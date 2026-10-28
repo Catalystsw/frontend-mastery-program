@@ -92,6 +92,8 @@
   .numlbl{color:var(--muted); font-size:min(1.5vw,16px); margin-top:8px; line-height:1.45}
 
   .two.tight pre{font-size:min(1.3vw,14.5px); padding:14px 18px}
+  .two.tight pre.dense{font-size:min(1.2vw,13px); line-height:1.5}
+  table.grid.ext td:first-child{white-space:nowrap}
   .two.tight table.grid{font-size:min(1.45vw,16px)}
   .two.tight table.grid td{padding:7px 10px}
   .two.tight table.grid th{padding:7px 10px}
@@ -293,6 +295,7 @@
   }
 </style>
 <!--catalyst-brand:style-->
+<link rel="icon" type="image/png" href="data:image/png;base64,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">
 <style id="catalyst-brand">
   /* Catalyst slide brand system v1 — generated by brand/apply_brand.py.
      Edit brand/apply_brand.py, not this block; it is regenerated on every run. */
@@ -384,7 +387,7 @@
 <div id="stage">
 
   <!-- MODULE 03 · VIDEO 1 -->
-  <section class="slide" style="justify-content:center" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>01</b> / 27</div><!--/catalyst-brand:chrome-->
+  <section class="slide" style="justify-content:center" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>01</b> / 40</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 03 · JavaScript, Deeply</div>
     <h1>The language<br>under the framework</h1>
     <div class="sub">Execution contexts, closures, <span class="mono">this</span>, prototypes, modules, promises and memory — ending with the interview toolbelt written from an empty file.</div>
@@ -409,22 +412,30 @@
   </section>
 
   <!-- MODULE 03 · VIDEO 1 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>02</b> / 27</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>02</b> / 40</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 03 · the route through this module</div>
-    <h2>Six lessons</h2>
-    <ul class="plist">
-      <li><b>1 ·</b> Execution contexts and scope<small>drawn, not described</small></li>
-      <li><b>2 ·</b> Closures<small>how a callback remembers, and what it keeps alive</small></li>
-      <li><b>3 ·</b> <code>this</code> and prototypes<small>the call site, and what <code>class</code> hides</small></li>
-      <li><b>4 ·</b> Modules and async<small><code>import</code> at runtime, promises, combinators</small></li>
-      <li><b>5 ·</b> Errors and memory<small>the <code>try</code> that catches nothing, and the leak</small></li>
-      <li><b>6 ·</b> The toolbelt<small>debounce, throttle, EventEmitter — from an empty file</small></li>
-    </ul>
-    <a class="ex" href="https://github.com/eng-AhmedMahmoud/frontend-mastery-jobboard" target="_blank" rel="noopener"><b>The repo</b><span class="br">frontend-mastery-jobboard</span><i>every exercise in this module · open on GitHub ↗</i></a>
+    <h2>Ten lessons</h2>
+    <div class="two">
+      <ul class="plist">
+        <li><b>1 ·</b> Execution contexts and scope<small>drawn, not described</small></li>
+        <li><b>2 ·</b> Closures<small>how a callback remembers, and what it keeps alive</small></li>
+        <li><b>3 ·</b> <code>this</code><small>decided at the call site, not the definition</small></li>
+        <li><b>4 ·</b> Prototypes<small>and what <code>class</code> is hiding</small></li>
+        <li><b>5 ·</b> Modules and bundling<small>what <code>import</code> does at runtime</small></li>
+      </ul>
+      <ul class="plist">
+        <li><b>6 ·</b> Callbacks → promises → async/await<small>and the states in between</small></li>
+        <li><b>7 ·</b> Errors across async boundaries<small>the <code>try</code> that catches nothing</small></li>
+        <li><b>8 ·</b> Memory and leaks<small>the leak your single-page app has right now</small></li>
+        <li><b>9 ·</b> The toolbelt, part 1<small>debounce and throttle, from an empty file</small></li>
+        <li><b>10 ·</b> The toolbelt, part 2<small>deepClone, EventEmitter, promiseAll</small></li>
+      </ul>
+    </div>
+    <a class="ex" href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener"><b>The repo</b><span class="br">frontend-mastery-jobboard</span><i>every exercise in this module · open on GitHub ↗</i></a>
   </section>
 
   <!-- MODULE 03 · VIDEO 1 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>03</b> / 27</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>03</b> / 40</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · what a call actually costs</div>
     <h2>Every function call pushes a context</h2>
     <div class="two tight stk" id="stk">
@@ -458,7 +469,7 @@
   </section>
 
   <!-- MODULE 03 · VIDEO 1 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>04</b> / 27</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>04</b> / 40</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · proof, in six lines</div>
     <h2>Lexical, not dynamic</h2>
     <div class="two tight">
@@ -487,8 +498,8 @@
   </section>
 
   <!-- MODULE 03 · VIDEO 2 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 2</div><div class="cx-page"><b>05</b> / 27</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">The definition that survives an interview</div>
+  <section class="slide" data-chip="MODULE 03 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 2</div><div class="cx-page"><b>05</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · the definition that survives an interview</div>
     <h2>A function plus the environment it was born in</h2>
     <div class="two tight">
       <div>
@@ -516,7 +527,7 @@
   </section>
 
   <!-- MODULE 03 · VIDEO 2 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 2</div><div class="cx-page"><b>06</b> / 27</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 2</div><div class="cx-page"><b>06</b> / 40</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Where you already rely on it</div>
     <h2>Three shapes, one mechanism</h2>
     <div class="three">
@@ -546,7 +557,7 @@ store.state  <span class="no">// undefined</span></code></pre>
   </section>
 
   <!-- MODULE 03 · VIDEO 2 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 2</div><div class="cx-page"><b>07</b> / 27</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 2</div><div class="cx-page"><b>07</b> / 40</div><!--/catalyst-brand:chrome-->
     <div class="kicker">The other edge of the same knife</div>
     <h2>What the closure keeps alive</h2>
     <div class="two">
@@ -572,8 +583,8 @@ store.state  <span class="no">// undefined</span></code></pre>
   </section>
 
   <!-- MODULE 03 · VIDEO 3 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 3</div><div class="cx-page"><b>08</b> / 27</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Read the call, not the definition</div>
+  <section class="slide" data-chip="MODULE 03 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 3</div><div class="cx-page"><b>08</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · read the call, not the definition</div>
     <h2>Four rules, checked in this order</h2>
     <div class="two tight">
       <div>
@@ -604,7 +615,7 @@ obj.<span class="fn">who</span>()                  <span class="cmt">// 2 · imp
   </section>
 
   <!-- MODULE 03 · VIDEO 3 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 3</div><div class="cx-page"><b>09</b> / 27</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 3</div><div class="cx-page"><b>09</b> / 40</div><!--/catalyst-brand:chrome-->
     <div class="kicker">The bug you have shipped at least once</div>
     <h2>A method passed by reference loses its dot</h2>
     <div class="two tight">
@@ -631,8 +642,8 @@ input.addEventListener(<span class="st">'input'</span>, s.handle)
     </div>
   </section>
 
-  <!-- MODULE 03 · VIDEO 3 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 3</div><div class="cx-page"><b>10</b> / 27</div><!--/catalyst-brand:chrome-->
+  <!-- MODULE 03 · VIDEO 4 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 4</div><div class="cx-page"><b>10</b> / 40</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · delegation, without classes</div>
     <h2>Inheritance without classes or constructors</h2>
     <div class="two tight">
@@ -658,8 +669,8 @@ console.log(<span class="ty">Object</span>.getPrototypeOf(userA) === protoUser);
     </div>
   </section>
 
-  <!-- MODULE 03 · VIDEO 3 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 3</div><div class="cx-page"><b>11</b> / 27</div><!--/catalyst-brand:chrome-->
+  <!-- MODULE 03 · VIDEO 4 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 4</div><div class="cx-page"><b>11</b> / 40</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · what <code>class</code> is hiding</div>
     <h2>What 'class' is actually hiding</h2>
     <div class="two tight">
@@ -689,8 +700,8 @@ console.log(<span class="kw">typeof</span> <span class="ty">User</span>); <span 
     <div class="key">"Does JavaScript have true classes?" No — sugar over constructor functions and prototype chains. The runtime model is prototypal.</div>
   </section>
 
-  <!-- MODULE 03 · VIDEO 3 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 3</div><div class="cx-page"><b>12</b> / 27</div><!--/catalyst-brand:chrome-->
+  <!-- MODULE 03 · VIDEO 4 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 4</div><div class="cx-page"><b>12</b> / 40</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · intercepting the object model</div>
     <h2>Intercept and control property access</h2>
     <div class="two tight">
@@ -729,12 +740,44 @@ userProxy.age = <span class="st">'thirty'</span>; <span class="cmt">// throws Ty
     </div>
   </section>
 
-  <!-- MODULE 03 · VIDEO 4 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 4</div><div class="cx-page"><b>13</b> / 27</div><!--/catalyst-brand:chrome-->
+  <!-- MODULE 03 · VIDEO 5 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>13</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · before the first import</div>
+    <h2>Which module system is this file?</h2>
+    <div class="two tight">
+      <pre class="dense"><code><span class="cmt">// package.json — decides what .js means</span>
+{ <span class="st">"type"</span>: <span class="st">"module"</span> }        <span class="cmt">// .js → ESM</span>
+<span class="cmt">// no "type", or "commonjs" → .js → CommonJS</span>
+
+<span class="cmt">// ESM project, a tool that wants CommonJS:</span>
+eslint.config<span class="kw">.cjs</span>           <span class="cmt">// .cjs wins</span>
+
+<span class="cmt">// JSON in ESM must say what it is</span>
+<span class="kw">import</span> config <span class="kw">from</span> <span class="st">'./config.json'</span>
+  <span class="kw">with</span> { type: <span class="st">'json'</span> };
+<span class="cmt">// CommonJS: require('./config.json')</span></code></pre>
+      <div>
+        <table class="grid ext">
+          <tr><th>File</th><th>What it is</th></tr>
+          <tr><td><code>.js</code> <code>.ts</code></td><td>Either: <b>"type"</b> in package.json decides</td></tr>
+          <tr><td><code>.mjs</code> <code>.mts</code></td><td><b>Always ESM</b>; .mts → .mjs</td></tr>
+          <tr><td><code>.cjs</code> <code>.cts</code></td><td><b>Always CommonJS</b>; .cts → .cjs</td></tr>
+          <tr><td><code>.d.ts</code></td><td>Types only; runs nothing</td></tr>
+          <tr><td><code>.jsx</code> <code>.tsx</code></td><td>JSX inside; the bundler compiles it</td></tr>
+          <tr><td><code>.vue</code> <code>.svelte</code> <code>.astro</code></td><td>Compiled by a framework plugin</td></tr>
+          <tr><td><code>.wasm</code> <code>.node</code></td><td>WebAssembly; native C++ addons</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="key">Need a guarantee whatever the project says? Use <code>.mjs</code> / <code>.cjs</code>, or <code>.mts</code> / <code>.cts</code> in TypeScript. <code>.js</code> and <code>.ts</code> follow <b>"type"</b>.</div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 5 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>14</b> / 40</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · at runtime</div>
     <h2>What 'import' actually does at runtime</h2>
     <div class="two tight">
-      <pre><code><span class="cmt">// counter.js</span>
+      <pre class="dense"><code><span class="cmt">// counter.js</span>
 <span class="kw">export</span> <span class="kw">let</span> count = 0;
 <span class="kw">export</span> <span class="kw">function</span> <span class="fn">inc</span>() { count++; }
 
@@ -744,7 +787,12 @@ userProxy.age = <span class="st">'thirty'</span>; <span class="cmt">// throws Ty
 console.log(count); <span class="cmt">// 0</span>
 inc();
 console.log(count); <span class="cmt">// 1 — live binding reflects update!</span>
-<span class="cmt">// count = 5; // TypeError: Assignment to constant variable</span></code></pre>
+<span class="cmt">// count = 5; // TypeError: Assignment to constant variable</span>
+
+<span class="cmt">// CommonJS</span>
+<span class="kw">const</span> { count, inc } = <span class="fn">require</span>(<span class="st">'./counter'</span>);
+inc();
+console.log(count); <span class="cmt">// 0 ← <bdi dir="rtl" style="font:1.15em var(--sans)">ما زالت 0! لأنها نسخة أُخذت لحظة الـ require</bdi></span></code></pre>
       <div class="card g">
         <h3 class="g">Three Phases of ESM Loading</h3>
         <ul class="plist">
@@ -757,31 +805,114 @@ console.log(count); <span class="cmt">// 1 — live binding reflects update!</sp
     <div class="key">CommonJS copies values; ESM links <b>live bindings</b> — which is why circular imports resolve there and half-build in CommonJS.</div>
   </section>
 
-  <!-- MODULE 03 · VIDEO 4 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 4</div><div class="cx-page"><b>14</b> / 27</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · why that bites on the server</div>
+  <!-- MODULE 03 · VIDEO 5 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>15</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · why that bites in tests</div>
     <h2>Why senior engineers call it an anti-pattern</h2>
-    <div class="three">
+    <div class="two tight">
       <div class="card r">
-        <h3 class="r">1 · Test Cross-Pollution</h3>
-        <p>Global state lingers across test files. Test B fails because Test A mutated the singleton. Resetting state requires manual tear-down in <code>afterEach</code>.</p>
+        <h3 class="r">1 · Test cross-pollution</h3>
+        <p>Tests in one file share the module: B sees what A left.</p>
+        <pre class="dense"><code><span class="kw">import</span> { cart } <span class="kw">from</span> <span class="st">'./store'</span>;
+
+<span class="fn">test</span>(<span class="st">'A: adds an item'</span>, () =&gt; {
+  cart.push(<span class="st">'pen'</span>);
+  expect(cart.length).toBe(1); <span class="cmt">// ✅</span>
+});
+
+<span class="fn">test</span>(<span class="st">'B: cart starts empty'</span>, () =&gt; {
+  expect(cart.length).toBe(0); <span class="cmt">// ❌ got 1</span>
+});</code></pre>
       </div>
       <div class="card r">
-        <h3 class="r">2 · Hidden Dependencies</h3>
-        <p>Components import the singleton directly instead of receiving it via props or DI. You cannot swap a mock client or a different config without monkey-patching.</p>
-      </div>
-      <div class="card r">
-        <h3 class="r">3 · The SSR Request Leak</h3>
-        <p>In Next.js / Node server runtimes, module singletons are shared across <b>all concurrent HTTP requests</b>. User A's session or cart leaks to User B!</p>
+        <h3 class="r">2 · Hidden dependencies</h3>
+        <p>The signature hides <code>apiClient</code>, so no mock can go in.</p>
+        <pre class="dense"><code><span class="kw">import</span> { apiClient } <span class="kw">from</span> <span class="st">'./apiClient'</span>;
+
+<span class="kw">function</span> <span class="fn">UserProfile</span>() {
+  <span class="kw">const</span> user = apiClient.getUser(); <span class="cmt">// hidden</span>
+  <span class="cmt">// …</span>
+}
+
+<span class="cmt">// Explicit, and swappable for a mock</span>
+<span class="kw">function</span> <span class="fn">UserProfile</span>({ apiClient }) { … }</code></pre>
       </div>
     </div>
-    <div class="key r">In SSR and React, Singletons are a memory and security liability. Use React Provider or request-scoped Dependency Injection instead.</div>
-    <a class="ex" href="https://github.com/eng-AhmedMahmoud/frontend-mastery-jobboard/tree/module-3/patterns/singleton" target="_blank" rel="noopener"><b>Exercise</b><span class="br">module-3/patterns/singleton</span><i>singleton.ts — module instances, and where they leak · open on GitHub ↗</i></a>
+    <div class="key r">A reset in <code>afterEach</code> patches it. Passing it in fixes it.</div>
+    <a class="ex" href="https://github.com/Catalystsw/frontend-mastery-jobboard/tree/module-3/patterns/singleton" target="_blank" rel="noopener"><b>Exercise</b><span class="br">module-3/patterns/singleton</span><i>singleton.ts — module instances, and where they leak · open on GitHub ↗</i></a>
   </section>
 
-  <!-- MODULE 03 · VIDEO 4 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 4</div><div class="cx-page"><b>15</b> / 27</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">One object, three states, one transition</div>
+  <!-- MODULE 03 · VIDEO 5 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>16</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · why that bites on the server</div>
+    <h2>One copy, every user</h2>
+    <div class="two tight">
+      <div class="card r">
+        <h3 class="r">3 · The SSR request leak</h3>
+        <p>A browser gives each user their own copy of the page. A Node or Next.js server loads the module <b>once</b> and serves every request from it.</p>
+        <pre class="dense"><code><span class="cmt">// session.js — one copy for every request</span>
+<span class="kw">let</span> currentUser = <span class="kw">null</span>;
+<span class="kw">export function</span> <span class="fn">setUser</span>(u) { currentUser = u; }
+<span class="kw">export function</span> <span class="fn">getUser</span>() { <span class="kw">return</span> currentUser; }
+
+<span class="cmt">// request A → setUser(A)</span>
+<span class="cmt">// request B → setUser(B)    same instant</span>
+<span class="cmt">// A's page  → getUser()  → B 😱</span></code></pre>
+      </div>
+      <div class="card g">
+        <h3 class="g">The fix · one copy per tree, per request</h3>
+        <pre class="dense"><code><span class="cmt">// React — each tree owns its state</span>
+<span class="kw">function</span> <span class="fn">App</span>() {
+  <span class="kw">const</span> [cart, setCart] = <span class="fn">useState</span>([]);
+  <span class="kw">return</span> (
+    &lt;<span class="ty">CartContext</span> value={{ cart, setCart }}&gt;
+      &lt;<span class="ty">Shop</span> /&gt;
+    &lt;/<span class="ty">CartContext</span>&gt;
+  );
+}
+
+<span class="cmt">// Server — build it inside the request</span>
+<span class="kw">export async function</span> <span class="fn">handler</span>(req) {
+  <span class="kw">const</span> user = <span class="kw">await</span> <span class="fn">getUserFromRequest</span>(req);
+  <span class="kw">return</span> <span class="fn">render</span>(user);
+}</code></pre>
+      </div>
+    </div>
+    <div class="key r">Module scope is shared by everyone and never resets. Nothing that belongs to one user or one request lives there.</div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 5 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>17</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · who reads your imports</div>
+    <h2>Webpack, Vite, Turbopack</h2>
+    <table class="grid">
+      <tr><th></th><th>Webpack</th><th>Vite</th><th>Turbopack</th></tr>
+      <tr><td><b>In&nbsp;dev</b></td><td>Bundles the whole graph, then serves it. Start-up and rebuilds grow with the app.</td><td>No bundle. Serves each file as native ESM when the browser asks for it; npm deps are pre-bundled once.</td><td>Bundles too, but incrementally: caches every step and redoes only what a change touched.</td></tr>
+      <tr><td><b>For&nbsp;prod</b></td><td>webpack itself, written in JavaScript</td><td>Rolldown, in Rust, since Vite 8; Rollup before that</td><td>Turbopack, in Rust; the <code>next build</code> default since Next.js 16</td></tr>
+      <tr><td><b>You&nbsp;meet&nbsp;it</b></td><td>Older CRA apps, heavy custom configs, Module Federation</td><td>New React SPAs, Vue, Svelte, and Vitest</td><td>Next.js, where it is the default since v16</td></tr>
+      <tr><td><b>They&nbsp;ask</b></td><td>"Why does our dev server get slower as the app grows?"</td><td>"Why does Vite start instantly on a big app?"</td><td>"What does incremental bundling actually buy you?"</td></tr>
+    </table>
+    <div class="two tight">
+      <pre class="dense"><code><span class="cmt">// math.js</span>
+<span class="kw">export const</span> <span class="fn">add</span> = (a, b) =&gt; a + b;
+<span class="kw">export const</span> <span class="fn">mul</span> = (a, b) =&gt; a * b;
+
+<span class="cmt">// app.js — static, readable before anything runs</span>
+<span class="kw">import</span> { add } <span class="kw">from</span> <span class="st">'./math.js'</span>;
+<span class="ok">// ✅ bundle ships add; mul is shaken out</span></code></pre>
+      <pre class="dense"><code><span class="cmt">// CommonJS — only known at runtime</span>
+<span class="kw">const</span> math = <span class="fn">require</span>(<span class="st">'./math'</span>);
+<span class="kw">if</span> (user.isAdmin) <span class="fn">require</span>(<span class="st">'./admin'</span>);
+
+<span class="cmt">// which export? decided at runtime</span>
+math[action](1, 2);
+<span class="no">// ❌ bundler must keep all of math.js</span></code></pre>
+    </div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 6 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>18</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · one object, three states, one transition</div>
     <h2>A promise settles once, and never moves again</h2>
     <div class="fig" style="max-width:920px">
       <svg viewBox="0 0 920 170" role="img" aria-label="Pending transitions once to fulfilled or rejected">
@@ -807,8 +938,68 @@ console.log(count); <span class="cmt">// 1 — live binding reflects update!</sp
     <div class="key">A promise <b>starts the moment it is created</b>, not when you await it — and <code>.then</code> on a settled promise still defers to a microtask.</div>
   </section>
 
-  <!-- MODULE 03 · VIDEO 4 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 4</div><div class="cx-page"><b>16</b> / 27</div><!--/catalyst-brand:chrome-->
+  <!-- MODULE 03 · VIDEO 6 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>19</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Before promises · inversion of control</div>
+    <h2>A callback hands someone else your next step</h2>
+    <div class="two tight">
+      <pre class="dense"><code><span class="cmt">// error-first callbacks, three steps deep</span>
+<span class="fn">getUser</span>(id, (err, user) =&gt; {
+  <span class="kw">if</span> (err) <span class="kw">return</span> <span class="fn">fail</span>(err);
+  <span class="fn">getJobs</span>(user, (err, jobs) =&gt; {
+    <span class="kw">if</span> (err) <span class="kw">return</span> <span class="fn">fail</span>(err);
+    <span class="fn">getCompany</span>(jobs[0], (err, company) =&gt; {
+      <span class="kw">if</span> (err) <span class="kw">return</span> <span class="fn">fail</span>(err);
+      <span class="fn">render</span>(user, jobs, company);
+    });
+  });
+});</code></pre>
+      <div class="card a">
+        <h3 class="cy">What you are trusting it to do</h3>
+        <ul class="plist">
+          <li>Call it exactly once<small>A promise settles once; a second resolve is ignored.</small></li>
+          <li>Never call it inline<small><code>.then</code> always runs later, on a microtask.</small></li>
+          <li>Hand you the error<small>A throw in any step becomes a rejection the next <code>.catch</code> sees.</small></li>
+        </ul>
+      </div>
+    </div>
+    <div class="key">Promises did not remove callbacks — <code>.then</code> still takes one. They turned the callback's unwritten contract into a guarantee.</div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 6 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>20</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">new Promise · wrapping a callback API</div>
+    <h2>Promisify once, await everywhere</h2>
+    <div class="two tight">
+      <pre class="dense"><code><span class="cmt">// the executor runs synchronously, right now</span>
+<span class="kw">function</span> <span class="fn">loadImage</span>(src) {
+  <span class="kw">return new</span> <span class="ty">Promise</span>((resolve, reject) =&gt; {
+    <span class="kw">const</span> img = <span class="kw">new</span> <span class="ty">Image</span>();
+    img.onload = () =&gt; <span class="fn">resolve</span>(img);
+    img.onerror = () =&gt; <span class="fn">reject</span>(<span class="kw">new</span> <span class="ty">Error</span>(<span class="st">'load failed'</span>));
+    img.src = src;
+  });
+}
+
+<span class="kw">const</span> <span class="fn">sleep</span> = (ms) =&gt; <span class="kw">new</span> <span class="ty">Promise</span>((r) =&gt; <span class="fn">setTimeout</span>(r, ms));</code></pre>
+      <pre class="dense"><code><span class="no">// ❌ wrapping what is already a promise</span>
+<span class="kw">function</span> <span class="fn">getJobs</span>() {
+  <span class="kw">return new</span> <span class="ty">Promise</span>((resolve, reject) =&gt; {
+    fetch(<span class="st">'/api/jobs'</span>).then(resolve, reject);
+  });
+}
+
+<span class="ok">// ✅ just return it</span>
+<span class="kw">const</span> <span class="fn">getJobs</span> = () =&gt; fetch(<span class="st">'/api/jobs'</span>);
+
+<span class="cmt">// Node: util.promisify(fn) wraps any</span>
+<span class="cmt">// (err, value) callback API for you</span></code></pre>
+    </div>
+    <div class="key"><code>resolve</code> and <code>reject</code> are one-shot: the first call wins and every later call is ignored. That is the contract the callback never had.</div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 6 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>21</b> / 40</div><!--/catalyst-brand:chrome-->
     <div class="kicker">The same fetch, written three ways</div>
     <h2>await is a <span class="cy">.then</span> you can read top to bottom</h2>
     <div class="two tight">
@@ -836,8 +1027,51 @@ console.log(count); <span class="cmt">// 1 — live binding reflects update!</sp
     </div>
   </section>
 
-  <!-- MODULE 03 · VIDEO 4 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 4</div><div class="cx-page"><b>17</b> / 27</div><!--/catalyst-brand:chrome-->
+  <!-- MODULE 03 · VIDEO 6 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>22</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Series or parallel · it is where the await goes</div>
+    <h2>Two awaits in a row is a waterfall</h2>
+    <div class="two tight">
+      <pre class="dense"><code><span class="no">// ❌ series: the second waits for no reason</span>
+<span class="kw">const</span> jobs = <span class="kw">await</span> <span class="fn">getJobs</span>();
+<span class="kw">const</span> filters = <span class="kw">await</span> <span class="fn">getFilters</span>();
+
+<span class="ok">// ✅ parallel: start both, wait once</span>
+<span class="kw">const</span> [jobs, filters] = <span class="kw">await</span> <span class="ty">Promise</span>.all([
+  <span class="fn">getJobs</span>(),
+  <span class="fn">getFilters</span>(),
+]);</code></pre>
+      <pre class="dense"><code><span class="no">// ❌ forEach ignores the promise you return</span>
+ids.forEach(<span class="kw">async</span> (id) =&gt; { <span class="kw">await</span> <span class="fn">save</span>(id); });
+<span class="fn">done</span>(); <span class="cmt">// runs before a single save lands</span>
+
+<span class="ok">// ✅ one at a time, in order</span>
+<span class="kw">for</span> (<span class="kw">const</span> id <span class="kw">of</span> ids) <span class="kw">await</span> <span class="fn">save</span>(id);
+
+<span class="ok">// ✅ all at once</span>
+<span class="kw">await</span> <span class="ty">Promise</span>.all(ids.map((id) =&gt; <span class="fn">save</span>(id)));</code></pre>
+    </div>
+    <div class="fig" style="max-width:760px">
+      <svg viewBox="0 0 760 92" role="img" aria-label="Two awaits in series take 600 milliseconds; Promise.all takes 300">
+        <text x="0" y="28" class="lbl b">two awaits</text>
+        <rect x="120" y="8" width="260" height="30" rx="6" fill="#0C2733" stroke="#22D3EE"/>
+        <text x="250" y="28" text-anchor="middle" class="lbl">getJobs · 300 ms</text>
+        <rect x="384" y="8" width="260" height="30" rx="6" fill="#2A2213" stroke="#FBBF24"/>
+        <text x="514" y="28" text-anchor="middle" class="lbl">getFilters · 300 ms</text>
+        <text x="658" y="28" class="lbl b" style="fill:var(--bad)">= 600 ms</text>
+        <text x="0" y="75" class="lbl b">Promise.all</text>
+        <rect x="120" y="50" width="260" height="17" rx="5" fill="#0C2733" stroke="#22D3EE"/>
+        <text x="130" y="62" class="lbl s">getJobs</text>
+        <rect x="120" y="71" width="260" height="17" rx="5" fill="#2A2213" stroke="#FBBF24"/>
+        <text x="130" y="83" class="lbl s">getFilters</text>
+        <text x="394" y="75" class="lbl b" style="fill:var(--good)">= 300 ms</text>
+      </svg>
+    </div>
+    <div class="key">Start independent work together and await it once. Keep series only where the next call needs the last one's answer.</div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 6 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>23</b> / 40</div><!--/catalyst-brand:chrome-->
     <div class="kicker">The four combinators, and when each is right</div>
     <h2>Pick by what failure should mean</h2>
     <table class="grid tight-t">
@@ -866,9 +1100,9 @@ console.log(count); <span class="cmt">// 1 — live binding reflects update!</sp
     <div class="key w"><code>Promise.all</code> rejects on the first failure but <b>cancels nothing</b> — watch the other two keep going.</div>
   </section>
 
-  <!-- MODULE 03 · VIDEO 5 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>18</b> / 27</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">fetch · the rejection that never comes</div>
+  <!-- MODULE 03 · VIDEO 7 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>24</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 7 · fetch, the rejection that never comes</div>
     <h2>A 500 is a successful request</h2>
     <div class="two tight">
       <div>
@@ -893,8 +1127,107 @@ console.log(count); <span class="cmt">// 1 — live binding reflects update!</sp
     <div class="say">It bites the other way too: <code>res.json()</code> on a 204 throws, and an abort rejects with an <code>AbortError</code> you want to swallow.</div>
   </section>
 
-  <!-- MODULE 03 · VIDEO 5 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>19</b> / 27</div><!--/catalyst-brand:chrome-->
+  <!-- MODULE 03 · VIDEO 7 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>25</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">What a try can see</div>
+    <h2>A try only catches what it awaits</h2>
+    <div class="two tight">
+      <pre class="dense"><code><span class="no">// ❌ no await: the rejection skips the catch</span>
+<span class="kw">try</span> {
+  <span class="fn">save</span>(form);
+} <span class="kw">catch</span> (e) {
+  <span class="fn">toast</span>(e); <span class="cmt">// never runs</span>
+}
+
+<span class="no">// ❌ returned, not awaited: the same hole</span>
+<span class="kw">async function</span> <span class="fn">load</span>() {
+  <span class="kw">try</span> { <span class="kw">return</span> <span class="fn">fetchJobs</span>(); }
+  <span class="kw">catch</span> { <span class="kw">return</span> []; } <span class="cmt">// never runs</span>
+}
+<span class="ok">// ✅ await save(form); return await fetchJobs();</span></code></pre>
+      <pre class="dense"><code><span class="no">// ❌ thrown later, from another task</span>
+<span class="kw">try</span> {
+  <span class="fn">setTimeout</span>(() =&gt; {
+    <span class="kw">throw new</span> <span class="ty">Error</span>(<span class="st">'boom'</span>);
+  });
+} <span class="kw">catch</span> (e) {
+  <span class="cmt">// never runs: this try is long gone</span>
+}
+
+<span class="cmt">// the smoke alarm for what nobody caught</span>
+<span class="fn">addEventListener</span>(<span class="st">'unhandledrejection'</span>,
+  (e) =&gt; <span class="fn">report</span>(e.reason));</code></pre>
+    </div>
+    <div class="key r">No catch in the same async chain means an unhandled rejection: a console error in the browser, a crashed process in Node 15+.</div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 7 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>26</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">AbortController · cancellation</div>
+    <h2>Cancel what nobody is waiting for</h2>
+    <div class="two tight">
+      <pre class="dense"><code><span class="kw">const</span> controller = <span class="kw">new</span> <span class="ty">AbortController</span>();
+
+fetch(url, { signal: controller.signal })
+  .then(<span class="fn">render</span>)
+  .catch((e) =&gt; {
+    <span class="kw">if</span> (e.name === <span class="st">'AbortError'</span>) <span class="kw">return</span>; <span class="cmt">// ours</span>
+    <span class="fn">showError</span>(e);
+  });
+
+<span class="cmt">// the user typed again: drop the old request</span>
+controller.<span class="fn">abort</span>();</code></pre>
+      <pre class="dense"><code><span class="cmt">// React: cancel when the effect re-runs</span>
+<span class="fn">useEffect</span>(() =&gt; {
+  <span class="kw">const</span> c = <span class="kw">new</span> <span class="ty">AbortController</span>();
+  <span class="fn">getJSON</span>(url, { signal: c.signal })
+    .then(<span class="fn">setData</span>)
+    .catch(<span class="fn">ignoreAbort</span>);
+  <span class="kw">return</span> () =&gt; c.<span class="fn">abort</span>();
+}, [url]);
+
+<span class="cmt">// a deadline, with no timer to clear</span>
+fetch(url, { signal: <span class="ty">AbortSignal</span>.<span class="fn">timeout</span>(5000) });
+<span class="cmt">// rejects with name 'TimeoutError'</span></code></pre>
+    </div>
+    <div class="key">An abort is not a failure. Catch <code>AbortError</code> and drop it; report everything else.</div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 7 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>27</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Typed errors · cause · retry</div>
+    <h2>Errors that know whether a retry helps</h2>
+    <div class="two tight">
+      <pre class="dense"><code><span class="kw">class</span> <span class="ty">HttpError</span> <span class="kw">extends</span> <span class="ty">Error</span> {
+  <span class="fn">constructor</span>(status, url, options) {
+    <span class="kw">super</span>(<span class="st">`${status} from ${url}`</span>, options);
+    <span class="kw">this</span>.name = <span class="st">'HttpError'</span>;
+    <span class="kw">this</span>.status = status;
+  }
+}
+
+<span class="cmt">// wrap, don't replace: keep the original</span>
+<span class="kw">throw new</span> <span class="ty">Error</span>(<span class="st">'Could not load jobs'</span>, { cause: err });</code></pre>
+      <pre class="dense"><code><span class="cmt">// 4xx fails the same way every time; abort was ours</span>
+<span class="kw">const</span> <span class="fn">retryable</span> = (e) =&gt;
+  e <span class="kw">instanceof</span> <span class="ty">HttpError</span> ? e.status &gt;= 500
+                         : e.name !== <span class="st">'AbortError'</span>;
+
+<span class="kw">async function</span> <span class="fn">withRetry</span>(fn, tries = 3) {
+  <span class="kw">for</span> (<span class="kw">let</span> i = 1; ; i++) {
+    <span class="kw">try</span> { <span class="kw">return await</span> <span class="fn">fn</span>(); }
+    <span class="kw">catch</span> (e) {
+      <span class="kw">if</span> (i === tries || !<span class="fn">retryable</span>(e)) <span class="kw">throw</span> e;
+      <span class="kw">await</span> <span class="fn">sleep</span>(2 ** i * 150); <span class="cmt">// 300 ms, 600 ms</span>
+    }
+  }
+}</code></pre>
+    </div>
+    <div class="key">Retry network drops and 5xx, with backoff. Never retry a 4xx or an abort, and keep the first error as <code>cause</code>.</div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 7 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>28</b> / 40</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Where to catch, and what to say</div>
     <h2>Three boundaries, three jobs</h2>
     <div class="three">
@@ -914,63 +1247,127 @@ console.log(count); <span class="cmt">// 1 — live binding reflects update!</sp
     <div class="key">"A <code>try</code> only catches a throw in the same turn of the loop — so I <code>await</code>, wrap <code>fetch</code> so a status becomes a rejection, and give each feature one boundary."</div>
   </section>
 
-  <!-- MODULE 03 · VIDEO 5 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>20</b> / 27</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 8 · the leak your SPA has right now</div>
-    <h2>The #1 memory leak in single-page applications</h2>
-    <div class="sub">Forgetting to unsubscribe holds entire component trees hostage from Garbage Collection.</div>
+  <!-- MODULE 03 · VIDEO 8 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 8</div><div class="cx-page"><b>29</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 8 · what a leak actually is</div>
+    <h2>Memory is freed when nothing can reach it</h2>
     <div class="two">
-      <div class="card r">
-        <h3 class="r">The Retained Closure Graph</h3>
-        <p>When component <code>&lt;UserProfile /&gt;</code> calls <code>eventBus.on('theme', onThemeChange)</code>, the event bus keeps a pointer to <code>onThemeChange</code>.</p>
-        <p style="margin-top:8px"><code>onThemeChange</code>'s closure scope references the component's state, props, and DOM nodes. When the user navigates away, <b>the entire tree cannot be collected</b>!</p>
+      <div>
+        <pre><code><span class="kw">let</span> user = { name: <span class="st">'Sara'</span>, photo: bigImage }
+user = <span class="kw">null</span>
+<span class="ok">// nothing points at that object any more → freed</span>
+
+<span class="kw">const</span> seen = []
+<span class="kw">function</span> <span class="fn">remember</span>(u) { seen.push(u) }
+
+<span class="fn">remember</span>({ name: <span class="st">'Omar'</span>, photo: bigImage })
+<span class="no">// still reachable through `seen` → never freed</span></code></pre>
       </div>
-      <div class="card g">
-        <h3 class="g">The Three Defenses</h3>
-        <ul class="plist">
-          <li>Always teardown in cleanup<small><code>useEffect(() =&gt; eventBus.on(..., fn), [])</code></small></li>
-          <li>AbortController Signal<small>Pass <code>{ signal }</code> to native <code>addEventListener</code></small></li>
-          <li>WeakRef &amp; FinalizationRegistry<small>For advanced frameworks: allow GC to reclaim dead listeners</small></li>
-        </ul>
+      <div>
+        <p class="say" style="margin-top:14px">The garbage collector starts from what is always alive — globals, <code>window</code>, the function running right now — and follows every reference. Whatever it can reach stays. Everything else is freed.</p>
+        <div class="key w">A leak is not memory you lost. It is memory you can <b>still reach</b> — by accident, through something you forgot about.</div>
       </div>
     </div>
-    <a class="ex" href="https://github.com/eng-AhmedMahmoud/frontend-mastery-jobboard/tree/module-3/patterns/observer" target="_blank" rel="noopener"><b>Exercise</b><span class="br">module-3/patterns/observer</span><i>observer.ts — subscribe, unsubscribe, and the leak test · open on GitHub ↗</i></a>
   </section>
 
-  <!-- MODULE 03 · VIDEO 5 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>21</b> / 27</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 8 · the two weak collections</div>
-    <h2>When the key should own the lifetime</h2>
+  <!-- MODULE 03 · VIDEO 8 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 8</div><div class="cx-page"><b>30</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 8 · the leak your single-page app has right now</div>
+    <h2>A listener you never removed keeps everything it remembers</h2>
+    <div class="two">
+      <div>
+        <pre><code><span class="kw">function</span> <span class="fn">openProfile</span>(user) {
+  <span class="kw">const</span> panel = document.createElement(<span class="st">'div'</span>)
+  panel.textContent = user.name
+  document.body.append(panel)
+
+  <span class="kw">function</span> <span class="fn">onResize</span>() {
+    panel.style.width = innerWidth / <span class="st">2</span> + <span class="st">'px'</span>
+  }
+  window.addEventListener(<span class="st">'resize'</span>, onResize)
+
+  <span class="kw">return function</span> <span class="fn">closeProfile</span>() {
+    panel.remove()
+    <span class="no">// ❌ forgot removeEventListener</span>
+  }
+}</code></pre>
+      </div>
+      <div>
+        <ul class="plist">
+          <li><code>window</code> lives as long as the tab<small>so its list of listeners lives that long too</small></li>
+          <li>That list holds <code>onResize</code><small>the function you passed in</small></li>
+          <li><code>onResize</code> is a closure<small>it remembers <code>panel</code> and <code>user</code> — lesson 2</small></li>
+          <li>So the removed panel is still in memory<small>off the screen, never freed</small></li>
+        </ul>
+        <div class="key r">The page never reloads in a single-page app, so nothing wipes this for you. Open and close the profile fifty times: fifty panels, still alive.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 8 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 8</div><div class="cx-page"><b>31</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 8 · the fix</div>
+    <h2>Every add needs a remove</h2>
+    <div class="two">
+      <div>
+        <h3 class="g">Remove the same function</h3>
+        <pre><code>window.addEventListener(<span class="st">'resize'</span>, onResize)
+
+<span class="kw">return function</span> <span class="fn">closeProfile</span>() {
+  panel.remove()
+  window.removeEventListener(<span class="st">'resize'</span>, onResize)
+  <span class="ok">// ✓ same reference → actually removed</span>
+}</code></pre>
+      </div>
+      <div>
+        <h3 class="g">Or one abort for all of them</h3>
+        <pre><code><span class="kw">const</span> controller = <span class="kw">new</span> <span class="ty">AbortController</span>()
+<span class="kw">const</span> { signal } = controller
+
+window.addEventListener(<span class="st">'resize'</span>, onResize, { signal })
+window.addEventListener(<span class="st">'scroll'</span>, onScroll, { signal })
+
+<span class="kw">return function</span> <span class="fn">closeProfile</span>() {
+  panel.remove()
+  controller.abort() <span class="ok">// ✓ both listeners gone</span>
+}</code></pre>
+      </div>
+    </div>
+    <div class="key w"><code>removeEventListener('resize', () =&gt; …)</code> removes nothing — an arrow written twice is two different functions. Same rule for timers: every <code>setInterval</code> needs its <code>clearInterval</code>.</div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 8 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 8</div><div class="cx-page"><b>32</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 8 · Map or WeakMap</div>
+    <h2>WeakMap: notes that disappear with the thing they describe</h2>
     <div class="two tight">
       <div>
-        <pre><code><span class="cmt">// strong: this Map is a root, forever</span>
-<span class="kw">const</span> meta = <span class="kw">new</span> <span class="ty">Map</span>()
-meta.set(node, { seen: <span class="kw">true</span> })
-node.remove()
-<span class="no">// node is detached — and still alive,</span>
-<span class="no">// because meta holds it as a key</span>
+        <pre><code><span class="cmt">// Map holds its keys for ever</span>
+<span class="kw">const</span> notes = <span class="kw">new</span> <span class="ty">Map</span>()
+notes.set(panel, { opened: Date.now() })
+panel.remove()
+<span class="no">// panel is off the page — but notes still holds it</span>
 
-<span class="cmt">// weak: the entry dies with the node</span>
-<span class="kw">const</span> meta = <span class="kw">new</span> <span class="ty">WeakMap</span>()
-meta.set(node, { seen: <span class="kw">true</span> })
-node.remove()
-<span class="ok">// nothing else references node → both collected</span></code></pre>
+<span class="cmt">// WeakMap lets its keys go</span>
+<span class="kw">const</span> notes = <span class="kw">new</span> <span class="ty">WeakMap</span>()
+notes.set(panel, { opened: Date.now() })
+panel.remove()
+<span class="ok">// nothing else holds panel → panel and its note are freed</span></code></pre>
       </div>
       <div>
         <table class="grid">
-          <tr><th></th><th>Holds its key</th><th>Iterable / sized</th></tr>
-          <tr><td><code>Map</code> / <code>Set</code></td><td><b class="r">Yes</b> — strongly</td><td>Yes</td></tr>
-          <tr><td><code>WeakMap</code> / <code>WeakSet</code></td><td><b class="g">No</b></td><td>No — and that is the price</td></tr>
+          <tr><th></th><th>Keeps its key alive</th><th>Can loop over it</th></tr>
+          <tr><td><code>Map</code> / <code>Set</code></td><td><b class="r">Yes</b></td><td>Yes</td></tr>
+          <tr><td><code>WeakMap</code> / <code>WeakSet</code></td><td><b class="g">No</b></td><td>No — that is the price</td></tr>
         </table>
-        <div class="key"><code>WeakMap</code> when you are <b>annotating</b> something you do not own. <code>Map</code> when the cache is the owner — and then bound it.</div>
-        <div class="say"><code>WeakRef</code> and <code>FinalizationRegistry</code> run at the collector's convenience — name them in an interview, avoid them in app code.</div>
+        <div class="key">Use a <code>WeakMap</code> to attach extra data to an object you do not own — a DOM node, someone else's object. Use a <code>Map</code> when you own the data, and put a limit on its size.</div>
       </div>
     </div>
   </section>
 
-    <!-- MODULE 03 · VIDEO 6 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>22</b> / 27</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Utility 1 · wait for quiet</div>
+    <!-- MODULE 03 · VIDEO 9 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>33</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 9 · utility 1, wait for quiet</div>
     <h2><span class="cy">debounce</span>(fn, wait)</h2>
     <p class="say">Every call <b>resets</b> the timer. <code>fn</code> runs once, <code>wait</code> ms after the last call — a burst collapses to a single run.</p>
     <div class="tl" data-mode="debounce">
@@ -984,9 +1381,9 @@ node.remove()
     <div class="key">Search-as-you-type, autosave, resize-settled, validating a field after typing stops.</div>
   </section>
 
-  <!-- MODULE 03 · VIDEO 6 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>23</b> / 27</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Utility 2 · allow one per window</div>
+  <!-- MODULE 03 · VIDEO 9 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>34</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 9 · utility 2, allow one per window</div>
     <h2><span class="g">throttle</span>(fn, limit)</h2>
     <p class="say">The first call runs <b>immediately</b>, then everything is ignored until the window expires — a steady stream becomes a steady rate.</p>
     <div class="tl" data-mode="throttle">
@@ -1000,9 +1397,9 @@ node.remove()
     <div class="key g">Scroll position, mousemove, drag, analytics pings, infinite-scroll checks.</div>
   </section>
 
-  <!-- MODULE 03 · VIDEO 6 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>24</b> / 27</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Live coding · from an empty file</div>
+  <!-- MODULE 03 · VIDEO 9 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>35</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 9 · live coding, from an empty file</div>
     <h2>Both, in nine lines each</h2>
     <div class="two tight">
       <div>
@@ -1038,39 +1435,139 @@ node.remove()
     <div class="key w">Not an arrow at the top level: <code>debounce(obj.method)</code> would silently lose its receiver. Lesson 3, cashed in.</div>
   </section>
 
-  <!-- MODULE 03 · VIDEO 6 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>25</b> / 27</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 10 · the distinction they probe</div>
-    <h2>Observer vs Publish-Subscribe: The crucial difference</h2>
+  <!-- MODULE 03 · VIDEO 10 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 10"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 10</div><div class="cx-page"><b>36</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 10 · utility 3, a copy that shares nothing</div>
+    <h2><span class="cy">deepClone</span>(value)</h2>
+    <div class="two tight">
+      <div>
+        <pre><code><span class="kw">function</span> <span class="fn">deepClone</span>(value, seen = <span class="kw">new</span> <span class="ty">WeakMap</span>()) {
+  <span class="kw">if</span> (value === <span class="kw">null</span> || <span class="kw">typeof</span> value !== <span class="st">'object'</span>) <span class="kw">return</span> value
+  <span class="kw">if</span> (value <span class="kw">instanceof</span> <span class="ty">Date</span>) <span class="kw">return new</span> <span class="ty">Date</span>(value.getTime())
+  <span class="kw">if</span> (seen.has(value)) <span class="kw">return</span> seen.get(value)   <span class="cmt">// a cycle</span>
+
+  <span class="kw">const</span> copy = Array.isArray(value) ? [] : {}
+  seen.set(value, copy)                        <span class="cmt">// before the children</span>
+  <span class="kw">for</span> (<span class="kw">const</span> [key, entry] <span class="kw">of</span> Object.entries(value)) {
+    copy[key] = <span class="fn">deepClone</span>(entry, seen)
+  }
+  <span class="kw">return</span> copy
+}</code></pre>
+      </div>
+      <div>
+        <ul class="plist">
+          <li>Primitives come back as they are<small>check <code>null</code> first — <code>typeof null</code> is <code>'object'</code></small></li>
+          <li>A <code>Date</code> gets its own branch<small>a plain object copy turns it into <code>{}</code></small></li>
+          <li>Arrays start as <code>[]</code>, not <code>{}</code><small>or the copy is an object with numeric keys</small></li>
+          <li>Cycles go through the <code>WeakMap</code><small>record the copy before copying its children</small></li>
+        </ul>
+      </div>
+    </div>
+    <div class="key">In app code, <code>structuredClone(value)</code> already does this. The interview wants to see you write it — and name the four cases.</div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 10 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 10"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 10</div><div class="cx-page"><b>37</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 10 · utility 4, subscribe and broadcast</div>
+    <h2><span class="g">EventEmitter</span></h2>
+    <div class="two tight">
+      <div>
+        <pre><code><span class="kw">class</span> <span class="ty">EventEmitter</span> {
+  #listeners = <span class="kw">new</span> <span class="ty">Map</span>()   <span class="cmt">// event → Set of listeners</span>
+
+  <span class="fn">on</span>(event, fn) {
+    <span class="kw">const</span> set = <span class="kw">this</span>.#listeners.get(event) ?? <span class="kw">new</span> <span class="ty">Set</span>()
+    set.add(fn)
+    <span class="kw">this</span>.#listeners.set(event, set)
+    <span class="kw">return</span> () =&gt; <span class="kw">this</span>.off(event, fn)   <span class="cmt">// the unsubscribe</span>
+  }
+  <span class="fn">off</span>(event, fn) {
+    <span class="kw">const</span> set = <span class="kw">this</span>.#listeners.get(event)
+    set?.delete(fn)
+    <span class="kw">if</span> (set?.size === <span class="st">0</span>) <span class="kw">this</span>.#listeners.delete(event)
+  }
+  <span class="fn">emit</span>(event, payload) {
+    <span class="kw">const</span> set = <span class="kw">this</span>.#listeners.get(event) ?? []
+    <span class="kw">for</span> (<span class="kw">const</span> fn <span class="kw">of</span> [...set]) fn(payload)   <span class="cmt">// a copy</span>
+  }
+}</code></pre>
+      </div>
+      <div>
+        <ul class="plist">
+          <li>A <code>Set</code> per event<small>no duplicates, and removing one is instant</small></li>
+          <li><code>on</code> returns its own unsubscribe<small>every add needs a remove — lesson 8</small></li>
+          <li>Empty set → delete the key<small>or the map grows for ever in a long-lived app</small></li>
+          <li><code>emit</code> loops over a copy<small>a listener that unsubscribes mid-emit would change the set you are looping over</small></li>
+          <li><code>once</code> is the follow-up question<small><code>on</code> plus a wrapper that unsubscribes itself, then calls through</small></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 10 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 10"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 10</div><div class="cx-page"><b>38</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 10 · utility 5, rebuild Promise.all</div>
+    <h2><span class="cy">promiseAll</span>(values)</h2>
+    <div class="two tight">
+      <div>
+        <pre><code><span class="kw">function</span> <span class="fn">promiseAll</span>(values) {
+  <span class="kw">return new</span> <span class="ty">Promise</span>((resolve, reject) =&gt; {
+    <span class="kw">if</span> (values.length === <span class="st">0</span>) <span class="kw">return</span> resolve([])
+
+    <span class="kw">const</span> results = <span class="kw">new</span> <span class="ty">Array</span>(values.length)
+    <span class="kw">let</span> finished = <span class="st">0</span>
+
+    values.forEach((value, index) =&gt; {
+      Promise.resolve(value).then((result) =&gt; {
+        results[index] = result          <span class="cmt">// its own slot</span>
+        finished += <span class="st">1</span>
+        <span class="kw">if</span> (finished === values.length) resolve(results)
+      }, reject)                         <span class="cmt">// first rejection wins</span>
+    })
+  })
+}</code></pre>
+      </div>
+      <div>
+        <ul class="plist">
+          <li><code>results[index]</code>, never <code>push</code><small>they finish out of order; the answer must keep the input order</small></li>
+          <li>A counter, not <code>results.length</code><small><code>new Array(3).length</code> is already 3</small></li>
+          <li>Empty input resolves at once<small>no <code>.then</code> ever runs, so nothing else would call <code>resolve</code></small></li>
+          <li><code>Promise.resolve(value)</code><small>plain values and promises take the same path</small></li>
+        </ul>
+      </div>
+    </div>
+    <div class="key">The counter and the index are closures — lesson 2. The "first rejection wins" rule is lesson 6's combinator table, written by hand.</div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 10 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 10"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 10</div><div class="cx-page"><b>39</b> / 40</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 10 · build</div>
+    <h2>Five utilities, five test files, all green</h2>
     <div class="two">
-      <div class="card a">
-        <h3 class="cy">Observer Pattern</h3>
-        <p><b>Direct Coupling:</b> The Subject directly maintains a collection of Observer references. When something happens, the Subject iterates through them and calls their update method.</p>
-        <p style="margin-top:8px">Usually synchronous and lives in the same memory context.</p>
+      <div>
+        <ul class="plist">
+          <li><code>src/utils/debounce.ts</code><small>lesson 9</small></li>
+          <li><code>src/utils/throttle.ts</code><small>lesson 9</small></li>
+          <li><code>src/utils/deep-clone.ts</code><small>Dates, arrays, cycles</small></li>
+          <li><code>src/utils/event-emitter.ts</code><small>on, off, once, emit</small></li>
+          <li><code>src/utils/promise-all.ts</code><small>order kept, empty input, first rejection</small></li>
+        </ul>
       </div>
-      <div class="card b">
-        <h3 class="b">Publish / Subscribe (Pub-Sub)</h3>
-        <p><b>Zero Coupling:</b> Publishers and Subscribers never know each other exists. They communicate through a third-party <b>Event Broker</b> or Event Bus.</p>
-        <p style="margin-top:8px">Can easily bridge asynchronous boundaries, WebSockets, or separate micro-frontends.</p>
+      <div>
+        <pre><code>git checkout module-3/utils/start
+pnpm test src/utils
+<span class="cmt"># red → make each file green</span>
+
+<span class="cmt"># stuck? numbered hints for one file</span>
+git checkout module-3/utils/guided -- src/utils/deep-clone.ts</code></pre>
+        <div class="key g">The files are TypeScript, but the function bodies are the JavaScript on these slides. The types are module 4.</div>
       </div>
     </div>
-    <div class="key">"Is Pub-Sub just Observer?" — Pub-Sub adds a broker, so publisher and subscriber never know each other.</div>
+    <a class="ex" href="https://github.com/Catalystsw/frontend-mastery-jobboard/tree/module-3/utils/start" target="_blank" rel="noopener"><b>Build</b><span class="br">module-3/utils/start</span><i>five utilities, failing tests first · open on GitHub ↗</i></a>
   </section>
 
-  <!-- MODULE 03 · VIDEO 6 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>26</b> / 27</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Say this in the interview</div>
-    <h2>Four sentences that win the architecture question</h2>
-    <div class="say" style="max-width:62ch; font-size:min(2.15vw,23px)">
-      <p style="margin-bottom:14px"><b class="cy">1 ·</b> Static imports for tree-shaking, dynamic <code>import()</code> for route splitting.</p>
-      <p style="margin-bottom:14px"><b class="cy">2 ·</b> No module singletons in SSR — they leak state across concurrent requests.</p>
-      <p style="margin-bottom:14px"><b class="cy">3 ·</b> Proxy with Reflect at boundaries, never in a hot loop.</p>
-      <p><b class="cy">4 ·</b> Thousands of records: prototype delegation, not closures per instance.</p>
-    </div>
-  </section>
-
-  <!-- MODULE 03 · VIDEO 6 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>27</b> / 27</div><!--/catalyst-brand:chrome-->
+  <!-- MODULE 03 · VIDEO 10 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 10"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 10</div><div class="cx-page"><b>40</b> / 40</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 03 · done</div>
     <h2>What you can now explain &amp; defend</h2>
     <div class="two">
