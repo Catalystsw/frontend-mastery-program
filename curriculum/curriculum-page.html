@@ -98,7 +98,7 @@
     write, starting from a failing test.</p>
     <div class="stats">
       <div><div class="v">13</div><div class="k">Modules</div></div>
-      <div><div class="v">111</div><div class="k">Lessons</div></div>
+      <div><div class="v">89</div><div class="k">Lessons</div></div>
       <div><div class="v">13</div><div class="k">Build checkpoints</div></div>
       <div><div class="v">1</div><div class="k">Shipped product</div></div>
     </div>
@@ -108,7 +108,7 @@
   <section class="sec" id="curriculum">
     <div class="card curr">
       <div class="sec-head"><b class="bar"></b><span class="num">01</span><h2>Curriculum</h2></div>
-      <p class="sec-sub">13 modules · 111 lessons · click any module to expand</p>
+      <p class="sec-sub">13 modules · 89 lessons · click any module to expand</p>
 
       <div class="act-row"><span class="t">Act I · Modules 1–4</span><span class="d">The platform under the framework</span></div>
 
@@ -182,18 +182,14 @@
       <div class="act-row"><span class="t">Act II · Modules 5–10</span><span class="d">From components to a product</span></div>
 
       <details class="mod">
-        <summary><span class="mnum">05</span><span class="mttl">React, Deeply<em>The mental model, not the API tour</em></span><span class="count">11 lessons</span></summary>
+        <summary><span class="mnum">05</span><span class="mttl">React, Deeply<em>The mental model, not the API tour</em></span><span class="count">7 lessons</span></summary>
         <div class="mbody">
           <p class="aim"><b>By the end:</b> you can explain a re-render you did not expect, and fix it without reaching for <code>memo</code> first. The render model is the spine of this module.</p>
           <ol class="lessons">
-            <li>The render model: what React does between your state and the DOM</li>
-            <li>Fiber, lanes, and why rendering can be interrupted</li>
-            <li>Anatomy of a re-render — the four reasons a component runs again</li>
-            <li>Keys, reconciliation, and state landing on the wrong row</li>
-            <li>Hooks: state, effects, refs, and the closure trap</li>
-            <li>You might not need an effect — deriving instead of synchronising</li>
-            <li>Context, and why it re-rendered everything</li>
-            <li>Composition patterns that beat prop drilling</li>
+            <li>The render model — from state to DOM, and why rendering can be interrupted</li>
+            <li>Anatomy of a re-render — keys, reconciliation, and state landing on the wrong row</li>
+            <li>Hooks and the closure trap — and the effect you might not need</li>
+            <li>Context and composition — why it re-rendered everything, and what beats prop drilling</li>
             <li>Error boundaries and portals</li>
             <li>Suspense and concurrent rendering, plainly</li>
             <li>Build the listings feed, then profile it<span class="build">Build</span></li>
@@ -215,18 +211,15 @@
       </details>
 
       <details class="mod">
-        <summary><span class="mnum">07</span><span class="mttl">UI Engineering — Components &amp; Accessibility<em>The highest-ROI module for the live-coding round</em></span><span class="count">11 lessons</span></summary>
+        <summary><span class="mnum">07</span><span class="mttl">UI Engineering — Components &amp; Accessibility<em>The highest-ROI module for the live-coding round</em></span><span class="count">8 lessons</span></summary>
         <div class="mbody">
           <p class="aim"><b>By the end:</b> you build the components an interviewer asks for live — keyboard-driven, ARIA-correct, no library underneath.</p>
           <ol class="lessons">
-            <li>Component API design: data, event, config, style and slot props</li>
-            <li>Controlled, uncontrolled, and the one you actually want</li>
+            <li>Component API design — props, slots, and controlled vs uncontrolled</li>
             <li>Design tokens and a design system small enough to finish</li>
             <li>The accessibility tree, focus, and the keyboard path</li>
-            <li>Build the search autocomplete — debounce and race conditions<span class="build">Build</span></li>
-            <li>The ARIA combobox contract, attribute by attribute</li>
-            <li>Build the overlays — modal, dropdown, tabs, toast<span class="build">Build</span></li>
-            <li>Focus traps, portals and live regions</li>
+            <li>Build the search autocomplete — debounce, race conditions and the ARIA combobox<span class="build">Build</span></li>
+            <li>Build the overlays — modal, dropdown, tabs, toast, with focus traps and live regions<span class="build">Build</span></li>
             <li>Forms and validation without a form library</li>
             <li>Virtualization from scratch: windowing, pooling, recycling<span class="build">Build</span></li>
             <li>Responsive behaviour that is not just breakpoints</li>
@@ -235,18 +228,15 @@
       </details>
 
       <details class="mod">
-        <summary><span class="mnum">08</span><span class="mttl">Data, State &amp; Routing<em>Whose state is it — the server's or yours?</em></span><span class="count">10 lessons</span></summary>
+        <summary><span class="mnum">08</span><span class="mttl">Data, State &amp; Routing<em>Whose state is it — the server's or yours?</em></span><span class="count">7 lessons</span></summary>
         <div class="mbody">
           <p class="aim"><b>By the end:</b> you can say which state is the server's and which is yours — the distinction that decides mid versus senior — and defend where each piece lives.</p>
           <ol class="lessons">
             <li>Server state vs client state: the question most candidates fail</li>
-            <li>TanStack Query: the cache, and what invalidation really means</li>
-            <li>Optimistic updates, and the rollback everybody forgets</li>
+            <li>TanStack Query — the cache, invalidation, and optimistic updates with rollback</li>
             <li>Race conditions in data fetching, and the two fixes</li>
-            <li>Type-safe routing and loaders</li>
-            <li>Search params are state — make the URL shareable</li>
-            <li>Normalization, and when a flat store earns its keep</li>
-            <li>Zustand, Redux Toolkit, and when each is the wrong choice</li>
+            <li>Type-safe routing, loaders, and search params as state</li>
+            <li>Normalization, Zustand and Redux Toolkit — and when each is the wrong choice</li>
             <li>Real-time: polling, SSE and websockets compared</li>
             <li>Rebuild the data layer on Query and Router<span class="build">Build</span></li>
           </ol>
@@ -254,18 +244,15 @@
       </details>
 
       <details class="mod">
-        <summary><span class="mnum">09</span><span class="mttl">Next.js &amp; Rendering Architecture<em>A strategy per route — and where Next.js is the wrong answer</em></span><span class="count">10 lessons</span></summary>
+        <summary><span class="mnum">09</span><span class="mttl">Next.js &amp; Rendering Architecture<em>A strategy per route — and where Next.js is the wrong answer</em></span><span class="count">7 lessons</span></summary>
         <div class="mbody">
           <p class="aim"><b>By the end:</b> you pick a rendering strategy per route and defend it out loud, including the routes where reaching for Next.js is the wrong call.</p>
           <ol class="lessons">
-            <li>The App Router mental model</li>
-            <li>Server Components vs Client Components — where the boundary goes</li>
+            <li>The App Router mental model — Server vs Client Components</li>
             <li>CSR, SSR, SSG, ISR and streaming, chosen per route</li>
             <li>Data fetching and the caching layers, in order</li>
-            <li>Server actions and mutations</li>
-            <li>Route handlers, middleware and the edge</li>
-            <li>Auth and session patterns that survive a refresh</li>
-            <li>SEO, metadata, and the dashboard that must not be indexed</li>
+            <li>Server actions, route handlers and middleware</li>
+            <li>Auth, sessions and SEO metadata that survive a refresh</li>
             <li>When NOT to reach for Next.js</li>
             <li>Port the job board: public pages vs authed dashboard<span class="build">Build</span></li>
           </ol>
@@ -273,18 +260,15 @@
       </details>
 
       <details class="mod">
-        <summary><span class="mnum">10</span><span class="mttl">Performance, Testing &amp; Security<em>Prove the before and after with numbers</em></span><span class="count">11 lessons</span></summary>
+        <summary><span class="mnum">10</span><span class="mttl">Performance, Testing &amp; Security<em>Prove the before and after with numbers</em></span><span class="count">8 lessons</span></summary>
         <div class="mbody">
           <p class="aim"><b>By the end:</b> you set a performance budget, prove a before and after with real measurements, and ship it with tests green in CI.</p>
           <ol class="lessons">
-            <li>Core Web Vitals: LCP, INP, CLS, and which one users feel</li>
-            <li>Measuring properly: the Performance panel, lab vs field</li>
-            <li>Lighthouse, CrUX, RUM — what each one can and cannot tell you</li>
+            <li>Core Web Vitals, and measuring properly — lab vs field</li>
             <li>Bundles: analysis, code splitting, and the import that cost 300 KB</li>
             <li>Images, fonts and the layout shift they cause</li>
             <li>Memoization that actually helps, and the profiler that proves it</li>
-            <li>The testing pyramid: what to unit test, what to E2E</li>
-            <li>Testing behaviour with Testing Library, not implementation</li>
+            <li>The testing pyramid, and testing behaviour with Testing Library</li>
             <li>Playwright and MSW: the tests that catch real regressions</li>
             <li>XSS, CSRF, CSP and where to put a token</li>
             <li>Baseline → budget → fix, with CI green<span class="build">Build</span></li>
@@ -295,50 +279,44 @@
       <div class="act-row"><span class="t">Act III · Modules 11–13</span><span class="d">Design it. Ship it. Prove it.</span></div>
 
       <details class="mod">
-        <summary><span class="mnum">11</span><span class="mttl">Frontend System Design<em>A 45-minute design round, with a script</em></span><span class="count">9 lessons</span></summary>
+        <summary><span class="mnum">11</span><span class="mttl">Frontend System Design<em>A 45-minute design round, with a script</em></span><span class="count">6 lessons</span></summary>
         <div class="mbody">
           <p class="aim"><b>By the end:</b> you run a 45-minute design round to a repeatable script — RADIO — and can defend the trade-offs of a codebase that has to scale past one team.</p>
           <ol class="lessons">
-            <li>What a design round is actually scoring</li>
-            <li>RADIO: Requirements, Architecture, Data, Interface, Optimizations</li>
+            <li>What a design round scores, and the RADIO script</li>
             <li>Requirements: the questions that buy you the next twenty minutes</li>
-            <li>Component and data-flow architecture on a whiteboard</li>
-            <li>API and contract design from the client's side</li>
-            <li>Scaling the codebase 1 — the modular monolith</li>
-            <li>Scaling the codebase 2 — monorepos and what they actually fix</li>
-            <li>Scaling the codebase 3 — micro-frontends and their real cost</li>
+            <li>Component, data-flow and API design on a whiteboard</li>
+            <li>Scaling the codebase — the modular monolith and monorepos</li>
+            <li>Micro-frontends and their real cost</li>
             <li>Six questions, walked: feed, autocomplete, chat, e-commerce, dashboard, editor</li>
           </ol>
         </div>
       </details>
 
       <details class="mod">
-        <summary><span class="mnum">12</span><span class="mttl">The Capstone<em>Assembly week, not build week</em></span><span class="count">6 lessons</span></summary>
+        <summary><span class="mnum">12</span><span class="mttl">The Capstone<em>Assembly week, not build week</em></span><span class="count">5 lessons</span></summary>
         <div class="mbody">
           <p class="aim"><b>By the end:</b> you ship one deployed job board you can defend line by line — and discover that most of it already exists on branches you wrote yourself.</p>
           <ol class="lessons">
             <li>Assembly week, not build week — what you already have</li>
             <li>Wiring auth and protected routes end to end</li>
             <li>The architecture story: writing down why, not what</li>
-            <li>Deploy, and the CI gate that keeps it green</li>
-            <li>The accessibility and performance pass you can defend</li>
+            <li>Deploy, the CI gate, and the accessibility and performance pass</li>
             <li>Capstone review against the senior checklist<span class="build">Build</span></li>
           </ol>
         </div>
       </details>
 
       <details class="mod">
-        <summary><span class="mnum">13</span><span class="mttl">Interview Preparation<em>Every format, drilled under time</em></span><span class="count">8 lessons</span></summary>
+        <summary><span class="mnum">13</span><span class="mttl">Interview Preparation<em>Every format, drilled under time</em></span><span class="count">6 lessons</span></summary>
         <div class="mbody">
           <p class="aim"><b>By the end:</b> you have drilled every format against the clock, and you can think out loud without going quiet.</p>
           <ol class="lessons">
             <li>Thinking out loud: the skill nobody practises</li>
-            <li>The quiz round: 200 "why" questions, and how to answer in thirty seconds</li>
-            <li>The utilities round under time pressure</li>
+            <li>The quiz and utilities rounds, under time</li>
             <li>The UI round: clarify, scaffold, build, then polish</li>
             <li>The design round, timed, with the RADIO script</li>
-            <li>Behavioural answers with STAR and a real trade-off</li>
-            <li>Take-home strategy: scope, README, and knowing when to stop</li>
+            <li>Behavioural answers and take-home strategy</li>
             <li>Building your own drill schedule from your module 1 score</li>
           </ol>
         </div>

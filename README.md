@@ -49,18 +49,35 @@ hidden behind a key or waiting in view-source.
 program/
   program-page.html       the program at a glance
 curriculum/
-  curriculum-page.html    every lesson, in order — 13 modules, 111 lessons
+  curriculum-page.html    every lesson, in order — 13 modules, 89 lessons
 modules/
   01-foundations/
-    deck.html             what companies actually test — 28 slides
-    diagnostic-deck.html  the diagnostic, answered and animated — 50 slides
+    deck.html             what companies actually test — 26 slides
+    diagnostic-deck.html  the diagnostic, answered and animated — 35 slides
   02-browser-runtime/
-    deck.html             the browser as a runtime — 45 slides, one video per lesson
+    deck.html             the browser as a runtime — 23 slides
   03-javascript-deeply/
-    deck.html             the language under the framework — 52 slides, one video per lesson
+    deck.html             the language under the framework — 40 slides, one video per lesson
+  04-typescript-frontend/
+    deck.html             types that make the wrong state impossible — 16 slides
+  05-react-deeply/
+    deck.html             the render model, re-renders, hooks and Suspense — 23 slides
+  06-react-typescript/
+    deck.html             typed props, generic components, typed state and the API layer — 14 slides
   07-ui-engineering/
-    deck.html             components, observers and virtualization — 28 slides
-  …                       one folder per module, added as it is written
+    deck.html             components and accessibility, built live — 24 slides
+  08-data-state-routing/
+    deck.html             whose state is it — the server's or yours — 22 slides
+  09-nextjs-rendering/
+    deck.html             a rendering strategy per route — 21 slides
+  10-performance-testing-security/
+    deck.html             prove the before and after with numbers — 24 slides
+  11-frontend-system-design/
+    deck.html             a 45-minute design round, with a script — 18 slides
+  12-capstone/
+    deck.html             assembly week, not build week — 15 slides
+  13-interview-preparation/
+    deck.html             every format, drilled under time — 18 slides
 repo/
   jobboard-deck.html      the exercise repo, explained end to end
 assets/                   screenshots and recordings, shared by every deck
@@ -72,7 +89,7 @@ copying a single deck somewhere else.
 
 ### The modules
 
-Thirteen modules, 111 lessons, 13 build checkpoints. `curriculum/curriculum-page.html` lists
+Thirteen modules, 89 lessons, 13 build checkpoints. `curriculum/curriculum-page.html` lists
 every lesson; this is the shape of it.
 
 | # | Module | # | Module |
