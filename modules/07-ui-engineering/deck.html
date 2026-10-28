@@ -6,7 +6,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Module 07 — UI Engineering · React Component Patterns &amp; Accessibility · Frontend Mastery</title>
+<title>Module 07 — UI Engineering · Frontend Mastery</title>
 <style>
   :root{
     --bg:#070A14; --panel:#0E1525; --panel2:#121C30; --code:#0B1220;
@@ -70,6 +70,14 @@
   .key.g{background:rgba(52,211,153,.10); border-color:var(--good)}
   .key.r{background:rgba(248,113,122,.10); border-color:var(--bad)}
 
+  .ex{display:inline-flex; align-items:center; gap:14px; margin-top:20px; text-decoration:none;
+      background:var(--panel2); border:1px solid var(--line2); border-left:4px solid var(--good);
+      border-radius:0 12px 12px 0; padding:11px 18px; font-size:min(1.6vw,17.5px); color:var(--ink2)}
+  .ex:hover{border-color:var(--good)}
+  .ex b{color:var(--good); font:700 12px/1 var(--mono); letter-spacing:1.6px; text-transform:uppercase; white-space:nowrap}
+  .ex .br{font-family:var(--mono); color:var(--ink); font-weight:600}
+  .ex i{color:var(--muted); font-style:normal; font-size:.86em}
+
   .plist{list-style:none; margin-top:10px; max-width:44ch}
   .plist li{font:600 min(2vw,22px)/1.35 var(--sans); color:var(--ink); padding:9px 0 9px 32px; position:relative}
   .plist li::before{content:"▷"; position:absolute; left:0; top:11px; color:var(--cy); font-size:15px}
@@ -89,6 +97,64 @@
   .two.tight table.grid th{padding:7px 10px}
   .frag{opacity:0; transform:translateY(8px); transition:opacity .35s, transform .35s}
   .frag.on{opacity:1; transform:none}
+
+  /* Columns of cards line up at the bottom edge too: stretch the row, then let the
+     code block inside each card take up the slack. Cards are sometimes wrapped in a
+     plain div, so the stretch has to travel one level down as well. */
+  .two,.three{align-items:stretch}
+  .two > *,.three > *{min-width:0}
+  .two > :not(.card),.three > :not(.card){display:flex; flex-direction:column}
+  .two > .card,.three > .card,
+  .two > * > .card,.three > * > .card{display:flex; flex-direction:column; flex:1}
+  .two > .card > pre,.three > .card > pre,
+  .two > * > .card > pre,.three > * > .card > pre{margin-top:auto}
+
+  /* ---- entrance motion ------------------------------------------------------------
+     Every slide deals its own content: heading first, then the figure, then the line
+     that lands the point. The brand chrome (logo, chip, page number) is excluded — it
+     belongs to the deck, not the slide, and re-animating it makes it look loose.
+     `.frag` keeps its own click-driven reveal, so it opts out too. */
+  @keyframes cxRise{from{opacity:0; transform:translateY(15px)} to{opacity:1; transform:none}}
+  @keyframes cxFade{from{opacity:0} to{opacity:1}}
+  @keyframes cxBar{from{transform:scaleY(0)} to{transform:scaleY(1)}}
+  .slide.on > :not(.cx-logo):not(.cx-chip):not(.cx-page):not(.notes):not(.frag){
+    animation:cxRise .44s cubic-bezier(.22,.72,.28,1) both}
+  /* the chrome occupies the first three child slots, so content starts at 4 */
+  .slide.on > :nth-child(4){animation-delay:.02s}
+  .slide.on > :nth-child(5){animation-delay:.10s}
+  .slide.on > :nth-child(6){animation-delay:.18s}
+  .slide.on > :nth-child(7){animation-delay:.26s}
+  .slide.on > :nth-child(n+8){animation-delay:.32s}
+
+  /* Lists, table rows and columns deal themselves in turn, inside their parent's slot. */
+  .slide.on .plist li:not(.frag){animation:cxRise .38s cubic-bezier(.22,.72,.28,1) both}
+  .slide.on .plist li:nth-child(1){animation-delay:.20s}
+  .slide.on .plist li:nth-child(2){animation-delay:.28s}
+  .slide.on .plist li:nth-child(3){animation-delay:.36s}
+  .slide.on .plist li:nth-child(4){animation-delay:.44s}
+  .slide.on .plist li:nth-child(5){animation-delay:.52s}
+  .slide.on .plist li:nth-child(n+6){animation-delay:.60s}
+  .slide.on table.grid tr{animation:cxFade .4s ease both}
+  .slide.on table.grid tr:nth-child(1){animation-delay:.18s}
+  .slide.on table.grid tr:nth-child(2){animation-delay:.26s}
+  .slide.on table.grid tr:nth-child(3){animation-delay:.34s}
+  .slide.on table.grid tr:nth-child(4){animation-delay:.42s}
+  .slide.on table.grid tr:nth-child(n+5){animation-delay:.50s}
+  .slide.on .two > *:nth-child(2),
+  .slide.on .three > *:nth-child(2){animation:cxRise .44s cubic-bezier(.22,.72,.28,1) .10s both}
+  .slide.on .three > *:nth-child(3){animation:cxRise .44s cubic-bezier(.22,.72,.28,1) .18s both}
+
+  /* The accent bar on a key line draws down rather than appearing whole. */
+  .key{position:relative; overflow:hidden}
+  .key::after{content:""; position:absolute; left:0; top:0; bottom:0; width:4px;
+    background:currentColor; opacity:.9; transform-origin:top;
+    animation:cxBar .5s cubic-bezier(.22,.72,.28,1) .12s both}
+  .slide .card{transition:border-color .25s, transform .25s}
+
+  @media (prefers-reduced-motion: reduce){
+    .slide.on *{animation:none !important}
+    .slide .draw{stroke-dashoffset:0 !important}
+  }
 
   #bar{position:fixed; left:0; top:0; height:5px; background:var(--cy); width:0; transition:width .3s; z-index:10}
   #navToggle{position:fixed; top:15px; left:15px; z-index:31; background:var(--panel); border:1px solid var(--line2); color:var(--ink); font:600 13px/1 var(--mono); padding:9px 13px; border-radius:9px; cursor:pointer; opacity:.82}
@@ -120,6 +186,7 @@
     #stage{position:static; display:block}
     .slide{position:relative; display:flex !important; opacity:1 !important; page-break-after:always; min-height:100vh; border-bottom:1px solid var(--line)}
     .frag{opacity:1 !important; transform:none !important}
+    *{animation:none !important}
   }
 </style>
 <!--catalyst-brand:style-->
@@ -213,744 +280,524 @@
 
 <div id="bar"></div>
 <div id="stage">
-
-  <!-- 1 · TITLE -->
-  <section class="slide" style="justify-content:center"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>01</b> / 28</div><!--/catalyst-brand:chrome-->
+<!-- 1 · TITLE -->
+  <section class="slide" style="justify-content:center" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>01</b> / 24</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 07 · UI Engineering</div>
-    <h1>React Patterns &amp;<br>Accessibility</h1>
-    <div class="sub">Six component patterns from javascriptpatterns.dev that scale from small primitives to enterprise design systems. Build keyboard-navigable, ARIA-correct UI live from scratch.</div>
-    <div class="fig" style="max-width:960px">
-      <svg viewBox="0 0 960 74" role="img" aria-label="Six React patterns: Con/Pres, HOC, Render Props, Hooks, Provider, Compound">
+    <h1>Components You Can<br>Build Live, Keyboard First</h1>
+    <div class="sub">Eight lessons, three of them builds — the autocomplete, the overlays, a virtual list — keyboard-driven, ARIA-correct, no library underneath.</div>
+    <div class="fig" style="max-width:980px">
+      <svg viewBox="0 0 980 108" role="img" aria-label="Eight lessons: component APIs, design tokens, the accessibility tree and focus, build the autocomplete, build the overlays, forms, build a virtual list, responsive behaviour">
         <g>
-          <rect x="0" y="18" width="145" height="40" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="72" y="43" text-anchor="middle" class="lbl b" font-size="13">Con / Pres</text>
-          <rect x="160" y="18" width="140" height="40" rx="9" fill="#121C30" stroke="#243349"/>
-          <text x="230" y="43" text-anchor="middle" class="lbl b" font-size="13">HOC</text>
-          <rect x="315" y="18" width="150" height="40" rx="9" fill="#121C30" stroke="#FBBF24"/>
-          <text x="390" y="43" text-anchor="middle" class="lbl b" font-size="13">Render Props</text>
-          <rect x="480" y="18" width="140" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="550" y="43" text-anchor="middle" class="lbl b" font-size="13">Hooks</text>
-          <rect x="635" y="18" width="145" height="40" rx="9" fill="#121C30" stroke="#2196F3"/>
-          <text x="707" y="43" text-anchor="middle" class="lbl b" font-size="13">Provider</text>
-          <rect x="795" y="18" width="165" height="40" rx="9" fill="#121C30" stroke="#A78BFA"/>
-          <text x="877" y="43" text-anchor="middle" class="lbl b" font-size="13">Compound</text>
+          <rect x="0" y="4" width="230" height="40" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="115" y="29" text-anchor="middle" class="lbl b" font-size="12">1 · Component APIs</text>
+          <rect x="250" y="4" width="230" height="40" rx="9" fill="#121C30" stroke="#2196F3"/>
+          <text x="365" y="29" text-anchor="middle" class="lbl b" font-size="12">2 · Design tokens</text>
+          <rect x="500" y="4" width="230" height="40" rx="9" fill="#121C30" stroke="#A78BFA"/>
+          <text x="615" y="29" text-anchor="middle" class="lbl b" font-size="12">3 · A11y tree &amp; focus</text>
+          <rect x="750" y="4" width="230" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="865" y="29" text-anchor="middle" class="lbl b" font-size="12">4 · Build · Autocomplete</text>
+          <rect x="0" y="62" width="230" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="115" y="87" text-anchor="middle" class="lbl b" font-size="12">5 · Build · Overlays</text>
+          <rect x="250" y="62" width="230" height="40" rx="9" fill="#121C30" stroke="#FBBF24"/>
+          <text x="365" y="87" text-anchor="middle" class="lbl b" font-size="12">6 · Forms</text>
+          <rect x="500" y="62" width="230" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="615" y="87" text-anchor="middle" class="lbl b" font-size="12">7 · Build · Virtual list</text>
+          <rect x="750" y="62" width="230" height="40" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="865" y="87" text-anchor="middle" class="lbl b" font-size="12">8 · Responsive</text>
         </g>
       </svg>
     </div>
-  </section>
+</section>
 
-  <!-- 2 · THE LIVE CODING BAR -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>02</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">The Interview Bar</div>
-    <h2>What live UI rounds are actually scoring</h2>
-    <div class="two">
-      <div class="card r">
-        <h3 class="r">The Junior Approach</h3>
-        <p>Creates a single monolithic component with 15 boolean flags (<code>isOpen</code>, <code>hasHeader</code>, <code>showArrow</code>, <code>isSearchable</code>). Mouse-only clicks. Zero keyboard support. Fails screen reader accessibility.</p>
-      </div>
-      <div class="card g">
-        <h3 class="g">The Senior Approach</h3>
-        <p>Designs an expressive, composable API using <b>Compound Components</b>. Separates state with custom hooks. Manages focus traps, roving tabindex, and WAI-ARIA roles out of the box.</p>
-      </div>
-    </div>
-    <div class="key">Senior engineers don't just make pixels appear on screen — they author component APIs that other developers love using and that all users can navigate.</div>
-  </section>
-
-  <!-- 3 · MAP OF THE 6 REACT PATTERNS -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>03</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">The Landscape</div>
-    <h2>Six React patterns from javascriptpatterns.dev</h2>
-    <div class="three">
-      <div class="card a">
-        <h3 class="cy">1 · Con / Pres</h3>
-        <p>Separating business logic &amp; data fetching from pure UI rendering markup.</p>
-      </div>
-      <div class="card w">
-        <h3 class="w">2 · HOC</h3>
-        <p>Higher-Order Components. Enhancing components with cross-cutting abilities.</p>
-      </div>
-      <div class="card a">
-        <h3 class="cy">3 · Render Props</h3>
-        <p>Inverting control by passing a function that returns JSX based on internal state.</p>
-      </div>
-      <div class="card g">
-        <h3 class="g">4 · Hooks</h3>
-        <p>Extracting reusable stateful behavior into pure functions without tree nesting.</p>
-      </div>
-      <div class="card b">
-        <h3 class="b">5 · Provider</h3>
-        <p>Passing state globally through the Fiber tree without prop drilling.</p>
-      </div>
-      <div class="card p">
-        <h3 class="p">6 · Compound</h3>
-        <p>Cohesive sub-components (<code>&lt;Select.Option&gt;</code>) sharing implicit state.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 4 · PART 1: COMPONENT API DESIGN -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>04</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Part 1 · Component API Design</div>
-    <h2>The five prop categories</h2>
-    <div class="sub">Every prop on a component must belong to one of five distinct roles:</div>
+  <!-- L1a · FIVE PROP CATEGORIES -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>02</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Props are the API</div>
+    <h2>Every prop has one of five jobs</h2>
     <table class="grid">
-      <thead>
-        <tr><th>Category</th><th>Role</th><th>Examples</th></tr>
-      </thead>
-      <tbody>
-        <tr><td><b class="cy">1 · Data Props</b></td><td>What the component displays</td><td><code>users={data}</code>, <code>totalCount={42}</code></td></tr>
-        <tr><td><b class="g">2 · Event Props</b></td><td>How parent reacts to actions</td><td><code>onSelect={(id) =&gt; ...}</code>, <code>onClose={fn}</code></td></tr>
-        <tr><td><b class="w">3 · Config Props</b></td><td>Behavioral switches &amp; mode</td><td><code>mode="single"</code>, <code>size="lg"</code></td></tr>
-        <tr><td><b class="p">4 · Style Props</b></td><td>Cosmetic adjustments</td><td><code>className</code>, <code>variant="ghost"</code></td></tr>
-        <tr><td><b class="b">5 · Slot Props</b></td><td>Inverted layout blocks</td><td><code>header={...}</code>, <code>children</code></td></tr>
-      </tbody>
+      <tr><th>Category</th><th>Its job</th><th>Rasmi's <code>JobCard</code></th></tr>
+      <tr><td><b class="cy">Data</b></td><td>What the component shows</td><td><code>job={job}</code>, <code>matchScore={0.82}</code></td></tr>
+      <tr><td><b class="g">Events</b></td><td>What the parent hears about</td><td><code>onSave={(id) =&gt; …}</code>, <code>onApply</code></td></tr>
+      <tr><td><b class="w">Config</b></td><td>How it behaves</td><td><code>density="compact"</code>, <code>headingLevel={3}</code></td></tr>
+      <tr><td><b class="p">Style</b></td><td>How it looks, from outside</td><td><code>className</code>, <code>variant="featured"</code></td></tr>
+      <tr><td><b class="b">Slots</b></td><td>Whose markup goes where</td><td><code>actions={&lt;SaveButton /&gt;}</code>, <code>children</code></td></tr>
     </table>
-    <div class="key r" style="margin-top:16px"><b>The Anti-Pattern:</b> Boolean prop proliferation. Adding <code>isUserModal</code>, <code>isAdminModal</code>, <code>isCheckoutModal</code> creates an unmaintainable combinatorial explosion.</div>
-  </section>
+    <div class="key r"><b>The anti-pattern is boolean soup:</b> <code>showLogo</code>, <code>showSalary</code>, <code>isFeatured</code>, <code>isCompact</code>, <code>hideActions</code> — thirty-two combinations, and nobody tested them all.</div>
+</section>
 
-  <!-- 5 · CONTROLLED VS UNCONTROLLED -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>05</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">API Design · State Contract</div>
-    <h2>Controlled vs Uncontrolled: The single source of truth</h2>
+  <!-- L1b · SLOTS AND COMPOUND COMPONENTS -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>03</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Slots and compound components</div>
+    <h2>Let the consumer own the markup</h2>
+    <pre><code>&lt;<span class="ty">Select</span> value={jobType} onChange={setJobType}&gt;
+  &lt;<span class="ty">Select.Trigger</span> placeholder=<span class="st">"Job type"</span> /&gt;
+  &lt;<span class="ty">Select.List</span>&gt;
+    &lt;<span class="ty">Select.Option</span> value=<span class="st">"full-time"</span>&gt;Full-time&lt;/<span class="ty">Select.Option</span>&gt;
+    &lt;<span class="ty">Select.Option</span> value=<span class="st">"contract"</span>&gt;Contract&lt;/<span class="ty">Select.Option</span>&gt;
+    &lt;<span class="ty">Select.Option</span> value=<span class="st">"internship"</span>&gt;Internship&lt;/<span class="ty">Select.Option</span>&gt;
+  &lt;/<span class="ty">Select.List</span>&gt;
+&lt;/<span class="ty">Select</span>&gt;</code></pre>
+    <div class="two">
+      <div class="card g">
+        <h3 class="g">Share state through context</h3>
+        <p>The root owns the state and provides it; each <code>Select.Option</code> reads it with <code>useContext</code> — at any depth, through any wrapper the consumer adds.</p>
+      </div>
+      <div class="card r">
+        <h3 class="r">Not <code>cloneElement</code></h3>
+        <p><code>Children.map</code> plus <code>cloneElement</code> only reaches direct children. Wrap one option in a layout <code>div</code> and it silently stops working.</p>
+      </div>
+    </div>
+</section>
+
+  <!-- L1c · CONTROLLED VS UNCONTROLLED -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>04</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Controlled vs uncontrolled</div>
+    <h2>Who owns the value? Support both.</h2>
     <div class="two">
       <div class="card a">
-        <h3 class="cy">Controlled: Parent Owns State</h3>
-        <pre style="margin-top:8px"><code><span class="kw">function</span> <span class="fn">Parent</span>() {
-  <span class="kw">const</span> [val, setVal] = useState(<span class="st">''</span>);
-  <span class="kw">return</span> &lt;<span class="ty">Input</span> value={val} onChange={setVal} /&gt;;
-}</code></pre>
-        <p style="margin-top:8px">Parent dictates value. Essential for instant validation, conditional formatting, and synchronizing multiple inputs.</p>
+        <h3 class="cy">Controlled · the parent owns it</h3>
+        <p>Validate, format or sync it on every keystroke.</p>
+        <pre><code>&lt;<span class="ty">SearchBox</span> value={q} onChange={setQ} /&gt;</code></pre>
       </div>
       <div class="card b">
-        <h3 class="b">Uncontrolled: DOM Owns State</h3>
-        <pre style="margin-top:8px"><code><span class="kw">function</span> <span class="fn">Parent</span>() {
-  <span class="kw">const</span> inputRef = useRef();
-  <span class="kw">return</span> &lt;<span class="ty">Input</span> defaultValue=<span class="st">'init'</span> ref={inputRef} /&gt;;
+        <h3 class="b">Uncontrolled · the component owns it</h3>
+        <p>Seed it once, read it on submit. No parent re-render per key.</p>
+        <pre><code>&lt;<span class="ty">SearchBox</span> defaultValue=<span class="st">"react"</span> /&gt;</code></pre>
+      </div>
+    </div>
+    <pre><code><span class="kw">function</span> <span class="fn">useControllableState</span>&lt;<span class="ty">T</span>&gt;(value: <span class="ty">T</span> | <span class="kw">undefined</span>, defaultValue: <span class="ty">T</span>, onChange?: (v: <span class="ty">T</span>) =&gt; <span class="kw">void</span>) {
+  <span class="kw">const</span> [inner, setInner] = <span class="fn">useState</span>(defaultValue);
+  <span class="kw">const</span> isControlled = value !== <span class="kw">undefined</span>;
+  <span class="kw">const</span> current = isControlled ? value : inner;
+  <span class="kw">function</span> <span class="fn">set</span>(next: <span class="ty">T</span>) {
+    <span class="kw">if</span> (!isControlled) <span class="fn">setInner</span>(next);   <span class="cmt">// uncontrolled: keep it ourselves</span>
+    onChange?.(next);                     <span class="cmt">// either way: tell the parent</span>
+  }
+  <span class="kw">return</span> [current, set] <span class="kw">as const</span>;
 }</code></pre>
-        <p style="margin-top:8px">State lives in DOM. Read on-demand on form submit. Zero re-renders during keystrokes.</p>
-      </div>
+</section>
+
+  <!-- L2a · THREE LAYERS OF TOKENS -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>05</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Design tokens</div>
+    <h2>A token is a decision with a name</h2>
+    <div class="fig" style="max-width:940px">
+      <svg viewBox="0 0 940 92" role="img" aria-label="Three token layers: primitive values feed semantic tokens, which components read">
+        <rect x="0" y="10" width="270" height="72" rx="10" fill="#121C30" stroke="#64748B"/>
+        <text x="135" y="40" text-anchor="middle" class="lbl b">Primitive · what it is</text>
+        <text x="135" y="62" text-anchor="middle" class="lbl">--blue-500: #2196F3</text>
+        <path class="draw" pathLength="1" d="M270,46 L330,46" stroke="#64748B" fill="none"/>
+        <rect x="335" y="10" width="270" height="72" rx="10" fill="#121C30" stroke="#22D3EE"/>
+        <text x="470" y="40" text-anchor="middle" class="lbl b">Semantic · what it's for</text>
+        <text x="470" y="62" text-anchor="middle" class="lbl">--color-accent</text>
+        <path class="draw" pathLength="1" d="M605,46 L665,46" stroke="#64748B" fill="none"/>
+        <rect x="670" y="10" width="270" height="72" rx="10" fill="#121C30" stroke="#34D399"/>
+        <text x="805" y="40" text-anchor="middle" class="lbl b">Component · where it's used</text>
+        <text x="805" y="62" text-anchor="middle" class="lbl">.button { background }</text>
+      </svg>
     </div>
-    <div class="key"><b>Senior Component Contract:</b> Support controlled mode when <code>value !== undefined</code>, but fall back to internal uncontrolled state with <code>defaultValue</code> when omitted!</div>
-  </section>
-
-  <!-- 6 · PART 2: CONTAINER / PRESENTATIONAL -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>06</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Part 2 · Container / Presentational</div>
-    <h2>Separating state from rendering markup</h2>
-    <div class="two tight">
-      <div>
-        <div class="lbl b" style="margin-bottom:6px">Container Component (How things work)</div>
-        <pre style="margin-top:0"><code><span class="kw">function</span> <span class="fn">JobListContainer</span>() {
-  <span class="kw">const</span> { jobs, loading, error } = useJobs();
-  <span class="kw">const</span> [filter, setFilter] = useState(<span class="st">''</span>);
-
-  <span class="kw">if</span> (loading) <span class="kw">return</span> &lt;<span class="ty">Spinner</span> /&gt;;
-  <span class="kw">if</span> (error) <span class="kw">return</span> &lt;<span class="ty">ErrorMessage</span> /&gt;;
-
-  <span class="kw">return</span> (
-    &lt;<span class="ty">JobListView</span>
-      jobs={jobs}
-      filter={filter}
-      onFilterChange={setFilter}
-    /&gt;
-  );
-}</code></pre>
-      </div>
-      <div>
-        <div class="lbl b" style="margin-bottom:6px">Presentational Component (How things look)</div>
-        <pre style="margin-top:0"><code><span class="kw">function</span> <span class="fn">JobListView</span>({ jobs, filter, onFilterChange }) {
-  <span class="kw">return</span> (
-    &lt;<span class="ty">section</span> className=<span class="st">"job-feed"</span>&gt;
-      &lt;<span class="ty">FilterBar</span> value={filter} onChange={onFilterChange} /&gt;
-      &lt;<span class="ty">ul</span>&gt;
-        {jobs.map(j =&gt; &lt;<span class="ty">JobCard</span> key={j.id} {...j} /&gt;)}
-      &lt;/<span class="ty">ul</span>&gt;
-    &lt;/<span class="ty">section</span>&gt;
-  );
-}</code></pre>
-      </div>
-    </div>
-  </section>
-
-  <!-- 7 · CON/PRES IN THE MODERN ERA -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>07</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Container / Presentational · Evolution</div>
-    <h2>How Custom Hooks replaced container components</h2>
-    <div class="sub">You no longer need an extra JSX layer just to hold state.</div>
-    <div class="two">
-      <div class="card w">
-        <h3 class="w">The 2016 Paradigm (Component Wrapper)</h3>
-        <p>Every data-fetching feature had two files: <code>UserListContainer.jsx</code> and <code>UserListView.jsx</code>. Resulted in deeply nested component trees in React DevTools.</p>
-      </div>
-      <div class="card g">
-        <h3 class="g">The Modern Paradigm (Hook as Container)</h3>
-        <p>Extract all fetching, sorting, and state into <code>useUserList()</code>. The UI component calls the hook directly at the top. The separation of concerns remains 100% intact!</p>
-      </div>
-    </div>
-    <div class="key"><b>Where Container Components Returned:</b> Next.js Server Components! An RSC acts as the asynchronous server container, passing data to a <code>'use client'</code> interactive presentational component.</div>
-  </section>
-
-  <!-- 8 · PART 3: HIGHER-ORDER COMPONENT (HOC) -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>08</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Part 3 · HOC Pattern</div>
-    <h2>Enhancing components with cross-cutting concerns</h2>
-    <div class="sub">A Higher-Order Component is a pure function taking a component and returning an enhanced component.</div>
-    <pre><code><span class="kw">function</span> <span class="fn">withAuth</span>(<span class="ty">WrappedComponent</span>) {
-  <span class="kw">return function</span> <span class="fn">WithAuthComponent</span>(props) {
-    <span class="kw">const</span> { isAuthenticated, loading } = useAuth();
-
-    <span class="kw">if</span> (loading) <span class="kw">return</span> &lt;<span class="ty">PageSkeleton</span> /&gt;;
-    <span class="kw">if</span> (!isAuthenticated) <span class="kw">return</span> &lt;<span class="ty">Redirect</span> to=<span class="st">"/login"</span> /&gt;;
-
-    <span class="kw">return</span> &lt;<span class="ty">WrappedComponent</span> {...props} /&gt;;
-  };
+    <pre><code>:root {
+  --blue-500: <span class="st">#2196F3</span>;  --red-500: <span class="st">#E5484D</span>;  --space-2: <span class="st">8px</span>;   <span class="cmt">/* primitives: raw values */</span>
+  --color-accent: <span class="fn">var</span>(--blue-500);                               <span class="cmt">/* semantic: what it means */</span>
+  --color-danger: <span class="fn">var</span>(--red-500);
+  --color-surface: <span class="st">#FFFFFF</span>;
 }
+[data-theme=<span class="st">"dark"</span>] { --color-surface: <span class="st">#0E1525</span>; }                <span class="cmt">/* a theme swaps the semantic layer */</span>
+.button { background: <span class="fn">var</span>(--color-accent); padding: <span class="fn">var</span>(--space-2); }</code></pre>
+    <div class="key">Components read semantic tokens only. Dark mode is a second set of semantic values — not a second stylesheet.</div>
+</section>
 
-<span class="cmt">// Usage:</span>
-<span class="kw">const</span> <span class="ty">ProtectedDashboard</span> = withAuth(<span class="ty">Dashboard</span>);</code></pre>
-    <div class="say">Used extensively in legacy React codebases, Redux (<code>connect</code>), and Relay for telemetry, authentication, and layout wrappers.</div>
-  </section>
-
-  <!-- 9 · HOC MECHANICS & REF FORWARDING -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>09</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">HOC Pattern · Implementation Invariants</div>
-    <h2>The three rules of writing a production HOC</h2>
-    <div class="three">
-      <div class="card a">
-        <h3 class="cy">1 · Pass-Through Props</h3>
-        <p>Always forward unrelated props: <code>{...props}</code>. Never swallow props that the wrapped component expects.</p>
-      </div>
-      <div class="card a">
-        <h3 class="cy">2 · Wrap Display Name</h3>
-        <p>Set <code>WithAuth.displayName = `WithAuth(${Component.displayName})`</code> so React DevTools error stacks remain readable.</p>
-      </div>
-      <div class="card w">
-        <h3 class="w">3 · Forward Refs!</h3>
-        <p>Wrap the HOC in <code>React.forwardRef</code>. If you don't, passing <code>ref</code> attaches to the wrapper instead of the underlying DOM element!</p>
-      </div>
-    </div>
-    <pre style="margin-top:14px; font-size:13.5px"><code><span class="cmt">// Ref-forwarding HOC template</span>
-<span class="kw">const</span> withBorder = (<span class="ty">Comp</span>) =&gt; {
-  <span class="kw">return</span> React.forwardRef((props, ref) =&gt; (
-    &lt;<span class="ty">div</span> className=<span class="st">"border-wrapper"</span>&gt;
-      &lt;<span class="ty">Comp</span> ref={ref} {...props} /&gt;
-    &lt;/<span class="ty">div</span>&gt;
-  ));
-};</code></pre>
-  </section>
-
-  <!-- 10 · HOC CAVEATS -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>10</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">HOC Pattern · Trade-offs</div>
-    <h2>Why the React ecosystem moved away from HOCs</h2>
-    <div class="three">
-      <div class="card r">
-        <h3 class="r">1 · Wrapper Hell</h3>
-        <p>Inspecting DevTools showed 15 nested components: <code>&lt;WithRouter&gt;&lt;WithTheme&gt;&lt;WithAuth&gt;&lt;WithRedux&gt;...</code>. Made debugging props and layouts a nightmare.</p>
-      </div>
-      <div class="card r">
-        <h3 class="r">2 · Prop Name Collisions</h3>
-        <p>If <code>withUser</code> and <code>withProfile</code> both inject a prop called <code>data</code>, the last HOC silently overwrites the first one without a compile error.</p>
-      </div>
-      <div class="card r">
-        <h3 class="r">3 · Static Method Hoisting</h3>
-        <p>Any static methods attached to the wrapped component are lost unless manually copied over using <code>hoist-non-react-statics</code>.</p>
-      </div>
-    </div>
-    <div class="key">Hooks solved every single one of these three flaws without adding a single DOM node or wrapper component.</div>
-  </section>
-
-  <!-- 11 · PART 4: RENDER PROPS -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>11</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Part 4 · Render Props Pattern</div>
-    <h2>Inverting control over rendering</h2>
-    <div class="sub">A component shares its internal state by delegating rendering to a function prop.</div>
-    <div class="two tight">
-      <pre><code><span class="cmt">// Toggle Component with Render Prop</span>
-<span class="kw">function</span> <span class="fn">Toggle</span>({ children }) {
-  <span class="kw">const</span> [on, setOn] = useState(<span class="kw">false</span>);
-  <span class="kw">const</span> toggle = () =&gt; setOn(s =&gt; !s);
-
-  <span class="cmt">// Invoke child as a render function</span>
-  <span class="kw">return</span> children({ on, toggle });
-}
-
-<span class="cmt">// Consumer decides the markup:</span>
-&lt;<span class="ty">Toggle</span>&gt;
-  {({ on, toggle }) =&gt; (
-    &lt;<span class="ty">button</span> onClick={toggle}&gt;
-      Status: {on ? <span class="st">'ACTIVE'</span> : <span class="st">'PAUSED'</span>}
-    &lt;/<span class="ty">button</span>&gt;
-  )}
-&lt;/<span class="ty">Toggle</span>&gt;</code></pre>
-      <div class="card a">
-        <h3 class="cy">Inversion of Control</h3>
-        <p><code>Toggle</code> handles state transitions and boolean toggling.</p>
-        <p style="margin-top:10px">The consumer has <b>100% control</b> over what renders: button, switch, checkbox, or keyboard badge.</p>
-        <p style="margin-top:10px">Unlike HOCs, there are zero prop collisions because arguments are scoped inside the callback function.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 12 · RENDER PROPS IN ACTION -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>12</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Render Props · Production Reality</div>
-    <h2>Where Render Props still dominates today</h2>
-    <div class="sub">Even after hooks, Render Props remains the gold standard for geometric &amp; virtualization engines:</div>
+  <!-- L2b · A DESIGN SYSTEM YOU CAN FINISH -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>06</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Small enough to finish</div>
+    <h2>Six components, every state, done</h2>
     <div class="two">
-      <div class="card b">
-        <h3 class="b">Virtual Lists &amp; Windowing</h3>
-        <pre style="margin-top:8px; font-size:13.5px"><code>&lt;<span class="ty">VirtualList</span> items={jobs} itemHeight={60}&gt;
-  {({ item, index, style }) =&gt; (
-    &lt;<span class="ty">div</span> style={style}&gt;
-      &lt;<span class="ty">JobRow</span> job={item} /&gt;
-    &lt;/<span class="ty">div</span>&gt;
-  )}
-&lt;/<span class="ty">VirtualList</span>&gt;</code></pre>
-        <p style="margin-top:8px">Parent calculates top/height offsets; consumer formats the row.</p>
-      </div>
       <div class="card g">
-        <h3 class="g">Intersection &amp; Visibility</h3>
-        <pre style="margin-top:8px; font-size:13.5px"><code>&lt;<span class="ty">InView</span> threshold={0.5}&gt;
-  {({ inView, ref }) =&gt; (
-    &lt;<span class="ty">div</span> ref={ref}&gt;
-      {inView ? &lt;<span class="ty">HeavyChart</span> /&gt; : &lt;<span class="ty">Skeleton</span> /&gt;}
-    &lt;/<span class="ty">div</span>&gt;
-  )}
-&lt;/<span class="ty">InView</span>&gt;</code></pre>
-        <p style="margin-top:8px">Attaches DOM observers and renders conditionally.</p>
+        <h3 class="g">In · finish these for Rasmi</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li>Tokens: colour, space, type, radius, motion<small>one CSS file, one source of truth</small></li>
+          <li>Button, IconButton, Input, Field, Badge, Card<small>the six the job board actually renders</small></li>
+          <li>Every state, styled<small>hover, focus-visible, disabled, invalid, loading</small></li>
+        </ul>
       </div>
-    </div>
-  </section>
-
-  <!-- 13 · RENDER PROPS TRADE-OFFS -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>13</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Render Props · Trade-offs</div>
-    <h2>Callback pyramids vs dynamic flexibility</h2>
-    <div class="two">
       <div class="card r">
-        <h3 class="r">The Callback Pyramid (Callback Hell)</h3>
-        <p>Composing multiple render prop components creates deep indentation:</p>
-        <pre style="margin-top:8px; font-size:13px"><code>&lt;<span class="ty">User</span>&gt;{u =&gt; (
-  &lt;<span class="ty">Theme</span>&gt;{t =&gt; (
-    &lt;<span class="ty">WindowSize</span>&gt;{w =&gt; (
-      &lt;<span class="ty">App</span> user={u} theme={t} size={w} /&gt;
-    )}&lt;/<span class="ty">WindowSize</span>&gt;
-  )}&lt;/<span class="ty">Theme</span>&gt;
-)}&lt;/<span class="ty">User</span>&gt;</code></pre>
-      </div>
-      <div class="card g">
-        <h3 class="g">The Hooks Contrast</h3>
-        <p>Hooks flatten the exact same state extraction into linear top-level statements:</p>
-        <pre style="margin-top:8px; font-size:13px"><code><span class="kw">const</span> u = useUser();
-<span class="kw">const</span> t = useTheme();
-<span class="kw">const</span> w = useWindowSize();
-<span class="kw">return</span> &lt;<span class="ty">App</span> user={u} theme={t} size={w} /&gt;;</code></pre>
-      </div>
-    </div>
-    <div class="key">Use Render Props when the component needs to <b>render dynamic JSX fragments</b> inside its own DOM container. Use Hooks when sharing <b>pure state and logic</b>.</div>
-  </section>
-
-  <!-- 14 · PART 5: THE HOOKS PATTERN -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>14</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Part 5 · Hooks Pattern</div>
-    <h2>Stateful logic without component hierarchy</h2>
-    <div class="sub">Custom hooks extract state, subscriptions, and DOM measurements into composable primitives.</div>
-    <div class="two tight">
-      <pre><code><span class="cmt">// Custom Hook: useDebounce</span>
-<span class="kw">function</span> <span class="fn">useDebounce</span>(value, delay = 300) {
-  <span class="kw">const</span> [debounced, setDebounced] = useState(value);
-
-  useEffect(() =&gt; {
-    <span class="kw">const</span> timer = setTimeout(() =&gt; {
-      setDebounced(value);
-    }, delay);
-
-    <span class="kw">return</span> () =&gt; clearTimeout(timer);
-  }, [value, delay]);
-
-  <span class="kw">return</span> debounced;
-}
-
-<span class="cmt">// In Component:</span>
-<span class="kw">const</span> debouncedQuery = useDebounce(searchQuery, 400);</code></pre>
-      <div class="card a">
-        <h3 class="cy">Why Hooks Won</h3>
-        <ul class="plist">
-          <li>Zero DOM bloat<small>No wrappers, no extra divs, no synthetic hierarchy</small></li>
-          <li>Full TypeScript inference<small>Returns typed values and tuples natively</small></li>
-          <li>Composable chaining<small>A custom hook can call 5 other custom hooks</small></li>
+        <h3 class="r">Out · until a second app needs it</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li>A theme builder<small>one light theme and one dark is plenty</small></li>
+          <li>Forty components<small>build the next one when a screen asks for it</small></li>
+          <li>A documentation site<small>one page that renders every state is enough</small></li>
         </ul>
       </div>
     </div>
-  </section>
+    <div class="key">Variants are a union, not booleans: <code>variant: 'primary' | 'ghost' | 'danger'</code>. The focus ring is a token too — style <code>:focus-visible</code> once, in the system, and no component can forget it.</div>
+</section>
 
-  <!-- 15 · HOOKS UNDER THE HOOD -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>15</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Hooks Pattern · Engine Reality</div>
-    <h2>Why the Rules of Hooks exist</h2>
-    <div class="sub">React does not identify hooks by name. It tracks them as a <b>singly linked list</b> on the Fiber node.</div>
-    <div class="fig" style="max-width:960px">
-      <svg viewBox="0 0 960 120" role="img" aria-label="Fiber memoizedState linked list of hook cells">
-        <rect x="20" y="30" width="160" height="60" rx="8" fill="#121C30" stroke="#34D399" stroke-width="2"/>
-        <text x="100" y="56" text-anchor="middle" class="lbl b">Hook 1 (useState)</text>
-        <text x="100" y="76" text-anchor="middle" class="lbl s">memoizedState: ''</text>
-
-        <path d="M182 60 L238 60" stroke="#34D399" stroke-width="2"/>
-        <text x="210" y="52" text-anchor="middle" class="lbl s" fill="#34D399">next</text>
-
-        <rect x="240" y="30" width="160" height="60" rx="8" fill="#121C30" stroke="#34D399" stroke-width="2"/>
-        <text x="320" y="56" text-anchor="middle" class="lbl b">Hook 2 (useEffect)</text>
-        <text x="320" y="76" text-anchor="middle" class="lbl s">memoizedState: Effect</text>
-
-        <path d="M402 60 L458 60" stroke="#34D399" stroke-width="2"/>
-        <text x="430" y="52" text-anchor="middle" class="lbl s" fill="#34D399">next</text>
-
-        <rect x="460" y="30" width="160" height="60" rx="8" fill="#121C30" stroke="#34D399" stroke-width="2"/>
-        <text x="540" y="56" text-anchor="middle" class="lbl b">Hook 3 (useRef)</text>
-        <text x="540" y="76" text-anchor="middle" class="lbl s">memoizedState: {cur}</text>
-
-        <path d="M622 60 L678 60" stroke="#34D399" stroke-width="2"/>
-        <text x="650" y="52" text-anchor="middle" class="lbl s" fill="#34D399">next</text>
-
-        <text x="710" y="65" class="lbl b" fill="#94A3B8">null</text>
-      </svg>
-    </div>
-    <div class="key r">If you call a hook inside an <code>if (condition)</code>, Hook 2 is skipped on some renders. The list pointer shifts, and React returns Hook 3's state to Hook 2! Memory pointers get corrupt.</div>
-  </section>
-
-  <!-- 16 · CUSTOM HOOK API DESIGN -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>16</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Hooks Pattern · Design System</div>
-    <h2>Tuple vs Object: Designing custom hook return contracts</h2>
-    <div class="two">
-      <div class="card a">
-        <h3 class="cy">Tuple Return: <code>[state, actions]</code></h3>
-        <pre style="margin-top:8px; font-size:13.5px"><code><span class="kw">function</span> <span class="fn">useToggle</span>(initial = <span class="kw">false</span>) {
-  <span class="kw">const</span> [on, setOn] = useState(initial);
-  <span class="kw">const</span> toggle = useCallback(() =&gt; setOn(s =&gt; !s), []);
-  <span class="kw">return</span> [on, toggle] <span class="kw">as const</span>;
-}
-
-<span class="cmt">// Easy to rename on call site:</span>
-<span class="kw">const</span> [isModalOpen, toggleModal] = useToggle();
-<span class="kw">const</span> [isDrawerOpen, toggleDrawer] = useToggle();</code></pre>
-        <p style="margin-top:8px">Best for 1–2 values where renaming is common (like <code>useState</code>).</p>
-      </div>
-      <div class="card b">
-        <h3 class="b">Object Return: <code>{ data, loading, ... }</code></h3>
-        <pre style="margin-top:8px; font-size:13.5px"><code><span class="kw">function</span> <span class="fn">useQuery</span>(key) {
-  <span class="cmt">// ...</span>
-  <span class="kw">return</span> { data, error, isLoading, refetch };
-}
-
-<span class="cmt">// Consumers pick what they care about:</span>
-<span class="kw">const</span> { data, isLoading } = useQuery(<span class="st">'users'</span>);</code></pre>
-        <p style="margin-top:8px">Best for 3+ values. Allows backwards-compatible additions without breaking positional arguments.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 17 · PART 6: PROVIDER PATTERN -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>17</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Part 6 · Provider Pattern</div>
-    <h2>Passing state globally without prop drilling</h2>
-    <div class="sub">React Context passes data directly down the Fiber tree to any descendant subscriber.</div>
-    <pre><code><span class="kw">const</span> <span class="ty">ThemeContext</span> = React.createContext(<span class="kw">null</span>);
-
-<span class="kw">export function</span> <span class="fn">ThemeProvider</span>({ children }) {
-  <span class="kw">const</span> [theme, setTheme] = useState(<span class="st">'dark'</span>);
-
-  <span class="kw">return</span> (
-    &lt;<span class="ty">ThemeContext.Provider</span> value={{ theme, setTheme }}&gt;
-      {children}
-    &lt;/<span class="ty">ThemeContext.Provider</span>&gt;
-  );
-}
-
-<span class="kw">export function</span> <span class="fn">useTheme</span>() {
-  <span class="kw">const</span> ctx = useContext(<span class="ty">ThemeContext</span>);
-  <span class="kw">if</span> (!ctx) <span class="kw">throw new Error</span>(<span class="st">'useTheme must be used within ThemeProvider'</span>);
-  <span class="kw">return</span> ctx;
-}</code></pre>
-    <div class="say">Always export a custom hook (<code>useTheme</code>) with an invariant guard! It prevents silent <code>null</code> crashes when consumers forget the provider.</div>
-  </section>
-
-  <!-- 18 · PROVIDER PERFORMANCE PITFALL -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>18</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Provider Pattern · The Trap</div>
-    <h2>The reference equality trap that re-renders everything</h2>
+  <!-- L3a · THE ACCESSIBILITY TREE -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>07</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · The accessibility tree</div>
+    <h2>Role, name, state — or it isn't there</h2>
     <div class="two">
       <div class="card r">
-        <h3 class="r">The Bug: Inline Object Value</h3>
-        <pre style="margin-top:8px; font-size:13.5px"><code>&lt;<span class="ty">CountContext.Provider</span>
-  value={{ count, dispatch }}&gt;
-  {children}
-&lt;/<span class="ty">CountContext.Provider</span>&gt;</code></pre>
-        <p style="margin-top:8px">Every time <code>CountProvider</code> renders, a new object reference <code>{ count, dispatch }</code> is created. <b>Every component using <code>useContext</code> re-renders</b>, even if <code>count</code> didn't change!</p>
+        <h3 class="r">What you wrote</h3>
+        <pre><code>&lt;<span class="ty">div</span> className=<span class="st">"save"</span> onClick={save}&gt;
+  &lt;<span class="ty">StarIcon</span> /&gt;
+&lt;/<span class="ty">div</span>&gt;</code></pre>
+        <p style="margin-top:10px"><b>Tree:</b> generic · no name · not focusable. Tab skips it, Enter does nothing.</p>
       </div>
       <div class="card g">
-        <h3 class="g">The Fix: Split State &amp; Dispatch</h3>
-        <pre style="margin-top:8px; font-size:13.5px"><code>&lt;<span class="ty">StateContext.Provider</span> value={state}&gt;
-  &lt;<span class="ty">DispatchContext.Provider</span> value={dispatch}&gt;
-    {children}
-  &lt;/<span class="ty">DispatchContext.Provider</span>&gt;
-&lt;/<span class="ty">StateContext.Provider</span>&gt;</code></pre>
-        <p style="margin-top:8px">Because <code>dispatch</code> identity never changes, buttons that only fire actions NEVER re-render when state changes!</p>
+        <h3 class="g">What the tree needs</h3>
+        <pre><code>&lt;<span class="ty">button</span> type=<span class="st">"button"</span> onClick={save}
+  aria-label=<span class="st">"Save job"</span> aria-pressed={saved}&gt;
+  &lt;<span class="ty">StarIcon</span> aria-hidden=<span class="st">"true"</span> /&gt;
+&lt;/<span class="ty">button</span>&gt;</code></pre>
+        <p style="margin-top:10px"><b>Tree:</b> button · “Save job” · pressed. Spoken roughly as “Save job, toggle button, pressed”.</p>
       </div>
     </div>
-  </section>
+    <div class="key">ARIA only edits the tree — it adds no behaviour. A <code>div</code> with <code>role="button"</code> still needs <code>tabindex</code>, Enter and Space. The native element brings all three, so it comes first.</div>
+</section>
 
-  <!-- 19 · PART 7: COMPOUND PATTERN -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>19</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Part 7 · Compound Pattern</div>
-    <h2>Components that work together as one cohesive unit</h2>
-    <div class="sub">From javascriptpatterns.dev: Sub-components sharing implicit state without prop drilling.</div>
-    <pre><code><span class="cmt">// Clean, declarative Consumer JSX</span>
-&lt;<span class="ty">Select</span> defaultValue=<span class="st">"eg"</span> onChange={handleCountryChange}&gt;
-  &lt;<span class="ty">Select.Trigger</span> placeholder=<span class="st">"Select country"</span> /&gt;
-  &lt;<span class="ty">Select.List</span>&gt;
-    &lt;<span class="ty">Select.Option</span> value=<span class="st">"eg"</span>&gt;Egypt&lt;/<span class="ty">Select.Option</span>&gt;
-    &lt;<span class="ty">Select.Option</span> value=<span class="st">"sa"</span>&gt;Saudi Arabia&lt;/<span class="ty">Select.Option</span>&gt;
-    &lt;<span class="ty">Select.Option</span> value=<span class="st">"ae"</span>&gt;United Arab Emirates&lt;/<span class="ty">Select.Option</span>&gt;
-  &lt;/<span class="ty">Select.List</span>&gt;
-&lt;/<span class="ty">Select</span>&gt;</code></pre>
-    <div class="key">Compare this to a monolithic <code>&lt;Select options={[...]} /&gt;</code>. The Compound Pattern gives consumers complete control over DOM structure, styling, icon placement, and accessibility slots!</div>
-  </section>
-
-  <!-- 20 · IMPLEMENTING COMPOUND: CONTEXT VS CLONE -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>20</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Compound Pattern · Implementation</div>
-    <h2>Two approaches: React Context vs cloneElement</h2>
-    <div class="two">
-      <div class="card w">
-        <h3 class="w">Approach A: React.cloneElement</h3>
-        <p>Parent iterates over <code>React.Children.map</code> and clones children with extra injected props.</p>
-        <div class="key r" style="font-size:14px; margin-top:10px"><b>Fatal Flaw:</b> Only works on immediate direct children! If the consumer wraps an <code>&lt;Option /&gt;</code> in a <code>&lt;div class="wrapper"&gt;</code>, the cloned props are lost.</div>
-      </div>
-      <div class="card g">
-        <h3 class="g">Approach B: React Context (Modern Standard)</h3>
-        <p>Parent wraps children in an internal <code>CompoundContext.Provider</code>. Sub-components read state via <code>useContext()</code>.</p>
-        <div class="key g" style="font-size:14px; margin-top:10px"><b>Winner:</b> Works at arbitrary depth! Consumer can insert layout divs, grid wrappers, or animations anywhere between components.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 21 · COMPOUND TABS CODE -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>21</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Compound Pattern · Implementation Code</div>
-    <h2>Building Compound Tabs in 25 lines</h2>
-    <pre style="max-height:48vh; font-size:13.8px"><code><span class="kw">const</span> <span class="ty">TabsContext</span> = React.createContext(<span class="kw">null</span>);
-
-<span class="kw">export function</span> <span class="fn">Tabs</span>({ defaultValue, children }) {
-  <span class="kw">const</span> [activeTab, setActiveTab] = useState(defaultValue);
-  <span class="kw">return</span> (
-    &lt;<span class="ty">TabsContext.Provider</span> value={{ activeTab, setActiveTab }}&gt;
-      &lt;<span class="ty">div</span> className=<span class="st">"tabs-root"</span>&gt;{children}&lt;/<span class="ty">div</span>&gt;
-    &lt;/<span class="ty">TabsContext.Provider</span>&gt;
-  );
-}
-
-<span class="ty">Tabs</span>.<span class="fn">Tab</span> = <span class="kw">function</span> <span class="fn">Tab</span>({ value, children }) {
-  <span class="kw">const</span> { activeTab, setActiveTab } = useContext(<span class="ty">TabsContext</span>);
-  <span class="kw">const</span> isSelected = activeTab === value;
-  <span class="kw">return</span> (
-    &lt;<span class="ty">button</span>
-      role=<span class="st">"tab"</span>
-      aria-selected={isSelected}
-      className={isSelected ? <span class="st">'tab-active'</span> : <span class="st">'tab'</span>}
-      onClick={() =&gt; setActiveTab(value)}&gt;
-      {children}
-    &lt;/<span class="ty">button</span>&gt;
-  );
-};
-
-<span class="ty">Tabs</span>.<span class="fn">Panel</span> = <span class="kw">function</span> <span class="fn">Panel</span>({ value, children }) {
-  <span class="kw">const</span> { activeTab } = useContext(<span class="ty">TabsContext</span>);
-  <span class="kw">if</span> (activeTab !== value) <span class="kw">return null</span>;
-  <span class="kw">return</span> &lt;<span class="ty">div</span> role=<span class="st">"tabpanel"</span>&gt;{children}&lt;/<span class="ty">div</span>&gt;;
-};</code></pre>
-  </section>
-
-  <!-- 22 · THE A11Y CONTRACT -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>22</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Accessibility · WAI-ARIA</div>
-    <h2>The screen reader contract</h2>
-    <div class="sub">A component is not finished when the CSS is styled; it is finished when ARIA attributes speak the truth.</div>
+  <!-- L3b · THE SCREEN READER CONTRACT -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>08</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · The contract you'll build to</div>
+    <h2>The roles lessons 4 and 5 build to</h2>
     <table class="grid">
-      <thead>
-        <tr><th>Role</th><th>Required ARIA Attributes</th><th>Target Element</th></tr>
-      </thead>
-      <tbody>
-        <tr><td><code>combobox</code></td><td><code>aria-expanded</code>, <code>aria-autocomplete</code>, <code>aria-controls</code></td><td>Search input</td></tr>
-        <tr><td><code>listbox</code></td><td><code>aria-label</code>, <code>tabIndex="-1"</code></td><td>Popup dropdown list</td></tr>
-        <tr><td><code>option</code></td><td><code>aria-selected="true|false"</code>, <code>id="opt-N"</code></td><td>List items</td></tr>
-        <tr><td><code>dialog</code></td><td><code>aria-modal="true"</code>, <code>aria-labelledby="title-id"</code></td><td>Modal overlay</td></tr>
-        <tr><td><code>status</code></td><td><code>aria-live="polite"</code></td><td>Toast / notification</td></tr>
-      </tbody>
+      <tr><th>Role</th><th>On</th><th>Must carry</th></tr>
+      <tr><td><code>combobox</code></td><td>The search input itself</td><td><code>aria-expanded</code>, <code>aria-controls</code>, <code>aria-activedescendant</code>, <code>aria-autocomplete="list"</code></td></tr>
+      <tr><td><code>listbox</code> · <code>option</code></td><td>The suggestions popup, each row</td><td>A name on the listbox; a unique <code>id</code> and <code>aria-selected</code> on every option</td></tr>
+      <tr><td><code>dialog</code></td><td>The modal panel</td><td><code>aria-modal="true"</code>, <code>aria-labelledby</code> → its heading</td></tr>
+      <tr><td><code>tablist</code> · <code>tab</code> · <code>tabpanel</code></td><td>The tabs</td><td><code>aria-selected</code> on each tab, <code>aria-controls</code> → its panel</td></tr>
+      <tr><td><code>status</code></td><td>The toast region</td><td>Implicitly <code>aria-live="polite"</code>; mounted empty, before the first message</td></tr>
     </table>
-    <div class="key">When an autocomplete option is highlighted with Arrow keys, the input MUST update <code>aria-activedescendant="opt-id"</code> so screen readers announce the item without stealing keyboard focus!</div>
-  </section>
+    <div class="key">A component isn't finished when it looks right. It's finished when the tree says what the screen shows.</div>
+</section>
 
-  <!-- 23 · KEYBOARD PATH & FOCUS TRAPS -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>23</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Accessibility · Keyboard Navigation</div>
-    <h2>Focus traps &amp; roving tabindex</h2>
+  <!-- L3c · THE KEYBOARD PATH -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>09</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Focus and the keyboard path</div>
+    <h2>Tab between widgets, arrows within</h2>
     <div class="two">
       <div class="card a">
-        <h3 class="cy">Roving tabindex (Lists &amp; Menus)</h3>
-        <p>A menu should only have <b>one</b> Tab stop. Pressing <kbd>Tab</kbd> lands on the active item.</p>
-        <p style="margin-top:8px">Navigating options uses <kbd>↑</kbd> and <kbd>↓</kbd> arrows by toggling <code>tabIndex={isActive ? 0 : -1}</code> and calling <code>el.focus()</code>.</p>
-      </div>
-      <div class="card w">
-        <h3 class="w">Focus Trap (Modal Dialogs)</h3>
-        <p>When a modal opens, focus must be trapped inside. Pressing <kbd>Tab</kbd> on the last element cycles to the first element.</p>
-        <p style="margin-top:8px">Pressing <kbd>Escape</kbd> closes the modal and <b>restores focus to the trigger button</b> that opened it!</p>
-      </div>
-    </div>
-    <div class="key">Restoring focus on modal close is the single most common accessibility test question in senior frontend interviews.</div>
-  </section>
-
-  <!-- 24 · THE 3 WEB OBSERVERS IN UI ENGINEERING -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>24</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Observer APIs · High-Performance Reactivity</div>
-    <h2>The 3 Web Observers in UI engineering: 60fps without event bubbling</h2>
-    <div class="three">
-      <div class="card a">
-        <h3 class="cy">IntersectionObserver</h3>
-        <p><b>50× faster than scroll listeners</b></p>
-        <p style="margin-top:6px; font-size:14px">Tracks sentinel visibility asynchronously. Eliminates 15ms <code>setInterval</code> coordinate polling.</p>
-        <div class="key cy" style="font-size:12.5px; margin-top:8px"><b>Sentinel Pattern:</b> Fires when bottom sentinel intersects; fetches next page and appends in 1 batch.</div>
+        <h3 class="cy">Roving tabindex · focus moves</h3>
+        <p>One item has <code>tabIndex 0</code>, the rest <code>-1</code>. Arrows move the zero and call <code>.focus()</code>. Tabs, toolbars, menus.</p>
+        <pre><code>tabIndex={i === active ? <span class="st">0</span> : -<span class="st">1</span>}
+<span class="cmt">// on ArrowRight:</span>
+<span class="fn">setActive</span>(next); refs[next].<span class="fn">focus</span>();</code></pre>
       </div>
       <div class="card p">
-        <h3 class="p">MutationObserver</h3>
-        <p><b>Native subtree tracking</b></p>
-        <p style="margin-top:6px; font-size:14px">Tracks DOM changes without JS proxy wrappers. Essential for contenteditable editors &amp; sandboxes.</p>
-        <div class="key" style="font-size:12.5px; margin-top:8px"><b>Notion Pattern:</b> Never observe 10,000 nodes! Observe <i>only the active line</i>; guard against recursive self-firing.</div>
-      </div>
-      <div class="card g">
-        <h3 class="g">ResizeObserver</h3>
-        <p><b>10× faster than window.onresize</b></p>
-        <p style="margin-top:6px; font-size:14px">Element-level dimensions without event bubbling. Uses logical <code>inlineSize</code> and <code>blockSize</code> for RTL/vertical text.</p>
-        <div class="key g" style="font-size:12.5px; margin-top:8px"><b>Trading Dashboards:</b> Resizing 1 chart in a multi-grid updates only that chart's toolbar.</div>
+        <h3 class="p">aria-activedescendant · focus stays</h3>
+        <p>DOM focus never leaves the input; it points at the highlighted option's <code>id</code>. Comboboxes — the user keeps typing.</p>
+        <pre><code>&lt;<span class="ty">input</span> role=<span class="st">"combobox"</span>
+  aria-activedescendant=<span class="st">"q-opt-3"</span> /&gt;
+<span class="cmt">// focus stays here; the tree reads option 3</span></code></pre>
       </div>
     </div>
-  </section>
+    <div class="key">Fifty jobs in a list are one Tab stop, not fifty. <code>tabindex="0"</code> joins the order, <code>"-1"</code> is focusable by script only, and a positive tabindex is always a bug.</div>
+</section>
 
-  <!-- 25 · VIRTUALIZATION ARCHITECTURE & POOLING -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>25</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Virtualization · Architecture &amp; Pooling</div>
-    <h2>Why lazy scrolling fails &amp; the fixed memory pool</h2>
+  <!-- L4a · THE COMBOBOX CONTRACT -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 4</div><div class="cx-page"><b>10</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Build · The ARIA combobox</div>
+    <h2>The autocomplete, as the tree sees it</h2>
+    <pre><code>&lt;<span class="ty">label</span> htmlFor=<span class="st">"q"</span>&gt;Search jobs&lt;/<span class="ty">label</span>&gt;
+&lt;<span class="ty">input</span> id=<span class="st">"q"</span> role=<span class="st">"combobox"</span> value={query} onChange={onType} onKeyDown={onKey}
+  aria-autocomplete=<span class="st">"list"</span>
+  aria-expanded={open}
+  aria-controls=<span class="st">"q-list"</span>
+  aria-activedescendant={open &amp;&amp; active &gt;= <span class="st">0</span> ? <span class="st">'q-opt-'</span> + active : <span class="kw">undefined</span>} /&gt;
+&lt;<span class="ty">ul</span> id=<span class="st">"q-list"</span> role=<span class="st">"listbox"</span> aria-label=<span class="st">"Job suggestions"</span> hidden={!open}&gt;
+  {jobs.<span class="fn">map</span>((job, i) =&gt; (
+    &lt;<span class="ty">li</span> key={job.id} id={<span class="st">'q-opt-'</span> + i} role=<span class="st">"option"</span> aria-selected={i === active}
+        onMouseDown={e =&gt; e.<span class="fn">preventDefault</span>()} onClick={() =&gt; <span class="fn">choose</span>(job)}&gt;{job.title}&lt;/<span class="ty">li</span>&gt;
+  ))}
+&lt;/<span class="ty">ul</span>&gt;</code></pre>
+    <div class="key"><code>↓</code> <code>↑</code> move the active option (<code>↓</code> opens the list) · <code>Enter</code> chooses · <code>Escape</code> closes, a second one clears · typing keeps editing. DOM focus never leaves the input.</div>
+</section>
+
+  <!-- L4b · THE RACE -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 4</div><div class="cx-page"><b>11</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Build · Race conditions</div>
+    <h2>Whichever response lands last wins</h2>
+    <p class="say">Debounce waits for typing to pause, so fewer requests start. It does nothing about the <b>order</b> they come back in.</p>
+    <div class="fig" style="max-width:940px">
+      <svg viewBox="0 0 940 170" role="img" aria-label="The request for re starts first and is slow; the request for react starts later and returns first; then the re response lands and overwrites the correct results">
+        <text x="770" y="14" text-anchor="end" class="lbl s">time</text>
+        <path d="M780,10 L930,10" stroke="#64748B" fill="none"/>
+        <text x="0" y="45" class="lbl b">types “re”</text>
+        <rect x="150" y="22" width="560" height="36" rx="8" fill="#121C30" stroke="#F8717A"/>
+        <text x="166" y="45" class="lbl">GET /api/jobs?q=re · slow · 420 ms</text>
+        <text x="0" y="105" class="lbl b">types “react”</text>
+        <rect x="300" y="82" width="250" height="36" rx="8" fill="#121C30" stroke="#34D399"/>
+        <text x="316" y="105" class="lbl">GET ?q=react · 180 ms</text>
+        <path class="nohead" d="M550,118 L550,142" stroke="#34D399" stroke-dasharray="3 3" fill="none"/>
+        <text x="550" y="160" text-anchor="middle" class="lbl" style="fill:#34D399">renders “react” results</text>
+        <path class="nohead" d="M710,58 L710,142" stroke="#F8717A" stroke-dasharray="3 3" fill="none"/>
+        <text x="718" y="160" class="lbl" style="fill:#F8717A">then “re” lands and overwrites</text>
+      </svg>
+    </div>
+    <div class="key w">Debounce decides how many requests run. Only cancelling — or ignoring — the stale one decides which result renders. You need both.</div>
+</section>
+
+  <!-- L4c · DEBOUNCE AND ABORT -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 4</div><div class="cx-page"><b>12</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Build · Debounce and abort</div>
+    <h2>One effect: wait, fetch, cancel</h2>
+    <pre><code><span class="fn">useEffect</span>(() =&gt; {
+  <span class="kw">if</span> (query.<span class="fn">trim</span>().length &lt; <span class="st">2</span>) { <span class="fn">setJobs</span>([]); <span class="kw">return</span>; }
+  <span class="kw">const</span> ctrl = <span class="kw">new</span> <span class="ty">AbortController</span>();
+  <span class="kw">const</span> timer = <span class="fn">setTimeout</span>(() =&gt; {                          <span class="cmt">// debounce: wait for a pause</span>
+    <span class="fn">fetch</span>(<span class="st">'/api/jobs?q='</span> + <span class="fn">encodeURIComponent</span>(query), { signal: ctrl.signal })
+      .<span class="fn">then</span>(res =&gt; res.<span class="fn">json</span>())
+      .<span class="fn">then</span>(setJobs)
+      .<span class="fn">catch</span>(err =&gt; { <span class="kw">if</span> (!ctrl.signal.aborted) <span class="fn">setError</span>(err); });
+  }, <span class="st">250</span>);
+  <span class="kw">return</span> () =&gt; { <span class="fn">clearTimeout</span>(timer); ctrl.<span class="fn">abort</span>(); };   <span class="cmt">// the next keystroke cancels both</span>
+}, [query]);</code></pre>
+    <div class="key g">The cleanup is the fix: a new keystroke clears the timer that hasn't fired and aborts the request already in flight, so a stale response can never reach <code>setJobs</code>.</div>
+    <div class="ex"><b>Build stage</b><span class="br">module-7/autocomplete</span><i>check it out in the job board repo, then make its tests pass</i></div>
+</section>
+
+  <!-- L5a · THE MODAL -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>13</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Build · The modal</div>
+    <h2>Trap focus, then give it back</h2>
+    <pre><code><span class="kw">function</span> <span class="fn">openModal</span>() {
+  returnTo.current = document.activeElement <span class="kw">as</span> <span class="ty">HTMLElement</span>;   <span class="cmt">// remember the trigger</span>
+  <span class="fn">setOpen</span>(<span class="kw">true</span>);                                               <span class="cmt">// an effect focuses the first field</span>
+}
+<span class="kw">function</span> <span class="fn">onKeyDown</span>(e: <span class="ty">React.KeyboardEvent</span>) {
+  <span class="kw">if</span> (e.key === <span class="st">'Escape'</span>) <span class="kw">return</span> <span class="fn">closeModal</span>();
+  <span class="kw">if</span> (e.key !== <span class="st">'Tab'</span>) <span class="kw">return</span>;
+  <span class="kw">const</span> items = <span class="ty">Array</span>.<span class="fn">from</span>(panel.current!.<span class="fn">querySelectorAll</span>&lt;<span class="ty">HTMLElement</span>&gt;(FOCUSABLE));
+  <span class="kw">const</span> first = items[<span class="st">0</span>], last = items[items.length - <span class="st">1</span>];
+  <span class="kw">if</span> (e.shiftKey &amp;&amp; document.activeElement === first) { e.<span class="fn">preventDefault</span>(); last.<span class="fn">focus</span>(); }
+  <span class="kw">if</span> (!e.shiftKey &amp;&amp; document.activeElement === last) { e.<span class="fn">preventDefault</span>(); first.<span class="fn">focus</span>(); }
+}
+<span class="kw">function</span> <span class="fn">closeModal</span>() { <span class="fn">setOpen</span>(<span class="kw">false</span>); returnTo.current?.<span class="fn">focus</span>(); }</code></pre>
+    <div class="key">Native <code>&lt;dialog&gt;</code> with <code>showModal()</code> makes the page behind inert and closes on Escape for free. Labelling it, and checking focus lands back on the trigger, stay your job.</div>
+</section>
+
+  <!-- L5b · THE KEYBOARD MAP -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>14</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Build · Dropdown, tabs, toast</div>
+    <h2>Every overlay has a keyboard contract</h2>
+    <table class="grid">
+      <tr><th>Widget</th><th>Keys</th><th>Where focus goes</th></tr>
+      <tr><td><b>Modal</b><br><code>dialog</code></td><td><code>Tab</code> and <code>Shift+Tab</code> cycle inside · <code>Escape</code> closes</td><td>Inside on open; back to the trigger on close</td></tr>
+      <tr><td><b>Dropdown menu</b><br><code>aria-haspopup="menu"</code></td><td><code>Enter</code> <code>Space</code> <code>↓</code> open · <code>↑</code> <code>↓</code> <code>Home</code> <code>End</code> move · <code>Escape</code> closes</td><td>Into the menu (roving tabindex); back to the button on close</td></tr>
+      <tr><td><b>Tabs</b><br><code>tablist</code> · <code>tab</code></td><td><code>←</code> <code>→</code> move and activate · <code>Home</code> <code>End</code></td><td>One Tab stop for the whole tablist; Tab again enters the panel</td></tr>
+      <tr><td><b>Toast</b><br><code>role="status"</code></td><td>None of its own</td><td>Nowhere — a toast never takes focus</td></tr>
+    </table>
+    <div class="key w">A dropdown of navigation links is a disclosure, not a menu: a button with <code>aria-expanded</code> and a plain list of links. <code>role="menu"</code> promises app-style arrow keys — use it only if you build them.</div>
+</section>
+
+  <!-- L5c · TOASTS AND LIVE REGIONS -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>15</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Build · Toasts and live regions</div>
+    <h2>Announce it without moving focus</h2>
+    <pre><code><span class="cmt">// Mounted once, empty, at the app root: a live region must exist before its text changes</span>
+&lt;<span class="ty">div</span> role=<span class="st">"status"</span> className=<span class="st">"sr-only"</span>&gt;{announcement}&lt;/<span class="ty">div</span>&gt;
+
+<span class="kw">function</span> <span class="fn">toast</span>(message: <span class="ty">string</span>) {
+  <span class="fn">setToasts</span>(list =&gt; [...list, { id: crypto.<span class="fn">randomUUID</span>(), message }]);   <span class="cmt">// the visible stack</span>
+  <span class="fn">setAnnouncement</span>(<span class="st">''</span>);                                                   <span class="cmt">// clear first, so the same</span>
+  <span class="fn">setTimeout</span>(() =&gt; <span class="fn">setAnnouncement</span>(message), <span class="st">50</span>);                        <span class="cmt">// text twice is still read</span>
+}</code></pre>
+    <div class="key">Polite (<code>role="status"</code>) for “Job saved”. Assertive (<code>role="alert"</code>) only for what must interrupt, like “Session expired”. A toast that holds a button must not vanish on a timer.</div>
+    <div class="ex"><b>Build stage</b><span class="br">module-7/overlays</span><i>modal, dropdown, tabs and toast — make its tests pass</i></div>
+</section>
+
+  <!-- L6a · THE PLATFORM VALIDATES -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 6</div><div class="cx-page"><b>16</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · Forms without a library</div>
+    <h2>Keep the rules, own the messages</h2>
+    <pre><code>&lt;<span class="ty">form</span> noValidate onSubmit={onSubmit}&gt;                  <span class="cmt">{/* keep the checks, drop the browser bubbles */}</span>
+  &lt;<span class="ty">label</span> htmlFor=<span class="st">"email"</span>&gt;Email&lt;/<span class="ty">label</span>&gt;
+  &lt;<span class="ty">input</span> id=<span class="st">"email"</span> name=<span class="st">"email"</span> type=<span class="st">"email"</span> required
+    aria-invalid={<span class="ty">Boolean</span>(errors.email)} aria-describedby=<span class="st">"email-error"</span> /&gt;
+  &lt;<span class="ty">p</span> id=<span class="st">"email-error"</span>&gt;{errors.email}&lt;/<span class="ty">p</span>&gt;
+&lt;/<span class="ty">form</span>&gt;
+
+<span class="kw">function</span> <span class="fn">messageFor</span>(input: <span class="ty">HTMLInputElement</span>) {
+  <span class="kw">const</span> v = input.validity;                              <span class="cmt">// the browser already ran the rules</span>
+  <span class="kw">if</span> (v.valueMissing) <span class="kw">return</span> <span class="st">'This field is required'</span>;
+  <span class="kw">if</span> (v.typeMismatch) <span class="kw">return</span> <span class="st">'Check the format, like name@company.com'</span>;
+  <span class="kw">if</span> (v.tooShort)     <span class="kw">return</span> <span class="st">'Use at least '</span> + input.minLength + <span class="st">' characters'</span>;
+  <span class="kw">return</span> <span class="st">''</span>;
+}</code></pre>
+    <div class="key"><code>noValidate</code> turns off the browser's bubbles, not its checks. <code>validity</code> still works, and your message, linked by <code>aria-describedby</code>, is the one a screen reader reads.</div>
+</section>
+
+  <!-- L6b · WHEN TO SHOW THE ERROR -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 6</div><div class="cx-page"><b>17</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · Validation timing</div>
+    <h2>Submit checks all; blur checks one</h2>
+    <pre><code><span class="kw">function</span> <span class="fn">onSubmit</span>(e: <span class="ty">React.SubmitEvent</span>&lt;<span class="ty">HTMLFormElement</span>&gt;) {
+  e.<span class="fn">preventDefault</span>();
+  <span class="kw">const</span> form = e.currentTarget;
+  <span class="kw">const</span> next = <span class="fn">validate</span>(form);                        <span class="cmt">// messageFor() on every field → { name: message }</span>
+  <span class="fn">setErrors</span>(next);
+  <span class="kw">const</span> first = <span class="ty">Object</span>.<span class="fn">keys</span>(next)[<span class="st">0</span>];
+  <span class="kw">if</span> (first) <span class="kw">return</span> (form.elements.<span class="fn">namedItem</span>(first) <span class="kw">as</span> <span class="ty">HTMLElement</span>).<span class="fn">focus</span>();
+  <span class="fn">apply</span>(<span class="kw">new</span> <span class="ty">FormData</span>(form));                           <span class="cmt">// valid: send it</span>
+}</code></pre>
+    <table class="grid">
+      <tr><th>When</th><th>What you do</th></tr>
+      <tr><td><b>Submit</b></td><td>Validate every field, show every error, move focus to the first invalid one.</td></tr>
+      <tr><td><b>Blur</b></td><td>Validate the field just left — only if the user changed it.</td></tr>
+      <tr><td><b>Typing</b></td><td>Clear an error the moment it's fixed. Never show a new one mid-word.</td></tr>
+    </table>
+</section>
+
+  <!-- L7a · WINDOWING -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 7</div><div class="cx-page"><b>18</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 7 · Build · Windowing</div>
+    <h2>Render only what's on screen</h2>
+    <div class="fig" style="max-width:940px">
+      <svg viewBox="0 0 940 150" role="img" aria-label="A list of ten thousand jobs; only the rows inside the viewport plus a few overscan rows on each side are rendered">
+        <text x="20" y="22" class="lbl">jobs[0]</text>
+        <text x="920" y="22" text-anchor="end" class="lbl">jobs[9 999]</text>
+        <rect x="20" y="34" width="900" height="44" rx="8" fill="#121C30" stroke="#243349"/>
+        <rect x="320" y="34" width="50" height="44" fill="rgba(251,191,36,.12)" stroke="#FBBF24" stroke-dasharray="4 4"/>
+        <rect x="370" y="28" width="200" height="56" rx="6" fill="rgba(34,211,238,.12)" stroke="#22D3EE" stroke-width="2"/>
+        <rect x="570" y="34" width="50" height="44" fill="rgba(251,191,36,.12)" stroke="#FBBF24" stroke-dasharray="4 4"/>
+        <text x="470" y="61" text-anchor="middle" class="lbl b">viewport</text>
+        <text x="345" y="100" text-anchor="middle" class="lbl s" style="fill:#FBBF24">overscan</text>
+        <text x="595" y="100" text-anchor="middle" class="lbl s" style="fill:#FBBF24">overscan</text>
+        <text x="320" y="122" text-anchor="middle" class="lbl b">start</text>
+        <text x="620" y="122" text-anchor="middle" class="lbl b">end</text>
+        <text x="20" y="146" class="lbl s">outer height = jobs.length × ROW · only rows in [start, end) exist in the DOM</text>
+      </svg>
+    </div>
+    <pre><code><span class="kw">const</span> ROW = <span class="st">96</span>, OVERSCAN = <span class="st">4</span>;
+<span class="kw">const</span> start = <span class="ty">Math</span>.<span class="fn">max</span>(<span class="st">0</span>, <span class="ty">Math</span>.<span class="fn">floor</span>(scrollTop / ROW) - OVERSCAN);
+<span class="kw">const</span> end   = <span class="ty">Math</span>.<span class="fn">min</span>(jobs.length, <span class="ty">Math</span>.<span class="fn">ceil</span>((scrollTop + viewportHeight) / ROW) + OVERSCAN);
+<span class="cmt">// outer element: height = jobs.length * ROW, so the scrollbar stays honest</span>
+<span class="cmt">// each row in [start, end): position: absolute; transform: translateY(index * ROW)</span></code></pre>
+    <div class="key">Ten thousand jobs in memory, about twenty rows in the DOM — at any scroll position.</div>
+</section>
+
+  <!-- L7b · POOLING AND RECYCLING -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 7</div><div class="cx-page"><b>19</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 7 · Build · Pooling and recycling</div>
+    <h2>Recycle the node, change its data</h2>
     <div class="two">
       <div class="card r">
-        <h3 class="r">The Flaw of Lazy Scrolling</h3>
-        <p>Appending 5,000 DOM nodes creates heavy C++ objects, takes &gt;100ms per layout pass, and freezes UI during garbage collection.</p>
-        <div class="key r" style="font-size:13.5px; margin-top:10px"><b>Virtualization Rule:</b> Keep 100,000 items in virtual JS memory. Render only <b>20 nodes in the DOM</b> forever.</div>
+        <h3 class="r">Appending forever</h3>
+        <p>Infinite scroll that keeps appending cards: every node costs memory, style and layout work. Page fifty scrolls worse than page one, and garbage-collection pauses show up as jank.</p>
       </div>
       <div class="card g">
-        <h3 class="g">The Half-Swapping Algorithm</h3>
-        <pre style="margin-top:8px; font-size:13px"><code><span class="cmt">// Fixed limit = 2 * pageSize (e.g. 20 nodes total)</span>
-<span class="kw">if</span> (<span class="kw">this</span>.pool.length &gt;= <span class="kw">this</span>.limit) {
-  <span class="cmt">// Slice the top 10 elements scrolled out of view</span>
-  <span class="kw">const</span> recycle = <span class="kw">this</span>.pool.slice(<span class="no">0</span>, <span class="kw">this</span>.pageSize);
-  <span class="kw">const</span> unchanged = <span class="kw">this</span>.pool.slice(<span class="kw">this</span>.pageSize);
-
-  <span class="cmt">// Swap halves in memory array:</span>
-  <span class="kw">this</span>.pool = [...unchanged, ...recycle];
-}</code></pre>
-        <p style="margin-top:8px; font-size:14px"><b>Pure Memory Operation:</b> Slicing and swapping happens in JS array pointers first — zero DOM thrashing!</p>
+        <h3 class="g">A fixed pool</h3>
+        <p>Build two pages of nodes once. When the top page scrolls out of view, move those nodes to the bottom and give them new text and a new position. <b>Nothing is created or destroyed.</b></p>
       </div>
     </div>
-  </section>
+    <pre><code><span class="kw">const</span> recycled = pool.<span class="fn">splice</span>(<span class="st">0</span>, PAGE);                        <span class="cmt">// the page that scrolled out of view</span>
+pool.<span class="fn">push</span>(...recycled);                                      <span class="cmt">// …moves to the bottom of the pool</span>
+recycled.<span class="fn">forEach</span>((el, k) =&gt; {
+  <span class="kw">const</span> index = end + k, job = jobs[index];
+  el.<span class="fn">querySelector</span>(<span class="st">'.title'</span>)!.textContent = job.title;       <span class="cmt">// new text, same node</span>
+  el.<span class="fn">setAttribute</span>(<span class="st">'aria-posinset'</span>, <span class="ty">String</span>(index + <span class="st">1</span>));       <span class="cmt">// the tree knows where it is</span>
+  el.style.transform = <span class="st">'translateY('</span> + index * ROW + <span class="st">'px)'</span>;   <span class="cmt">// moved by the compositor, no layout</span>
+});</code></pre>
+</section>
 
-  <!-- 26 · IN-PLACE UPDATES & GPU POSITIONING -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>26</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Virtualization · Mutation &amp; Compositing</div>
-    <h2>In-place template updates &amp; zero-reflow GPU positioning</h2>
-    <div class="two">
-      <div class="card a">
-        <h3 class="cy">In-Place Data Mutation</h3>
-        <pre style="margin-top:8px; font-size:13px"><code><span class="kw">function</span> <span class="fn">updateTemplate</span>(element, datum) {
-  <span class="cmt">// Mutates existing live DOM node references</span>
-  element.querySelector(<span class="st">'.title'</span>).textContent = datum.title;
-  element.querySelector(<span class="st">'.body'</span>).textContent = datum.body;
-  <span class="kw">return</span> element;
-}</code></pre>
-        <p style="margin-top:8px; font-size:14px">Recycled nodes receive new data while scrolled out of view. <b>No nodes are created or destroyed</b>, eliminating GC pauses!</p>
-      </div>
-      <div class="card g">
-        <h3 class="g">Zero-Reflow GPU Math</h3>
-        <pre style="margin-top:8px; font-size:13px"><code><span class="cmt">// Sequential Y coordinate calculation:</span>
-<span class="kw">for</span> (<span class="kw">let</span> i = <span class="no">0</span>; i &lt; <span class="kw">this</span>.pool.length; i++) {
-  <span class="kw">const</span> prev = <span class="kw">this</span>.pool.at(i - <span class="no">1</span>);
-  <span class="kw">const</span> prevY = y(prev);
-  <span class="kw">const</span> newY = (prevY === <span class="kw">null</span>)
-    ? <span class="no">0</span>
-    : prevY + prev.getBoundingClientRect().height + (<span class="no">2</span> * MARGIN);
-
-  <span class="cmt">// GPU Composite only: ZERO Layout Pass!</span>
-  <span class="kw">this</span>.pool[i].style.transform = `translateY(${newY}px)`;
-}</code></pre>
-        <p style="margin-top:8px; font-size:14px">Each card uses <code>position: absolute</code>. Moving via <code>translateY</code> skips layout and paint entirely.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- 27 · COMPLETE VIRTUALLIST IMPLEMENTATION -->
-  <section class="slide"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · UI PATTERNS</div><div class="cx-page"><b>27</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Virtualization · Complete Architecture</div>
-    <h2>The VirtualList state machine: production vanilla JS</h2>
-    <pre style="max-height:48vh; font-size:13px"><code><span class="kw">class</span> <span class="ty">VirtualList</span> {
-  <span class="kw">async</span> <span class="fn">handleBottomObserver</span>() {
-    <span class="kw">const</span> data = <span class="kw">await</span> <span class="kw">this</span>.getPage(<span class="kw">this</span>.end);
-    <span class="kw">if</span> (<span class="kw">this</span>.pool.length &lt; <span class="kw">this</span>.limit) {
-      <span class="cmt">// Warmup Phase: Append initial nodes using DocumentFragment</span>
-      <span class="kw">const</span> frag = document.createDocumentFragment();
-      data.forEach(d =&gt; {
-        <span class="kw">const</span> card = <span class="kw">this</span>.getTemplate(d);
-        <span class="kw">this</span>.pool.push(card);
-        frag.appendChild(card);
-      });
-      <span class="kw">this</span>.list.appendChild(frag);
-    } <span class="kw">else</span> {
-      <span class="cmt">// Recycling Phase: Slice, Swap Halves, Update In-Place</span>
-      <span class="kw">const</span> recycle = <span class="kw">this</span>.pool.slice(<span class="no">0</span>, <span class="kw">this</span>.pageSize);
-      <span class="kw">const</span> unchanged = <span class="kw">this</span>.pool.slice(<span class="kw">this</span>.pageSize);
-      <span class="kw">this</span>.pool = [...unchanged, ...recycle];
-      <span class="kw">this</span>.updateData(recycle, data); <span class="cmt">// In-place textContent update</span>
+  <!-- L7c · THE VIRTUALLIST STATE MACHINE -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 7</div><div class="cx-page"><b>20</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 7 · Build · The whole machine</div>
+    <h2>Two phases: warm up, then recycle</h2>
+    <pre style="font-size:14px"><code><span class="kw">class</span> <span class="ty">VirtualList</span> {
+  <span class="kw">async</span> <span class="fn">onBottomVisible</span>() {                          <span class="cmt">// an IntersectionObserver on the bottom sentinel</span>
+    <span class="kw">const</span> page = <span class="kw">await</span> <span class="kw">this</span>.<span class="fn">getPage</span>(<span class="kw">this</span>.end);
+    <span class="kw">if</span> (<span class="kw">this</span>.pool.length &lt; <span class="kw">this</span>.limit) {             <span class="cmt">// warm-up: create nodes, once</span>
+      <span class="kw">const</span> frag = document.<span class="fn">createDocumentFragment</span>();
+      <span class="kw">for</span> (<span class="kw">const</span> job <span class="kw">of</span> page) { <span class="kw">const</span> el = <span class="kw">this</span>.<span class="fn">render</span>(job); <span class="kw">this</span>.pool.<span class="fn">push</span>(el); frag.<span class="fn">append</span>(el); }
+      <span class="kw">this</span>.list.<span class="fn">append</span>(frag);
+    } <span class="kw">else</span> {                                         <span class="cmt">// steady state: recycle the top page</span>
+      <span class="kw">const</span> recycled = <span class="kw">this</span>.pool.<span class="fn">splice</span>(<span class="st">0</span>, <span class="kw">this</span>.pageSize);
+      <span class="kw">this</span>.pool.<span class="fn">push</span>(...recycled);
+      recycled.<span class="fn">forEach</span>((el, k) =&gt; <span class="kw">this</span>.<span class="fn">update</span>(el, page[k]));
     }
-    <span class="kw">this</span>.updateElementPosition();    <span class="cmt">// translateY math for all cards</span>
-    <span class="kw">this</span>.updateObservers();          <span class="cmt">// Relocate top &amp; bottom sentinels via translateY</span>
+    <span class="kw">this</span>.<span class="fn">position</span>();        <span class="cmt">// translateY for every node in the pool</span>
+    <span class="kw">this</span>.<span class="fn">moveSentinels</span>();   <span class="cmt">// top sentinel above the first node, bottom one below the last</span>
     <span class="kw">this</span>.end++;
   }
 }</code></pre>
-    <div class="key g">This single 35-line state machine renders 100,000 items with constant 60fps, fixed memory usage, and bidirectional scrolling.</div>
-  </section>
+    <div class="ex"><b>Build stage</b><span class="br">module-7/virtual-list</span><i>a thousand jobs through a handful of live rows — make its tests pass</i></div>
+</section>
 
-  <!-- 28 · LIVE CODING PLAYBOOK & RECAP -->
-  <section class="slide" data-chip="MODULE 07 · COMPLETE"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · COMPLETE</div><div class="cx-page"><b>28</b> / 28</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Module 07 · The Complete Answer</div>
-    <h2>The UI engineering playbook: live coding framework &amp; recap</h2>
-    <div class="two">
+  <!-- L8a · CONTAINER QUERIES AND FLUID TYPE -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 8</div><div class="cx-page"><b>21</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 8 · Container queries and fluid type</div>
+    <h2>Ask the container, not the window</h2>
+    <pre><code>.job-list { container-type: inline-size; }
+
+.job-card { display: grid; gap: <span class="fn">var</span>(--space-2); }                   <span class="cmt">/* narrow: stacked */</span>
+<span class="kw">@container</span> (min-width: <span class="st">36rem</span>) {
+  .job-card { grid-template-columns: <span class="st">4rem 1fr auto</span>; }               <span class="cmt">/* wide: logo · details · save */</span>
+}
+
+h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <span class="st">1.25rem + 2vw</span>, <span class="st">3rem</span>); }               <span class="cmt">/* fluid, with a floor and a ceiling */</span></code></pre>
+    <div class="key">The same <code>JobCard</code> sits in a narrow sidebar and a wide feed on one screen. A media query sees one window; a container query sees the space each card was actually given.</div>
+</section>
+
+  <!-- L8b · INPUT MODALITY AND REDUCED MOTION -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 8</div><div class="cx-page"><b>22</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 8 · Input modality and motion</div>
+    <h2>Input, hover and motion — not width</h2>
+    <pre><code><span class="kw">@media</span> (hover: hover) <span class="kw">and</span> (pointer: fine) {                      <span class="cmt">/* a mouse: hide until hover…   */</span>
+  .job-card .actions { opacity: <span class="st">0</span>; }
+  .job-card:<span class="fn">is</span>(:hover, :focus-within) .actions { opacity: <span class="st">1</span>; }    <span class="cmt">/* …or keyboard focus inside */</span>
+}
+<span class="kw">@media</span> (pointer: coarse) {                                        <span class="cmt">/* a thumb, not a cursor */</span>
+  .icon-button { min-width: <span class="st">44px</span>; min-height: <span class="st">44px</span>; }
+}
+<span class="kw">@media</span> (prefers-reduced-motion: reduce) {                          <span class="cmt">/* less movement, same feedback */</span>
+  .drawer { transform: none; transition: opacity <span class="st">.2s</span>; }
+}</code></pre>
+    <div class="key">Hover is a bonus, never the only way in. Reduced motion means less movement, not no feedback — swap the slide for a fade.</div>
+</section>
+
+  <!-- L8c · OBSERVE THE ELEMENT -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 8</div><div class="cx-page"><b>23</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 8 · When JavaScript needs to know</div>
+    <h2>Observe the element, not the window</h2>
+    <div class="three">
       <div class="card a">
-        <h3 class="cy">The 4-Step Live Coding Framework</h3>
-        <ul class="plist" style="margin-top:4px">
-          <li><b>1 · Contract (5 min):</b> Controlled vs uncontrolled? ARIA role? Keyboard loop? Virtualization budget?<small></small></li>
-          <li><b>2 · Scaffold (10 min):</b> Write consumer JSX first (<code>&lt;List&gt;&lt;Item&gt;</code>). Agree on API.<small></small></li>
-          <li><b>3 · Wire State &amp; Observers (15 min):</b> Context provider or fixed pool; attach native observers.<small></small></li>
-          <li><b>4 · Polish (10 min):</b> Roving tabindex, focus restoration, and GPU-only <code>translateY</code> transforms.<small></small></li>
-        </ul>
+        <h3 class="cy">ResizeObserver</h3>
+        <p>Fires when one element's box changes, not on every window resize. Use it when script needs the number — a virtual grid's column count, a chart's width. Read <code>inlineSize</code>, so RTL and vertical text still work.</p>
       </div>
       <div class="card g">
-        <h3 class="g">What You Can Now Build From Scratch</h3>
-        <p>1. <b>6 React Patterns:</b> Container/Pres, HOC, Render Props, Hooks, Provider, Compound.<br>
-        2. <b>Accessible Systems:</b> WAI-ARIA combobox/dialog contracts, focus traps, roving tabindex.<br>
-        3. <b>Web Observers:</b> IntersectionObserver, MutationObserver, ResizeObserver.<br>
-        4. <b>Virtualization:</b> Sliding window, memory pooling, half-swapping, and GPU compositing.</p>
-        <div class="key b" style="margin-top:10px"><b>Next · Module 08:</b> Data, State &amp; Routing (Server state vs Client state, TanStack Query, and type-safe routing).</div>
+        <h3 class="g">IntersectionObserver</h3>
+        <p>Tells you when an element enters or leaves a viewport or scroll container, without a scroll listener. Lesson 7's sentinels, lazy images, a sticky header's shadow.</p>
+      </div>
+      <div class="card p">
+        <h3 class="p">matchMedia</h3>
+        <p>The script side of a media feature, with a <code>change</code> event. Check <code>prefers-reduced-motion</code> before a JS animation; react when a pointer is attached.</p>
       </div>
     </div>
-  </section>
+    <div class="key">CSS first. Reach for an observer only when script genuinely needs the answer — and disconnect it on unmount.</div>
+</section>
+
+  <!-- CLOSING -->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 8</div><div class="cx-page"><b>24</b> / 24</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Module 07 · done</div>
+    <h2>What you can now build live</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">From scratch, keyboard first</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li>Components with an API worth using<small>five prop jobs, compound parts, both state modes, semantic tokens</small></li>
+          <li>An autocomplete that survives the race<small>ARIA combobox, debounce, <code>AbortController</code></small></li>
+          <li>Modal, dropdown, tabs and toast<small>focus traps, roving tabindex, live regions</small></li>
+          <li>A form with no form library<small><code>validity</code>, errors on blur, focus the first invalid field</small></li>
+          <li>A virtual list that fits its container<small>windowing, a recycled pool, container queries</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Next · Module 08 — Data, State &amp; Routing</h3>
+        <p>Before you move on: the three build stages green — autocomplete, overlays, virtual list.</p>
+        <p style="margin-top:10px">Next, the data that fills these components: what belongs on the server, what belongs in the client, and the URL as state.</p>
+      </div>
+    </div>
+</section>
 
 </div>
 
