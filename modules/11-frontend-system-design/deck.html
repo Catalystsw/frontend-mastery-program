@@ -82,6 +82,8 @@
   .plist li{font:600 min(2vw,22px)/1.35 var(--sans); color:var(--ink); padding:9px 0 9px 32px; position:relative}
   .plist li::before{content:"▷"; position:absolute; left:0; top:11px; color:var(--cy); font-size:15px}
   .plist li small{display:block; color:var(--muted); font-weight:400; font-size:.72em; margin-top:3px}
+  .plist a{color:inherit; text-decoration:none; border-bottom:1px solid var(--line2)}
+  .plist a:hover{color:var(--cy); border-color:var(--cy)}
 
   table.grid{border-collapse:collapse; width:100%; max-width:1040px; margin-top:20px; font-size:min(1.6vw,17.5px)}
   table.grid th{text-align:left; font:700 12px/1 var(--mono); letter-spacing:1.4px; text-transform:uppercase; color:var(--muted); padding:10px 12px; border-bottom:2px solid var(--line2)}
@@ -280,39 +282,35 @@
 
 <div id="bar"></div>
 <div id="stage">
-<!-- 1 · TITLE -->
-  <section class="slide" style="justify-content:center" data-chip="MODULE 11 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 1</div><div class="cx-page"><b>01</b> / 18</div><!--/catalyst-brand:chrome-->
+  <section class="slide" style="justify-content:center" data-chip="MODULE 11 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 1</div><div class="cx-page"><b>01</b> / 21</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 11 · Frontend System Design</div>
     <h1>Forty-Five Minutes,<br>Run to a Script</h1>
     <div class="sub">What the round scores, the RADIO script that fills it, and how a codebase grows past one team.</div>
     <div class="fig" style="max-width:980px">
-      <svg viewBox="0 0 980 70" role="img" aria-label="Six lessons: scoring and RADIO, requirements, components and APIs, scaling the code, micro-frontends, six questions">
+      <svg viewBox="0 0 980 70" role="img" aria-label="Five lessons: scoring and RADIO, the whiteboard, scaling the code, feed search and chat, shop dashboard and editor">
         <g>
-          <rect x="0" y="8" width="150" height="54" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="75" y="29" text-anchor="middle" class="lbl s" style="letter-spacing:1.4px">LESSON 1</text>
-          <text x="75" y="49" text-anchor="middle" class="lbl b">Scoring &amp; RADIO</text>
-          <rect x="166" y="8" width="150" height="54" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="241" y="29" text-anchor="middle" class="lbl s" style="letter-spacing:1.4px">LESSON 2</text>
-          <text x="241" y="49" text-anchor="middle" class="lbl b">Requirements</text>
-          <rect x="332" y="8" width="150" height="54" rx="9" fill="#121C30" stroke="#2196F3"/>
-          <text x="407" y="29" text-anchor="middle" class="lbl s" style="letter-spacing:1.4px">LESSON 3</text>
-          <text x="407" y="49" text-anchor="middle" class="lbl b">Components &amp; APIs</text>
-          <rect x="498" y="8" width="150" height="54" rx="9" fill="#121C30" stroke="#FBBF24"/>
-          <text x="573" y="29" text-anchor="middle" class="lbl s" style="letter-spacing:1.4px">LESSON 4</text>
-          <text x="573" y="49" text-anchor="middle" class="lbl b">Scaling the code</text>
-          <rect x="664" y="8" width="150" height="54" rx="9" fill="#121C30" stroke="#A78BFA"/>
-          <text x="739" y="29" text-anchor="middle" class="lbl s" style="letter-spacing:1.4px">LESSON 5</text>
-          <text x="739" y="49" text-anchor="middle" class="lbl b">Micro-frontends</text>
-          <rect x="830" y="8" width="150" height="54" rx="9" fill="#121C30" stroke="#F8717A"/>
-          <text x="905" y="29" text-anchor="middle" class="lbl s" style="letter-spacing:1.4px">LESSON 6</text>
-          <text x="905" y="49" text-anchor="middle" class="lbl b">Six questions</text>
+          <rect x="0" y="8" width="180" height="54" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="90" y="29" text-anchor="middle" class="lbl s" style="letter-spacing:1.4px">LESSON 1</text>
+          <text x="90" y="49" text-anchor="middle" class="lbl b">Scoring &amp; RADIO</text>
+          <rect x="200" y="8" width="180" height="54" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="290" y="29" text-anchor="middle" class="lbl s" style="letter-spacing:1.4px">LESSON 2</text>
+          <text x="290" y="49" text-anchor="middle" class="lbl b">On the whiteboard</text>
+          <rect x="400" y="8" width="180" height="54" rx="9" fill="#121C30" stroke="#FBBF24"/>
+          <text x="490" y="29" text-anchor="middle" class="lbl s" style="letter-spacing:1.4px">LESSON 3</text>
+          <text x="490" y="49" text-anchor="middle" class="lbl b">Scaling the code</text>
+          <rect x="600" y="8" width="180" height="54" rx="9" fill="#121C30" stroke="#2196F3"/>
+          <text x="690" y="29" text-anchor="middle" class="lbl s" style="letter-spacing:1.4px">LESSON 4</text>
+          <text x="690" y="49" text-anchor="middle" class="lbl b">Feed, search, chat</text>
+          <rect x="800" y="8" width="180" height="54" rx="9" fill="#121C30" stroke="#F8717A"/>
+          <text x="890" y="29" text-anchor="middle" class="lbl s" style="letter-spacing:1.4px">LESSON 5</text>
+          <text x="890" y="49" text-anchor="middle" class="lbl b">Shop, dashboard, editor</text>
         </g>
       </svg>
     </div>
 </section>
 
   <!-- L1a · THE RUBRIC -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 1</div><div class="cx-page"><b>02</b> / 18</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 11 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 1</div><div class="cx-page"><b>02</b> / 21</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · What the round is scoring</div>
     <h2>Six axes, and the diagram is one of them</h2>
     <table class="grid">
@@ -328,7 +326,7 @@
 </section>
 
   <!-- L1b · RADIO ON A CLOCK -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 1</div><div class="cx-page"><b>03</b> / 18</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 11 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 1</div><div class="cx-page"><b>03</b> / 21</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · The RADIO script</div>
     <h2>Five sections, one clock</h2>
     <p class="say"><b>R</b>equirements, <b>A</b>rchitecture, <b>D</b>ata model, <b>I</b>nterface, <b>O</b>ptimizations. Every section has a time limit and something it leaves on the board.</p>
@@ -376,8 +374,30 @@
     <div class="key w">A skipped section costs more than a thin one. When the clock says O and you're still on A, say so out loud, and move.</div>
 </section>
 
+  <!-- L1 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 11 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 1</div><div class="cx-page"><b>04</b> / 21</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Read next</div>
+    <h2>Go deeper: the design round</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://web.dev/articles/rendering-on-the-web" target="_blank" rel="noopener" onclick="event.stopPropagation()">Rendering on the Web ↗</a><small>the rendering trade-offs you name in Architecture</small></li>
+          <li><a href="https://web.dev/articles/vitals" target="_blank" rel="noopener" onclick="event.stopPropagation()">Web Vitals ↗</a><small>the numbers behind Optimizations</small></li>
+          <li><a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank" rel="noopener" onclick="event.stopPropagation()">WAI-ARIA Authoring Practices Guide ↗</a><small>the accessibility half of the user-experience axis</small></li>
+        </ul>
+      </div>
+      <div class="card g">
+        <h3 class="g">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener" onclick="event.stopPropagation()">Rasmi's ARCHITECTURE.md ↗</a><small>a real codebase's decisions, written down</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
   <!-- L2a · THE REQUIREMENTS BOARD -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 2</div><div class="cx-page"><b>04</b> / 18</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 11 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 2</div><div class="cx-page"><b>05</b> / 21</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Requirements</div>
     <h2>Eight minutes that decide the next thirty</h2>
     <p class="say">Prompt: <b>“Design the search page for a job board.”</b> The board after requirements: a number on every line that can take one.</p>
@@ -413,7 +433,7 @@
 </section>
 
   <!-- L2b · QUESTIONS THAT FORK THE DESIGN -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 2</div><div class="cx-page"><b>05</b> / 18</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 11 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 2</div><div class="cx-page"><b>06</b> / 21</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Questions that fork the design</div>
     <h2>Each good question moves a box</h2>
     <table class="grid">
@@ -429,8 +449,8 @@
 </section>
 
   <!-- L3a · COMPONENTS AND DATA FLOW -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 3</div><div class="cx-page"><b>06</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Components and data flow</div>
+  <section class="slide" data-chip="MODULE 11 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 2</div><div class="cx-page"><b>07</b> / 21</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Components and data flow</div>
     <h2>Boxes are jobs, arrows are data</h2>
     <div class="fig">
       <svg viewBox="0 0 1000 270" role="img" aria-label="Server API sends JSON to a normalized client store, which feeds a controller, which passes props to view components; user events flow back to the controller, which sends requests to the server">
@@ -472,8 +492,8 @@
 </section>
 
   <!-- L3b · CURSOR VS OFFSET -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 3</div><div class="cx-page"><b>07</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Contracts from the client's side</div>
+  <section class="slide" data-chip="MODULE 11 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 2</div><div class="cx-page"><b>08</b> / 21</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Contracts from the client's side</div>
     <h2>Offset pages drift; cursors don't</h2>
     <div class="fig">
       <svg viewBox="0 0 1000 146" role="img" aria-label="A new item N arrives above A, B, C. Asking for offset 3 returns C, D, E, so C appears twice. Asking for items after C returns D, E, F.">
@@ -510,47 +530,31 @@
     </table>
 </section>
 
-  <!-- L3c · RESPONSE AND ERROR SHAPES -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 3</div><div class="cx-page"><b>08</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Response and error shapes</div>
-    <h2>Ask for data the client can store once</h2>
-    <div class="two tight">
-      <div class="card b">
-        <h3 class="b">Normalized response</h3>
-        <p>Entities by id, the page as a list of ids. <b>u_7</b> exists once, however many posts point at it.</p>
-        <pre><code>{
-  <span class="st">"ids"</span>: [<span class="st">"p_91"</span>, <span class="st">"p_90"</span>],
-  <span class="st">"posts"</span>: {
-    <span class="st">"p_91"</span>: { author: <span class="st">"u_7"</span>, body: <span class="st">"…"</span> },
-    <span class="st">"p_90"</span>: { author: <span class="st">"u_7"</span>, body: <span class="st">"…"</span> }
-  },
-  <span class="st">"users"</span>: {
-    <span class="st">"u_7"</span>: { name: <span class="st">"Lina"</span>, avatar: <span class="st">"…"</span> }
-  },
-  <span class="st">"next"</span>: <span class="st">"c_8f2a"</span>  <span class="cmt">// opaque cursor</span>
-}</code></pre>
+  <!-- L2 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 11 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 2</div><div class="cx-page"><b>09</b> / 21</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Read next</div>
+    <h2>Go deeper: requirements and contracts</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://graphql.org/learn/pagination/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Pagination — GraphQL ↗</a><small>cursors versus offsets, explained by the spec's authors</small></li>
+          <li><a href="https://www.rfc-editor.org/rfc/rfc9457" target="_blank" rel="noopener" onclick="event.stopPropagation()">RFC 9457: Problem Details for HTTP APIs ↗</a><small>a standard single error shape</small></li>
+          <li><a href="https://redux.js.org/usage/structuring-reducers/normalizing-state-shape" target="_blank" rel="noopener" onclick="event.stopPropagation()">Normalizing state shape — Redux ↗</a><small>entities by id, stored once</small></li>
+        </ul>
       </div>
-      <div class="card r">
-        <h3 class="r">One error shape, everywhere</h3>
-        <p><b>code</b> branches the UI, <b>message</b> is shown, <b>retryable</b> decides the retry button, <b>fields</b> become inline form errors.</p>
-        <pre><code>{
-  <span class="st">"error"</span>: {
-    code: <span class="st">"LISTING_CLOSED"</span>,
-    message: <span class="st">"Applications are closed."</span>,
-    retryable: <span class="kw">false</span>,
-    fields: { salary: <span class="st">"Must be a number"</span> }
-  }
-}
-<span class="cmt">// same envelope from every endpoint,</span>
-<span class="cmt">// so one component renders every failure</span></code></pre>
+      <div class="card g">
+        <h3 class="g">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener" onclick="event.stopPropagation()">Rasmi — the job board repo ↗</a><small>the domain types this lesson draws on the board</small></li>
+        </ul>
       </div>
     </div>
-    <div class="key g">Edit Lina's avatar once and every card updates. Nested responses make you hunt down every copy of her.</div>
 </section>
 
   <!-- L4a · THE MODULAR MONOLITH -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 4</div><div class="cx-page"><b>09</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · The modular monolith</div>
+  <section class="slide" data-chip="MODULE 11 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 3</div><div class="cx-page"><b>10</b> / 21</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · The modular monolith</div>
     <h2>One deploy, hard walls inside it</h2>
     <div class="fig">
       <svg viewBox="0 0 1000 250" role="img" aria-label="One app with four feature modules, each with a public index file and private internals; features import each other only through index files, deep imports are blocked by a lint rule; all features use a shared layer">
@@ -601,41 +605,9 @@
     <div class="key"><b>Fixes:</b> features that can't reach into each other, so one team can own one. <b>Doesn't fix:</b> one build, one release train. Everybody still ships together.</div>
 </section>
 
-  <!-- L4b · MONOREPOS -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 4</div><div class="cx-page"><b>10</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Monorepos</div>
-    <h2>A monorepo fixes sharing, not coupling</h2>
-    <div class="two">
-      <div class="card a">
-        <h3 class="cy">One repo, many packages</h3>
-        <p>The day the employer app arrives, it needs the same UI and the same API client.</p>
-        <pre><code>repo/
-├─ apps/
-│  ├─ web/          <span class="cmt">job seekers</span>
-│  └─ employer/     <span class="cmt">companies post here</span>
-├─ packages/
-│  ├─ ui/           <span class="cmt">the design system</span>
-│  ├─ api-client/   <span class="cmt">typed contracts</span>
-│  └─ config/       <span class="cmt">lint + tsconfig</span>
-└─ pnpm-workspace.yaml</code></pre>
-      </div>
-      <div>
-        <div class="card g">
-          <h3 class="g">What it fixes</h3>
-          <p>A change to <b>packages/ui</b> and both apps that use it lands in <b>one commit</b>. There's one version of shared code instead of three. The task graph builds and tests <b>only what a change affects</b>.</p>
-        </div>
-        <div class="card r" style="margin-top:16px">
-          <h3 class="r">What it doesn't</h3>
-          <p>Tangled code stays tangled; it just moves into <b>packages/</b>. Both apps still ship from the same main branch. Ownership comes from boundaries and CODEOWNERS, <b>not from folders</b>.</p>
-        </div>
-      </div>
-    </div>
-    <div class="key">Reach for a monorepo when the second app arrives, not with the first.</div>
-</section>
-
   <!-- L4c · PAIN FIRST -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 4</div><div class="cx-page"><b>11</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · What each actually fixes</div>
+  <section class="slide" data-chip="MODULE 11 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 3</div><div class="cx-page"><b>11</b> / 21</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · What each actually fixes</div>
     <h2>Name the pain before the architecture</h2>
     <table class="grid">
       <tr><th>The pain</th><th>Modular monolith</th><th>Monorepo</th><th>Micro-frontends</th></tr>
@@ -648,49 +620,9 @@
     <div class="key w">Most teams asking for micro-frontends have the first row's pain. That row is fixed by walls, not by separate deploys.</div>
 </section>
 
-  <!-- L5a · WHAT A MICRO-FRONTEND IS -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 5</div><div class="cx-page"><b>12</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Micro-frontends</div>
-    <h2>Split by team, stitched together late</h2>
-    <div class="fig">
-      <svg viewBox="0 0 1000 214" role="img" aria-label="A shell app handles routing, session, layout and tokens, and loads three separately deployed apps: jobs, employer and account, each with its own repository, CI and CDN">
-        <defs>
-          <marker id="m11e" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/></marker>
-        </defs>
-        <rect x="0" y="0" width="1000" height="52" rx="10" fill="#22D3EE" fill-opacity=".10" stroke="#22D3EE"/>
-        <text x="500" y="32" text-anchor="middle" class="lbl b">Shell · routing · session · layout · design tokens</text>
-        <path d="M150,53 L150,94" stroke="#94A3B8" fill="none" marker-end="url(#m11e)"/>
-        <path d="M500,53 L500,94" stroke="#94A3B8" fill="none" marker-end="url(#m11e)"/>
-        <path d="M850,53 L850,94" stroke="#94A3B8" fill="none" marker-end="url(#m11e)"/>
-        <text x="512" y="78" class="lbl s">loaded when the route is hit</text>
-        <rect x="0" y="96" width="300" height="66" rx="10" fill="#121C30" stroke="#FBBF24"/>
-        <text x="150" y="124" text-anchor="middle" class="lbl b">/jobs · search team</text>
-        <text x="150" y="146" text-anchor="middle" class="lbl s">deploys daily · v41</text>
-        <rect x="350" y="96" width="300" height="66" rx="10" fill="#121C30" stroke="#34D399"/>
-        <text x="500" y="124" text-anchor="middle" class="lbl b">/employer · employer team</text>
-        <text x="500" y="146" text-anchor="middle" class="lbl s">deploys weekly · v12</text>
-        <rect x="700" y="96" width="300" height="66" rx="10" fill="#121C30" stroke="#A78BFA"/>
-        <text x="850" y="124" text-anchor="middle" class="lbl b">/account · account team</text>
-        <text x="850" y="146" text-anchor="middle" class="lbl s">deploys on demand · v7</text>
-        <rect x="40" y="180" width="220" height="30" rx="7" fill="#0B1220" stroke="#243349"/>
-        <text x="150" y="200" text-anchor="middle" class="lbl s">own repo · own CI · own CDN</text>
-        <rect x="390" y="180" width="220" height="30" rx="7" fill="#0B1220" stroke="#243349"/>
-        <text x="500" y="200" text-anchor="middle" class="lbl s">own repo · own CI · own CDN</text>
-        <rect x="740" y="180" width="220" height="30" rx="7" fill="#0B1220" stroke="#243349"/>
-        <text x="850" y="200" text-anchor="middle" class="lbl s">own repo · own CI · own CDN</text>
-      </svg>
-    </div>
-    <table class="grid">
-      <tr><th>Stitched where</th><th>What you get</th><th>What it costs</th></tr>
-      <tr><td><b>In the browser</b> (module federation, import maps)</td><td>One page; one shared React is possible</td><td>Version skew shows up at runtime, not in CI</td></tr>
-      <tr><td><b>On the server or edge</b>, by route</td><td>Strong isolation, a simple model</td><td>A full page load between apps; layout built twice</td></tr>
-      <tr><td><b>iframes</b></td><td>Total isolation</td><td>Focus, accessibility, sizing and deep links all fight you</td></tr>
-    </table>
-</section>
-
   <!-- L5b · THE REAL COST -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 5</div><div class="cx-page"><b>13</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · The real cost</div>
+  <section class="slide" data-chip="MODULE 11 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 3</div><div class="cx-page"><b>12</b> / 21</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · The real cost</div>
     <h2>The bill arrives in production</h2>
     <table class="grid">
       <tr><th>Cost</th><th>What it looks like</th></tr>
@@ -705,8 +637,8 @@
 </section>
 
   <!-- L5c · THE LADDER -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 5</div><div class="cx-page"><b>14</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Defending the choice</div>
+  <section class="slide" data-chip="MODULE 11 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 3</div><div class="cx-page"><b>13</b> / 21</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Defending the choice</div>
     <h2>Climb only when the step below stops working</h2>
     <div class="fig">
       <svg viewBox="0 0 1000 250" role="img" aria-label="Three ascending steps: modular monolith, then monorepo when a second app needs the same code, then micro-frontends when teams block each other's releases">
@@ -732,9 +664,31 @@
     <div class="key g">Say it as one sentence: <i>“We start as a modular monolith with enforced feature boundaries, move to a monorepo when the employer app arrives, and split deploys only if release coordination becomes the bottleneck.”</i></div>
 </section>
 
+  <!-- L3 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 11 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 3</div><div class="cx-page"><b>14</b> / 21</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Read next</div>
+    <h2>Go deeper: scaling the codebase</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://webpack.js.org/concepts/module-federation/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Module Federation — webpack ↗</a><small>how micro-frontends share code at runtime</small></li>
+          <li><a href="https://nx.dev/concepts/decisions/why-monorepos" target="_blank" rel="noopener" onclick="event.stopPropagation()">Why monorepos — Nx ↗</a><small>what a monorepo does and doesn't solve</small></li>
+          <li><a href="https://pnpm.io/workspaces" target="_blank" rel="noopener" onclick="event.stopPropagation()">Workspaces — pnpm ↗</a><small>many packages in one repo</small></li>
+        </ul>
+      </div>
+      <div class="card g">
+        <h3 class="g">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener" onclick="event.stopPropagation()">Rasmi — the job board repo ↗</a><small>feature folders with one door each</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
   <!-- L6a · FEED + AUTOCOMPLETE -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 6</div><div class="cx-page"><b>15</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 6 · Six questions, walked</div>
+  <section class="slide" data-chip="MODULE 11 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 4</div><div class="cx-page"><b>15</b> / 21</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Walked</div>
     <h2>Feed and autocomplete: lists that move</h2>
     <div class="two">
       <div class="card a">
@@ -752,29 +706,68 @@
     </div>
 </section>
 
-  <!-- L6b · CHAT + E-COMMERCE -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 6</div><div class="cx-page"><b>16</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 6 · Six questions, walked</div>
-    <h2>Chat and e-commerce: writes that must not lie</h2>
+  <!-- L4b · REAL-TIME, AND THE CHAT -->
+  <section class="slide" data-chip="MODULE 11 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 4</div><div class="cx-page"><b>16</b> / 21</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Real-time, and the chat</div>
+    <h2>Pick the simplest transport that's fast enough</h2>
+    <table class="grid">
+      <tr><th></th><th>Polling</th><th>Server-Sent Events</th><th>WebSocket</th></tr>
+      <tr><td><b>Direction</b></td><td>Client asks</td><td>Server → client</td><td>Both ways</td></tr>
+      <tr><td><b>Built on</b></td><td>Ordinary requests</td><td>One long HTTP response</td><td>An upgraded connection</td></tr>
+      <tr><td><b>Reconnect</b></td><td>Nothing to reconnect</td><td>Automatic, resumes via <code>Last-Event-ID</code></td><td>Yours to write, with backoff</td></tr>
+      <tr><td><b>Idle cost</b></td><td>A request every interval</td><td>One open connection</td><td>One connection + heartbeats</td></tr>
+      <tr><td><b>Fits</b></td><td>“12 new jobs” banner</td><td>Application status changes</td><td>Chat with a recruiter</td></tr>
+    </table>
+    <div class="key g"><b>Chat:</b> a WebSocket for push, optimistic sends with a client-made id, order by server sequence — and on reconnect, fetch everything after the last sequence you saw.</div>
+</section>
+
+  <!-- L4 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 11 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 4</div><div class="cx-page"><b>17</b> / 21</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Read next</div>
+    <h2>Go deeper: feeds, search and real-time</h2>
     <div class="two">
-      <div class="card g">
-        <h3 class="g">Chat</h3>
-        <div class="key g" style="margin-top:4px; font-size:min(1.75vw,19px)"><b>Key decision:</b> a WebSocket for push, optimistic sends with a client-made id, order by server sequence.</div>
-        <p style="margin-top:14px"><b>Because</b> both sides write, and the network drops in the middle of a conversation.</p>
-        <p style="margin-top:10px"><b>Say before they ask:</b> the server's ack swaps the temporary id for the real one; on reconnect, fetch everything after the last sequence seen; the list is anchored to the bottom; new messages are announced politely.</p>
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events" target="_blank" rel="noopener" onclick="event.stopPropagation()">Using server-sent events — MDN ↗</a><small>EventSource, event ids and reconnection</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API" target="_blank" rel="noopener" onclick="event.stopPropagation()">The WebSocket API — MDN ↗</a><small>two-way messaging, and what you must handle yourself</small></li>
+          <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Combobox pattern — WAI-ARIA APG ↗</a><small>the autocomplete's keyboard and ARIA contract</small></li>
+        </ul>
       </div>
+      <div class="card g">
+        <h3 class="g">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard/tree/module-7/autocomplete/solution" target="_blank" rel="noopener" onclick="event.stopPropagation()">The race-safe autocomplete ↗</a><small>the one you built in module 7</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+  <!-- L5a · E-COMMERCE -->
+  <section class="slide" data-chip="MODULE 11 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 5</div><div class="cx-page"><b>18</b> / 21</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Walked</div>
+    <h2>E-commerce: the cart can be optimistic, checkout can't</h2>
+    <div class="two">
       <div class="card b">
         <h3 class="b">E-commerce</h3>
         <div class="key" style="margin-top:4px; font-size:min(1.75vw,19px)"><b>Key decision:</b> server-render product and listing pages; the cart can be optimistic, checkout can't.</div>
         <p style="margin-top:14px"><b>Because</b> first load and search ranking drive revenue, and a wrong price or a double charge is the worst bug you can ship.</p>
-        <p style="margin-top:10px"><b>Say before they ask:</b> filters live in the URL; price and stock are re-checked on the server; an idempotency key makes a double-clicked “Place order” charge once.</p>
+      </div>
+      <div class="card w">
+        <h3 class="w">Say before they ask</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li>Filters live in the URL<small>shareable, back-button safe, crawlable</small></li>
+          <li>Price and stock re-checked on the server<small>the client's total is a preview, never the charge</small></li>
+          <li>An idempotency key on “Place order”<small>a double click or a retry charges once</small></li>
+          <li>The product photo is the LCP<small>sized, eager, high priority</small></li>
+        </ul>
       </div>
     </div>
 </section>
 
   <!-- L6c · DASHBOARD + EDITOR -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 6</div><div class="cx-page"><b>17</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 6 · Six questions, walked</div>
+  <section class="slide" data-chip="MODULE 11 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 5</div><div class="cx-page"><b>19</b> / 21</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Walked</div>
     <h2>Dashboard and editor: where the hard part hides</h2>
     <div class="two">
       <div class="card p">
@@ -792,8 +785,30 @@
     </div>
 </section>
 
+  <!-- L5 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 11 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 5</div><div class="cx-page"><b>20</b> / 21</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Read next</div>
+    <h2>Go deeper: shops, dashboards and editors</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/" target="_blank" rel="noopener" onclick="event.stopPropagation()">The Idempotency-Key HTTP header (IETF draft) ↗</a><small>making a retried POST safe</small></li>
+          <li><a href="https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary" target="_blank" rel="noopener" onclick="event.stopPropagation()">Error boundaries — React reference ↗</a><small>one per dashboard widget</small></li>
+          <li><a href="https://prosemirror.net/docs/guide/" target="_blank" rel="noopener" onclick="event.stopPropagation()">ProseMirror guide ↗</a><small>a document model and transactions, in depth</small></li>
+        </ul>
+      </div>
+      <div class="card g">
+        <h3 class="g">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API" target="_blank" rel="noopener" onclick="event.stopPropagation()">Canvas API — MDN ↗</a><small>when an SVG chart has too many points</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
   <!-- CLOSING -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 6</div><div class="cx-page"><b>18</b> / 18</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 11 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 5</div><div class="cx-page"><b>21</b> / 21</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 11 · done</div>
     <h2>A design round, run to a script</h2>
     <div class="two">
@@ -810,7 +825,7 @@
       <div class="card b">
         <h3 class="b">Next · Module 12 — The Capstone</h3>
         <p>Assembly week, not build week: one deployed job board you can defend line by line. This module's trade-offs become its architecture story.</p>
-        <p style="margin-top:12px"><b>Before you move on:</b> pick one prompt from Lesson 6, set a 45-minute timer, and run RADIO out loud on paper. Then do it again with a different prompt.</p>
+        <p style="margin-top:12px"><b>Before you move on:</b> pick one prompt from Lessons 4 and 5, set a 45-minute timer, and run RADIO out loud on paper. Then do it again with a different prompt.</p>
       </div>
     </div>
 </section>

@@ -188,6 +188,11 @@
     .frag{opacity:1 !important; transform:none !important}
     *{animation:none !important}
   }
+
+  /* Read-next slides: links a presenter can click without advancing the deck. */
+  .refs li a{color:var(--ink); text-decoration:underline; text-decoration-color:var(--cy);
+    text-decoration-thickness:2px; text-underline-offset:4px}
+  .refs li a:hover, .refs li a:focus-visible{color:var(--cy)}
 </style>
 <!--catalyst-brand:style-->
 <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAATTUlEQVR42uVbabAcV3X+zrm3e2bee5JsyZaFjbFROWCLJRZgshRLUoEARQJFEemHnQ1DoNhTMcUSiIUIpIDELHZBQgBT2SqJXoCQIuBAKuCEQIAAXvBuy7ZsS0jW+paZ6e57z5cf9/bMvGdJlmUc5KKr+vWb7p7pe+49y3fO+VrwY98oOGE34SP9AJzYG2X5IP2PTfItFGwVW/PEl6wYNht7mCoFWAAws+zWw507hm0RwPRhjqNtGtNYXDooLblg+wUAOsMdg/23y9wjsWQCEIBwxXnvfVHdOeuiiJXr1DkABCkgCNF8G5gWQiJAByACaI8KiOXFyv9PHmHpnuVHUwAKQcynJZ2nh7oaKn1q6N/vefDLHez43O7rLlvMstM/bOE3bVPMnl2c/NQ/e2lTnPmnwa0/M6ILkTRAEgANkEntkyMI8zBMW5gmgO2aeAAFhIRyEeoDPHZtHlSDCsC2vGgPxwQo2ATFrMSTz3v/y0O5/hMDPmaVRWnASsmxrAIByQl9E7QDWHo82kzLEUZhSZs0ggj5dzRPQAekwIzw6NQhntZV23nBpk2bPjs7KxGA+OMXflYxuzme9KSP/1pTnP3Hg7hmVZQyilqR1Jut9MckYP7dI98nR7ZWsQKMHSgCIAEAYHBZEwSiBZxpgejRQaeYn5/12eaOSwPSSGY3xxU/+6EXN+7sy4d2xuNjFIMzl1Y6AqL5GXIYkY5kAjyCVyK4RFsmLynEFGoFFAKIgGIQAaKkCaUZYnDoqkioGlx11XhI/vji3DP89PmXbRp2n7Al2OrH0xpTKzXNqYJSTDgvWaoAkqPRcgfXOr+lNx7TkWKAVsmLiAEwmGi6xQlggBkRvKJZWNSHEwYJAGs2vvpFC/qYv2ia1SvgYPBBWRGFFDAIIot8t1sq0+T/o2uTRztOgySoEc5a7dDsC5MGQgPMezRCUJfI/9BNYO1TPvrSgZx5RfSnrQBJOFPEGgw1UAIGBY8bb+lxByOxIlkQAyARDhGREWDMfqGHGCKcK5eAoYf0xLUbr3hJ7dd/cCGuPTPGgjARNAaBAh2PmhEGJjVsvbPEic/Lz09eP9x9x75TYlYuTdpEB4hrERHgBE4cOp0pnHPOOcesASOQs/pp731Z3TnncwcXV0BcB2yiOBBGQAsHdgpYFZIaS1yGs/ggmKu9Hh+6O5I2chhMCoh5gAqDAOYA5wBrAHNwToEQcTtuP6YJkIwwsOYpH35J489830I1Y9pboRYChBHeOZAOdQhpJRySyoHZpiU7uDB2iNAJxZP8NwnO5bYjnJg7GeEBQiCU9HMRgGtDbpM9fyevfp01QoHGgI4iVhUm5D+iCSSEh+d01z75Iy8LxYZPDJpzzqNMqVkFyCLoA2qLCCZQ7WahJ4SnB8xnQOJyiNM05+21WADRQShQZvg72iWLm49sB6b5rINQE5ZjF0CZoIILY9Cp2Ry1ANQDMcJi9aBOUAA6zEpY89QPXBiKsz5SxVNXB3aNOlDYEHAxaboUIBQU5pWeWPlWtaVK2FyKBGaY510IaAUgwBABEwiKUbyXJRoCtJ7VOMYWIinEijkACtU65x8TKNEiwALiPIAaVLXJuKQPTBeFgISTN1z2woD1l/brNavr6AwOCrUUV8exbBm69UtUXCRC0UBhEHqISc4LLK2ObwBfAUUAvICagAxUQNU8ufmoyamJuDR/QhAGIqFOZx5qeYgAlMxak0WCQdTQ7XW5YcNhNYACvFuAdb1VGy7ZjM6GP6ps9frKSmOnq4gVgAboKtBkL8uJyWhXlmXOzIZ5IqYywCOogIrAUKf7Q2seIWuFG6/JZDKBcUKVkGYWKibQQ6mTFkmE0BKcEAGjA+ChKrC6AVGbouaNNz4QCeanbLV1T//giwfxrA8s2ulro04ZNSjEAG/ZUbfQ1U1A2hZ0pBAkreMSwKwEJEAYRpmhiOXY0qNQKFrBhKC1fiQ7OeMyn58grrSRRgnQYGowMQhqCBVggNDBUUAYEImuM5tS8+yH+9OMCwC26XDy9qt+5p3Pq+IZ7w/F6WvrxgzSVzCvVumS0HVM9gwdJy8SR0mISJ4oxKQgLmRkliApTKDoQkXh4EUJsVgjChCdwqR1fgp1MpJeW5fPkJePEDUoicZFUAMEFcQUIn3APMQRjA0UDXpFU0rY/dWa8/+UBn2pAltNWrtffc4LVxYnvfyKRTzpt/vBRXhxhmzzsckeowCiAHAjr0wYoAFQy0gs/RtbyOma7PULCBTOBN4EHgEMu79o9dxVwRYPRDNY0c3fMVGUWcvyqRwqYwy0OASkykZnNAdASGAAwEFjmbJBmsA1UEbtstkv4eD3F7dftmcyPR35gNXrNnYODlc8prGVoNQg+oDmAkNrm8uEByxJ20YBOkgQGDWBkDJrR64FiDkiRCncQUjY/o25Qz94De752M7DxWF7kM9HO3+47/YPk9M8IAxGKgMc2M48ky2m0Jbj8+RvjCJK6xMcQEXpPYIaYuinufY+RfJQW68Izjd3fabZ+zdvxa6r9/6ky6R+slhpGsCYnZB1xnGSuqSoYS3+bmEas/DmIQIEqxGxCHgFpAehEPUQPb/oynDPZxf3fnfLcNfVe8dh94SYgBmAtQhqAAWQU1pCoGQCOyBMmJOP1tXrqPICCEwUZIC0WWGMVAO7big+3vWvg+qGNw53/vkuYMtkEeDE0ACx1psn8CGUbE9ttaZNdDjOuqQV3gAE0By07KSIWffNS7CeDpxWO7fJws1v69/10Sz81p+48A/QAKFCWjeOCOYmjxE5oYkTJWpN2D4XIRQB1AAipKwsCFW9TnWGqsMdnz944PtvwX1X3ItN2xxmN0ecIJtf1knI4d1GmpBWmGMtGKm9m6jiZHiLGujUQFiEcJV13XDOhnf8VT13y4dPROGXTMACgGFhDGJA6ABW5lwzjm9li/EFtADEGlK4lI0bgaIDqACsY1cWnB/e+y9zP7z4bWlmTjzhlyRDM6POWY7n0adYPmo05FQ2OLCKcKpQT5A2/inzQD9gRde5rt3zD7F/x1sBqbFpmwNOPOGXmsDCDKZlJaJMw6JBpJ/T3JRzJU1oRk7fgkKlyLUIB4qDDYeY1jrq4o4/Hez75hWDe67cA1AwKyek8A/wAT4qSihqqWCun9NbP7LxVG/3UOkg9gPMl1AxwGqUWsD7Bp1m11/vu+5V78rA/Sce5x9SGIT2QZlHlAjL2H4E9EbgxxCNQLcHugKxnqOTBTgn4psdn9y3+wvvGjuOE1v4pRMwA9TDCgEBpOaMT8YLCZ+LCzkCKIB6kQ4VporFPof3bjt4xzffhcXP78GjaBtNgMUDUhW11kZD7OYy1hBAA2UJWhdEmSNgA4Q+Jdax1xl6rXZ+6tB1r3tLyrNPfLU/bBTY199Vi4UFJ6IwrUHXIBSNhLLR4BuNbBBjg8AGtdWwGlO9eV/a9tnhgZsvxxbao034tjoJgHLo2i8ccv3+bKfeu7/wsecKFt5NFx13UlH6TlEWUnTLWHTKUBTeldPugBTx7s8M5q/7/WrHR7Y/Wmz+cCYw6jTODf7jsydhZsFh8fmNdEqFQ0EFQAqNUICMiNYMet3F6+r7rvrnwd1fOAhsUWwVw0/ntkUfzaOXB3x+7tdSNeTqX7KljZKJT3sgWDubCACzN4zVfguAre/mo9EUDtetk58G/ZVltAWctvFTzxnE4vm1wBkKUSuQIJG1nRd6AS0YvOtaUfgYtGFD06kpqfxw/3/t+vYbvvEom4BU7jr95z+9uV8//qOD2F0HFxnpJKrL3E+DIEINUHNQLWERRokwlwlKGmWVr++0/m2vnbv29V95OONa9bgLT+qsPKUULcj5UiY5gdKvOSpi5WuT50TLlML1S2IFwF4tP7rl9gHun104XB9QAOEzL9qycvv2cz8+V224CMGbSNDga0QEwOecIFiq2CcuSkLKmuoBYgUUBLVByTu+ta741svu/Pblux+C0aUS2fpL1q5a9bhXGGZeYHGmR/QAFmKQUaEm1SBi4oGIIDXqAW8NRCICChAdE/MkG5Oi7nSL+jYb3HP5/HXf+V9gm7V+aoQEe9MrSud1NauaJs5UoAkSA7C24OFBVUQ2qTuDyZa3wQSgekBWnrHAU9YB2H1sFLFNDpA4c877Tg0rH/snjV/1yhBnYJwBZCpXqVM9UnMLLHWhUwslaqJRRWkgIIIUAMpczjcADSLDBb1e73krzq9+d/4a+XJblhuFsFt3fr0f+rtv7eg+MZlj8JFQhbKEh0ICgcgMkRWUCJEApUDoYS7CfAVqgHmRKd+VBxKEjhRGZ+PpF1yxBqvOvkyLk1/ZxK7F6AwqpAs0qWgyJGVAkyENFY2BBmOkkYx5cEytNpCQmtA+xTVU5xiqojZ77Fofpp+VFuU9lnmCQoCy64vSnz7vmZ/szvzoaY3XZ1dQo4k4MygKwIBAAgypYZL7BpSQyYptUQSIMGk0yrFhiK22ZuMHTj8UT3tPdKf8VqzZRBQFpYCIB5nAV+r1h3EpHrn5MlKwpI2pcJcpehIBIUgHxI6Gxsiq6ObyVjORC6QgsHjTpTdos+ONiHu/41ylXptAq2DR2gYdxI3pLwZNvQQ3yBPSyfTUFC+ORfh1z3rfqXV57pWDePLvNLEXTFYWkBlQe6nE3nafNI4779K20R0gZa5QS8piqRNMOwMZwBggRQFXdATq5XDJUA77m9z911x6bTW45bWuue+/Ox16X3QsgoxKiDYQhtSCZlsmxwQjpEhdWRHAqzyY8Ot/4eNr+82T3z8Ia17AYo0aS28sQfj8m5qEdH5pR4syYVkc8ZBFMqNEcvouuXLtCLgKkfOI4eAReWkEZiM2bXO4eev30b/rYq3uvwrSKBMViJAIs5BDIidIEZ1URzQATcxR4qjC8/RnvPPMe5t1H+rbKa+ILKIYBS3jZMQJaDvKufdoLTN8susX8mIQRG7gtO9sMFe1nYE2ALUPlIFHJ+bNbo54+ieK+uY/vDUe+uHbu3LwFnGmCAHURHORtivEArBuqiKTEK3hHBHqgOIoKz+14XWn3a/nf6zGKRcF9MS50lmM0pKeR9VoyZo24g/5EYdIKKkh3DZsYBMIXMYtO2riNCggTo6Rmfi91zTAJte/7dJrYXe+eMYvfsV5J2gifNmDxSb3RovU64cHGGGsUlGZRHME4XtnvOqxnPqVy4Ke+evgVKLyRkJFAKkTp6htwmSu8cjERk1YnfBCGRfIclayjPkLmircVimUXR6FI7REFSIAmfvem+/wCze9pSfzV4mWCFXiCYg4eBO4GOCsgUriCAQRiHcomuXco6227vx3nKrrfnlrcKddyLAiC5ZYQOIS+UEQIGjSkQaBta8DJPKDJVYZQFAM1pItYbmTJRPmkZmiUQHrUeM0JEw/JG4qAcqB6994vS5e/4YZXbhJYgX1DpC04sZB4uZoDos0qCs4MoFNswoI12285Kz54ty/HbgzLm7CFGECkSJTAcerOB68jXunRy01THatWivQiW6WJtAWIwpXolR3rBqw9E2ruRvefIcu3nzhCnfoS9JUAKtofh7wIbFIxCWNTf6KIi4/ZBMASCjP/026s37VbIYQg/gmMf5MENkkjhAUROoxUDLUlpjJ0DbeZSIQTLyJstQEkq9QJ3AuQHRBi+4ifKe6LzuYUeP/mLdDN776mmLhlkt6bt/XXWGOzjMiMrCBmqKQMoWh0LBpvcCsxKc/d8uaqpp6dhVWA9aLoBOyAZl4gtD0UgNYZEeXAc6IC9xkJlnbpeZEhVom2vMYmUwiaxVgaBhiZb4734Rw21US6y8ml3SpHgdbnLLvVrm5eOJlb4pT6z/Jct0FUCURnJmHMweFAV6s0TFTZcfC6lW0chVCXjKngNUwVBnhFaD5MSdIJk3CJlQ9JE2jjFde3IQZ2ISDdBAESmTUTuWVu780v/Pq35u/99P7gfSG23Hw0xNibG655Ho7eOOrfXPXV0o/51RCtBjZSEEjWKoC9XBk0U1/R/BuEAsvBjiCjqDSKehUqHQJacESpicJaLpv5AIxDvZguqfd8/fMOUbXIahkbOhYS88f8r2w/T979X3vwX1X7sdzt/jJipUeR6GIwDaHO995XXff//zBdHX3v09jUQhGItAVJqwP3trfe8uuTHiUmVU79hj23iY6r+LEUpdNqBGUSNKEIkzCS96ZgzzzhEHzpIzQTp4II4SEgISniSMBFq5hib1zMrzz7+OBa19/8Jp3XIvf+EeHq7eGSYHc8dUrZgF8zdeHXrvHTT3pB2XZO98V02d4jVXPdu7pH/rhm6o7P3ZTuvfdOvd3mxt/8sZOpHs2tLNSvaogSpRGDBQ4L1CKiIlkRLt8H7OnM3Orxb0iouZEoxc1iMQhCl/ZVGf/IFbb/21x33df3+y48u4jcRMeZt0vtb2nzt3yNF8+4ec6nRnE+Ztu33/z27+6/Blr1lw8c/CkJ/yim3rcedpZWSTrzgQc32nLC9QjEeIsq23G2Tp69UWhtUOhHnBkVQ0ocsC87Dkwv3DjN3D7X97xCBMzDvey9IO+QC08zH6k88e0Z0OQn0zZvn017KjCy//vm+VyTMLLI/BUniCvmB9Tb+L/ADhu5hbNpqMQAAAAAElFTkSuQmCC">
@@ -281,34 +286,34 @@
 <div id="bar"></div>
 <div id="stage">
 <!-- 1 · TITLE -->
-  <section class="slide" style="justify-content:center" data-chip="MODULE 09 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 1</div><div class="cx-page"><b>01</b> / 21</div><!--/catalyst-brand:chrome-->
+  <section class="slide" style="justify-content:center" data-chip="MODULE 09 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 1</div><div class="cx-page"><b>01</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 09 · Next.js &amp; Rendering Architecture</div>
     <h1>A Rendering Strategy<br>for Every Route</h1>
-    <div class="sub">Seven lessons on where your HTML gets made, how long it stays true, and the routes where Next.js is the wrong answer.</div>
+    <div class="sub">Five lessons on where your HTML gets made, how long it stays true, and the routes where Next.js is the wrong answer.</div>
     <div class="fig" style="max-width:980px">
-      <svg viewBox="0 0 980 70" role="img" aria-label="Seven lessons: boundaries, render modes, caching, mutations, auth and SEO, when not Next.js, the port">
+      <svg viewBox="0 0 980 64" role="img" aria-label="Five lessons: boundaries, rendering and caching per route, actions and auth, SEO and when not to use Next.js, the port">
         <g>
-          <rect x="0" y="16" width="132" height="38" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="66" y="40" text-anchor="middle" class="lbl b" font-size="12">1 · Boundaries</text>
-          <rect x="141" y="16" width="132" height="38" rx="9" fill="#121C30" stroke="#2196F3"/>
-          <text x="207" y="40" text-anchor="middle" class="lbl b" font-size="12">2 · Render modes</text>
-          <rect x="282" y="16" width="132" height="38" rx="9" fill="#121C30" stroke="#A78BFA"/>
-          <text x="348" y="40" text-anchor="middle" class="lbl b" font-size="12">3 · Caching</text>
-          <rect x="423" y="16" width="132" height="38" rx="9" fill="#121C30" stroke="#FBBF24"/>
-          <text x="489" y="40" text-anchor="middle" class="lbl b" font-size="12">4 · Mutations</text>
-          <rect x="564" y="16" width="132" height="38" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="630" y="40" text-anchor="middle" class="lbl b" font-size="12">5 · Auth &amp; SEO</text>
-          <rect x="705" y="16" width="132" height="38" rx="9" fill="#121C30" stroke="#F8717A"/>
-          <text x="771" y="40" text-anchor="middle" class="lbl b" font-size="12">6 · When not Next</text>
-          <rect x="846" y="16" width="132" height="38" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="912" y="40" text-anchor="middle" class="lbl b" font-size="12">7 · The port</text>
+          <rect x="0" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="90" y="26" text-anchor="middle" class="lbl s">Lesson 1</text>
+          <text x="90" y="45" text-anchor="middle" class="lbl b">Boundaries</text>
+          <rect x="200" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="290" y="26" text-anchor="middle" class="lbl s">Lesson 2</text>
+          <text x="290" y="45" text-anchor="middle" class="lbl b">Render &amp; cache</text>
+          <rect x="400" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#F8717A"/>
+          <text x="490" y="26" text-anchor="middle" class="lbl s">Lesson 3</text>
+          <text x="490" y="45" text-anchor="middle" class="lbl b">Actions &amp; auth</text>
+          <rect x="600" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#A78BFA"/>
+          <text x="690" y="26" text-anchor="middle" class="lbl s">Lesson 4</text>
+          <text x="690" y="45" text-anchor="middle" class="lbl b">SEO, or not Next</text>
+          <rect x="800" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#FBBF24"/>
+          <text x="890" y="26" text-anchor="middle" class="lbl s">Lesson 5</text>
+          <text x="890" y="45" text-anchor="middle" class="lbl b">The port</text>
         </g>
       </svg>
     </div>
 </section>
 
-  <!-- L1a · SERVER BY DEFAULT -->
-  <section class="slide" data-chip="MODULE 09 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 1</div><div class="cx-page"><b>02</b> / 21</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 09 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 1</div><div class="cx-page"><b>02</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · The App Router mental model</div>
     <h2>Server by default, client by exception</h2>
     <div class="fig" style="max-width:1000px">
@@ -351,8 +356,7 @@
     <div class="key">A Server Component renders on the server and sends its <i>result</i>, never its code. <code>'use client'</code> marks a door into the browser bundle: that file and everything it imports ship to the client — and it still renders to HTML on the server first.</div>
 </section>
 
-  <!-- L1b · WHAT EACH SIDE CAN DO -->
-  <section class="slide" data-chip="MODULE 09 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 1</div><div class="cx-page"><b>03</b> / 21</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 09 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 1</div><div class="cx-page"><b>03</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Two kinds of component</div>
     <h2>What each side can and cannot do</h2>
     <table class="grid">
@@ -366,8 +370,7 @@
     <div class="key w">Props that cross from server to client must be serializable: strings, numbers, plain objects, arrays, Dates, promises — and server actions. A plain function or a class instance can't make the trip.</div>
 </section>
 
-  <!-- L1c · WHERE THE BOUNDARY GOES -->
-  <section class="slide" data-chip="MODULE 09 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 1</div><div class="cx-page"><b>04</b> / 21</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 09 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 1</div><div class="cx-page"><b>04</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Where the boundary goes</div>
     <h2>Push <code>'use client'</code> down to the leaves</h2>
     <div class="two tight" style="grid-template-columns:1fr 1.2fr">
@@ -406,8 +409,29 @@
     <div class="key g">Only <code>ApplyButton</code> crosses over. A client component can still wrap server-rendered <code>children</code>.</div>
 </section>
 
-  <!-- L2a · FIVE STRATEGIES -->
-  <section class="slide" data-chip="MODULE 09 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 2</div><div class="cx-page"><b>05</b> / 21</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 09 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 1</div><div class="cx-page"><b>05</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Read next</div>
+    <h2>The boundary, in the docs</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://nextjs.org/docs/app/getting-started/server-and-client-components" target="_blank" rel="noopener">Server and Client Components — Next.js</a><small>where the boundary goes, and what crosses it</small></li>
+          <li><a href="https://react.dev/reference/rsc/server-components" target="_blank" rel="noopener">Server Components — react.dev</a><small>the React model underneath the App Router</small></li>
+          <li><a href="https://react.dev/reference/rsc/use-client" target="_blank" rel="noopener">&#x27;use client&#x27; — react.dev</a><small>a directive marks a door, not a component</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://nextjs.org/learn/dashboard-app" target="_blank" rel="noopener">Next.js Learn — the dashboard course</a><small>the official hands-on App Router course</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/09-nextjs-rendering" target="_blank" rel="noopener">Module 9 slides</a><small>the deck this video walks through</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+  <section class="slide" data-chip="MODULE 09 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 2</div><div class="cx-page"><b>06</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Five ways to make HTML</div>
     <h2>One question: when is the HTML made?</h2>
     <table class="grid">
@@ -421,8 +445,7 @@
     <div class="key">Whatever a given version's defaults are, a route can only be static if nothing in it needs the request. Know which row each route lands on — and which line of code put it there.</div>
 </section>
 
-  <!-- L2b · DECISION FLOW -->
-  <section class="slide" data-chip="MODULE 09 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 2</div><div class="cx-page"><b>06</b> / 21</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 09 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 2</div><div class="cx-page"><b>07</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Choosing per route</div>
     <h2>Three questions pick the strategy</h2>
     <div class="fig" style="max-width:980px">
@@ -468,48 +491,8 @@
     <div class="key">Write the answer next to the route before you write the route. If you can't say why a page is dynamic, it probably shouldn't be.</div>
 </section>
 
-  <!-- L2c · STATIC AND STREAMED IN CODE -->
-  <section class="slide" data-chip="MODULE 09 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 2</div><div class="cx-page"><b>07</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 2 · Static and streamed, in code</div>
-    <h2>Opposite ends of the table, same framework</h2>
-    <div class="two tight">
-      <div class="card b">
-        <h3 class="b">/jobs/[id] · static, refreshed</h3>
-        <pre><code><span class="kw">export async function</span> <span class="fn">generateStaticParams</span>() {
-  <span class="kw">const</span> jobs = <span class="kw">await</span> <span class="fn">getRecentJobs</span>(<span class="st">200</span>)
-  <span class="kw">return</span> jobs.<span class="fn">map</span>((j) =&gt; ({ id: j.id }))
-}
-
-<span class="kw">export default async function</span> <span class="fn">JobPage</span>(
-  { params }: <span class="ty">Props</span>
-) {
-  <span class="kw">const</span> { id } = <span class="kw">await</span> params
-  <span class="kw">const</span> job = <span class="kw">await</span> <span class="fn">getJob</span>(id) <span class="cmt">// 300 s</span>
-  <span class="kw">return</span> &lt;<span class="ty">JobView</span> job={job} /&gt;
-}</code></pre>
-      </div>
-      <div class="card w">
-        <h3 class="w">/dashboard · per user, streamed</h3>
-        <pre><code><span class="kw">export default async function</span> <span class="fn">Dashboard</span>() {
-  <span class="cmt">// reads the cookie: this route is dynamic</span>
-  <span class="kw">const</span> me = <span class="kw">await</span> <span class="fn">verifySession</span>()
-  <span class="kw">return</span> (
-    &lt;&gt;
-      &lt;<span class="ty">h1</span>&gt;Welcome back, {me.name}&lt;/<span class="ty">h1</span>&gt;
-      &lt;<span class="ty">Suspense</span> fallback={&lt;<span class="ty">RowsSkeleton</span> /&gt;}&gt;
-        &lt;<span class="ty">Applications</span> /&gt; <span class="cmt">// slow query</span>
-      &lt;/<span class="ty">Suspense</span>&gt;
-    &lt;/&gt;
-  )
-}</code></pre>
-      </div>
-    </div>
-    <div class="key g">The greeting flushes at once; the applications stream in when their query lands. <code>loading.tsx</code> is the same idea, wrapped around a whole route segment.</div>
-</section>
-
-  <!-- L3a · THE CACHING LAYERS, IN ORDER -->
-  <section class="slide" data-chip="MODULE 09 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 3</div><div class="cx-page"><b>08</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · The caching layers, in order</div>
+  <section class="slide" data-chip="MODULE 09 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 2</div><div class="cx-page"><b>08</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · The caching layers, in order</div>
     <h2>Four caches stand between a click and your database</h2>
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 180" role="img" aria-label="A request passes the router cache in the browser, then the full route cache, request memoization and the data cache on the server, before reaching the database">
@@ -555,9 +538,8 @@
     <div class="key w">Every “why is this stale?” bug lives in one of these four boxes. Name the box before you touch a setting — the fix for each one is different.</div>
 </section>
 
-  <!-- L3b · OPT IN, OPT OUT, INVALIDATE -->
-  <section class="slide" data-chip="MODULE 09 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 3</div><div class="cx-page"><b>09</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Who controls each layer</div>
+  <section class="slide" data-chip="MODULE 09 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 2</div><div class="cx-page"><b>09</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Who controls each layer</div>
     <h2>Opt in, opt out, invalidate</h2>
     <table class="grid">
       <tr><th>Layer</th><th>You opt in with</th><th>It's skipped when</th><th>You clear it with</th></tr>
@@ -569,43 +551,30 @@
     <div class="key">A mutation changes layer 4 first. Revalidate the data, and the route and router caches built from it follow — in a server action, the user's own browser included.</div>
 </section>
 
-  <!-- L3c · FETCHING WITHOUT WATERFALLS -->
-  <section class="slide" data-chip="MODULE 09 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 3</div><div class="cx-page"><b>10</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Fetching without waterfalls</div>
-    <h2>Fetch where you render — in parallel, tagged</h2>
-    <div class="two tight" style="grid-template-columns:1.25fr 1fr">
-      <div class="card p">
-        <h3 class="p">features/jobs/data.ts</h3>
-        <pre><code><span class="kw">import</span> <span class="st">'server-only'</span>
-<span class="kw">import</span> { cache } <span class="kw">from</span> <span class="st">'react'</span>
-
-<span class="kw">export const</span> getJob = <span class="fn">cache</span>(<span class="kw">async</span> (id: <span class="ty">string</span>) =&gt; {
-  <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(`${API}/jobs/${id}`, {
-    next: { revalidate: <span class="st">300</span>, tags: [`job-${id}`] },
-  })
-  <span class="kw">if</span> (res.status === <span class="st">404</span>) <span class="fn">notFound</span>()
-  <span class="kw">return</span> JobSchema.<span class="fn">parse</span>(<span class="kw">await</span> res.<span class="fn">json</span>())
-})</code></pre>
+  <section class="slide" data-chip="MODULE 09 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 2</div><div class="cx-page"><b>10</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Read next</div>
+    <h2>Rendering and caching, at the source</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://web.dev/articles/rendering-on-the-web" target="_blank" rel="noopener">Rendering on the Web — web.dev</a><small>CSR, SSR, static and streaming, framework-neutral</small></li>
+          <li><a href="https://nextjs.org/docs/app/guides/caching" target="_blank" rel="noopener">Caching in Next.js</a><small>the four layers, how to opt in, how to invalidate</small></li>
+          <li><a href="https://nextjs.org/docs/app/guides/incremental-static-regeneration" target="_blank" rel="noopener">Incremental Static Regeneration</a><small>time-based and on-demand revalidation</small></li>
+        </ul>
       </div>
-      <div class="card g">
-        <h3 class="g">app/jobs/[id]/page.tsx</h3>
-        <pre><code><span class="no">// ✗ waterfall: one waits for the other</span>
-<span class="kw">const</span> job = <span class="kw">await</span> <span class="fn">getJob</span>(id)
-<span class="kw">const</span> more = <span class="kw">await</span> <span class="fn">getSimilar</span>(id)
-
-<span class="ok">// ✓ parallel: both start now</span>
-<span class="kw">const</span> [job, more] = <span class="kw">await</span> <span class="ty">Promise</span>.<span class="fn">all</span>([
-  <span class="fn">getJob</span>(id),
-  <span class="fn">getSimilar</span>(id),
-])</code></pre>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://nextjs.org/docs/app/api-reference/file-conventions/loading" target="_blank" rel="noopener">loading.js — streaming a route segment</a><small>Suspense around a whole segment</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/09-nextjs-rendering" target="_blank" rel="noopener">Module 9 slides</a><small>the deck this video walks through</small></li>
+        </ul>
       </div>
     </div>
-    <div class="key g"><code>generateMetadata</code> and the page both call <code>getJob(id)</code>; <code>cache()</code> makes that one call per request. The tag is how a mutation finds this entry later.</div>
 </section>
 
-  <!-- L4a · SERVER ACTIONS -->
-  <section class="slide" data-chip="MODULE 09 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 4</div><div class="cx-page"><b>11</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Server actions</div>
+  <section class="slide" data-chip="MODULE 09 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 3</div><div class="cx-page"><b>11</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Server actions</div>
     <h2>A form that posts straight to a server function</h2>
     <pre><code><span class="st">'use server'</span> <span class="cmt">// features/jobs/actions.ts</span>
 <span class="kw">export async function</span> <span class="fn">postJob</span>(prev: <span class="ty">FormState</span>, form: <span class="ty">FormData</span>): <span class="ty">Promise</span>&lt;<span class="ty">FormState</span>&gt; {
@@ -623,23 +592,8 @@
     <div class="key r">An action is a public endpoint. Authenticate, authorise and validate inside it — every time.</div>
 </section>
 
-  <!-- L4b · THREE ENTRY POINTS -->
-  <section class="slide" data-chip="MODULE 09 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 4</div><div class="cx-page"><b>12</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Three server entry points</div>
-    <h2>Action, route handler or middleware?</h2>
-    <table class="grid">
-      <tr><th></th><th>Server action</th><th>Route handler</th><th>Middleware / proxy</th></tr>
-      <tr><td><b>Called by</b></td><td>Your own UI — a form, a button</td><td>Anyone with the URL — a mobile app, a webhook, a cron job</td><td>Every matching request, before anything renders</td></tr>
-      <tr><td><b>Lives in</b></td><td>A <code>'use server'</code> function</td><td><code>app/api/…/route.ts</code> exporting <code>GET</code>, <code>POST</code></td><td><code>middleware.ts</code> — renamed <code>proxy.ts</code> in Next 16</td></tr>
-      <tr><td><b>In Rasmi</b></td><td>Post a job, apply, save a job</td><td>Payment webhook, the partner jobs feed, RSS</td><td>Send a visitor with no session cookie from <code>/dashboard</code> to <code>/login</code></td></tr>
-      <tr><td><b class="r">Not for</b></td><td>Reads, or an API other clients depend on</td><td>Your own form posts — an action is less code</td><td>Database queries, or the real permission check</td></tr>
-    </table>
-    <div class="key">Reads belong in Server Components. These three are for writes from your UI, for callers from outside, and for the door — in that order.</div>
-</section>
-
-  <!-- L4c · MIDDLEWARE AND ROUTE HANDLERS IN CODE -->
-  <section class="slide" data-chip="MODULE 09 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 4</div><div class="cx-page"><b>13</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · The door and the side entrance</div>
+  <section class="slide" data-chip="MODULE 09 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 3</div><div class="cx-page"><b>12</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · The door and the side entrance</div>
     <h2>Middleware checks for a wristband, not a password</h2>
     <div class="two tight">
       <div class="card w">
@@ -671,12 +625,11 @@
 }</code></pre>
       </div>
     </div>
-    <div class="key r">A cookie being present proves nothing about who sent it. Middleware makes the cheap, optimistic redirect; the real check lives next to the data, in <code>verifySession()</code> — Lesson 5.</div>
+    <div class="key r">A cookie being present proves nothing about who sent it. Middleware makes the cheap, optimistic redirect; the real check lives next to the data, in <code>verifySession()</code> — two slides on.</div>
 </section>
 
-  <!-- L5a · SESSIONS THAT SURVIVE A REFRESH -->
-  <section class="slide" data-chip="MODULE 09 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 5</div><div class="cx-page"><b>14</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Sessions that survive a refresh</div>
+  <section class="slide" data-chip="MODULE 09 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 3</div><div class="cx-page"><b>13</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Sessions that survive a refresh</div>
     <h2>Put the session where the server can read it</h2>
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 200" role="img" aria-label="Two timelines after a refresh: a token in localStorage produces a logged-out flash; an httpOnly cookie lets the server render the dashboard on the first byte">
@@ -717,9 +670,8 @@
     <div class="key">The flags that make a cookie a session, not a liability: <code>HttpOnly</code> so scripts can't read it, <code>Secure</code>, <code>SameSite=Lax</code>, a short <code>Max-Age</code>, and a value that's signed or encrypted.</div>
 </section>
 
-  <!-- L5b · CHECK NEXT TO THE DATA -->
-  <section class="slide" data-chip="MODULE 09 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 5</div><div class="cx-page"><b>15</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Check next to the data</div>
+  <section class="slide" data-chip="MODULE 09 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 3</div><div class="cx-page"><b>14</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Check next to the data</div>
     <h2>One <code>verifySession()</code>, wherever data is read</h2>
     <div class="two tight" style="grid-template-columns:1.25fr 1fr">
       <div class="card g">
@@ -750,9 +702,31 @@
     <div class="key g"><code>cache()</code> makes five calls in one render cost one cookie read and one lookup. <code>server-only</code> turns importing this file from a Client Component into a build error instead of a leak.</div>
 </section>
 
-  <!-- L5c · SEO METADATA -->
-  <section class="slide" data-chip="MODULE 09 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 5</div><div class="cx-page"><b>16</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Metadata in the first byte</div>
+  <section class="slide" data-chip="MODULE 09 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 3</div><div class="cx-page"><b>15</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Read next</div>
+    <h2>Writes and sessions, read properly</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://nextjs.org/docs/app/getting-started/mutating-data" target="_blank" rel="noopener">Updating data — Next.js</a><small>server functions, forms and revalidation</small></li>
+          <li><a href="https://nextjs.org/docs/app/guides/authentication" target="_blank" rel="noopener">Authentication — Next.js</a><small>sessions, the data access layer, verifySession</small></li>
+          <li><a href="https://nextjs.org/docs/app/guides/data-security" target="_blank" rel="noopener">Data security — Next.js</a><small>why every action authenticates, authorises and validates</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie" target="_blank" rel="noopener">Set-Cookie — MDN</a><small>HttpOnly, Secure, SameSite, Max-Age</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://nextjs.org/docs/app/getting-started/route-handlers-and-middleware" target="_blank" rel="noopener">Route handlers and middleware — Next.js</a><small>the side entrance and the door</small></li>
+          <li><a href="https://github.com/vercel/next.js/security/advisories/GHSA-f82v-jwr5-mffw" target="_blank" rel="noopener">The 2025 middleware bypass advisory</a><small>why middleware is never the real lock</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+  <section class="slide" data-chip="MODULE 09 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 4</div><div class="cx-page"><b>16</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Metadata in the first byte</div>
     <h2>Found in public, invisible behind login</h2>
     <div class="two tight" style="grid-template-columns:1.2fr 1fr">
       <div class="card b">
@@ -783,9 +757,8 @@
     <div class="key w"><code>robots.txt</code> asks crawlers not to look — it's public and only advisory. <code>noindex</code> tells them not to list. Only auth keeps a page private. The dashboard gets the last two.</div>
 </section>
 
-  <!-- L6a · WHEN NOT TO REACH FOR NEXT.JS -->
-  <section class="slide" data-chip="MODULE 09 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 6</div><div class="cx-page"><b>17</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 6 · When NOT to reach for Next.js</div>
+  <section class="slide" data-chip="MODULE 09 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 4</div><div class="cx-page"><b>17</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · When NOT to reach for Next.js</div>
     <h2>No route needs a server? Don't run one</h2>
     <table class="grid">
       <tr><th>If you're building</th><th>Reach for</th><th>Because</th></tr>
@@ -798,30 +771,30 @@
     <div class="key g">Rasmi's verdict: the public job pages need it — search, first paint, shared links. The dashboard alone wouldn't; it rides along because it shares the session, the components and the domain.</div>
 </section>
 
-  <!-- L6b · THE BILL -->
-  <section class="slide" data-chip="MODULE 09 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 6</div><div class="cx-page"><b>18</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 6 · The bill</div>
-    <h2>What you sign up for with a server framework</h2>
-    <div class="three">
-      <div class="card w">
-        <h3 class="w">A runtime to operate</h3>
-        <p>A Node process to host, scale, patch and keep warm. Files on a CDN have none of those problems. <b><code>output: 'export'</code></b> gives you static files back — and drops actions, middleware, ISR and request-time rendering.</p>
+  <section class="slide" data-chip="MODULE 09 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 4</div><div class="cx-page"><b>18</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Read next</div>
+    <h2>Be found — or choose not to need Next.js</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://nextjs.org/docs/app/getting-started/metadata-and-og-images" target="_blank" rel="noopener">Metadata and OG images — Next.js</a><small>metadata in the first byte</small></li>
+          <li><a href="https://developers.google.com/search/docs/appearance/structured-data/job-posting" target="_blank" rel="noopener">Job posting structured data — Google</a><small>the JSON-LD that gets a listing into job search</small></li>
+          <li><a href="https://developers.google.com/search/docs/crawling-indexing/block-indexing" target="_blank" rel="noopener">Block indexing with noindex — Google</a><small>robots.txt asks; noindex tells; auth protects</small></li>
+        </ul>
       </div>
-      <div class="card p">
-        <h3 class="p">A bigger mental model</h3>
-        <p>Two kinds of component, four caches, and defaults that have changed between major versions. <b>Every engineer on the team</b> has to know which side of the boundary they're standing on.</p>
-      </div>
-      <div class="card r">
-        <h3 class="r">Coupling to the host</h3>
-        <p>Image optimisation, ISR and middleware work best on hosts built for them. Self-hosting works — but <b>sharing the cache across instances</b> becomes your problem.</p>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://nextjs.org/docs/app/guides/static-exports" target="_blank" rel="noopener">Static exports — Next.js</a><small>what output: &#x27;export&#x27; keeps and drops</small></li>
+          <li><a href="https://vite.dev/guide/" target="_blank" rel="noopener">Vite — getting started</a><small>the SPA you reach for when no route needs a server</small></li>
+        </ul>
       </div>
     </div>
-    <div class="key">Defend the route, not the framework. List what each route needs from the server; if the list is empty, ship static files.</div>
 </section>
 
-  <!-- L7a · THE ROUTE MAP -->
-  <section class="slide" data-chip="MODULE 09 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 7</div><div class="cx-page"><b>19</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 7 · Build · Port the job board</div>
+  <section class="slide" data-chip="MODULE 09 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 5</div><div class="cx-page"><b>19</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Build · Port the job board</div>
     <h2>The route map is the spec</h2>
     <table class="grid">
       <tr><th>Route</th><th>Strategy</th><th>Why</th><th>Fresh after a change via</th></tr>
@@ -836,9 +809,8 @@
     <p class="say">Fill in the last column before you write a line of code — it's the column that turns into bugs.</p>
 </section>
 
-  <!-- L7b · WHAT DONE LOOKS LIKE -->
-  <section class="slide" data-chip="MODULE 09 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 7</div><div class="cx-page"><b>20</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 7 · Build · What done looks like</div>
+  <section class="slide" data-chip="MODULE 09 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 5</div><div class="cx-page"><b>20</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Build · What done looks like</div>
     <h2>Port it, then prove every route</h2>
     <div class="two tight">
       <div class="card a">
@@ -871,8 +843,29 @@ proxy.ts               <span class="cmt">the door</span></code></pre>
     <p class="say">Stage: <code>module-9/next-rendering</code> — same features, same domain types, new rendering.</p>
 </section>
 
-  <!-- CLOSING -->
-  <section class="slide" data-chip="MODULE 09 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 7</div><div class="cx-page"><b>21</b> / 21</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 09 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 5</div><div class="cx-page"><b>21</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Read next</div>
+    <h2>Everything the port leans on</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://nextjs.org/docs/app/api-reference/file-conventions/route-groups" target="_blank" rel="noopener">Route groups — Next.js</a><small>(public) and (dashboard), two layouts, one URL space</small></li>
+          <li><a href="https://nextjs.org/docs/app/api-reference/functions/generate-static-params" target="_blank" rel="noopener">generateStaticParams</a><small>the 200 jobs built at deploy</small></li>
+          <li><a href="https://nextjs.org/docs/app/api-reference/functions/revalidateTag" target="_blank" rel="noopener">revalidateTag</a><small>a new job on /jobs without a redeploy</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener">Rasmi — the job board repo</a><small>the port starts from your module 8 stage</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/09-nextjs-rendering" target="_blank" rel="noopener">Module 9 slides</a><small>the deck this video walks through</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+  <section class="slide" data-chip="MODULE 09 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 5</div><div class="cx-page"><b>22</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 09 · done</div>
     <h2>A strategy per route, defended out loud</h2>
     <div class="two">
@@ -953,7 +946,7 @@ proxy.ts               <span class="cmt">the door</span></code></pre>
     else if(k==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
     else if(k==='p'){slides.forEach(s=>s.querySelectorAll('.frag').forEach(el=>el.classList.add('on')));window.print();}
   });
-  document.getElementById('stage').addEventListener('click',e=>{ e.clientX>innerWidth/2?next():prev(); });
+  document.getElementById('stage').addEventListener('click',e=>{ if(e.target.closest('a')) return; e.clientX>innerWidth/2?next():prev(); });
   render();
 </script>
 <!--catalyst-brand:copy-->

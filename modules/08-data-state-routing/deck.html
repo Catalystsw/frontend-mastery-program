@@ -188,6 +188,11 @@
     .frag{opacity:1 !important; transform:none !important}
     *{animation:none !important}
   }
+
+  /* Read-next slides: links a presenter can click without advancing the deck. */
+  .refs li a{color:var(--ink); text-decoration:underline; text-decoration-color:var(--cy);
+    text-decoration-thickness:2px; text-underline-offset:4px}
+  .refs li a:hover, .refs li a:focus-visible{color:var(--cy)}
 </style>
 <!--catalyst-brand:style-->
 <link rel="icon" type="image/png" href="data:image/png;base64,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">
@@ -286,35 +291,28 @@
     <h1>Whose State<br>Is It, Anyway?</h1>
     <div class="sub">Which state is the server's, which is yours — and where each piece belongs.</div>
     <div class="fig" style="max-width:980px">
-      <svg viewBox="0 0 980 64" role="img" aria-label="Seven lessons: whose state, TanStack Query, race conditions, the URL as state, stores, real-time, build it">
+      <svg viewBox="0 0 980 64" role="img" aria-label="Five lessons: whose state, TanStack Query and the race it fixes, the URL as state, stores, build it">
         <g>
-          <rect x="0" y="6" width="128" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="64" y="26" text-anchor="middle" class="lbl s">Lesson 1</text>
-          <text x="64" y="45" text-anchor="middle" class="lbl b">Whose state?</text>
-          <rect x="142" y="6" width="128" height="52" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="206" y="26" text-anchor="middle" class="lbl s">Lesson 2</text>
-          <text x="206" y="45" text-anchor="middle" class="lbl b">TanStack Query</text>
-          <rect x="284" y="6" width="128" height="52" rx="9" fill="#121C30" stroke="#F8717A"/>
-          <text x="348" y="26" text-anchor="middle" class="lbl s">Lesson 3</text>
-          <text x="348" y="45" text-anchor="middle" class="lbl b">Race conditions</text>
-          <rect x="426" y="6" width="128" height="52" rx="9" fill="#121C30" stroke="#2196F3"/>
-          <text x="490" y="26" text-anchor="middle" class="lbl s">Lesson 4</text>
+          <rect x="0" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="90" y="26" text-anchor="middle" class="lbl s">Lesson 1</text>
+          <text x="90" y="45" text-anchor="middle" class="lbl b">Whose state?</text>
+          <rect x="200" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="290" y="26" text-anchor="middle" class="lbl s">Lesson 2</text>
+          <text x="290" y="45" text-anchor="middle" class="lbl b">Query &amp; races</text>
+          <rect x="400" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#2196F3"/>
+          <text x="490" y="26" text-anchor="middle" class="lbl s">Lesson 3</text>
           <text x="490" y="45" text-anchor="middle" class="lbl b">URL as state</text>
-          <rect x="568" y="6" width="128" height="52" rx="9" fill="#121C30" stroke="#A78BFA"/>
-          <text x="632" y="26" text-anchor="middle" class="lbl s">Lesson 5</text>
-          <text x="632" y="45" text-anchor="middle" class="lbl b">Stores</text>
-          <rect x="710" y="6" width="128" height="52" rx="9" fill="#121C30" stroke="#FBBF24"/>
-          <text x="774" y="26" text-anchor="middle" class="lbl s">Lesson 6</text>
-          <text x="774" y="45" text-anchor="middle" class="lbl b">Real-time</text>
-          <rect x="852" y="6" width="128" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="916" y="26" text-anchor="middle" class="lbl s">Lesson 7</text>
-          <text x="916" y="45" text-anchor="middle" class="lbl b">Build it</text>
+          <rect x="600" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#A78BFA"/>
+          <text x="690" y="26" text-anchor="middle" class="lbl s">Lesson 4</text>
+          <text x="690" y="45" text-anchor="middle" class="lbl b">Stores</text>
+          <rect x="800" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#FBBF24"/>
+          <text x="890" y="26" text-anchor="middle" class="lbl s">Lesson 5</text>
+          <text x="890" y="45" text-anchor="middle" class="lbl b">Build it</text>
         </g>
       </svg>
     </div>
 </section>
 
-  <!-- L1a · SERVER STATE vs CLIENT STATE -->
   <section class="slide" data-chip="MODULE 08 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 1</div><div class="cx-page"><b>02</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Two kinds of state</div>
     <h2>Server state is a copy you don't own</h2>
@@ -329,7 +327,6 @@
     <div class="key">If someone else can change it without telling you, it's server state — and what your app holds is a <b>cache</b> of it. Caches need expiry, refetching and invalidation. <code>useState</code> has none of those.</div>
 </section>
 
-  <!-- L1b · SORTING RASMI'S STATE -->
   <section class="slide" data-chip="MODULE 08 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 1</div><div class="cx-page"><b>03</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Sorting Rasmi's state</div>
     <h2>Every piece of state gets exactly one home</h2>
@@ -378,7 +375,6 @@
     <div class="key w">The trap is <b>Saved jobs</b>. The user decides it, so it feels like client state — but the server keeps it. The click isn't the state; it's a <i>request</i> to change the server's state.</div>
 </section>
 
-  <!-- L1c · THE INTERVIEW QUESTION -->
   <section class="slide" data-chip="MODULE 08 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 1</div><div class="cx-page"><b>04</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · The interview question</div>
     <h2>Three questions decide where state lives</h2>
@@ -425,8 +421,29 @@
     <div class="key">Mid-level answer: “I'd put it in Redux.” Senior answer: ask these three questions out loud for each piece — and say what breaks if it lived anywhere else.</div>
 </section>
 
-  <!-- L2a · THE CACHE -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>05</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 1</div><div class="cx-page"><b>05</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Read next</div>
+    <h2>Read where the line is drawn</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://tanstack.com/query/latest/docs/framework/react/guides/does-this-replace-client-state" target="_blank" rel="noopener">Does TanStack Query replace client state?</a><small>the server-state / client-state split, from the library&#x27;s authors</small></li>
+          <li><a href="https://react.dev/learn/choosing-the-state-structure" target="_blank" rel="noopener">Choosing the state structure — react.dev</a><small>avoid redundant and duplicated state</small></li>
+          <li><a href="https://kentcdodds.com/blog/application-state-management-with-react" target="_blank" rel="noopener">Application state management with React</a><small>Kent C. Dodds on keeping state close to where it&#x27;s used</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener">Rasmi — the job board repo</a><small>sort its state into server, URL and client before Lesson 2</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/08-data-state-routing" target="_blank" rel="noopener">Module 8 slides</a><small>the deck this video walks through</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+  <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>06</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · The cache</div>
     <h2>One key, one entry, one lifecycle</h2>
     <div class="fig" style="max-width:1000px">
@@ -468,8 +485,7 @@
     <div class="key"><code>staleTime</code> decides when data is <b>refetched</b>; <code>gcTime</code> decides when it is <b>deleted</b>. Stale data still renders instantly — the refetch runs behind it.</div>
 </section>
 
-  <!-- L2b · INVALIDATION -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>06</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>07</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · What invalidation really means</div>
     <h2>Invalidate means “mark stale”, not “delete”</h2>
     <div class="two tight">
@@ -502,8 +518,7 @@
     <div class="key">Keys match by prefix: <code>['jobs']</code> hits every list and every detail. Shape your keys the way your data changes.</div>
 </section>
 
-  <!-- L2c · OPTIMISTIC UPDATES -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>07</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>08</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Optimistic updates</div>
     <h2>Save the job now — and keep a way back</h2>
     <pre><code><span class="kw">const</span> save = <span class="fn">useMutation</span>({
@@ -522,78 +537,9 @@
     <div class="key r">Most hand-written optimistic updates skip two lines: the <code>onError</code> restore, and the <code>cancelQueries</code> that stops a refetch already in flight from landing on top of your guess. Without them the star lies.</div>
 </section>
 
-  <!-- L3a · THE RACE -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 3</div><div class="cx-page"><b>08</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Race conditions</div>
-    <h2>The last response to land wins — not the last request</h2>
-    <div class="fig" style="max-width:1000px">
-      <svg viewBox="0 0 1000 196" role="img" aria-label="Timeline: the user types re then react; the slow request for re resolves after the fast request for react, so the screen shows results for re">
-        <text x="0" y="35" class="lbl b">you type</text>
-        <text x="0" y="87" class="lbl b">request A</text>
-        <text x="0" y="127" class="lbl b">request B</text>
-        <text x="0" y="182" class="lbl b">screen</text>
-        <rect x="150" y="16" width="60" height="30" rx="7" fill="#121C30" stroke="#243349"/>
-        <text x="180" y="36" text-anchor="middle" class="lbl" style="font-family:var(--mono)">re</text>
-        <rect x="350" y="16" width="80" height="30" rx="7" fill="#121C30" stroke="#243349"/>
-        <text x="390" y="36" text-anchor="middle" class="lbl" style="font-family:var(--mono)">react</text>
-        <rect x="180" y="68" width="640" height="28" rx="7" fill="#121C30" stroke="#F8717A"/>
-        <text x="500" y="87" text-anchor="middle" class="lbl">GET /jobs?q=re — slow</text>
-        <rect x="390" y="108" width="180" height="28" rx="7" fill="#121C30" stroke="#34D399"/>
-        <text x="480" y="127" text-anchor="middle" class="lbl">GET ?q=react — fast</text>
-        <path class="draw" pathLength="1" d="M570,136 L570,158" stroke="#34D399" fill="none"/>
-        <path class="draw" pathLength="1" d="M820,96 L820,158" stroke="#F8717A" fill="none"/>
-        <rect x="570" y="162" width="250" height="30" rx="7" fill="#121C30" stroke="#34D399"/>
-        <text x="695" y="182" text-anchor="middle" class="lbl b">react results ✓</text>
-        <rect x="820" y="162" width="180" height="30" rx="7" fill="#121C30" stroke="#F8717A"/>
-        <text x="910" y="182" text-anchor="middle" class="lbl b" style="fill:#F8717A">re results ✗</text>
-      </svg>
-    </div>
-    <pre><code><span class="fn">useEffect</span>(() =&gt; {
-  api.<span class="fn">jobs</span>({ q }).<span class="fn">then</span>(setJobs);   <span class="no">// whoever answers last overwrites the list</span>
-}, [q]);</code></pre>
-    <div class="key r">Nothing here is wrong line by line. The bug lives between the lines: two promises, one setter, and no rule for which one may still write.</div>
-</section>
-
-  <!-- L3b · FIX ONE: CLEANUP -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 3</div><div class="cx-page"><b>09</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Fix one: clean up the effect</div>
-    <h2>Ignore the stale answer, or cancel the request</h2>
-    <div class="two tight">
-      <div class="card g">
-        <h3 class="g">The ignore flag</h3>
-        <p>The response still downloads; it just can't write. Works with any promise.</p>
-        <pre><code><span class="fn">useEffect</span>(() =&gt; {
-  <span class="kw">let</span> ignore = <span class="kw">false</span>;
-  api.<span class="fn">jobs</span>({ q }).<span class="fn">then</span>((jobs) =&gt; {
-    <span class="kw">if</span> (!ignore) <span class="fn">setJobs</span>(jobs);
-  });
-  <span class="kw">return</span> () =&gt; {
-    ignore = <span class="kw">true</span>;   <span class="cmt">// q changed: drop it</span>
-  };
-}, [q]);</code></pre>
-      </div>
-      <div class="card b">
-        <h3 class="b">AbortController</h3>
-        <p>The browser drops the request. Saves bandwidth — though the server may have done the work.</p>
-        <pre><code><span class="fn">useEffect</span>(() =&gt; {
-  <span class="kw">const</span> ctrl = <span class="kw">new</span> <span class="ty">AbortController</span>();
-  api.<span class="fn">jobs</span>({ q }, { signal: ctrl.signal })
-    .<span class="fn">then</span>(setJobs)
-    .<span class="fn">catch</span>((err) =&gt; {
-      <span class="kw">if</span> (err.name === <span class="st">'AbortError'</span>) <span class="kw">return</span>;
-      <span class="fn">setError</span>(err);
-    });
-  <span class="kw">return</span> () =&gt; ctrl.<span class="fn">abort</span>();
-}, [q]);</code></pre>
-      </div>
-    </div>
-    <div class="key">Both live in the cleanup function, which React runs before the next effect. StrictMode's extra setup-and-cleanup in development is there to catch the one you forgot.</div>
-</section>
-
-  <!-- L3c · FIX TWO: THE CACHE KEY -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 3</div><div class="cx-page"><b>10</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Fix two: let the cache key decide</div>
-    <h2>Each answer lands in its own key's slot</h2>
+  <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>09</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · The race it fixes</div>
+    <h2>A late answer lands in its own key — not on screen</h2>
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 140" role="img" aria-label="Late response for re fills the re entry; the component reads only the react entry">
         <rect x="0" y="14" width="240" height="40" rx="9" fill="#121C30" stroke="#F8717A"/>
@@ -619,12 +565,34 @@
   queryFn: ({ signal }) =&gt; api.<span class="fn">jobs</span>({ q }, { signal }),  <span class="cmt">// aborted once nobody observes the old key</span>
   placeholderData: keepPreviousData,                     <span class="cmt">// keep the old list on screen while the new one loads</span>
 });</code></pre>
-    <div class="key g">No flag, no cleanup. The screen reads by <b>key</b>, not by arrival order, so the race can't happen. The late <code>re</code> answer just fills the <code>re</code> entry — ready if the user deletes back to it.</div>
+    <div class="key g">In a bare <code>useEffect</code> the slow <code>re</code> answer overwrites <code>react</code>. Here the screen reads by <b>key</b>, not arrival order — the race is designed out.</div>
 </section>
 
-  <!-- L4a · THE URL IS STATE -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 4</div><div class="cx-page"><b>11</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Search params as state</div>
+  <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>10</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Read next</div>
+    <h2>The cache, from the people who built it</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://tanstack.com/query/latest/docs/framework/react/guides/important-defaults" target="_blank" rel="noopener">Important defaults — TanStack Query</a><small>why a tab switch refetches: staleTime 0, gcTime 5 min</small></li>
+          <li><a href="https://tanstack.com/query/latest/docs/framework/react/guides/query-invalidation" target="_blank" rel="noopener">Query invalidation</a><small>mark stale, refetch the active ones, match by prefix</small></li>
+          <li><a href="https://tanstack.com/query/latest/docs/framework/react/guides/optimistic-updates" target="_blank" rel="noopener">Optimistic updates</a><small>cancel, snapshot, write, roll back</small></li>
+          <li><a href="https://react.dev/reference/react/useEffect#fetching-data-with-effects" target="_blank" rel="noopener">Fetching data with effects — react.dev</a><small>the ignore flag that closes the race without a library</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://tkdodo.eu/blog/practical-react-query" target="_blank" rel="noopener">Practical React Query — TkDodo</a><small>the maintainer&#x27;s series on keys, defaults and custom hooks</small></li>
+          <li><a href="https://tanstack.com/query/latest/docs/framework/react/devtools" target="_blank" rel="noopener">TanStack Query Devtools</a><small>watch entries go fresh, stale and inactive</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+  <section class="slide" data-chip="MODULE 08 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 3</div><div class="cx-page"><b>11</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Search params as state</div>
     <h2>If it lives in useState, nobody can share it</h2>
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 72" role="img" aria-label="The URL string is validated by the route into a typed object, which becomes the query key">
@@ -658,9 +626,8 @@
     <div class="key">Move the filters into the URL and you get three features for free: refresh keeps them, a link shares them, and Back undoes the last one.</div>
 </section>
 
-  <!-- L4b · VALIDATE AT THE ROUTE -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 4</div><div class="cx-page"><b>12</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Type-safe routes and loaders</div>
+  <section class="slide" data-chip="MODULE 08 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 3</div><div class="cx-page"><b>12</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Type-safe routes and loaders</div>
     <h2>Validate the URL once, at the route</h2>
     <pre><code><span class="kw">const</span> jobSearch = z.<span class="fn">object</span>({
   q: z.<span class="fn">string</span>().<span class="fn">catch</span>(<span class="st">''</span>),
@@ -678,9 +645,8 @@
     <div class="key"><code>.catch()</code> turns a hand-edited URL into a valid default instead of an error page. <code>loaderDeps</code> names what the loader reads, so changing anything else in the URL doesn't refetch.</div>
 </section>
 
-  <!-- L4c · LOADERS AND TYPED LINKS -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 4</div><div class="cx-page"><b>13</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Loaders and typed links</div>
+  <section class="slide" data-chip="MODULE 08 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 3</div><div class="cx-page"><b>13</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Loaders and typed links</div>
     <h2>Fetch on navigation, not on render</h2>
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 142" role="img" aria-label="Fetching in effects waits for each render before the next fetch; route loaders start both fetches in parallel at navigation">
@@ -722,9 +688,30 @@
 &lt;<span class="ty">Link</span> to=<span class="st">"/job/$jobId"</span> params={{ jobId: job.id }} /&gt;     <span class="no">// ✗ type error: no such route</span></code></pre>
 </section>
 
-  <!-- L5a · NORMALIZATION -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 5</div><div class="cx-page"><b>14</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Normalization</div>
+  <section class="slide" data-chip="MODULE 08 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 3</div><div class="cx-page"><b>14</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Read next</div>
+    <h2>The URL, typed end to end</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://tanstack.com/router/latest/docs/framework/react/guide/search-params" target="_blank" rel="noopener">Search params — TanStack Router</a><small>validateSearch, defaults and typed links</small></li>
+          <li><a href="https://tanstack.com/router/latest/docs/framework/react/guide/data-loading" target="_blank" rel="noopener">Data loading — TanStack Router</a><small>loaders that run on navigation, not on render</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams" target="_blank" rel="noopener">URLSearchParams — MDN</a><small>what the browser gives you underneath</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://zod.dev" target="_blank" rel="noopener">Zod</a><small>the schema behind validateSearch — the module 4 boundary habit</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/08-data-state-routing" target="_blank" rel="noopener">Module 8 slides</a><small>the deck this video walks through</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+  <section class="slide" data-chip="MODULE 08 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 4</div><div class="cx-page"><b>15</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Normalization</div>
     <h2>One job, three copies, two of them wrong</h2>
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 192" role="img" aria-label="Nested copies of job 42 disagree; normalized lists hold ids pointing at one record">
@@ -760,9 +747,8 @@
     <div class="key">With a server cache you rarely normalize — you <b>invalidate</b> the keys and refetch. Normalize when the <i>client</i> edits one record from many screens: offline drafts, editors, collaborative boards.</div>
 </section>
 
-  <!-- L5b · ZUSTAND vs REDUX TOOLKIT -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 5</div><div class="cx-page"><b>15</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Zustand and Redux Toolkit</div>
+  <section class="slide" data-chip="MODULE 08 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 4</div><div class="cx-page"><b>16</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Zustand and Redux Toolkit</div>
     <h2>One tray, two stores</h2>
     <div class="two tight">
       <div class="card p">
@@ -803,9 +789,8 @@
     <div class="key">Neither should ever hold a job listing. Stores are for state the server has never heard of.</div>
 </section>
 
-  <!-- L5c · WHEN EACH IS WRONG -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 5</div><div class="cx-page"><b>16</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Choosing, and refusing</div>
+  <section class="slide" data-chip="MODULE 08 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 4</div><div class="cx-page"><b>17</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Choosing, and refusing</div>
     <h2>Every tool here is the wrong choice somewhere</h2>
     <table class="grid">
       <tr><th>Tool</th><th>Right for</th><th>Wrong when</th></tr>
@@ -819,112 +804,36 @@
     <div class="key r">Server data copied into Zustand or Redux is the classic red flag: loading flags, staleness and refetching, rebuilt by hand — and worse.</div>
 </section>
 
-  <!-- L6a · THREE SHAPES ON THE WIRE -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 6</div><div class="cx-page"><b>17</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 6 · Real-time</div>
-    <h2>Three ways to hear about a change</h2>
-    <div class="fig" style="max-width:1000px">
-      <svg viewBox="0 0 1000 240" role="img" aria-label="Polling repeats requests; server-sent events keep one response open and push events; a websocket upgrades and messages flow both ways">
-        <text x="155" y="14" text-anchor="middle" class="lbl b">Polling</text>
-        <text x="500" y="14" text-anchor="middle" class="lbl b">Server-Sent Events</text>
-        <text x="845" y="14" text-anchor="middle" class="lbl b">WebSocket</text>
-
-        <text x="40" y="36" text-anchor="middle" class="lbl s">client</text>
-        <text x="270" y="36" text-anchor="middle" class="lbl s">server</text>
-        <line x1="40" y1="42" x2="40" y2="236" stroke="#243349" stroke-dasharray="3 4"/>
-        <line x1="270" y1="42" x2="270" y2="236" stroke="#243349" stroke-dasharray="3 4"/>
-        <text x="155" y="58" text-anchor="middle" class="lbl s">GET</text>
-        <path d="M40,64 L268,64" stroke="#64748B" fill="none"/>
-        <text x="155" y="80" text-anchor="middle" class="lbl s">nothing new</text>
-        <path d="M270,86 L42,86" stroke="#64748B" fill="none"/>
-        <text x="155" y="120" text-anchor="middle" class="lbl s">GET</text>
-        <path d="M40,126 L268,126" stroke="#64748B" fill="none"/>
-        <text x="155" y="142" text-anchor="middle" class="lbl s">nothing new</text>
-        <path d="M270,148 L42,148" stroke="#64748B" fill="none"/>
-        <text x="155" y="182" text-anchor="middle" class="lbl s">GET</text>
-        <path d="M40,188 L268,188" stroke="#64748B" fill="none"/>
-        <text x="155" y="204" text-anchor="middle" class="lbl s" style="fill:#34D399">changed</text>
-        <path d="M270,210 L42,210" stroke="#34D399" fill="none"/>
-
-        <text x="385" y="36" text-anchor="middle" class="lbl s">client</text>
-        <text x="615" y="36" text-anchor="middle" class="lbl s">server</text>
-        <line x1="385" y1="42" x2="385" y2="236" stroke="#243349" stroke-dasharray="3 4"/>
-        <line x1="615" y1="42" x2="615" y2="236" stroke="#243349" stroke-dasharray="3 4"/>
-        <text x="500" y="58" text-anchor="middle" class="lbl s">GET /stream — stays open</text>
-        <path d="M385,64 L613,64" stroke="#64748B" fill="none"/>
-        <text x="500" y="106" text-anchor="middle" class="lbl s" style="fill:#34D399">event: status</text>
-        <path d="M615,112 L387,112" stroke="#34D399" fill="none"/>
-        <text x="500" y="156" text-anchor="middle" class="lbl s" style="fill:#34D399">event: status</text>
-        <path d="M615,162 L387,162" stroke="#34D399" fill="none"/>
-        <text x="500" y="206" text-anchor="middle" class="lbl s" style="fill:#34D399">event: status</text>
-        <path d="M615,212 L387,212" stroke="#34D399" fill="none"/>
-
-        <text x="730" y="36" text-anchor="middle" class="lbl s">client</text>
-        <text x="960" y="36" text-anchor="middle" class="lbl s">server</text>
-        <line x1="730" y1="42" x2="730" y2="236" stroke="#243349" stroke-dasharray="3 4"/>
-        <line x1="960" y1="42" x2="960" y2="236" stroke="#243349" stroke-dasharray="3 4"/>
-        <text x="845" y="58" text-anchor="middle" class="lbl s">HTTP Upgrade</text>
-        <path d="M730,64 L958,64" stroke="#64748B" fill="none"/>
-        <text x="845" y="80" text-anchor="middle" class="lbl s">101 Switching Protocols</text>
-        <path d="M960,86 L732,86" stroke="#64748B" fill="none"/>
-        <text x="845" y="130" text-anchor="middle" class="lbl s" style="fill:#A78BFA">message</text>
-        <path d="M960,136 L732,136" stroke="#A78BFA" fill="none"/>
-        <text x="845" y="170" text-anchor="middle" class="lbl s" style="fill:#A78BFA">send</text>
-        <path d="M730,176 L958,176" stroke="#A78BFA" fill="none"/>
-        <text x="845" y="210" text-anchor="middle" class="lbl s" style="fill:#A78BFA">message</text>
-        <path d="M960,216 L732,216" stroke="#A78BFA" fill="none"/>
-      </svg>
+  <section class="slide" data-chip="MODULE 08 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 4</div><div class="cx-page"><b>18</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Read next</div>
+    <h2>Before you add a store, read these</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://redux.js.org/usage/structuring-reducers/normalizing-state-shape" target="_blank" rel="noopener">Normalizing state shape — Redux</a><small>ids and lookup tables instead of nested copies</small></li>
+          <li><a href="https://redux-toolkit.js.org/api/createEntityAdapter" target="_blank" rel="noopener">createEntityAdapter — Redux Toolkit</a><small>normalization without the boilerplate</small></li>
+          <li><a href="https://react.dev/learn/scaling-up-with-reducer-and-context" target="_blank" rel="noopener">Scaling up with reducer and context — react.dev</a><small>what React alone already gives you</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://zustand.docs.pmnd.rs/" target="_blank" rel="noopener">Zustand docs</a><small>a store in one hook — read it before deciding you need one</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/08-data-state-routing" target="_blank" rel="noopener">Module 8 slides</a><small>the deck this video walks through</small></li>
+        </ul>
+      </div>
     </div>
-    <div class="key">Polling asks again and again. SSE keeps one response open and the server writes into it. A WebSocket upgrades the connection, and then both sides talk.</div>
 </section>
 
-  <!-- L6b · COMPARISON -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 6</div><div class="cx-page"><b>18</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 6 · Polling, SSE, WebSocket</div>
-    <h2>Pick the simplest one that's fast enough</h2>
-    <table class="grid">
-      <tr><th></th><th>Polling</th><th>Server-Sent Events</th><th>WebSocket</th></tr>
-      <tr><td><b>Direction</b></td><td>Client asks</td><td>Server → client</td><td>Both ways</td></tr>
-      <tr><td><b>Built on</b></td><td>Ordinary requests</td><td>One long HTTP response</td><td>An upgraded connection</td></tr>
-      <tr><td><b>Reconnect</b></td><td>Nothing to reconnect</td><td>Automatic, resumes via <code>Last-Event-ID</code></td><td>Yours to write, with backoff</td></tr>
-      <tr><td><b>Idle cost</b></td><td>A request every interval</td><td>One open connection</td><td>One open connection + heartbeats</td></tr>
-      <tr><td><b>In code</b></td><td><code>refetchInterval</code></td><td><code>new EventSource(url)</code></td><td><code>new WebSocket(url)</code></td></tr>
-      <tr><td><b>In Rasmi</b></td><td>“12 new jobs” banner</td><td>Application status changes</td><td>Chat with a recruiter</td></tr>
-    </table>
-    <div class="key w">Most screens that “need websockets” need polling every 30 seconds. Reach for a socket when the client must also talk back, fast.</div>
-</section>
-
-  <!-- L6c · PUSH INTO THE CACHE -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 6</div><div class="cx-page"><b>19</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 6 · Real-time feeds the cache</div>
-    <h2>Events go into the cache, not beside it</h2>
-    <pre><code><span class="kw">function</span> <span class="fn">useApplicationStatusStream</span>() {
-  <span class="kw">const</span> queryClient = <span class="fn">useQueryClient</span>();
-  <span class="fn">useEffect</span>(() =&gt; {
-    <span class="kw">const</span> es = <span class="kw">new</span> <span class="ty">EventSource</span>(<span class="st">'/api/applications/stream'</span>);
-    es.<span class="fn">addEventListener</span>(<span class="st">'status'</span>, (e) =&gt; {
-      <span class="kw">const</span> { id, status } = <span class="ty">JSON</span>.<span class="fn">parse</span>(e.data);
-      queryClient.<span class="fn">setQueryData</span>&lt;<span class="ty">Application</span>&gt;([<span class="st">'applications'</span>, <span class="st">'detail'</span>, id],
-        (old) =&gt; (old ? { ...old, status } : old));                           <span class="cmt">// patch the one we have</span>
-      queryClient.<span class="fn">invalidateQueries</span>({ queryKey: [<span class="st">'applications'</span>, <span class="st">'list'</span>] });  <span class="cmt">// refetch lists that show it</span>
-    });
-    <span class="kw">return</span> () =&gt; es.<span class="fn">close</span>();
-  }, [queryClient]);
-}
-<span class="cmt">// no server work at all? poll instead — same cache, same components:</span>
-<span class="fn">useQuery</span>({ ...<span class="fn">applicationsQuery</span>(), refetchInterval: <span class="st">30_000</span> });</code></pre>
-    <div class="key g">The event says <i>what</i> changed; components still read only the cache. Swap the transport later and not one component changes.</div>
-</section>
-
-  <!-- L7a · THE BUILD -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 7</div><div class="cx-page"><b>20</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 7 · Build</div>
+  <section class="slide" data-chip="MODULE 08 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 5</div><div class="cx-page"><b>19</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Build</div>
     <h2>Rebuild Rasmi's data layer on Query and Router</h2>
     <p class="say">Same screens, new plumbing: every piece of state moves to the home Lesson 1 gave it.</p>
     <div class="fig" style="max-width:1000px">
-      <svg viewBox="0 0 1000 214" role="img" aria-label="Target architecture: URL to route to QueryClient cache to components; SSE and mutations write into the cache; Zustand holds only the compare tray">
+      <svg viewBox="0 0 1000 214" role="img" aria-label="Target architecture: URL to route to QueryClient cache to components; polling and mutations write into the cache; Zustand holds only the compare tray">
         <rect x="450" y="0" width="200" height="36" rx="9" fill="#121C30" stroke="#A78BFA"/>
-        <text x="550" y="23" text-anchor="middle" class="lbl b">SSE · or polling</text>
+        <text x="550" y="23" text-anchor="middle" class="lbl b">refetchInterval · 30 s</text>
         <rect x="0" y="78" width="150" height="56" rx="10" fill="#121C30" stroke="#2196F3"/>
         <text x="75" y="101" text-anchor="middle" class="lbl b">URL</text>
         <text x="75" y="120" text-anchor="middle" class="lbl s" style="font-family:var(--mono)">/jobs?q=…</text>
@@ -952,9 +861,8 @@
     <div class="key">Stage <code>module-8/data-layer</code> in the job board repo. One rule for the whole build: no component calls <code>fetch</code> — every read is a query, every write is a mutation.</div>
 </section>
 
-  <!-- L7b · DEFINITION OF DONE -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 7</div><div class="cx-page"><b>21</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 7 · Definition of done</div>
+  <section class="slide" data-chip="MODULE 08 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 5</div><div class="cx-page"><b>20</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Definition of done</div>
     <h2>Seven checks before you call it done</h2>
     <table class="grid">
       <tr><th>Check</th><th>Prove it</th></tr>
@@ -963,14 +871,35 @@
       <tr><td><b>3 · No stale search results</b></td><td>Throttle the network and type fast: the list always matches the box</td></tr>
       <tr><td><b>4 · Save is optimistic, with rollback</b></td><td>Make the save endpoint fail: the star flips, then flips back with an error</td></tr>
       <tr><td><b>5 · Apply refreshes its dependants</b></td><td>“My applications” and the job's Applied badge update with no reload</td></tr>
-      <tr><td><b>6 · Statuses arrive live</b></td><td>Change a status on the server: the badge updates without a click</td></tr>
+      <tr><td><b>6 · Statuses stay fresh</b></td><td><code>refetchInterval</code> on applications: change a status on the server, the badge updates within 30 s — no click</td></tr>
       <tr><td><b>7 · The store holds no server data</b></td><td>Zustand contains the compare tray's ids — nothing else</td></tr>
     </table>
     <div class="key g">In the PR description, name the home of every piece of state with one sentence on why. That paragraph is your interview answer.</div>
 </section>
 
-  <!-- CLOSING -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 7</div><div class="cx-page"><b>22</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 5</div><div class="cx-page"><b>21</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Read next</div>
+    <h2>Everything the build leans on</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://tanstack.com/router/latest/docs/framework/react/guide/external-data-loading" target="_blank" rel="noopener">External data loading — TanStack Router</a><small>the router warms the Query cache; it owns no data</small></li>
+          <li><a href="https://tanstack.com/query/latest/docs/framework/react/guides/prefetching" target="_blank" rel="noopener">Prefetching — TanStack Query</a><small>ensureQueryData in loaders, prefetch on hover</small></li>
+          <li><a href="https://tanstack.com/query/latest/docs/framework/react/reference/useQuery" target="_blank" rel="noopener">useQuery reference</a><small>refetchInterval, placeholderData and the rest of the options</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener">Rasmi — the job board repo</a><small>the build starts from your module 7 stage</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/08-data-state-routing" target="_blank" rel="noopener">Module 8 slides</a><small>the deck this video walks through</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+  <section class="slide" data-chip="MODULE 08 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 5</div><div class="cx-page"><b>22</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 08 · done</div>
     <h2>Every piece of state has an owner and a home</h2>
     <div class="two">
@@ -981,7 +910,7 @@
           <li>Run a cache instead of fetching in effects<small>keys, staleTime vs gcTime, invalidation, optimistic updates that roll back</small></li>
           <li>Close race conditions for good<small>cleanup flags, AbortController, or keys that decide</small></li>
           <li>Keep shareable state in a typed URL<small>validateSearch, loaders, typed links</small></li>
-          <li>Pick a store — or refuse one — and a real-time transport<small>Zustand, Redux Toolkit, polling, SSE, WebSockets</small></li>
+          <li>Pick a store — or refuse one<small>Zustand, Redux Toolkit, Context, or the cache you already have</small></li>
         </ul>
       </div>
       <div class="card b">
@@ -1046,7 +975,7 @@
     else if(k==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
     else if(k==='p'){slides.forEach(s=>s.querySelectorAll('.frag').forEach(el=>el.classList.add('on')));window.print();}
   });
-  document.getElementById('stage').addEventListener('click',e=>{ e.clientX>innerWidth/2?next():prev(); });
+  document.getElementById('stage').addEventListener('click',e=>{ if(e.target.closest('a')) return; e.clientX>innerWidth/2?next():prev(); });
   render();
 </script>
 <!--catalyst-brand:copy-->

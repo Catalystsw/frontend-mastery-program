@@ -188,6 +188,10 @@
     .frag{opacity:1 !important; transform:none !important}
     *{animation:none !important}
   }
+  /* Read next: one per lesson, references and resources as links */
+  section[data-rn] .plist{max-width:none}
+  section[data-rn] .plist a{color:var(--ink); text-decoration:none; border-bottom:1px solid var(--line2)}
+  section[data-rn] .plist a:hover{color:var(--cy); border-bottom-color:var(--cy)}
 </style>
 <!--catalyst-brand:style-->
 <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAATTUlEQVR42uVbabAcV3X+zrm3e2bee5JsyZaFjbFROWCLJRZgshRLUoEARQJFEemHnQ1DoNhTMcUSiIUIpIDELHZBQgBT2SqJXoCQIuBAKuCEQIAAXvBuy7ZsS0jW+paZ6e57z5cf9/bMvGdJlmUc5KKr+vWb7p7pe+49y3fO+VrwY98oOGE34SP9AJzYG2X5IP2PTfItFGwVW/PEl6wYNht7mCoFWAAws+zWw507hm0RwPRhjqNtGtNYXDooLblg+wUAOsMdg/23y9wjsWQCEIBwxXnvfVHdOeuiiJXr1DkABCkgCNF8G5gWQiJAByACaI8KiOXFyv9PHmHpnuVHUwAKQcynJZ2nh7oaKn1q6N/vefDLHez43O7rLlvMstM/bOE3bVPMnl2c/NQ/e2lTnPmnwa0/M6ILkTRAEgANkEntkyMI8zBMW5gmgO2aeAAFhIRyEeoDPHZtHlSDCsC2vGgPxwQo2ATFrMSTz3v/y0O5/hMDPmaVRWnASsmxrAIByQl9E7QDWHo82kzLEUZhSZs0ggj5dzRPQAekwIzw6NQhntZV23nBpk2bPjs7KxGA+OMXflYxuzme9KSP/1pTnP3Hg7hmVZQyilqR1Jut9MckYP7dI98nR7ZWsQKMHSgCIAEAYHBZEwSiBZxpgejRQaeYn5/12eaOSwPSSGY3xxU/+6EXN+7sy4d2xuNjFIMzl1Y6AqL5GXIYkY5kAjyCVyK4RFsmLynEFGoFFAKIgGIQAaKkCaUZYnDoqkioGlx11XhI/vji3DP89PmXbRp2n7Al2OrH0xpTKzXNqYJSTDgvWaoAkqPRcgfXOr+lNx7TkWKAVsmLiAEwmGi6xQlggBkRvKJZWNSHEwYJAGs2vvpFC/qYv2ia1SvgYPBBWRGFFDAIIot8t1sq0+T/o2uTRztOgySoEc5a7dDsC5MGQgPMezRCUJfI/9BNYO1TPvrSgZx5RfSnrQBJOFPEGgw1UAIGBY8bb+lxByOxIlkQAyARDhGREWDMfqGHGCKcK5eAoYf0xLUbr3hJ7dd/cCGuPTPGgjARNAaBAh2PmhEGJjVsvbPEic/Lz09eP9x9x75TYlYuTdpEB4hrERHgBE4cOp0pnHPOOcesASOQs/pp731Z3TnncwcXV0BcB2yiOBBGQAsHdgpYFZIaS1yGs/ggmKu9Hh+6O5I2chhMCoh5gAqDAOYA5wBrAHNwToEQcTtuP6YJkIwwsOYpH35J489830I1Y9pboRYChBHeOZAOdQhpJRySyoHZpiU7uDB2iNAJxZP8NwnO5bYjnJg7GeEBQiCU9HMRgGtDbpM9fyevfp01QoHGgI4iVhUm5D+iCSSEh+d01z75Iy8LxYZPDJpzzqNMqVkFyCLoA2qLCCZQ7WahJ4SnB8xnQOJyiNM05+21WADRQShQZvg72iWLm49sB6b5rINQE5ZjF0CZoIILY9Cp2Ry1ANQDMcJi9aBOUAA6zEpY89QPXBiKsz5SxVNXB3aNOlDYEHAxaboUIBQU5pWeWPlWtaVK2FyKBGaY510IaAUgwBABEwiKUbyXJRoCtJ7VOMYWIinEijkACtU65x8TKNEiwALiPIAaVLXJuKQPTBeFgISTN1z2woD1l/brNavr6AwOCrUUV8exbBm69UtUXCRC0UBhEHqISc4LLK2ObwBfAUUAvICagAxUQNU8ufmoyamJuDR/QhAGIqFOZx5qeYgAlMxak0WCQdTQ7XW5YcNhNYACvFuAdb1VGy7ZjM6GP6ps9frKSmOnq4gVgAboKtBkL8uJyWhXlmXOzIZ5IqYywCOogIrAUKf7Q2seIWuFG6/JZDKBcUKVkGYWKibQQ6mTFkmE0BKcEAGjA+ChKrC6AVGbouaNNz4QCeanbLV1T//giwfxrA8s2ulro04ZNSjEAG/ZUbfQ1U1A2hZ0pBAkreMSwKwEJEAYRpmhiOXY0qNQKFrBhKC1fiQ7OeMyn58grrSRRgnQYGowMQhqCBVggNDBUUAYEImuM5tS8+yH+9OMCwC26XDy9qt+5p3Pq+IZ7w/F6WvrxgzSVzCvVumS0HVM9gwdJy8SR0mISJ4oxKQgLmRkliApTKDoQkXh4EUJsVgjChCdwqR1fgp1MpJeW5fPkJePEDUoicZFUAMEFcQUIn3APMQRjA0UDXpFU0rY/dWa8/+UBn2pAltNWrtffc4LVxYnvfyKRTzpt/vBRXhxhmzzsckeowCiAHAjr0wYoAFQy0gs/RtbyOma7PULCBTOBN4EHgEMu79o9dxVwRYPRDNY0c3fMVGUWcvyqRwqYwy0OASkykZnNAdASGAAwEFjmbJBmsA1UEbtstkv4eD3F7dftmcyPR35gNXrNnYODlc8prGVoNQg+oDmAkNrm8uEByxJ20YBOkgQGDWBkDJrR64FiDkiRCncQUjY/o25Qz94De752M7DxWF7kM9HO3+47/YPk9M8IAxGKgMc2M48ky2m0Jbj8+RvjCJK6xMcQEXpPYIaYuinufY+RfJQW68Izjd3fabZ+zdvxa6r9/6ky6R+slhpGsCYnZB1xnGSuqSoYS3+bmEas/DmIQIEqxGxCHgFpAehEPUQPb/oynDPZxf3fnfLcNfVe8dh94SYgBmAtQhqAAWQU1pCoGQCOyBMmJOP1tXrqPICCEwUZIC0WWGMVAO7big+3vWvg+qGNw53/vkuYMtkEeDE0ACx1psn8CGUbE9ttaZNdDjOuqQV3gAE0By07KSIWffNS7CeDpxWO7fJws1v69/10Sz81p+48A/QAKFCWjeOCOYmjxE5oYkTJWpN2D4XIRQB1AAipKwsCFW9TnWGqsMdnz944PtvwX1X3ItN2xxmN0ecIJtf1knI4d1GmpBWmGMtGKm9m6jiZHiLGujUQFiEcJV13XDOhnf8VT13y4dPROGXTMACgGFhDGJA6ABW5lwzjm9li/EFtADEGlK4lI0bgaIDqACsY1cWnB/e+y9zP7z4bWlmTjzhlyRDM6POWY7n0adYPmo05FQ2OLCKcKpQT5A2/inzQD9gRde5rt3zD7F/x1sBqbFpmwNOPOGXmsDCDKZlJaJMw6JBpJ/T3JRzJU1oRk7fgkKlyLUIB4qDDYeY1jrq4o4/Hez75hWDe67cA1AwKyek8A/wAT4qSihqqWCun9NbP7LxVG/3UOkg9gPMl1AxwGqUWsD7Bp1m11/vu+5V78rA/Sce5x9SGIT2QZlHlAjL2H4E9EbgxxCNQLcHugKxnqOTBTgn4psdn9y3+wvvGjuOE1v4pRMwA9TDCgEBpOaMT8YLCZ+LCzkCKIB6kQ4VporFPof3bjt4xzffhcXP78GjaBtNgMUDUhW11kZD7OYy1hBAA2UJWhdEmSNgA4Q+Jdax1xl6rXZ+6tB1r3tLyrNPfLU/bBTY199Vi4UFJ6IwrUHXIBSNhLLR4BuNbBBjg8AGtdWwGlO9eV/a9tnhgZsvxxbao034tjoJgHLo2i8ccv3+bKfeu7/wsecKFt5NFx13UlH6TlEWUnTLWHTKUBTeldPugBTx7s8M5q/7/WrHR7Y/Wmz+cCYw6jTODf7jsydhZsFh8fmNdEqFQ0EFQAqNUICMiNYMet3F6+r7rvrnwd1fOAhsUWwVw0/ntkUfzaOXB3x+7tdSNeTqX7KljZKJT3sgWDubCACzN4zVfguAre/mo9EUDtetk58G/ZVltAWctvFTzxnE4vm1wBkKUSuQIJG1nRd6AS0YvOtaUfgYtGFD06kpqfxw/3/t+vYbvvEom4BU7jr95z+9uV8//qOD2F0HFxnpJKrL3E+DIEINUHNQLWERRokwlwlKGmWVr++0/m2vnbv29V95OONa9bgLT+qsPKUULcj5UiY5gdKvOSpi5WuT50TLlML1S2IFwF4tP7rl9gHun104XB9QAOEzL9qycvv2cz8+V224CMGbSNDga0QEwOecIFiq2CcuSkLKmuoBYgUUBLVByTu+ta741svu/Pblux+C0aUS2fpL1q5a9bhXGGZeYHGmR/QAFmKQUaEm1SBi4oGIIDXqAW8NRCICChAdE/MkG5Oi7nSL+jYb3HP5/HXf+V9gm7V+aoQEe9MrSud1NauaJs5UoAkSA7C24OFBVUQ2qTuDyZa3wQSgekBWnrHAU9YB2H1sFLFNDpA4c877Tg0rH/snjV/1yhBnYJwBZCpXqVM9UnMLLHWhUwslaqJRRWkgIIIUAMpczjcADSLDBb1e73krzq9+d/4a+XJblhuFsFt3fr0f+rtv7eg+MZlj8JFQhbKEh0ICgcgMkRWUCJEApUDoYS7CfAVqgHmRKd+VBxKEjhRGZ+PpF1yxBqvOvkyLk1/ZxK7F6AwqpAs0qWgyJGVAkyENFY2BBmOkkYx5cEytNpCQmtA+xTVU5xiqojZ77Fofpp+VFuU9lnmCQoCy64vSnz7vmZ/szvzoaY3XZ1dQo4k4MygKwIBAAgypYZL7BpSQyYptUQSIMGk0yrFhiK22ZuMHTj8UT3tPdKf8VqzZRBQFpYCIB5nAV+r1h3EpHrn5MlKwpI2pcJcpehIBIUgHxI6Gxsiq6ObyVjORC6QgsHjTpTdos+ONiHu/41ylXptAq2DR2gYdxI3pLwZNvQQ3yBPSyfTUFC+ORfh1z3rfqXV57pWDePLvNLEXTFYWkBlQe6nE3nafNI4779K20R0gZa5QS8piqRNMOwMZwBggRQFXdATq5XDJUA77m9z911x6bTW45bWuue+/Ox16X3QsgoxKiDYQhtSCZlsmxwQjpEhdWRHAqzyY8Ot/4eNr+82T3z8Ia17AYo0aS28sQfj8m5qEdH5pR4syYVkc8ZBFMqNEcvouuXLtCLgKkfOI4eAReWkEZiM2bXO4eev30b/rYq3uvwrSKBMViJAIs5BDIidIEZ1URzQATcxR4qjC8/RnvPPMe5t1H+rbKa+ILKIYBS3jZMQJaDvKufdoLTN8susX8mIQRG7gtO9sMFe1nYE2ALUPlIFHJ+bNbo54+ieK+uY/vDUe+uHbu3LwFnGmCAHURHORtivEArBuqiKTEK3hHBHqgOIoKz+14XWn3a/nf6zGKRcF9MS50lmM0pKeR9VoyZo24g/5EYdIKKkh3DZsYBMIXMYtO2riNCggTo6Rmfi91zTAJte/7dJrYXe+eMYvfsV5J2gifNmDxSb3RovU64cHGGGsUlGZRHME4XtnvOqxnPqVy4Ke+evgVKLyRkJFAKkTp6htwmSu8cjERk1YnfBCGRfIclayjPkLmircVimUXR6FI7REFSIAmfvem+/wCze9pSfzV4mWCFXiCYg4eBO4GOCsgUriCAQRiHcomuXco6227vx3nKrrfnlrcKddyLAiC5ZYQOIS+UEQIGjSkQaBta8DJPKDJVYZQFAM1pItYbmTJRPmkZmiUQHrUeM0JEw/JG4qAcqB6994vS5e/4YZXbhJYgX1DpC04sZB4uZoDos0qCs4MoFNswoI12285Kz54ty/HbgzLm7CFGECkSJTAcerOB68jXunRy01THatWivQiW6WJtAWIwpXolR3rBqw9E2ruRvefIcu3nzhCnfoS9JUAKtofh7wIbFIxCWNTf6KIi4/ZBMASCjP/026s37VbIYQg/gmMf5MENkkjhAUROoxUDLUlpjJ0DbeZSIQTLyJstQEkq9QJ3AuQHRBi+4ifKe6LzuYUeP/mLdDN776mmLhlkt6bt/XXWGOzjMiMrCBmqKQMoWh0LBpvcCsxKc/d8uaqpp6dhVWA9aLoBOyAZl4gtD0UgNYZEeXAc6IC9xkJlnbpeZEhVom2vMYmUwiaxVgaBhiZb4734Rw21US6y8ml3SpHgdbnLLvVrm5eOJlb4pT6z/Jct0FUCURnJmHMweFAV6s0TFTZcfC6lW0chVCXjKngNUwVBnhFaD5MSdIJk3CJlQ9JE2jjFde3IQZ2ISDdBAESmTUTuWVu780v/Pq35u/99P7gfSG23Hw0xNibG655Ho7eOOrfXPXV0o/51RCtBjZSEEjWKoC9XBk0U1/R/BuEAsvBjiCjqDSKehUqHQJacESpicJaLpv5AIxDvZguqfd8/fMOUbXIahkbOhYS88f8r2w/T979X3vwX1X7sdzt/jJipUeR6GIwDaHO995XXff//zBdHX3v09jUQhGItAVJqwP3trfe8uuTHiUmVU79hj23iY6r+LEUpdNqBGUSNKEIkzCS96ZgzzzhEHzpIzQTp4II4SEgISniSMBFq5hib1zMrzz7+OBa19/8Jp3XIvf+EeHq7eGSYHc8dUrZgF8zdeHXrvHTT3pB2XZO98V02d4jVXPdu7pH/rhm6o7P3ZTuvfdOvd3mxt/8sZOpHs2tLNSvaogSpRGDBQ4L1CKiIlkRLt8H7OnM3Orxb0iouZEoxc1iMQhCl/ZVGf/IFbb/21x33df3+y48u4jcRMeZt0vtb2nzt3yNF8+4ec6nRnE+Ztu33/z27+6/Blr1lw8c/CkJ/yim3rcedpZWSTrzgQc32nLC9QjEeIsq23G2Tp69UWhtUOhHnBkVQ0ocsC87Dkwv3DjN3D7X97xCBMzDvey9IO+QC08zH6k88e0Z0OQn0zZvn017KjCy//vm+VyTMLLI/BUniCvmB9Tb+L/ADhu5hbNpqMQAAAAAElFTkSuQmCC">
@@ -281,34 +285,30 @@
 <div id="bar"></div>
 <div id="stage">
 <!-- 1 · TITLE -->
-  <section class="slide" style="justify-content:center" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>01</b> / 23</div><!--/catalyst-brand:chrome-->
+<section class="slide" style="justify-content:center" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>01</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 05 · React, Deeply</div>
     <h1>Explain Every<br>Re-render</h1>
     <div class="sub">How React decides what runs and when, ending with a profiler and a fix that isn't memo.</div>
     <div class="fig" style="max-width:1020px">
-      <svg viewBox="0 0 1052 70" role="img" aria-label="Seven lessons: render model, re-renders, hooks, context, boundaries, Suspense, profile it">
+      <svg viewBox="0 0 1052 70" role="img" aria-label="Five lessons: render model and transitions, re-renders and keys, hooks, context and boundaries, build and profile the feed">
         <g>
-          <rect x="0" y="16" width="140" height="38" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="70" y="40" text-anchor="middle" class="lbl b">1 · Render model</text>
-          <rect x="152" y="16" width="140" height="38" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="222" y="40" text-anchor="middle" class="lbl b">2 · Re-renders</text>
-          <rect x="304" y="16" width="140" height="38" rx="9" fill="#121C30" stroke="#2196F3"/>
-          <text x="374" y="40" text-anchor="middle" class="lbl b">3 · Hooks</text>
-          <rect x="456" y="16" width="140" height="38" rx="9" fill="#121C30" stroke="#FBBF24"/>
-          <text x="526" y="40" text-anchor="middle" class="lbl b">4 · Context</text>
-          <rect x="608" y="16" width="140" height="38" rx="9" fill="#121C30" stroke="#A78BFA"/>
-          <text x="678" y="40" text-anchor="middle" class="lbl b">5 · Boundaries</text>
-          <rect x="760" y="16" width="140" height="38" rx="9" fill="#121C30" stroke="#F8717A"/>
-          <text x="830" y="40" text-anchor="middle" class="lbl b">6 · Suspense</text>
-          <rect x="912" y="16" width="140" height="38" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="982" y="40" text-anchor="middle" class="lbl b">7 · Profile it</text>
+          <rect x="0" y="16" width="196" height="38" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="98" y="40" text-anchor="middle" class="lbl b">1 · Render model</text>
+          <rect x="214" y="16" width="196" height="38" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="312" y="40" text-anchor="middle" class="lbl b">2 · Re-renders</text>
+          <rect x="428" y="16" width="196" height="38" rx="9" fill="#121C30" stroke="#2196F3"/>
+          <text x="526" y="40" text-anchor="middle" class="lbl b">3 · Hooks</text>
+          <rect x="642" y="16" width="196" height="38" rx="9" fill="#121C30" stroke="#FBBF24"/>
+          <text x="740" y="40" text-anchor="middle" class="lbl b">4 · Context &amp; boundaries</text>
+          <rect x="856" y="16" width="196" height="38" rx="9" fill="#121C30" stroke="#A78BFA"/>
+          <text x="954" y="40" text-anchor="middle" class="lbl b">5 · Build · Profile it</text>
         </g>
       </svg>
     </div>
 </section>
 
-  <!-- L1a · RENDERING IS A FUNCTION CALL -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>02</b> / 23</div><!--/catalyst-brand:chrome-->
+<!-- L1a · RENDERING IS A FUNCTION CALL -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>02</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · The render model</div>
     <h2>Rendering is React calling your function</h2>
     <div class="fig" style="max-width:1000px">
@@ -341,8 +341,8 @@
     <div class="key">A render produces a description of the UI. The commit is the only moment the DOM changes, and it writes only the difference. An extra render costs CPU time, not DOM writes.</div>
 </section>
 
-  <!-- L1b · RENDER VS COMMIT -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>03</b> / 23</div><!--/catalyst-brand:chrome-->
+<!-- L1b · RENDER VS COMMIT -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>03</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Render vs commit</div>
     <h2>Render can be thrown away. Commit can't.</h2>
     <table class="grid">
@@ -356,8 +356,8 @@
     <div class="key w">A render can be paused, repeated or thrown away, so your component body must be safe to run any number of times. If it has a side effect, it's in the wrong phase.</div>
 </section>
 
-  <!-- L1c · FIBER AND LANES -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>04</b> / 23</div><!--/catalyst-brand:chrome-->
+<!-- L1c · FIBER AND LANES -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>04</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Fiber and lanes, plainly</div>
     <h2>Pausable work, ranked by urgency</h2>
     <div class="fig" style="max-width:1020px">
@@ -398,8 +398,49 @@
     <div class="key">The screen keeps showing the current tree while React builds the next one off to the side. That's why abandoning a render is safe: nothing reached the DOM.</div>
 </section>
 
-  <!-- L2a · FOUR REASONS -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 2</div><div class="cx-page"><b>05</b> / 23</div><!--/catalyst-brand:chrome-->
+<!-- L1d · useTransition -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>05</b> / 25</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · useTransition</div>
+    <h2>Keep typing urgent. Let the list wait.</h2>
+    <pre><code><span class="kw">function</span> <span class="fn">SearchBox</span>({ onSearch }: { onSearch: (q: <span class="ty">string</span>) =&gt; <span class="kw">void</span> }) {
+  <span class="kw">const</span> [text, setText] = <span class="fn">useState</span>(<span class="st">''</span>);
+  <span class="kw">const</span> [isPending, startTransition] = <span class="fn">useTransition</span>();
+
+  <span class="kw">function</span> <span class="fn">onChange</span>(e: <span class="ty">ChangeEvent</span>&lt;<span class="ty">HTMLInputElement</span>&gt;) {
+    <span class="fn">setText</span>(e.target.value);                         <span class="cmt">// urgent: the input</span>
+    <span class="fn">startTransition</span>(() =&gt; <span class="fn">onSearch</span>(e.target.value)); <span class="cmt">// can wait: the list</span>
+  }
+
+  <span class="kw">return</span> &lt;&gt;&lt;<span class="kw">input</span> value={text} onChange={onChange} /&gt;{isPending &amp;&amp; &lt;<span class="ty">Spinner</span> /&gt;}&lt;/&gt;;
+}
+<span class="cmt">// FeedPage: const [query, setQuery] = useState('');  →  &lt;SearchBox onSearch={setQuery} /&gt;</span></code></pre>
+    <div class="key"><code>text</code> lives in <code>SearchBox</code>, so the urgent render is just the input. The transition renders the long list in slices; if another key arrives first, that half-done render is dropped and restarted with the newer query.</div>
+</section>
+
+<!-- L1z · READ NEXT -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 1" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>06</b> / 25</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Read next</div>
+    <h2>Where the render model is written down</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://react.dev/learn/render-and-commit" target="_blank" rel="noopener">Render and commit — react.dev</a><small>trigger, render, commit, in React&#x27;s own words</small></li>
+          <li><a href="https://react.dev/reference/react/useTransition" target="_blank" rel="noopener">useTransition — react.dev</a><small>marking an update as able to wait</small></li>
+          <li><a href="https://react.dev/reference/react/useDeferredValue" target="_blank" rel="noopener">useDeferredValue — react.dev</a><small>the same idea when you only have the value</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://github.com/acdlite/react-fiber-architecture" target="_blank" rel="noopener">React Fiber architecture — Andrew Clark</a><small>the design notes behind interruptible rendering</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+<!-- L2a · FOUR REASONS -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 2</div><div class="cx-page"><b>07</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Anatomy of a re-render</div>
     <h2>Four reasons a component runs again</h2>
     <div class="three" style="grid-template-columns:repeat(4,1fr); max-width:1200px">
@@ -423,8 +464,8 @@
     <div class="key r"><b>"Its props changed" is not on the list.</b> Props only change because the parent rendered, and the parent rendering is what runs the child. <code>memo</code> is an opt-out from reason 2, nothing more.</div>
 </section>
 
-  <!-- L2b · RENDERING FLOWS DOWN -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 2</div><div class="cx-page"><b>06</b> / 23</div><!--/catalyst-brand:chrome-->
+<!-- L2b · RENDERING FLOWS DOWN -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 2</div><div class="cx-page"><b>08</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Rendering flows down</div>
     <h2>One setState re-runs everything below it</h2>
     <div class="fig" style="max-width:860px">
@@ -460,11 +501,11 @@
         <text x="22" y="286" class="lbl s">did not render</text>
       </svg>
     </div>
-    <div class="key">Rendering is not repainting. A card that returns the same JSX gets no DOM writes at commit. The waste is 200 function calls and a diff on every keystroke, which is exactly what the profiler shows in lesson 7.</div>
+    <div class="key">Rendering is not repainting. A card that returns the same JSX gets no DOM writes at commit. The waste is 200 function calls and a diff on every keystroke, which is exactly what the profiler shows in lesson 5.</div>
 </section>
 
-  <!-- L2c · KEYS -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 2</div><div class="cx-page"><b>07</b> / 23</div><!--/catalyst-brand:chrome-->
+<!-- L2c · KEYS -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 2</div><div class="cx-page"><b>09</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Keys and reconciliation</div>
     <h2>Index keys put state on the wrong row</h2>
     <div class="two tight">
@@ -519,8 +560,30 @@
     <div class="key">React matches children by type and key, and by position when there's no key. Same key, same instance, same state. An index key ties state to a slot, not to a listing. Changing a key on purpose resets state: <code>&lt;ApplyForm key={listing.id} /&gt;</code>.</div>
 </section>
 
-  <!-- L3a · STATE IS A SNAPSHOT -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 3</div><div class="cx-page"><b>08</b> / 23</div><!--/catalyst-brand:chrome-->
+<!-- L2z · READ NEXT -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 2" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 2</div><div class="cx-page"><b>10</b> / 25</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Read next</div>
+    <h2>Re-renders and keys, from the source</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://react.dev/learn/preserving-and-resetting-state" target="_blank" rel="noopener">Preserving and resetting state — react.dev</a><small>same position, same state; a new key resets it</small></li>
+          <li><a href="https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key" target="_blank" rel="noopener">Keeping list items in order with key — react.dev</a><small>why the index is the wrong key</small></li>
+          <li><a href="https://www.joshwcomeau.com/react/why-react-re-renders/" target="_blank" rel="noopener">Why React re-renders — Josh W. Comeau</a><small>the four reasons, with interactive demos</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://react.dev/learn/react-developer-tools" target="_blank" rel="noopener">React Developer Tools</a><small>the Components and Profiler tabs used in this module</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+<!-- L3a · STATE IS A SNAPSHOT -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 3</div><div class="cx-page"><b>11</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Hooks and the closure trap</div>
     <h2>Each render sees its own constant state</h2>
     <div class="two">
@@ -550,8 +613,8 @@
     <div class="key"><code>saved</code> is a <code>const</code> for the whole render. Every function created during that render (handlers, effects, timers) closes over that render's values. That's the closure trap, and it's the next slide.</div>
 </section>
 
-  <!-- L3b · THE CLOSURE TRAP -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 3</div><div class="cx-page"><b>09</b> / 23</div><!--/catalyst-brand:chrome-->
+<!-- L3b · THE CLOSURE TRAP -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 3</div><div class="cx-page"><b>12</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Stale closures in effects</div>
     <h2>An effect that runs once remembers the first render</h2>
     <div class="two">
@@ -578,8 +641,8 @@
     <div class="key">Two honest fixes. List <code>letter</code> as a dependency and the effect restarts with fresh values (here, the timer resets on every keystroke). Or keep the latest value in a ref: one mutable box every render shares. Silencing the lint rule is not a fix.</div>
 </section>
 
-  <!-- L3c · DERIVE, DON'T SYNC -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 3</div><div class="cx-page"><b>10</b> / 23</div><!--/catalyst-brand:chrome-->
+<!-- L3c · DERIVE, DON'T SYNC -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 3</div><div class="cx-page"><b>13</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · The effect you might not need</div>
     <h2>Derive it. Don't synchronise it.</h2>
     <div class="two">
@@ -607,8 +670,30 @@
     <div class="key g">If a value can be computed from props or state, compute it while rendering. The effect version renders with the old list first, then sets state and renders again. Too slow to recompute? Wrap it in <code>useMemo</code>. Still no effect.</div>
 </section>
 
-  <!-- L4a · ONE BIG CONTEXT -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>11</b> / 23</div><!--/catalyst-brand:chrome-->
+<!-- L3z · READ NEXT -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 3" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 3</div><div class="cx-page"><b>14</b> / 25</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Read next</div>
+    <h2>Effects, refs, and the effect you delete</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://react.dev/learn/you-might-not-need-an-effect" target="_blank" rel="noopener">You might not need an effect — react.dev</a><small>derive, don&#x27;t synchronise</small></li>
+          <li><a href="https://react.dev/learn/synchronizing-with-effects" target="_blank" rel="noopener">Synchronizing with effects — react.dev</a><small>what an effect is actually for</small></li>
+          <li><a href="https://react.dev/learn/referencing-values-with-refs" target="_blank" rel="noopener">Referencing values with refs — react.dev</a><small>the mutable box every render shares</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://overreacted.io/a-complete-guide-to-useeffect/" target="_blank" rel="noopener">A complete guide to useEffect — Dan Abramov</a><small>each render has its own props, state and effects</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+<!-- L4a · ONE BIG CONTEXT -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>15</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · Why context re-rendered everything</div>
     <h2>One context means every reader re-renders</h2>
     <div class="two tight">
@@ -649,41 +734,8 @@
     <div class="key w">Context has no selectors. When <code>value</code> changes by <code>Object.is</code>, every component that reads the context re-renders, whichever field it uses. Saving a job re-renders the navbar.</div>
 </section>
 
-  <!-- L4b · SPLIT CONTEXTS -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>12</b> / 23</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Split by how often it changes</div>
-    <h2>Give each rate of change its own context</h2>
-    <div class="two tight">
-      <div>
-        <pre><code><span class="kw">function</span> <span class="fn">AppProvider</span>({ user, children }: <span class="ty">Props</span>) {
-  <span class="kw">const</span> [saved, setSaved] =
-    <span class="fn">useState</span>(() =&gt; <span class="kw">new</span> <span class="ty">Set</span>&lt;<span class="ty">string</span>&gt;());
-
-  <span class="kw">return</span> (
-    &lt;<span class="ty">UserContext</span> value={user}&gt;
-      &lt;<span class="ty">SavedIdsContext</span> value={saved}&gt;
-        &lt;<span class="ty">SetSavedContext</span> value={setSaved}&gt;
-          {children}
-        &lt;/<span class="ty">SetSavedContext</span>&gt;
-      &lt;/<span class="ty">SavedIdsContext</span>&gt;
-    &lt;/<span class="ty">UserContext</span>&gt;
-  );
-}</code></pre>
-      </div>
-      <div>
-        <table class="grid" style="margin-top:14px">
-          <tr><th>Reader</th><th>Reads</th><th>On save</th></tr>
-          <tr><td><b>Navbar</b></td><td>UserContext</td><td><b class="g">skips</b></td></tr>
-          <tr><td><b>SaveButton</b></td><td>SetSavedContext</td><td><b class="g">skips</b>: the setter never changes</td></tr>
-          <tr><td><b>SavedCount</b></td><td>SavedIdsContext</td><td><b class="w">renders</b>, as it should</td></tr>
-        </table>
-      </div>
-    </div>
-    <div class="key g">No <code>useMemo</code> needed: each <code>value</code> is a piece of state or a setter, so it only changes when that piece does. A setter from <code>useState</code> keeps the same identity for the component's lifetime.</div>
-</section>
-
-  <!-- L4c · COMPOSITION -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>13</b> / 23</div><!--/catalyst-brand:chrome-->
+<!-- L4b · COMPOSITION -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>16</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · Composition over prop drilling</div>
     <h2>Pass the element, not the data it needs</h2>
     <div class="two tight">
@@ -716,46 +768,9 @@
     <div class="key">Layout no longer knows what a <code>User</code> is. Use composition when one value just needs to get past a few layers; use context when many distant components read the same value.</div>
 </section>
 
-  <!-- L5a · WHY BOUNDARIES -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 5</div><div class="cx-page"><b>14</b> / 23</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Error boundaries</div>
-    <h2>A crash in one panel shouldn't blank the page</h2>
-    <div class="fig" style="max-width:820px">
-      <svg viewBox="0 0 1000 286" role="img" aria-label="Rasmi page with an error boundary around each panel; the company panel failed and shows a fallback while filters and listings keep working">
-        <rect x="0" y="0" width="1000" height="40" rx="8" fill="#0E1525" stroke="#243349"/>
-        <text x="16" y="25" class="lbl b">Rasmi</text>
-        <text x="984" y="25" text-anchor="end" class="lbl s">saved (3)</text>
-        <rect x="0" y="60" width="210" height="190" rx="9" fill="none" stroke="#22D3EE" stroke-dasharray="5 5"/>
-        <rect x="8" y="68" width="194" height="174" rx="7" fill="#121C30" stroke="#243349"/>
-        <text x="105" y="100" text-anchor="middle" class="lbl b">FilterBar</text>
-        <text x="105" y="124" text-anchor="middle" class="lbl s">remote · seniority · company</text>
-        <rect x="230" y="60" width="510" height="190" rx="9" fill="none" stroke="#22D3EE" stroke-dasharray="5 5"/>
-        <rect x="238" y="68" width="494" height="174" rx="7" fill="#121C30" stroke="#243349"/>
-        <rect x="254" y="84" width="462" height="40" rx="6" fill="#0E1525" stroke="#243349"/>
-        <text x="270" y="109" class="lbl b">Frontend Engineer · Qafla</text>
-        <rect x="254" y="134" width="462" height="40" rx="6" fill="#0E1525" stroke="#243349"/>
-        <text x="270" y="159" class="lbl b">Data Analyst · Nilo Labs</text>
-        <rect x="254" y="184" width="462" height="40" rx="6" fill="#0E1525" stroke="#243349"/>
-        <text x="270" y="209" class="lbl b">Product Designer · Tamr</text>
-        <rect x="760" y="60" width="240" height="190" rx="9" fill="none" stroke="#22D3EE" stroke-dasharray="5 5"/>
-        <rect x="768" y="68" width="224" height="174" rx="7" fill="rgba(248,113,122,.10)" stroke="#F8717A"/>
-        <text x="880" y="120" text-anchor="middle" class="lbl b">Couldn't load</text>
-        <text x="880" y="140" text-anchor="middle" class="lbl b">company info</text>
-        <rect x="830" y="166" width="100" height="32" rx="7" fill="#121C30" stroke="#F8717A"/>
-        <text x="880" y="187" text-anchor="middle" class="lbl s" style="fill:#F8717A">Try again</text>
-        <rect x="0" y="266" width="28" height="14" rx="3" fill="none" stroke="#22D3EE" stroke-dasharray="5 5"/>
-        <text x="38" y="278" class="lbl s">an error boundary: a failure inside stays inside</text>
-      </svg>
-    </div>
-    <pre style="max-width:820px"><code>&lt;<span class="ty">ErrorBoundary</span> fallback={&lt;<span class="ty">PanelError</span> what=<span class="st">"company info"</span> /&gt;}&gt;
-  &lt;<span class="ty">CompanyPanel</span> companyId={listing.companyId} /&gt;
-&lt;/<span class="ty">ErrorBoundary</span>&gt;</code></pre>
-    <div class="key r">With no boundary, an error thrown while rendering unmounts the whole root: one bad company record and the user gets a blank page. Wrap what can fail on its own, plus one boundary at the root as the last resort.</div>
-</section>
-
-  <!-- L5b · THE BOUNDARY ITSELF -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 5</div><div class="cx-page"><b>15</b> / 23</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Writing the boundary</div>
+<!-- L4c · THE BOUNDARY ITSELF -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>17</b> / 25</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Writing the boundary</div>
     <h2>Still a class, and it can't catch everything</h2>
     <div class="two tight">
       <div>
@@ -788,9 +803,9 @@
     <div class="key w">React 19 still has no hook for this. Write the class once and reuse it everywhere, with a different <code>fallback</code> per place.</div>
 </section>
 
-  <!-- L5c · PORTALS -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 5</div><div class="cx-page"><b>16</b> / 23</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Portals</div>
+<!-- L4d · PORTALS -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>18</b> / 25</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Portals</div>
     <h2>Move it in the DOM, keep it in the React tree</h2>
     <div class="two tight">
       <div>
@@ -841,9 +856,9 @@
     <div class="key">Only the DOM position moves, out from under <code>overflow: hidden</code> and z-index traps. Context still flows in, and events bubble through the React tree: a click inside the dialog reaches <code>ListingCard</code>'s handlers.</div>
 </section>
 
-  <!-- L6a · SUSPENSE -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 6</div><div class="cx-page"><b>17</b> / 23</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 6 · Suspense</div>
+<!-- L4e · SUSPENSE -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>19</b> / 25</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Suspense</div>
     <h2>Suspense is a boundary for "not ready yet"</h2>
     <div class="two tight">
       <div>
@@ -885,60 +900,32 @@
     <div class="key w">Create the promise outside render: in a route loader, a cache, or a server component. Create it inside the component and every render starts a new one.</div>
 </section>
 
-  <!-- L6b · useTransition -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 6</div><div class="cx-page"><b>18</b> / 23</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 6 · useTransition</div>
-    <h2>Keep typing urgent. Let the list wait.</h2>
-    <pre><code><span class="kw">function</span> <span class="fn">SearchBox</span>({ onSearch }: { onSearch: (q: <span class="ty">string</span>) =&gt; <span class="kw">void</span> }) {
-  <span class="kw">const</span> [text, setText] = <span class="fn">useState</span>(<span class="st">''</span>);
-  <span class="kw">const</span> [isPending, startTransition] = <span class="fn">useTransition</span>();
-
-  <span class="kw">function</span> <span class="fn">onChange</span>(e: <span class="ty">ChangeEvent</span>&lt;<span class="ty">HTMLInputElement</span>&gt;) {
-    <span class="fn">setText</span>(e.target.value);                         <span class="cmt">// urgent: the input</span>
-    <span class="fn">startTransition</span>(() =&gt; <span class="fn">onSearch</span>(e.target.value)); <span class="cmt">// can wait: the list</span>
-  }
-
-  <span class="kw">return</span> &lt;&gt;&lt;<span class="kw">input</span> value={text} onChange={onChange} /&gt;{isPending &amp;&amp; &lt;<span class="ty">Spinner</span> /&gt;}&lt;/&gt;;
-}
-<span class="cmt">// FeedPage: const [query, setQuery] = useState('');  →  &lt;SearchBox onSearch={setQuery} /&gt;</span></code></pre>
-    <div class="key"><code>text</code> lives in <code>SearchBox</code>, so the urgent render is just the input. The transition renders the long list in slices; if another key arrives first, that half-done render is dropped and restarted with the newer query.</div>
-</section>
-
-  <!-- L6c · useDeferredValue -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 6</div><div class="cx-page"><b>19</b> / 23</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 6 · useDeferredValue</div>
-    <h2>Only have the value? Defer the value.</h2>
-    <div class="two tight">
-      <div>
-        <pre><code><span class="kw">function</span> <span class="fn">ListingResults</span>({ query }: <span class="ty">Props</span>) {
-  <span class="kw">const</span> deferred = <span class="fn">useDeferredValue</span>(query);
-  <span class="kw">const</span> stale = query !== deferred;
-
-  <span class="kw">return</span> (
-    &lt;<span class="kw">div</span> style={{ opacity: stale ? <span class="st">0.6</span> : <span class="st">1</span> }}&gt;
-      &lt;<span class="ty">SlowList</span> query={deferred} /&gt;
-    &lt;/<span class="kw">div</span>&gt;
-  );
-}
-<span class="no">// SlowList is wrapped in memo(): it must</span>
-<span class="no">// skip the urgent render to save anything</span></code></pre>
+<!-- L4z · READ NEXT -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 4" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>20</b> / 25</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Read next</div>
+    <h2>Context, boundaries and Suspense</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://react.dev/learn/passing-data-deeply-with-context" target="_blank" rel="noopener">Passing data deeply with context — react.dev</a><small>and the alternatives to try first</small></li>
+          <li><a href="https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary" target="_blank" rel="noopener">Catching rendering errors with an error boundary — react.dev</a><small>the class, and what it cannot catch</small></li>
+          <li><a href="https://react.dev/reference/react/Suspense" target="_blank" rel="noopener">Suspense — react.dev</a><small>a boundary for &quot;not ready yet&quot;</small></li>
+        </ul>
       </div>
-      <div>
-        <table class="grid" style="margin-top:14px">
-          <tr><th></th><th>useTransition</th><th>useDeferredValue</th></tr>
-          <tr><td><b>You hold</b></td><td>the setter</td><td>only the value</td></tr>
-          <tr><td><b>You mark</b></td><td>an update as non-urgent</td><td>a copy of a value that lags</td></tr>
-          <tr><td><b>Pending signal</b></td><td><code>isPending</code></td><td><code>value !== deferred</code></td></tr>
-          <tr><td><b>Skips urgent work by</b></td><td>keeping state low</td><td><code>memo</code> on the slow child</td></tr>
-        </table>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://react.dev/reference/react-dom/createPortal" target="_blank" rel="noopener">createPortal — react.dev</a><small>move it in the DOM, keep it in the tree</small></li>
+          <li><a href="https://github.com/bvaughn/react-error-boundary" target="_blank" rel="noopener">react-error-boundary</a><small>the boundary written once, with reset keys</small></li>
+        </ul>
       </div>
     </div>
-    <div class="key">Neither is a debounce: there's no fixed delay, and the background render can be interrupted. On a fast laptop the lag is invisible; on a cheap phone it's what keeps typing smooth.</div>
 </section>
 
-  <!-- L7a · BUILD BRIEF -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 7</div><div class="cx-page"><b>20</b> / 23</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 7 · Build</div>
+<!-- L5a · BUILD BRIEF -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 5</div><div class="cx-page"><b>21</b> / 25</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Build</div>
     <h2>Build the listings feed, the obvious way</h2>
     <div class="two">
       <div>
@@ -982,9 +969,9 @@
     <div class="key">Put all the state in <code>FeedPage</code> first. That's the version most real codebases have, and it gives the profiler something to find.</div>
 </section>
 
-  <!-- L7b · PROFILE IT -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 7</div><div class="cx-page"><b>21</b> / 23</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 7 · Profile it</div>
+<!-- L5b · PROFILE IT -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 5</div><div class="cx-page"><b>22</b> / 25</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Profile it</div>
     <h2>Record, type, stop, read</h2>
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 150" role="img" aria-label="Mock flamegraph for one keystroke: FeedPage, FeedHeader, CompanySidebar, SearchBox, FilterBar and ListingResults all rendered; FeedHeader and CompanySidebar rendered for no reason">
@@ -1021,9 +1008,9 @@
     </table>
 </section>
 
-  <!-- L7c · FIX BY RESTRUCTURING -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 7</div><div class="cx-page"><b>22</b> / 23</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 7 · Fix it by moving state</div>
+<!-- L5c · FIX BY RESTRUCTURING -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 5</div><div class="cx-page"><b>23</b> / 25</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Fix it by moving state</div>
     <h2>Move the state down before you reach for memo</h2>
     <div class="two tight">
       <div class="card r">
@@ -1058,8 +1045,30 @@
     <div class="key g">Order of fixes: <b>derive</b> instead of storing → <b>move state down</b> to where it's used → <b>pass content in</b> as children → <b>split the context</b> → then <code>memo</code>, for whatever is still slow.</div>
 </section>
 
-  <!-- CLOSING -->
-  <section class="slide" data-chip="MODULE 05 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 7</div><div class="cx-page"><b>23</b> / 23</div><!--/catalyst-brand:chrome-->
+<!-- L5z · READ NEXT -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 5" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 5</div><div class="cx-page"><b>24</b> / 25</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Read next</div>
+    <h2>Profile first, then fix</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://react.dev/reference/react/Profiler" target="_blank" rel="noopener">Profiler — react.dev</a><small>measuring renders in code</small></li>
+          <li><a href="https://overreacted.io/before-you-memo/" target="_blank" rel="noopener">Before you memo() — Dan Abramov</a><small>move state down, lift content up</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://react.dev/learn/react-developer-tools" target="_blank" rel="noopener">React Developer Tools</a><small>the Components and Profiler tabs used in this module</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener">Rasmi — the job board repo</a><small>every stage the builds start from</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+<!-- CLOSING -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 5</div><div class="cx-page"><b>25</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 05 · done</div>
     <h2>React, from the render model out</h2>
     <div class="two">
@@ -1138,6 +1147,10 @@
   });
   document.getElementById('stage').addEventListener('click',e=>{ e.clientX>innerWidth/2?next():prev(); });
   render();
+</script>
+<script>
+/* A link on a Read-next slide opens in a new tab; it must not also turn the slide. */
+document.getElementById('stage').addEventListener('click',e=>{ if(e.target.closest('a[href]')) e.stopPropagation(); },true);
 </script>
 <!--catalyst-brand:copy-->
 <script>

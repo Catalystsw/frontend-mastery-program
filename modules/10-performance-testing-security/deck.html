@@ -82,6 +82,8 @@
   .plist li{font:600 min(2vw,22px)/1.35 var(--sans); color:var(--ink); padding:9px 0 9px 32px; position:relative}
   .plist li::before{content:"▷"; position:absolute; left:0; top:11px; color:var(--cy); font-size:15px}
   .plist li small{display:block; color:var(--muted); font-weight:400; font-size:.72em; margin-top:3px}
+  .plist a{color:inherit; text-decoration:none; border-bottom:1px solid var(--line2)}
+  .plist a:hover{color:var(--cy); border-color:var(--cy)}
 
   table.grid{border-collapse:collapse; width:100%; max-width:1040px; margin-top:20px; font-size:min(1.6vw,17.5px)}
   table.grid th{text-align:left; font:700 12px/1 var(--mono); letter-spacing:1.4px; text-transform:uppercase; color:var(--muted); padding:10px 12px; border-bottom:2px solid var(--line2)}
@@ -280,35 +282,30 @@
 
 <div id="bar"></div>
 <div id="stage">
-<!-- 1 · TITLE -->
-  <section class="slide" style="justify-content:center" data-chip="MODULE 10 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 1</div><div class="cx-page"><b>01</b> / 24</div><!--/catalyst-brand:chrome-->
+  <section class="slide" style="justify-content:center" data-chip="MODULE 10 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 1</div><div class="cx-page"><b>01</b> / 23</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 10 · Performance, Testing &amp; Security</div>
     <h1>A Number Before,<br>a Number After</h1>
     <div class="sub">Measure what users feel, fix it, prove it — then let tests and CI keep it fixed.</div>
     <div class="fig" style="max-width:980px">
-      <svg viewBox="0 0 980 124" role="img" aria-label="Eight lessons: Core Web Vitals, bundles, images and fonts, memoization and the profiler, Testing Library, Playwright and MSW, web security, and the performance budget build">
-        <rect x="0" y="6" width="230" height="50" rx="9" fill="#121C30" stroke="#22D3EE"/>
-        <text x="115" y="36" text-anchor="middle" class="lbl b" style="font-size:13px">1 · Core Web Vitals</text>
-        <rect x="250" y="6" width="230" height="50" rx="9" fill="#121C30" stroke="#22D3EE"/>
-        <text x="365" y="36" text-anchor="middle" class="lbl b" style="font-size:13px">2 · Bundles &amp; splitting</text>
-        <rect x="500" y="6" width="230" height="50" rx="9" fill="#121C30" stroke="#22D3EE"/>
-        <text x="615" y="36" text-anchor="middle" class="lbl b" style="font-size:13px">3 · Images, fonts, CLS</text>
-        <rect x="750" y="6" width="230" height="50" rx="9" fill="#121C30" stroke="#22D3EE"/>
-        <text x="865" y="36" text-anchor="middle" class="lbl b" style="font-size:13px">4 · Memo &amp; the profiler</text>
-        <rect x="0" y="68" width="230" height="50" rx="9" fill="#121C30" stroke="#34D399"/>
-        <text x="115" y="98" text-anchor="middle" class="lbl b" style="font-size:13px">5 · Testing Library</text>
-        <rect x="250" y="68" width="230" height="50" rx="9" fill="#121C30" stroke="#34D399"/>
-        <text x="365" y="98" text-anchor="middle" class="lbl b" style="font-size:13px">6 · Playwright &amp; MSW</text>
-        <rect x="500" y="68" width="230" height="50" rx="9" fill="#121C30" stroke="#F8717A"/>
-        <text x="615" y="98" text-anchor="middle" class="lbl b" style="font-size:13px">7 · XSS, CSRF, CSP</text>
-        <rect x="750" y="68" width="230" height="50" rx="9" fill="#121C30" stroke="#FBBF24"/>
-        <text x="865" y="98" text-anchor="middle" class="lbl b" style="font-size:13px">8 · Budget in CI · build</text>
+      <svg viewBox="0 0 980 124" role="img" aria-label="Six lessons: Core Web Vitals and measuring, bundles images and fonts, memoization and the profiler, testing with Testing Library MSW and Playwright, XSS CSRF and CSP, and the performance budget build">
+        <rect x="0" y="6" width="310" height="50" rx="9" fill="#121C30" stroke="#22D3EE"/>
+        <text x="155" y="36" text-anchor="middle" class="lbl b" style="font-size:13px">1 · Core Web Vitals, lab vs field</text>
+        <rect x="335" y="6" width="310" height="50" rx="9" fill="#121C30" stroke="#22D3EE"/>
+        <text x="490" y="36" text-anchor="middle" class="lbl b" style="font-size:13px">2 · Bundles, images, fonts</text>
+        <rect x="670" y="6" width="310" height="50" rx="9" fill="#121C30" stroke="#22D3EE"/>
+        <text x="825" y="36" text-anchor="middle" class="lbl b" style="font-size:13px">3 · Memo &amp; the profiler</text>
+        <rect x="0" y="68" width="310" height="50" rx="9" fill="#121C30" stroke="#34D399"/>
+        <text x="155" y="98" text-anchor="middle" class="lbl b" style="font-size:13px">4 · Testing Library, MSW, Playwright</text>
+        <rect x="335" y="68" width="310" height="50" rx="9" fill="#121C30" stroke="#F8717A"/>
+        <text x="490" y="98" text-anchor="middle" class="lbl b" style="font-size:13px">5 · XSS, CSRF, CSP</text>
+        <rect x="670" y="68" width="310" height="50" rx="9" fill="#121C30" stroke="#FBBF24"/>
+        <text x="825" y="98" text-anchor="middle" class="lbl b" style="font-size:13px">6 · Budget in CI · build</text>
       </svg>
     </div>
 </section>
 
   <!-- L1a · CORE WEB VITALS -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 1</div><div class="cx-page"><b>02</b> / 24</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 1</div><div class="cx-page"><b>02</b> / 23</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Core Web Vitals</div>
     <h2>Three numbers for what users feel</h2>
     <div class="fig" style="max-width:1000px">
@@ -351,7 +348,7 @@
 </section>
 
   <!-- L1b · LAB VS FIELD -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 1</div><div class="cx-page"><b>03</b> / 24</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 1</div><div class="cx-page"><b>03</b> / 23</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Lab vs field</div>
     <h2>The lab says why. The field says whether.</h2>
     <table class="grid">
@@ -363,57 +360,31 @@
     <div class="key w">A Lighthouse 98 on your laptop next to a failing CrUX p75 is not a contradiction. Use the lab to diagnose and the field to judge.</div>
 </section>
 
-  <!-- L1c · RUM IN RASMI -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 1</div><div class="cx-page"><b>04</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 1 · Measuring Rasmi</div>
-    <h2>Collect your own field data</h2>
-    <div class="two tight" style="max-width:1240px">
-      <pre><code><span class="kw">import</span> { onCLS, onINP, onLCP } <span class="kw">from</span> <span class="st">'web-vitals/attribution'</span>;
-
-<span class="kw">function</span> <span class="fn">report</span>(metric) {
-  <span class="kw">const</span> body = JSON.<span class="fn">stringify</span>({
-    name: metric.name,     <span class="cmt">// 'LCP' | 'INP' | 'CLS'</span>
-    value: metric.value,   <span class="cmt">// ms, or a score for CLS</span>
-    rating: metric.rating, <span class="cmt">// good | needs-improvement | poor</span>
-    page: location.pathname,
-  });
-  navigator.<span class="fn">sendBeacon</span>(<span class="st">'/api/rum'</span>, body); <span class="cmt">// survives tab close</span>
-}
-
-<span class="fn">onLCP</span>(report); <span class="fn">onINP</span>(report); <span class="fn">onCLS</span>(report);
-<span class="cmt">// metric.attribution: the element, and where the time went</span></code></pre>
-      <div class="fig" style="margin:0">
-        <svg viewBox="0 0 580 262" role="img" aria-label="Rasmi job page LCP of 4.1 seconds: time to first byte 0.6 s, resource load delay 1.9 s, resource load duration 1.2 s, element render delay 0.4 s">
-          <text x="0" y="16" class="lbl b" style="font-size:15px">Rasmi job page · LCP 4.1 s, by subpart</text>
-          <text x="0" y="56" class="lbl b" style="font-size:13px">Time to first byte</text>
-          <text x="0" y="71" class="lbl s">server + network</text>
-          <rect x="210" y="42" width="44" height="30" rx="4" fill="#2196F3" fill-opacity=".22" stroke="#2196F3"/>
-          <text x="262" y="62" class="lbl b" style="font-size:13px">0.6 s</text>
-          <text x="0" y="104" class="lbl b" style="font-size:13px">Resource load delay</text>
-          <text x="0" y="119" class="lbl s">the &lt;img&gt; is requested late</text>
-          <rect x="254" y="90" width="139" height="30" rx="4" fill="#F8717A" fill-opacity=".22" stroke="#F8717A"/>
-          <text x="401" y="110" class="lbl b" style="font-size:13px">1.9 s</text>
-          <text x="0" y="152" class="lbl b" style="font-size:13px">Resource load duration</text>
-          <text x="0" y="167" class="lbl s">1600 px JPEG on a phone</text>
-          <rect x="393" y="138" width="88" height="30" rx="4" fill="#FBBF24" fill-opacity=".2" stroke="#FBBF24"/>
-          <text x="489" y="158" class="lbl b" style="font-size:13px">1.2 s</text>
-          <text x="0" y="200" class="lbl b" style="font-size:13px">Element render delay</text>
-          <text x="0" y="215" class="lbl s">main thread still busy</text>
-          <rect x="481" y="186" width="29" height="30" rx="4" fill="#A78BFA" fill-opacity=".22" stroke="#A78BFA"/>
-          <text x="518" y="206" class="lbl b" style="font-size:13px">0.4 s</text>
-          <line x1="210" y1="232" x2="510" y2="232" stroke="#243349"/>
-          <line x1="393" y1="34" x2="393" y2="238" stroke="#34D399" stroke-dasharray="4 4"/>
-          <text x="210" y="252" class="lbl s">0</text>
-          <text x="393" y="252" text-anchor="middle" class="lbl s" style="fill:#34D399">2.5 s · good</text>
-          <text x="510" y="252" text-anchor="end" class="lbl s">4.1 s</text>
-        </svg>
+  <!-- L1 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 1</div><div class="cx-page"><b>04</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Read next</div>
+    <h2>Go deeper: Core Web Vitals</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://web.dev/articles/vitals" target="_blank" rel="noopener" onclick="event.stopPropagation()">Web Vitals ↗</a><small>the three metrics and their thresholds</small></li>
+          <li><a href="https://web.dev/articles/inp" target="_blank" rel="noopener" onclick="event.stopPropagation()">Interaction to Next Paint (INP) ↗</a><small>what INP measures, and why it replaced FID</small></li>
+          <li><a href="https://web.dev/articles/lab-and-field-data-differences" target="_blank" rel="noopener" onclick="event.stopPropagation()">Why lab and field data can be different ↗</a><small>and what to do about it</small></li>
+        </ul>
+      </div>
+      <div class="card g">
+        <h3 class="g">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://github.com/GoogleChrome/web-vitals" target="_blank" rel="noopener" onclick="event.stopPropagation()">web-vitals ↗</a><small>the library behind the snippet above, with its attribution build</small></li>
+          <li><a href="https://pagespeed.web.dev/" target="_blank" rel="noopener" onclick="event.stopPropagation()">PageSpeed Insights ↗</a><small>CrUX field data and a Lighthouse run for any public URL</small></li>
+        </ul>
       </div>
     </div>
-    <div class="key">The subparts point at the fix. TTFB is the server, load delay is a request that started late, load duration is too many bytes, render delay is a busy main thread. Rasmi's biggest bar is load delay: that's Lessons 2 and 3.</div>
 </section>
 
   <!-- L2a · READING THE BUNDLE -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 2</div><div class="cx-page"><b>05</b> / 24</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 2</div><div class="cx-page"><b>05</b> / 23</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Reading the bundle</div>
     <h2>Find the import that cost 300 KB</h2>
     <div class="fig" style="max-width:1000px">
@@ -445,41 +416,9 @@ $ npx source-map-explorer <span class="st">'dist/assets/*.js'</span></code></pre
     <div class="key w">Seekers are nearly all of Rasmi's traffic. None of them opens the employer editor, and every one of them downloads, parses and compiles it.</div>
 </section>
 
-  <!-- L2b · CODE SPLITTING -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 2</div><div class="cx-page"><b>06</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 2 · Code splitting</div>
-    <h2>Download it when someone needs it</h2>
-    <div class="two tight">
-      <div class="card r">
-        <h3 class="r">Before · one static import</h3>
-        <pre><code><span class="kw">import</span> { PostJobPage } <span class="kw">from</span> <span class="st">'@/features/post-job'</span>;
-
-&lt;<span class="ty">PostJobPage</span> /&gt;
-<span class="no">// 300 KB inside main.js</span></code></pre>
-      </div>
-      <div class="card g">
-        <h3 class="g">After · its own chunk</h3>
-        <pre><code><span class="kw">const</span> PostJobPage = <span class="fn">lazy</span>(() =&gt;
-  <span class="kw">import</span>(<span class="st">'@/features/post-job'</span>)
-    .<span class="fn">then</span>((m) =&gt; ({ default: m.PostJobPage })));
-
-&lt;<span class="ty">Suspense</span> fallback={&lt;<span class="ty">PageSkeleton</span> /&gt;}&gt;
-  &lt;<span class="ty">PostJobPage</span> /&gt;
-&lt;/<span class="ty">Suspense</span>&gt;</code></pre>
-      </div>
-    </div>
-    <table class="grid" style="max-width:760px">
-      <tr><th>main.js</th><th>Minified</th><th>Gzip</th></tr>
-      <tr><td><b>Before</b></td><td><b style="color:var(--bad)">712 KB</b></td><td><b style="color:var(--bad)">214 KB</b></td></tr>
-      <tr><td>Editor → lazy chunk, fetched on <code>/post-job</code></td><td>−300 KB</td><td>−90 KB</td></tr>
-      <tr><td>Date locales → <code>en</code> + <code>ar</code> only</td><td>−66 KB</td><td>−22 KB</td></tr>
-      <tr><td><b>After</b></td><td><b style="color:var(--good)">346 KB</b></td><td><b style="color:var(--good)">102 KB</b></td></tr>
-    </table>
-</section>
-
   <!-- L3a · IMAGES -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 3</div><div class="cx-page"><b>07</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Images</div>
+  <section class="slide" data-chip="MODULE 10 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 2</div><div class="cx-page"><b>06</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Images</div>
     <h2>Reserve the box, rush the hero</h2>
     <div class="two tight" style="max-width:1240px">
       <div class="card g">
@@ -503,12 +442,12 @@ $ npx source-map-explorer <span class="st">'dist/assets/*.js'</span></code></pre
         <tr><td><code>srcSet</code> + <code>sizes</code>, AVIF</td><td>A phone fetches the 400 px file, not the 1600 px JPEG. <b>LCP</b></td></tr>
       </table>
     </div>
-    <div class="key">Lazy-load everything below the fold, such as the 30 employer logos further down. Never lazy-load the LCP image. In a client-rendered page the <code>&lt;img&gt;</code> doesn't exist until the JS runs, so Lesson 2's smaller bundle is an LCP fix too.</div>
+    <div class="key">Lazy-load everything below the fold, such as the 30 employer logos further down. Never lazy-load the LCP image. In a client-rendered page the <code>&lt;img&gt;</code> doesn't exist until the JS runs, so the smaller bundle from a minute ago is an LCP fix too.</div>
 </section>
 
   <!-- L3b · FONTS AND THE CLS SCORE -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 3</div><div class="cx-page"><b>08</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Fonts and the CLS score</div>
+  <section class="slide" data-chip="MODULE 10 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 2</div><div class="cx-page"><b>07</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Fonts and the CLS score</div>
     <h2>A late font moves text that already painted</h2>
     <div class="two tight" style="max-width:1240px">
       <div class="fig" style="margin:0">
@@ -553,9 +492,32 @@ $ npx source-map-explorer <span class="st">'dist/assets/*.js'</span></code></pre
     <div class="key"><code>font-display: optional</code> avoids the swap entirely. <code>swap</code> plus a metric-matched fallback keeps the font and loses the jump. Either way, preload the one file the first screen needs.</div>
 </section>
 
+  <!-- L2 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 2</div><div class="cx-page"><b>08</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Read next</div>
+    <h2>Go deeper: bundles, images and fonts</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://web.dev/articles/reduce-javascript-payloads-with-code-splitting" target="_blank" rel="noopener" onclick="event.stopPropagation()">Reduce JavaScript payloads with code splitting ↗</a><small>route and interaction splitting</small></li>
+          <li><a href="https://web.dev/articles/optimize-cls" target="_blank" rel="noopener" onclick="event.stopPropagation()">Optimize Cumulative Layout Shift ↗</a><small>images, fonts and late content</small></li>
+          <li><a href="https://web.dev/articles/fetch-priority" target="_blank" rel="noopener" onclick="event.stopPropagation()">Optimize resource loading with the Fetch Priority API ↗</a><small>rushing the LCP image</small></li>
+        </ul>
+      </div>
+      <div class="card g">
+        <h3 class="g">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://github.com/btd/rollup-plugin-visualizer" target="_blank" rel="noopener" onclick="event.stopPropagation()">rollup-plugin-visualizer ↗</a><small>the treemap for a Vite build</small></li>
+          <li><a href="https://react.dev/reference/react/lazy" target="_blank" rel="noopener" onclick="event.stopPropagation()">lazy — React reference ↗</a><small>including the default-export gotcha</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
   <!-- L4a · MEMO THAT HELPS -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 4</div><div class="cx-page"><b>09</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Memoization that helps</div>
+  <section class="slide" data-chip="MODULE 10 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 3</div><div class="cx-page"><b>09</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Memoization that helps</div>
     <h2>memo only skips when every prop is the same</h2>
     <div class="two tight" style="max-width:1240px">
       <div class="card r">
@@ -587,8 +549,8 @@ $ npx source-map-explorer <span class="st">'dist/assets/*.js'</span></code></pre
 </section>
 
   <!-- L4b · THE PROFILER -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 4</div><div class="cx-page"><b>10</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · The profiler proves it</div>
+  <section class="slide" data-chip="MODULE 10 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 3</div><div class="cx-page"><b>10</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · The profiler proves it</div>
     <h2>Record one click, read the commit</h2>
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 214" role="img" aria-label="React profiler flamegraph. Before: commit 42 ms, App, JobList and 120 JobCards all render. After: commit 5 ms, 2 JobCards render and 118 are skipped">
@@ -622,59 +584,32 @@ $ npx source-map-explorer <span class="st">'dist/assets/*.js'</span></code></pre
     </div>
 </section>
 
-  <!-- L4c · PICK THE CHEAPEST FIX -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 4</div><div class="cx-page"><b>11</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Pick the cheapest fix</div>
-    <h2>memo is the third thing to try, not the first</h2>
-    <table class="grid">
-      <tr><th>Fix</th><th>Reach for it when</th><th>In Rasmi</th></tr>
-      <tr><td><b>1 · Move state down</b></td><td>Only one subtree reads the state.</td><td>The filter drawer's <code>isOpen</code> lived in <code>App</code>, so opening it re-rendered every card.</td></tr>
-      <tr><td><b>2 · <code>useDeferredValue</code></b></td><td>Typing must stay instant while a big list re-renders behind it.</td><td><code>useDeferredValue(query)</code> feeds the list, so the input never waits.</td></tr>
-      <tr><td><b>3 · <code>memo</code> + stable props</b></td><td>An expensive child gets the same props on most renders.</td><td><code>JobCard</code> × 120, as on the last two slides.</td></tr>
-      <tr><td><b>4 · <code>useMemo</code></b></td><td>A calculation you measured at 1 ms or more.</td><td>Filtering and sorting 2,000 jobs on every render.</td></tr>
-      <tr><td><b>5 · React Compiler</b></td><td>You want 3 and 4 everywhere without writing them.</td><td>Adds memoization at build time. You still check it with the profiler.</td></tr>
-    </table>
-    <div class="key g">Every row needs a before and after from the profiler. If the number doesn't move, revert the change, because memoization has a cost too.</div>
-</section>
-
-  <!-- L5a · THE TESTING PYRAMID -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 5</div><div class="cx-page"><b>12</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · The testing pyramid</div>
-    <h2>Many cheap tests, a few real ones</h2>
-    <div class="fig" style="max-width:1000px">
-      <svg viewBox="0 0 1000 296" role="img" aria-label="Testing pyramid, top to bottom: end-to-end with Playwright, integration with Testing Library and MSW, unit with Vitest, static checks with TypeScript and ESLint">
-        <polygon points="220,10 240,10 290.7,75 169.3,75" fill="#F8717A" fill-opacity=".18" stroke="#F8717A"/>
-        <text x="230" y="64" text-anchor="middle" class="lbl b" style="font-size:13px">E2E</text>
-        <polygon points="165.4,80 294.6,80 345.3,145 114.7,145" fill="#FBBF24" fill-opacity=".16" stroke="#FBBF24"/>
-        <text x="230" y="118" text-anchor="middle" class="lbl b" style="font-size:14px">Integration</text>
-        <polygon points="110.8,150 349.2,150 399.9,215 60.1,215" fill="#22D3EE" fill-opacity=".14" stroke="#22D3EE"/>
-        <text x="230" y="188" text-anchor="middle" class="lbl b" style="font-size:14px">Unit</text>
-        <polygon points="56.2,220 403.8,220 454.5,285 5.5,285" fill="#A78BFA" fill-opacity=".14" stroke="#A78BFA"/>
-        <text x="230" y="258" text-anchor="middle" class="lbl b" style="font-size:14px">Static</text>
-
-        <line x1="292" y1="44" x2="490" y2="44" stroke="#243349" stroke-dasharray="3 4"/>
-        <text x="500" y="38" class="lbl b" style="font-size:14px">Playwright · ~5 journeys · minutes</text>
-        <text x="500" y="57" class="lbl" style="font-size:13px">search → open a role → apply, in a real browser</text>
-        <line x1="346" y1="112" x2="490" y2="112" stroke="#243349" stroke-dasharray="3 4"/>
-        <text x="500" y="106" class="lbl b" style="font-size:14px">Testing Library + MSW · dozens · seconds</text>
-        <text x="500" y="125" class="lbl" style="font-size:13px">the job list: loading, empty, error, filtered</text>
-        <line x1="400" y1="182" x2="490" y2="182" stroke="#243349" stroke-dasharray="3 4"/>
-        <text x="500" y="176" class="lbl b" style="font-size:14px">Vitest · hundreds · milliseconds</text>
-        <text x="500" y="195" class="lbl" style="font-size:13px">formatSalary, debounce, the search matcher</text>
-        <line x1="455" y1="252" x2="490" y2="252" stroke="#243349" stroke-dasharray="3 4"/>
-        <text x="500" y="246" class="lbl b" style="font-size:14px">TypeScript + ESLint · every save</text>
-        <text x="500" y="265" class="lbl" style="font-size:13px">a wrong prop, a missed union case, a hook rule</text>
-
-        <path d="M830,280 L830,16" stroke="#64748B" fill="none"/>
-        <text x="817" y="150" text-anchor="middle" class="lbl s" transform="rotate(-90 817 150)">slower · costlier · closer to the user</text>
-      </svg>
+  <!-- L3 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 3</div><div class="cx-page"><b>11</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Read next</div>
+    <h2>Go deeper: memo and the profiler</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://react.dev/reference/react/memo" target="_blank" rel="noopener" onclick="event.stopPropagation()">memo — React reference ↗</a><small>how props are compared, and when memo is pointless</small></li>
+          <li><a href="https://react.dev/reference/react/useMemo" target="_blank" rel="noopener" onclick="event.stopPropagation()">useMemo — React reference ↗</a><small>including the 1 ms rule</small></li>
+          <li><a href="https://react.dev/reference/react/Profiler" target="_blank" rel="noopener" onclick="event.stopPropagation()">&lt;Profiler&gt; — React reference ↗</a><small>measuring renders in code</small></li>
+        </ul>
+      </div>
+      <div class="card g">
+        <h3 class="g">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://react.dev/learn/react-developer-tools" target="_blank" rel="noopener" onclick="event.stopPropagation()">React Developer Tools ↗</a><small>the Profiler tab used in the video</small></li>
+          <li><a href="https://react.dev/reference/react/useDeferredValue" target="_blank" rel="noopener" onclick="event.stopPropagation()">useDeferredValue — React reference ↗</a><small>the fix for typing that feels sticky</small></li>
+        </ul>
+      </div>
     </div>
-    <div class="key">Push each check down to the cheapest layer that can actually catch the bug. For UI that's usually integration: a rendered component, real hooks, a fake network.</div>
 </section>
 
   <!-- L5b · BEHAVIOUR, NOT IMPLEMENTATION -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 5</div><div class="cx-page"><b>13</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Behaviour, not implementation</div>
+  <section class="slide" data-chip="MODULE 10 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 4</div><div class="cx-page"><b>12</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Behaviour, not implementation</div>
     <h2>Test what the user sees, not how you built it</h2>
     <div class="two tight" style="max-width:1240px">
       <div class="card r">
@@ -705,24 +640,9 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
     <div class="key g">Swap <code>useState</code> for a reducer, split <code>JobCard</code> in two or rename every class, and the right-hand test stays green. It goes red only when a seeker can no longer find a role and apply.</div>
 </section>
 
-  <!-- L5c · QUERIES, IN ORDER -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 5</div><div class="cx-page"><b>14</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Queries, in order</div>
-    <h2>Query the page the way a screen reader does</h2>
-    <table class="grid">
-      <tr><th>Query</th><th>Use it for</th><th>In Rasmi</th></tr>
-      <tr><td><b style="color:var(--good)">1 · <code>getByRole</code></b></td><td>Almost everything (buttons, links, headings, inputs), by role and accessible name.</td><td><code>getByRole('combobox', { name: 'Search jobs' })</code></td></tr>
-      <tr><td><b>2 · <code>getByLabelText</code></b></td><td>Form fields with a visible label.</td><td><code>getByLabelText('Remote')</code></td></tr>
-      <tr><td><b>3 · <code>getByText</code></b></td><td>Text you can't interact with.</td><td><code>getByText('No roles match those filters.')</code></td></tr>
-      <tr><td><b style="color:var(--bad)">4 · <code>getByTestId</code></b></td><td>Last resort, when nothing a user can perceive identifies it.</td><td>The virtual list's scroll container.</td></tr>
-      <tr><td><b>get · query · find</b></td><td><code>get</code> throws if it's missing, <code>query</code> returns <code>null</code> so you can assert absence, and <code>find</code> waits.</td><td><code>expect(screen.queryByRole('alert')).toBeNull()</code></td></tr>
-    </table>
-    <div class="key">If <code>getByRole</code> can't find your button, a screen-reader user can't either. A failing role query is an accessibility bug report.</div>
-</section>
-
   <!-- L6a · MSW -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 6</div><div class="cx-page"><b>15</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 6 · MSW</div>
+  <section class="slide" data-chip="MODULE 10 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 4</div><div class="cx-page"><b>13</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · MSW</div>
     <h2>Mock the network, not your fetch function</h2>
     <div class="two tight" style="max-width:1240px">
       <pre><code><span class="cmt">// src/test/handlers.ts</span>
@@ -756,8 +676,8 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
 </section>
 
   <!-- L6b · PLAYWRIGHT -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 6</div><div class="cx-page"><b>16</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 6 · Playwright</div>
+  <section class="slide" data-chip="MODULE 10 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 4</div><div class="cx-page"><b>14</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Playwright</div>
     <h2>One real browser, one journey that matters</h2>
     <div class="two tight" style="max-width:1240px">
       <pre><code><span class="kw">import</span> { test, expect } <span class="kw">from</span> <span class="st">'@playwright/test'</span>;
@@ -788,24 +708,32 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
     <div class="key">No sleeps. Every action waits until the element is visible, enabled and not covered, and <code>expect</code> retries for up to 5 s. When CI fails, the trace shows the DOM, network and console at every step.</div>
 </section>
 
-  <!-- L6c · WHICH LAYER CATCHES WHAT -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 6</div><div class="cx-page"><b>17</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 6 · Which layer catches what</div>
-    <h2>Each layer catches a bug the others miss</h2>
-    <table class="grid">
-      <tr><th>Regression in Rasmi</th><th>Unit</th><th>Integration</th><th>E2E</th></tr>
-      <tr><td><code>formatSalary</code> drops the currency for EGP</td><td><b style="color:var(--good)">✓</b></td><td>–</td><td>–</td></tr>
-      <tr><td>A 500 from <code>/api/jobs</code> leaves a blank page</td><td>–</td><td><b style="color:var(--good)">✓</b> with MSW</td><td>only with <code>page.route</code></td></tr>
-      <tr><td>“Apply now” loses its accessible name</td><td>–</td><td><b style="color:var(--good)">✓</b></td><td><b style="color:var(--good)">✓</b></td></tr>
-      <tr><td>The lazy <code>post-job</code> chunk 404s after a deploy</td><td>–</td><td>–</td><td><b style="color:var(--good)">✓</b></td></tr>
-      <tr><td>A sticky banner covers “Apply now”</td><td>–</td><td>–</td><td><b style="color:var(--good)">✓</b> the click is refused</td></tr>
-    </table>
-    <div class="key">Write E2E tests for the journeys that matter: search, then apply. Write integration tests for every state in between: loading, empty, error, success.</div>
+  <!-- L4 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 4</div><div class="cx-page"><b>15</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Read next</div>
+    <h2>Go deeper: testing</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://testing-library.com/docs/queries/about/" target="_blank" rel="noopener" onclick="event.stopPropagation()">About queries — Testing Library ↗</a><small>the query priority, roles first</small></li>
+          <li><a href="https://mswjs.io/docs/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Mock Service Worker docs ↗</a><small>handlers, server.use and MSW 2's http API</small></li>
+          <li><a href="https://playwright.dev/docs/best-practices" target="_blank" rel="noopener" onclick="event.stopPropagation()">Best practices — Playwright ↗</a><small>what to test end to end, and how</small></li>
+        </ul>
+      </div>
+      <div class="card g">
+        <h3 class="g">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://testing-library.com/docs/user-event/intro" target="_blank" rel="noopener" onclick="event.stopPropagation()">user-event ↗</a><small>why it beats fireEvent</small></li>
+          <li><a href="https://playwright.dev/docs/trace-viewer" target="_blank" rel="noopener" onclick="event.stopPropagation()">Trace viewer — Playwright ↗</a><small>reading a failed CI run step by step</small></li>
+        </ul>
+      </div>
+    </div>
 </section>
 
   <!-- L7a · XSS -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 7</div><div class="cx-page"><b>18</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 7 · XSS</div>
+  <section class="slide" data-chip="MODULE 10 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 5</div><div class="cx-page"><b>16</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · XSS</div>
     <h2>React escapes text. Your HTML is on you.</h2>
     <div class="two tight" style="max-width:1240px">
       <div class="card r">
@@ -830,8 +758,8 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
 </section>
 
   <!-- L7b · WHERE TO PUT A TOKEN -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 7</div><div class="cx-page"><b>19</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 7 · Where to put a token</div>
+  <section class="slide" data-chip="MODULE 10 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 5</div><div class="cx-page"><b>17</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Where to put a token</div>
     <h2>If JavaScript can read it, XSS can steal it</h2>
     <table class="grid">
       <tr><th>Where</th><th>Can injected script read it?</th><th>Sent automatically?</th><th>Use it for</th></tr>
@@ -844,8 +772,8 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
 </section>
 
   <!-- L7c · CONTENT SECURITY POLICY -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 7</div><div class="cx-page"><b>20</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 7 · Content Security Policy</div>
+  <section class="slide" data-chip="MODULE 10 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 5</div><div class="cx-page"><b>18</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Content Security Policy</div>
     <h2>CSP: the seatbelt for the XSS you missed</h2>
     <div class="two tight" style="max-width:1240px">
       <pre><code><span class="kw">Content-Security-Policy:</span>
@@ -869,9 +797,32 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
     <div class="key g">Ship it as <code>Content-Security-Policy-Report-Only</code> first: same policy, nothing blocked, every violation reported. Switch to enforcing once the reports go quiet.</div>
 </section>
 
+  <!-- L5 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 5</div><div class="cx-page"><b>19</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Read next</div>
+    <h2>Go deeper: XSS, CSRF and CSP</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Cross Site Scripting Prevention Cheat Sheet ↗</a><small>OWASP, including framework escape hatches</small></li>
+          <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Cross-Site Request Forgery Prevention Cheat Sheet ↗</a><small>OWASP, SameSite and tokens</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" target="_blank" rel="noopener" onclick="event.stopPropagation()">Content Security Policy (CSP) ↗</a><small>MDN, nonces and strict-dynamic</small></li>
+        </ul>
+      </div>
+      <div class="card g">
+        <h3 class="g">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://github.com/cure53/DOMPurify" target="_blank" rel="noopener" onclick="event.stopPropagation()">DOMPurify ↗</a><small>the sanitiser used in the video</small></li>
+          <li><a href="https://csp-evaluator.withgoogle.com/" target="_blank" rel="noopener" onclick="event.stopPropagation()">CSP Evaluator ↗</a><small>paste a policy, see its holes</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
   <!-- L8a · BASELINE → BUDGET → FIX -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 8</div><div class="cx-page"><b>21</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 8 · Baseline → budget → fix</div>
+  <section class="slide" data-chip="MODULE 10 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 6</div><div class="cx-page"><b>20</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · Baseline → budget → fix</div>
     <h2>Write the number down before you touch anything</h2>
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 96" role="img" aria-label="A loop: baseline, budget, fix, prove, guard in CI, and back to baseline for the next release">
@@ -908,40 +859,9 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
     </table>
 </section>
 
-  <!-- L8b · THE BUDGET IN CI -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 8</div><div class="cx-page"><b>22</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 8 · The budget as a check</div>
-    <h2>A budget CI can't fail is a wish</h2>
-    <div class="two tight" style="grid-template-columns:1.7fr 1fr; max-width:1344px">
-      <pre><code><span class="cmt">// lighthouserc.json</span>
-{
-  <span class="st">"ci"</span>: {
-    <span class="st">"collect"</span>: { <span class="st">"staticDistDir"</span>: <span class="st">"./dist"</span>, <span class="st">"numberOfRuns"</span>: 3 },
-    <span class="st">"assert"</span>: {
-      <span class="st">"assertions"</span>: {
-        <span class="st">"largest-contentful-paint"</span>: [<span class="st">"error"</span>, { <span class="st">"maxNumericValue"</span>: 2500 }],
-        <span class="st">"total-blocking-time"</span>: [<span class="st">"error"</span>, { <span class="st">"maxNumericValue"</span>: 200 }],
-        <span class="st">"cumulative-layout-shift"</span>: [<span class="st">"error"</span>, { <span class="st">"maxNumericValue"</span>: 0.1 }],
-        <span class="st">"resource-summary:script:size"</span>: [<span class="st">"error"</span>, { <span class="st">"maxNumericValue"</span>: 120000 }]
-      }
-    }
-  }
-}</code></pre>
-      <pre><code><span class="cmt"># .github/workflows/ci.yml · steps</span>
-- run: pnpm install --frozen-lockfile
-- run: pnpm typecheck &amp;&amp; pnpm lint
-- run: pnpm test    <span class="cmt"># Vitest · RTL · MSW</span>
-- run: pnpm build
-- run: pnpm exec playwright install --with-deps
-- run: pnpm exec playwright test
-- run: pnpm dlx @lhci/cli autorun</code></pre>
-    </div>
-    <div class="key">A PR that fixes a metric posts its own before and after. A PR that breaks the budget goes red, and the log names the metric, the budget and the measured number.</div>
-</section>
-
   <!-- L8c · BUILD -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 8</div><div class="cx-page"><b>23</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 8 · Build</div>
+  <section class="slide" data-chip="MODULE 10 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 6</div><div class="cx-page"><b>21</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · Build</div>
     <h2>Rasmi on a budget, with the receipts</h2>
     <div class="two">
       <div>
@@ -961,8 +881,30 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
     </div>
 </section>
 
+  <!-- L6 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 6</div><div class="cx-page"><b>22</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · Read next</div>
+    <h2>Go deeper: performance budgets</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://web.dev/articles/performance-budgets-101" target="_blank" rel="noopener" onclick="event.stopPropagation()">Performance budgets 101 ↗</a><small>choosing and enforcing a budget</small></li>
+          <li><a href="https://github.com/GoogleChrome/lighthouse-ci" target="_blank" rel="noopener" onclick="event.stopPropagation()">Lighthouse CI ↗</a><small>running Lighthouse on every push</small></li>
+          <li><a href="https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md" target="_blank" rel="noopener" onclick="event.stopPropagation()">Lighthouse CI configuration ↗</a><small>every assertion option in lighthouserc.json</small></li>
+        </ul>
+      </div>
+      <div class="card g">
+        <h3 class="g">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener" onclick="event.stopPropagation()">Rasmi — the job board repo ↗</a><small>the codebase you put on a budget</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
   <!-- CLOSING -->
-  <section class="slide" data-chip="MODULE 10 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 8</div><div class="cx-page"><b>24</b> / 24</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 6</div><div class="cx-page"><b>23</b> / 23</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 10 · done</div>
     <h2>Fast, tested and safe, with the proof</h2>
     <div class="two">

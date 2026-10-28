@@ -82,6 +82,9 @@
   .plist li{font:600 min(2vw,22px)/1.35 var(--sans); color:var(--ink); padding:9px 0 9px 32px; position:relative}
   .plist li::before{content:"▷"; position:absolute; left:0; top:11px; color:var(--cy); font-size:15px}
   .plist li small{display:block; color:var(--muted); font-weight:400; font-size:.72em; margin-top:3px}
+  .reads{max-width:none}
+  .reads a{color:var(--ink); text-decoration:underline; text-decoration-color:var(--cy); text-decoration-thickness:2px; text-underline-offset:4px}
+  .reads a:hover,.reads a:focus-visible{color:var(--cy)}
 
   table.grid{border-collapse:collapse; width:100%; max-width:1040px; margin-top:20px; font-size:min(1.6vw,17.5px)}
   table.grid th{text-align:left; font:700 12px/1 var(--mono); letter-spacing:1.4px; text-transform:uppercase; color:var(--muted); padding:10px 12px; border-bottom:2px solid var(--line2)}
@@ -281,30 +284,29 @@
 <div id="bar"></div>
 <div id="stage">
 <!-- 1 · TITLE -->
-  <section class="slide" style="justify-content:center" data-chip="MODULE 12 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 1</div><div class="cx-page"><b>01</b> / 15</div><!--/catalyst-brand:chrome-->
+  <section class="slide" style="justify-content:center" data-chip="MODULE 12 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 1</div><div class="cx-page"><b>01</b> / 18</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 12 · The Capstone</div>
     <h1>Assembly Week,<br>Not Build Week</h1>
     <div class="sub">Ship one deployed job board you can defend line by line.</div>
     <div class="fig" style="max-width:980px">
-      <svg viewBox="0 0 980 70" role="img" aria-label="Five lessons: assemble, auth and routes, the why, deploy and the gate, senior review">
+      <svg viewBox="0 0 980 70" role="img" aria-label="Four lessons: assemble, auth and routes, ship it with the why and the gate, senior review">
         <g>
-          <rect x="0" y="16" width="180" height="38" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="90" y="40" text-anchor="middle" class="lbl b">1 · Assemble</text>
-          <rect x="200" y="16" width="180" height="38" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="290" y="40" text-anchor="middle" class="lbl b">2 · Auth &amp; routes</text>
-          <rect x="400" y="16" width="180" height="38" rx="9" fill="#121C30" stroke="#2196F3"/>
-          <text x="490" y="40" text-anchor="middle" class="lbl b">3 · The why</text>
-          <rect x="600" y="16" width="180" height="38" rx="9" fill="#121C30" stroke="#FBBF24"/>
-          <text x="690" y="40" text-anchor="middle" class="lbl b">4 · Deploy &amp; the gate</text>
-          <rect x="800" y="16" width="180" height="38" rx="9" fill="#121C30" stroke="#A78BFA"/>
-          <text x="890" y="40" text-anchor="middle" class="lbl b">5 · Senior review</text>
+          <rect x="0" y="16" width="230" height="38" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="115" y="40" text-anchor="middle" class="lbl b">1 · Assemble</text>
+          <rect x="250" y="16" width="230" height="38" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="365" y="40" text-anchor="middle" class="lbl b">2 · Auth &amp; routes</text>
+          <rect x="500" y="16" width="230" height="38" rx="9" fill="#121C30" stroke="#FBBF24"/>
+          <text x="615" y="40" text-anchor="middle" class="lbl b">3 · Ship it: why &amp; the gate</text>
+          <rect x="750" y="16" width="230" height="38" rx="9" fill="#121C30" stroke="#A78BFA"/>
+          <text x="865" y="40" text-anchor="middle" class="lbl b">4 · Senior review</text>
         </g>
       </svg>
     </div>
 </section>
 
+
   <!-- L1a · THE MAP -->
-  <section class="slide" data-chip="MODULE 12 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 1</div><div class="cx-page"><b>02</b> / 15</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 12 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 1</div><div class="cx-page"><b>02</b> / 18</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · What you already have</div>
     <h2>Most of Rasmi is already on your branches</h2>
     <div class="fig" style="max-width:1020px">
@@ -361,8 +363,9 @@
     <div class="key">Green is yours already, written in earlier modules. The dashed stage is the only new one: it owns no feature folder — it assembles the lot, wires auth, deploys, and merges into <code>main</code>.</div>
 </section>
 
+
   <!-- L1b · THE ASSEMBLY PLAN -->
-  <section class="slide" data-chip="MODULE 12 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 1</div><div class="cx-page"><b>03</b> / 15</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 12 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 1</div><div class="cx-page"><b>03</b> / 18</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · The assembly plan</div>
     <h2>Merge in the order the layers point</h2>
     <div class="two">
@@ -386,8 +389,31 @@
     <div class="key g">Before writing anything from scratch this week, ask which branch it already lives on. Usually the answer is one you wrote.</div>
 </section>
 
+  <!-- L1 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 12 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 1</div><div class="cx-page"><b>04</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Read next</div>
+    <h2>Merge in order, deploy on day one</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist reads" style="margin-top:4px">
+          <li><a href="https://git-scm.com/docs/git-merge" target="_blank" rel="noopener">git merge — Git documentation</a><small>what a merge records, and how a conflict is resolved</small></li>
+          <li><a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/about-merge-methods-on-github" target="_blank" rel="noopener">About merge methods on GitHub</a><small>merge, squash or rebase: pick one and keep it</small></li>
+          <li><a href="https://nextjs.org/docs/app/getting-started/deploying" target="_blank" rel="noopener">Deploying — Next.js docs</a><small>the build and env the real URL runs on</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist reads" style="margin-top:4px">
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener">Rasmi — the job board repo</a><small>every stage branch you merge this week</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+
   <!-- L2a · THREE CHECKPOINTS -->
-  <section class="slide" data-chip="MODULE 12 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 2</div><div class="cx-page"><b>04</b> / 15</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 12 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 2</div><div class="cx-page"><b>05</b> / 18</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Three checkpoints</div>
     <h2>Auth is three checks. Only one is security.</h2>
     <div class="fig" style="max-width:1000px">
@@ -424,8 +450,9 @@
     <div class="key g">Middleware can only say “probably”. The server, at the moment it reads the data, is the one place that can say “no” — so that is where the check lives.</div>
 </section>
 
+
   <!-- L2b · THE GATE SITS NEXT TO THE DATA -->
-  <section class="slide" data-chip="MODULE 12 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 2</div><div class="cx-page"><b>05</b> / 15</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 12 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 2</div><div class="cx-page"><b>06</b> / 18</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · The gate sits next to the data</div>
     <h2>Check the session where the data is read</h2>
     <pre><code><span class="cmt">// data/session.server.ts — below features, so every feature may import it</span>
@@ -445,8 +472,9 @@
     <div class="key w">Don't stop at the layout. A layout doesn't re-render on client-side navigation, so a check there can be skipped. A check inside the function that reads the data can't — and a new page can't forget it.</div>
 </section>
 
+
   <!-- L2c · THE UNHAPPY PATHS -->
-  <section class="slide" data-chip="MODULE 12 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 2</div><div class="cx-page"><b>06</b> / 15</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 12 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 2</div><div class="cx-page"><b>07</b> / 18</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · End to end means the unhappy paths</div>
     <h2>Six auth paths, each with a test</h2>
     <table class="grid">
@@ -460,38 +488,31 @@
     </table>
 </section>
 
-  <!-- L3a · WHY, NOT WHAT -->
-  <section class="slide" data-chip="MODULE 12 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 3</div><div class="cx-page"><b>07</b> / 15</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Why, not what</div>
-    <h2>The code says what. The README says why.</h2>
-    <div class="two tight">
-      <div class="card r">
-        <h3 class="r">What · the reviewer skims past it</h3>
-        <pre><code><span class="kw">## Structure</span>
-src/app        the app
-src/features   the features
-src/ui         UI components
-src/utils      utilities
-
-<span class="kw">## Tech</span>
-React, TypeScript, Vite, TanStack Query</code></pre>
+  <!-- L2 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 12 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 2</div><div class="cx-page"><b>08</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Read next</div>
+    <h2>Gate the data, then test the unhappy paths</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist reads" style="margin-top:4px">
+          <li><a href="https://nextjs.org/docs/app/guides/authentication" target="_blank" rel="noopener">Authentication — Next.js docs</a><small>why the check belongs in the data layer</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie" target="_blank" rel="noopener">Set-Cookie — MDN</a><small>HttpOnly, Secure and SameSite, attribute by attribute</small></li>
+          <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" target="_blank" rel="noopener">Unvalidated redirects — OWASP cheat sheet</a><small>why ?next= accepts only a same-site path</small></li>
+        </ul>
       </div>
-      <div class="card g">
-        <h3 class="g">Why · the reviewer stops and reads</h3>
-        <pre><code><span class="kw">## Two rules hold this codebase up</span>
-1. Layers point downward.
-   CI fails on an upward import.
-2. Features never import each other.
-   Two features that need each other
-   are one feature with the seam in
-   the wrong place.</code></pre>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist reads" style="margin-top:4px">
+          <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html" target="_blank" rel="noopener">Session management — OWASP cheat sheet</a><small>expiry, rotation and logout, as a checklist</small></li>
+        </ul>
       </div>
     </div>
-    <div class="key">Every line of a why-README answers a question the reviewer would otherwise have to ask you out loud — or, worse, decide on their own.</div>
 </section>
 
+
   <!-- L3b · THE DECISION RECORD -->
-  <section class="slide" data-chip="MODULE 12 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 3</div><div class="cx-page"><b>08</b> / 15</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 12 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 3</div><div class="cx-page"><b>09</b> / 18</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · The decision record</div>
     <h2>An ADR fits on one screen</h2>
     <div class="two tight">
@@ -523,8 +544,9 @@ React, TypeScript, Vite, TanStack Query</code></pre>
     <div class="key w">Five to seven are enough for Rasmi: rendering per route, where server state lives, where the session lives, no component library, what earns an E2E test.</div>
 </section>
 
+
   <!-- L3c · THE FIVE-MINUTE README -->
-  <section class="slide" data-chip="MODULE 12 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 3</div><div class="cx-page"><b>09</b> / 15</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 12 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 3</div><div class="cx-page"><b>10</b> / 18</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · The five-minute README</div>
     <h2>Five minutes, spent in order</h2>
     <p class="say">A reviewer opens the repo with five minutes to spare. The README decides what they see in each one.</p>
@@ -568,9 +590,10 @@ React, TypeScript, Vite, TanStack Query</code></pre>
     <div class="key g">Test it on someone who has never seen the repo: hand them the README, start a five-minute timer, then ask what they would push back on.</div>
 </section>
 
+
   <!-- L4a · THE GATE -->
-  <section class="slide" data-chip="MODULE 12 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 4</div><div class="cx-page"><b>10</b> / 15</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Deploy, and the gate that keeps it green</div>
+  <section class="slide" data-chip="MODULE 12 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 3</div><div class="cx-page"><b>11</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Deploy, and the gate that keeps it green</div>
     <h2>Every push goes through the same gate</h2>
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 980 120" role="img" aria-label="Pipeline: push, then typecheck, lint, unit, e2e and budget as required checks, then a preview deploy, then production from main only">
@@ -625,9 +648,10 @@ React, TypeScript, Vite, TanStack Query</code></pre>
     </div>
 </section>
 
+
   <!-- L4b · THE ACCESSIBILITY PASS -->
-  <section class="slide" data-chip="MODULE 12 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 4</div><div class="cx-page"><b>11</b> / 15</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · The accessibility pass</div>
+  <section class="slide" data-chip="MODULE 12 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 3</div><div class="cx-page"><b>12</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · The accessibility pass</div>
     <h2>A scanner finds some. You find the rest.</h2>
     <div class="two">
       <div class="card a">
@@ -651,9 +675,10 @@ React, TypeScript, Vite, TanStack Query</code></pre>
     <div class="key w">Write the manual run into the README as a dated checklist. “Accessible” is a claim; a dated checklist is evidence.</div>
 </section>
 
+
   <!-- L4c · THE PERFORMANCE PASS -->
-  <section class="slide" data-chip="MODULE 12 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 4</div><div class="cx-page"><b>12</b> / 15</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · The performance pass</div>
+  <section class="slide" data-chip="MODULE 12 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 3</div><div class="cx-page"><b>13</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · The performance pass</div>
     <h2>Defend a number, its method, its commit</h2>
     <table class="grid">
       <tr><th>Metric</th><th>Budget</th><th>Measured how</th><th>Enforced where</th></tr>
@@ -665,9 +690,33 @@ React, TypeScript, Vite, TanStack Query</code></pre>
     <div class="key">“It's fast” loses the argument. “Listings LCP went from <i>before</i> to <i>after</i> on throttled mobile, in commit <i>abc123</i>” wins it — keep that sentence, with your real numbers, in the README.</div>
 </section>
 
+  <!-- L3 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 12 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 3</div><div class="cx-page"><b>14</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Read next</div>
+    <h2>Write down why, then let the gate keep it</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist reads" style="margin-top:4px">
+          <li><a href="https://adr.github.io/" target="_blank" rel="noopener">Architecture decision records</a><small>templates and worked examples of an ADR</small></li>
+          <li><a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches" target="_blank" rel="noopener">About protected branches — GitHub Docs</a><small>required checks: a red one stops the merge</small></li>
+          <li><a href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener">WCAG 2.2 quick reference — W3C</a><small>the criteria your keyboard pass is checking</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist reads" style="margin-top:4px">
+          <li><a href="https://docs.github.com/en/actions/writing-workflows/quickstart" target="_blank" rel="noopener">GitHub Actions quickstart</a><small>the workflow file behind the gate</small></li>
+          <li><a href="https://github.com/GoogleChrome/lighthouse-ci" target="_blank" rel="noopener">Lighthouse CI</a><small>the performance budget as a CI step</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+
   <!-- L5a · THE SENIOR CHECKLIST -->
-  <section class="slide" data-chip="MODULE 12 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 5</div><div class="cx-page"><b>13</b> / 15</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Capstone review</div>
+  <section class="slide" data-chip="MODULE 12 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 4</div><div class="cx-page"><b>15</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Capstone review</div>
     <h2>The senior checklist</h2>
     <table class="grid">
       <tr><th>Area</th><th>You can show</th><th>The question you must answer</th></tr>
@@ -681,9 +730,10 @@ React, TypeScript, Vite, TanStack Query</code></pre>
     </table>
 </section>
 
+
   <!-- L5b · BUILD -->
-  <section class="slide" data-chip="MODULE 12 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 5</div><div class="cx-page"><b>14</b> / 15</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Build</div>
+  <section class="slide" data-chip="MODULE 12 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 4</div><div class="cx-page"><b>16</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Build</div>
     <h2>Hand in a URL, a green gate, a checklist</h2>
     <div class="three">
       <div class="card g">
@@ -702,8 +752,32 @@ React, TypeScript, Vite, TanStack Query</code></pre>
     <div class="key g">Stage: <code>module-12/capstone</code>. Branch from <code>main</code>, merge the earlier stages bottom-up, merge back when the checklist is done. Then rehearse: open any file at random and explain why it exists, in under a minute.</div>
 </section>
 
+  <!-- L4 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 12 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 4</div><div class="cx-page"><b>17</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Read next</div>
+    <h2>Every row of the checklist points at evidence</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist reads" style="margin-top:4px">
+          <li><a href="https://web.dev/articles/vitals" target="_blank" rel="noopener">Web Vitals — web.dev</a><small>the published thresholds behind your budgets</small></li>
+          <li><a href="https://www.w3.org/WAI/test-evaluate/preliminary/" target="_blank" rel="noopener">Easy checks — W3C WAI</a><small>a first accessibility review, done by hand</small></li>
+          <li><a href="https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes" target="_blank" rel="noopener">About READMEs — GitHub Docs</a><small>the file a reviewer opens first</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist reads" style="margin-top:4px">
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener">Rasmi — the job board repo</a><small>the app you hand in</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-program" target="_blank" rel="noopener">Frontend Mastery program repo</a><small>every module deck, for the review</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+
   <!-- CLOSING -->
-  <section class="slide" data-chip="MODULE 12 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 5</div><div class="cx-page"><b>15</b> / 15</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 12 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 12 · VIDEO 4</div><div class="cx-page"><b>18</b> / 18</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 12 · done</div>
     <h2>One app you can defend, line by line</h2>
     <div class="two">

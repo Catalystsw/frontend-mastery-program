@@ -188,6 +188,10 @@
     .frag{opacity:1 !important; transform:none !important}
     *{animation:none !important}
   }
+  /* Read next: one per lesson, references and resources as links */
+  section[data-rn] .plist{max-width:none}
+  section[data-rn] .plist a{color:var(--ink); text-decoration:none; border-bottom:1px solid var(--line2)}
+  section[data-rn] .plist a:hover{color:var(--cy); border-bottom-color:var(--cy)}
 </style>
 <!--catalyst-brand:style-->
 <link rel="icon" type="image/png" href="data:image/png;base64,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">
@@ -281,7 +285,7 @@
 <div id="bar"></div>
 <div id="stage">
 <!-- 1 · TITLE -->
-  <section class="slide" style="justify-content:center" data-chip="MODULE 04 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 1</div><div class="cx-page"><b>01</b> / 16</div><!--/catalyst-brand:chrome-->
+<section class="slide" style="justify-content:center" data-chip="MODULE 04 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 1</div><div class="cx-page"><b>01</b> / 20</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 04 · TypeScript for Frontend Engineers</div>
     <h1>Types That Make the<br>Wrong State Impossible</h1>
     <div class="sub">Four short lessons, all TypeScript — shapes, unions, types built from types, and the boundary where data comes in. Ending at the point where more types stop paying for themselves.</div>
@@ -301,8 +305,8 @@
     </div>
 </section>
 
-  <!-- L1a · STRUCTURAL TYPING -->
-  <section class="slide" data-chip="MODULE 04 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 1</div><div class="cx-page"><b>02</b> / 16</div><!--/catalyst-brand:chrome-->
+<!-- L1a · STRUCTURAL TYPING -->
+<section class="slide" data-chip="MODULE 04 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 1</div><div class="cx-page"><b>02</b> / 20</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Structural typing</div>
     <h2>TypeScript does not care what you named it</h2>
     <div class="two">
@@ -328,8 +332,8 @@
     <div class="key">A type is a shape, not a label. If a value has the right properties, it satisfies the type — whatever you called it, or didn't.</div>
 </section>
 
-  <!-- L1b · TYPES AS SETS -->
-  <section class="slide" data-chip="MODULE 04 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 1</div><div class="cx-page"><b>03</b> / 16</div><!--/catalyst-brand:chrome-->
+<!-- L1b · TYPES AS SETS -->
+<section class="slide" data-chip="MODULE 04 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 1</div><div class="cx-page"><b>03</b> / 20</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Types as sets</div>
     <h2>Every type is a set of valid values</h2>
     <p class="say">A type isn't a container — it's a description of which values are legal. <code>type Role = 'admin' | 'seeker'</code> is a set with exactly two members. A union is the two sets combined; an object type is the set of every value shaped like it.</p>
@@ -360,8 +364,8 @@
     <div class="key w"><code>any</code> sits outside this chart — it doesn't narrow anything, it turns the checker off. <code>extends</code> means "lower on this chart": <code>array extends object</code>, so an array is assignable wherever an <code>object</code> is expected.</div>
 </section>
 
-  <!-- L1c · unknown vs any vs never -->
-  <section class="slide" data-chip="MODULE 04 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 1</div><div class="cx-page"><b>04</b> / 16</div><!--/catalyst-brand:chrome-->
+<!-- L1c · unknown vs any vs never -->
+<section class="slide" data-chip="MODULE 04 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 1</div><div class="cx-page"><b>04</b> / 20</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · unknown, any, never</div>
     <h2>Only one of these turns the checker off</h2>
     <table class="grid">
@@ -373,8 +377,30 @@
     <div class="key w"><code>fetch('/api/listings').then(r =&gt; r.json())</code> returns <code>Promise&lt;any&gt;</code> — the one place <code>any</code> sneaks back into a strict codebase uninvited.</div>
 </section>
 
-  <!-- L2a · NARROWING -->
-  <section class="slide" data-chip="MODULE 04 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 2</div><div class="cx-page"><b>05</b> / 16</div><!--/catalyst-brand:chrome-->
+<!-- L1z · READ NEXT -->
+<section class="slide" data-chip="MODULE 04 · VIDEO 1" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 1</div><div class="cx-page"><b>05</b> / 20</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Read next</div>
+    <h2>The handbook pages behind structural typing</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://www.typescriptlang.org/docs/handbook/type-compatibility.html" target="_blank" rel="noopener">Type compatibility — TypeScript Handbook</a><small>shape, not name, decides assignability</small></li>
+          <li><a href="https://www.typescriptlang.org/docs/handbook/2/everyday-types.html" target="_blank" rel="noopener">Everyday types — TypeScript Handbook</a><small>unions and literal types as sets</small></li>
+          <li><a href="https://www.typescriptlang.org/docs/handbook/2/functions.html#unknown" target="_blank" rel="noopener">unknown and never — TypeScript Handbook</a><small>the top and the bottom of the picture</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://www.typescriptlang.org/play" target="_blank" rel="noopener">TypeScript Playground</a><small>paste any snippet from the slides and hover the types</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+<!-- L2a · NARROWING -->
+<section class="slide" data-chip="MODULE 04 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 2</div><div class="cx-page"><b>06</b> / 20</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Narrowing</div>
     <h2>The compiler re-checks every branch you write</h2>
     <div class="three">
@@ -403,8 +429,8 @@
     <div class="key">This isn't a runtime feature — it's TypeScript re-reading your <code>if</code> and shrinking the type for everything downstream of it. The check is exactly as good as the condition you wrote.</div>
 </section>
 
-  <!-- L2b · DISCRIMINATED UNIONS -->
-  <section class="slide" data-chip="MODULE 04 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 2</div><div class="cx-page"><b>06</b> / 16</div><!--/catalyst-brand:chrome-->
+<!-- L2b · DISCRIMINATED UNIONS -->
+<section class="slide" data-chip="MODULE 04 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 2</div><div class="cx-page"><b>07</b> / 20</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Discriminated unions</div>
     <h2>One tag, one exact shape per state</h2>
     <pre><code><span class="kw">type</span> <span class="ty">ListingsRequest</span> =
@@ -423,8 +449,8 @@
     <div class="key g">Five booleans describe thirty-two states; this union describes exactly four. Narrow on <code>status</code> once and each branch gets only that state's fields — <code>state.data</code> is an error outside <code>'success'</code>.</div>
 </section>
 
-  <!-- L2c · EXHAUSTIVENESS WITH never -->
-  <section class="slide" data-chip="MODULE 04 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 2</div><div class="cx-page"><b>07</b> / 16</div><!--/catalyst-brand:chrome-->
+<!-- L2c · EXHAUSTIVENESS WITH never -->
+<section class="slide" data-chip="MODULE 04 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 2</div><div class="cx-page"><b>08</b> / 20</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Exhaustiveness, for free</div>
     <h2>Add a state, the compiler finds every switch that forgot it</h2>
     <pre><code><span class="kw">function</span> <span class="fn">assertNever</span>(x: <span class="ty">never</span>): <span class="ty">never</span> {
@@ -443,8 +469,30 @@
     <div class="key">Handle every case and what is left at <code>default</code> is <code>never</code>. Forget one later and the build fails at the exact switch that needs it.</div>
 </section>
 
-  <!-- L3a · GENERICS -->
-  <section class="slide" data-chip="MODULE 04 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 3</div><div class="cx-page"><b>08</b> / 16</div><!--/catalyst-brand:chrome-->
+<!-- L2z · READ NEXT -->
+<section class="slide" data-chip="MODULE 04 · VIDEO 2" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 2</div><div class="cx-page"><b>09</b> / 20</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Read next</div>
+    <h2>Narrowing, all the way to never</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html" target="_blank" rel="noopener">Narrowing — TypeScript Handbook</a><small>every guard the compiler understands</small></li>
+          <li><a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions" target="_blank" rel="noopener">Discriminated unions — TypeScript Handbook</a><small>one tag, one exact shape</small></li>
+          <li><a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html#exhaustiveness-checking" target="_blank" rel="noopener">Exhaustiveness checking — TypeScript Handbook</a><small>the never trick, from the source</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://www.typescriptlang.org/play" target="_blank" rel="noopener">TypeScript Playground</a><small>paste any snippet from the slides and hover the types</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+<!-- L3a · GENERICS -->
+<section class="slide" data-chip="MODULE 04 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 3</div><div class="cx-page"><b>10</b> / 20</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Generics, plainly</div>
     <h2>A generic is a parameter — for a type</h2>
     <p class="say">Same relationship as a function parameter: the caller doesn't know the <b>value</b> ahead of time, so the function doesn't either. A generic is the same deal for the <b>type</b> — the caller supplies it, usually by just calling the function normally.</p>
@@ -461,8 +509,8 @@
     <div class="key">You call <code>groupBy(listings, …)</code> like any function — TypeScript infers <code>T</code> and <code>K</code> from the arguments.</div>
 </section>
 
-  <!-- L3b · CONSTRAINING WITH keyof -->
-  <section class="slide" data-chip="MODULE 04 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 3</div><div class="cx-page"><b>09</b> / 16</div><!--/catalyst-brand:chrome-->
+<!-- L3b · CONSTRAINING WITH keyof -->
+<section class="slide" data-chip="MODULE 04 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 3</div><div class="cx-page"><b>11</b> / 20</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Constraining the parameter</div>
     <h2><code>keyof T</code> only lets real keys in</h2>
     <pre><code><span class="kw">function</span> <span class="fn">sortBy</span>&lt;<span class="ty">T</span>&gt;(items: <span class="ty">T</span>[], key: <span class="kw">keyof</span> <span class="ty">T</span>): <span class="ty">T</span>[] {
@@ -475,8 +523,8 @@
     <div class="key"><code>keyof T</code> turns a type's own property names into a union — pass the wrong string and the compiler rejects it before the sort ever runs.</div>
 </section>
 
-  <!-- L3c · UTILITY TYPES -->
-  <section class="slide" data-chip="MODULE 04 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 3</div><div class="cx-page"><b>10</b> / 16</div><!--/catalyst-brand:chrome-->
+<!-- L3c · UTILITY TYPES -->
+<section class="slide" data-chip="MODULE 04 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 3</div><div class="cx-page"><b>12</b> / 20</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Utility types you'll actually reach for</div>
     <h2>Five that pay for themselves</h2>
     <table class="grid">
@@ -489,8 +537,8 @@
     </table>
 </section>
 
-  <!-- L3d · MAPPED TYPES -->
-  <section class="slide" data-chip="MODULE 04 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 3</div><div class="cx-page"><b>11</b> / 16</div><!--/catalyst-brand:chrome-->
+<!-- L3d · MAPPED TYPES -->
+<section class="slide" data-chip="MODULE 04 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 3</div><div class="cx-page"><b>13</b> / 20</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Mapped types</div>
     <h2><code>[K in keyof T]</code> is a for loop over a type</h2>
     <div class="two">
@@ -514,8 +562,30 @@
     <div class="key">The compiler runs this once, over the keys of a type, the way <code>for...in</code> runs once over the keys of an object — <code>as</code> lets you rename each key on the way through, not just keep it.</div>
 </section>
 
-  <!-- L4a · TYPING ASYNC DATA -->
-  <section class="slide" data-chip="MODULE 04 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 4</div><div class="cx-page"><b>12</b> / 16</div><!--/catalyst-brand:chrome-->
+<!-- L3z · READ NEXT -->
+<section class="slide" data-chip="MODULE 04 · VIDEO 3" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 3</div><div class="cx-page"><b>14</b> / 20</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Read next</div>
+    <h2>Types built from types</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://www.typescriptlang.org/docs/handbook/2/generics.html" target="_blank" rel="noopener">Generics — TypeScript Handbook</a><small>type parameters and constraints</small></li>
+          <li><a href="https://www.typescriptlang.org/docs/handbook/2/mapped-types.html" target="_blank" rel="noopener">Mapped types — TypeScript Handbook</a><small>the for loop over keyof</small></li>
+          <li><a href="https://www.typescriptlang.org/docs/handbook/utility-types.html" target="_blank" rel="noopener">Utility types — TypeScript Handbook</a><small>Partial, Pick, Omit, Record and the rest</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://github.com/type-challenges/type-challenges" target="_blank" rel="noopener">type-challenges</a><small>graded drills; stop at the medium tier</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+<!-- L4a · TYPING ASYNC DATA -->
+<section class="slide" data-chip="MODULE 04 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 4</div><div class="cx-page"><b>15</b> / 20</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · Typing async data</div>
     <h2><code>Promise&lt;T&gt;</code> is where the lie gets a type</h2>
     <pre><code><span class="kw">async function</span> <span class="fn">getListing</span>(id: <span class="ty">string</span>): <span class="ty">Promise</span>&lt;<span class="ty">Listing</span>&gt; {
@@ -525,8 +595,8 @@
     <div class="key w">The return type is a promise <i>you</i> made, not one the compiler verified. <code>res.json()</code> is typed <code>any</code>; TypeScript trusts your annotation and checks nothing underneath it. Same story for <code>JSON.parse</code>, <code>localStorage</code> and an untyped SDK — every boundary hands you <code>any</code>.</div>
 </section>
 
-  <!-- L4b · SCHEMA VALIDATION AT THE BOUNDARY -->
-  <section class="slide" data-chip="MODULE 04 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 4</div><div class="cx-page"><b>13</b> / 16</div><!--/catalyst-brand:chrome-->
+<!-- L4b · SCHEMA VALIDATION AT THE BOUNDARY -->
+<section class="slide" data-chip="MODULE 04 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 4</div><div class="cx-page"><b>16</b> / 20</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · Schema validation at the boundary</div>
     <h2>Check it once, at the line where it enters</h2>
     <div class="fig" style="max-width:900px">
@@ -551,8 +621,8 @@
 });</code></pre>
 </section>
 
-  <!-- L4c · TYPES ON THE INSIDE -->
-  <section class="slide" data-chip="MODULE 04 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 4</div><div class="cx-page"><b>14</b> / 16</div><!--/catalyst-brand:chrome-->
+<!-- L4c · TYPES ON THE INSIDE -->
+<section class="slide" data-chip="MODULE 04 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 4</div><div class="cx-page"><b>17</b> / 20</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · Types on the inside</div>
     <h2>Infer the type from the schema — never write it twice</h2>
     <pre><code><span class="kw">type</span> <span class="ty">Listing</span> = z.infer&lt;<span class="kw">typeof</span> ListingSchema&gt;;
@@ -564,8 +634,8 @@
     <div class="key g">One definition does two jobs: a runtime check at the edge, a static type everywhere behind it. They can't drift out of sync — the type is <i>derived from</i> the schema, not written next to it by hand.</div>
 </section>
 
-  <!-- L4d · TSCONFIG STRICTNESS -->
-  <section class="slide" data-chip="MODULE 04 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 4</div><div class="cx-page"><b>15</b> / 16</div><!--/catalyst-brand:chrome-->
+<!-- L4d · TSCONFIG STRICTNESS -->
+<section class="slide" data-chip="MODULE 04 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 4</div><div class="cx-page"><b>18</b> / 20</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · tsconfig, flag by flag</div>
     <h2>Strict mode is eight flags wearing one name</h2>
     <table class="grid tight-t">
@@ -579,8 +649,30 @@
     <div class="key">The baseline worth it: <code>strict</code> plus <code>noUncheckedIndexedAccess</code>. Past that, if a type is harder to read than the bug it would catch, write the simple version and stop.</div>
 </section>
 
-  <!-- CLOSING -->
-  <section class="slide" data-chip="MODULE 04 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 4</div><div class="cx-page"><b>16</b> / 16</div><!--/catalyst-brand:chrome-->
+<!-- L4z · READ NEXT -->
+<section class="slide" data-chip="MODULE 04 · VIDEO 4" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 4</div><div class="cx-page"><b>19</b> / 20</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Read next</div>
+    <h2>The boundary, and the flags that guard it</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://zod.dev" target="_blank" rel="noopener">Zod documentation</a><small>parse at the edge, infer the type</small></li>
+          <li><a href="https://www.typescriptlang.org/tsconfig/#strict" target="_blank" rel="noopener">strict — TSConfig reference</a><small>the flags strict switches on</small></li>
+          <li><a href="https://www.typescriptlang.org/tsconfig/#noUncheckedIndexedAccess" target="_blank" rel="noopener">noUncheckedIndexedAccess — TSConfig reference</a><small>the flag strict leaves off</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener">Rasmi — the job board repo</a><small>every stage the builds start from</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+<!-- CLOSING -->
+<section class="slide" data-chip="MODULE 04 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 04 · VIDEO 4</div><div class="cx-page"><b>20</b> / 20</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 04 · done</div>
     <h2>The TypeScript playbook, in four lessons</h2>
     <div class="two">
@@ -657,6 +749,10 @@
   });
   document.getElementById('stage').addEventListener('click',e=>{ e.clientX>innerWidth/2?next():prev(); });
   render();
+</script>
+<script>
+/* A link on a Read-next slide opens in a new tab; it must not also turn the slide. */
+document.getElementById('stage').addEventListener('click',e=>{ if(e.target.closest('a[href]')) e.stopPropagation(); },true);
 </script>
 <!--catalyst-brand:copy-->
 <script>

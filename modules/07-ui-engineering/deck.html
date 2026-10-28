@@ -188,6 +188,10 @@
     .frag{opacity:1 !important; transform:none !important}
     *{animation:none !important}
   }
+  /* Read next: one per lesson, references and resources as links */
+  section[data-rn] .plist{max-width:none}
+  section[data-rn] .plist a{color:var(--ink); text-decoration:none; border-bottom:1px solid var(--line2)}
+  section[data-rn] .plist a:hover{color:var(--cy); border-bottom-color:var(--cy)}
 </style>
 <!--catalyst-brand:style-->
 <link rel="icon" type="image/png" href="data:image/png;base64,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">
@@ -281,36 +285,32 @@
 <div id="bar"></div>
 <div id="stage">
 <!-- 1 · TITLE -->
-  <section class="slide" style="justify-content:center" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>01</b> / 24</div><!--/catalyst-brand:chrome-->
+<section class="slide" style="justify-content:center" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>01</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 07 · UI Engineering</div>
     <h1>Components You Can<br>Build Live, Keyboard First</h1>
-    <div class="sub">Eight lessons, three of them builds — the autocomplete, the overlays, a virtual list — keyboard-driven, ARIA-correct, no library underneath.</div>
+    <div class="sub">Six lessons, three of them builds — the autocomplete, the overlays, a virtual list — keyboard-driven, ARIA-correct, no library underneath.</div>
     <div class="fig" style="max-width:980px">
-      <svg viewBox="0 0 980 108" role="img" aria-label="Eight lessons: component APIs, design tokens, the accessibility tree and focus, build the autocomplete, build the overlays, forms, build a virtual list, responsive behaviour">
+      <svg viewBox="0 0 980 108" role="img" aria-label="Six lessons: component APIs and tokens, the accessibility tree and focus, build the autocomplete, build the overlays, forms, build a virtual list">
         <g>
-          <rect x="0" y="4" width="230" height="40" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="115" y="29" text-anchor="middle" class="lbl b" font-size="12">1 · Component APIs</text>
-          <rect x="250" y="4" width="230" height="40" rx="9" fill="#121C30" stroke="#2196F3"/>
-          <text x="365" y="29" text-anchor="middle" class="lbl b" font-size="12">2 · Design tokens</text>
-          <rect x="500" y="4" width="230" height="40" rx="9" fill="#121C30" stroke="#A78BFA"/>
-          <text x="615" y="29" text-anchor="middle" class="lbl b" font-size="12">3 · A11y tree &amp; focus</text>
-          <rect x="750" y="4" width="230" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="865" y="29" text-anchor="middle" class="lbl b" font-size="12">4 · Build · Autocomplete</text>
-          <rect x="0" y="62" width="230" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="115" y="87" text-anchor="middle" class="lbl b" font-size="12">5 · Build · Overlays</text>
-          <rect x="250" y="62" width="230" height="40" rx="9" fill="#121C30" stroke="#FBBF24"/>
-          <text x="365" y="87" text-anchor="middle" class="lbl b" font-size="12">6 · Forms</text>
-          <rect x="500" y="62" width="230" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="615" y="87" text-anchor="middle" class="lbl b" font-size="12">7 · Build · Virtual list</text>
-          <rect x="750" y="62" width="230" height="40" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="865" y="87" text-anchor="middle" class="lbl b" font-size="12">8 · Responsive</text>
+          <rect x="0" y="4" width="313" height="40" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="156" y="29" text-anchor="middle" class="lbl b" font-size="12">1 · Component APIs &amp; tokens</text>
+          <rect x="333" y="4" width="313" height="40" rx="9" fill="#121C30" stroke="#A78BFA"/>
+          <text x="489" y="29" text-anchor="middle" class="lbl b" font-size="12">2 · A11y tree &amp; focus</text>
+          <rect x="666" y="4" width="313" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="822" y="29" text-anchor="middle" class="lbl b" font-size="12">3 · Build · Autocomplete</text>
+          <rect x="0" y="62" width="313" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="156" y="87" text-anchor="middle" class="lbl b" font-size="12">4 · Build · Overlays</text>
+          <rect x="333" y="62" width="313" height="40" rx="9" fill="#121C30" stroke="#FBBF24"/>
+          <text x="489" y="87" text-anchor="middle" class="lbl b" font-size="12">5 · Forms</text>
+          <rect x="666" y="62" width="313" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="822" y="87" text-anchor="middle" class="lbl b" font-size="12">6 · Build · Virtual list</text>
         </g>
       </svg>
     </div>
 </section>
 
-  <!-- L1a · FIVE PROP CATEGORIES -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>02</b> / 24</div><!--/catalyst-brand:chrome-->
+<!-- L1a · FIVE PROP CATEGORIES -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>02</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Props are the API</div>
     <h2>Every prop has one of five jobs</h2>
     <table class="grid">
@@ -324,8 +324,8 @@
     <div class="key r"><b>The anti-pattern is boolean soup:</b> <code>showLogo</code>, <code>showSalary</code>, <code>isFeatured</code>, <code>isCompact</code>, <code>hideActions</code> — thirty-two combinations, and nobody tested them all.</div>
 </section>
 
-  <!-- L1b · SLOTS AND COMPOUND COMPONENTS -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>03</b> / 24</div><!--/catalyst-brand:chrome-->
+<!-- L1b · SLOTS AND COMPOUND COMPONENTS -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>03</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Slots and compound components</div>
     <h2>Let the consumer own the markup</h2>
     <pre><code>&lt;<span class="ty">Select</span> value={jobType} onChange={setJobType}&gt;
@@ -348,8 +348,8 @@
     </div>
 </section>
 
-  <!-- L1c · CONTROLLED VS UNCONTROLLED -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>04</b> / 24</div><!--/catalyst-brand:chrome-->
+<!-- L1c · CONTROLLED VS UNCONTROLLED -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>04</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Controlled vs uncontrolled</div>
     <h2>Who owns the value? Support both.</h2>
     <div class="two">
@@ -376,9 +376,9 @@
 }</code></pre>
 </section>
 
-  <!-- L2a · THREE LAYERS OF TOKENS -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>05</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 2 · Design tokens</div>
+<!-- L1d · THREE LAYERS OF TOKENS -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>05</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Design tokens</div>
     <h2>A token is a decision with a name</h2>
     <div class="fig" style="max-width:940px">
       <svg viewBox="0 0 940 92" role="img" aria-label="Three token layers: primitive values feed semantic tokens, which components read">
@@ -406,34 +406,46 @@
     <div class="key">Components read semantic tokens only. Dark mode is a second set of semantic values — not a second stylesheet.</div>
 </section>
 
-  <!-- L2b · A DESIGN SYSTEM YOU CAN FINISH -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>06</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 2 · Small enough to finish</div>
-    <h2>Six components, every state, done</h2>
+<!-- L1e · CONTAINER QUERIES AND FLUID TYPE -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>06</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Container queries and fluid type</div>
+    <h2>Ask the container, not the window</h2>
+    <pre><code>.job-list { container-type: inline-size; }
+
+.job-card { display: grid; gap: <span class="fn">var</span>(--space-2); }                   <span class="cmt">/* narrow: stacked */</span>
+<span class="kw">@container</span> (min-width: <span class="st">36rem</span>) {
+  .job-card { grid-template-columns: <span class="st">4rem 1fr auto</span>; }               <span class="cmt">/* wide: logo · details · save */</span>
+}
+
+h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <span class="st">1.25rem + 2vw</span>, <span class="st">3rem</span>); }               <span class="cmt">/* fluid, with a floor and a ceiling */</span></code></pre>
+    <div class="key">The same <code>JobCard</code> sits in a narrow sidebar and a wide feed on one screen. A media query sees one window; a container query sees the space each card was actually given.</div>
+</section>
+
+<!-- L1z · READ NEXT -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 1" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>07</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Read next</div>
+    <h2>Component APIs, tokens and the container</h2>
     <div class="two">
-      <div class="card g">
-        <h3 class="g">In · finish these for Rasmi</h3>
+      <div class="card a">
+        <h3 class="cy">References</h3>
         <ul class="plist" style="margin-top:4px">
-          <li>Tokens: colour, space, type, radius, motion<small>one CSS file, one source of truth</small></li>
-          <li>Button, IconButton, Input, Field, Badge, Card<small>the six the job board actually renders</small></li>
-          <li>Every state, styled<small>hover, focus-visible, disabled, invalid, loading</small></li>
+          <li><a href="https://react.dev/learn/sharing-state-between-components#controlled-and-uncontrolled-components" target="_blank" rel="noopener">Controlled and uncontrolled components — react.dev</a><small>who owns the value</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries" target="_blank" rel="noopener">Container queries — MDN</a><small>ask the container, not the window</small></li>
+          <li><a href="https://www.w3.org/community/design-tokens/" target="_blank" rel="noopener">Design Tokens Community Group — W3C</a><small>the shared format tokens are heading to</small></li>
         </ul>
       </div>
-      <div class="card r">
-        <h3 class="r">Out · until a second app needs it</h3>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
         <ul class="plist" style="margin-top:4px">
-          <li>A theme builder<small>one light theme and one dark is plenty</small></li>
-          <li>Forty components<small>build the next one when a screen asks for it</small></li>
-          <li>A documentation site<small>one page that renders every state is enough</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener">Rasmi — the job board repo</a><small>every stage the builds start from</small></li>
         </ul>
       </div>
     </div>
-    <div class="key">Variants are a union, not booleans: <code>variant: 'primary' | 'ghost' | 'danger'</code>. The focus ring is a token too — style <code>:focus-visible</code> once, in the system, and no component can forget it.</div>
 </section>
 
-  <!-- L3a · THE ACCESSIBILITY TREE -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>07</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · The accessibility tree</div>
+<!-- L2a · THE ACCESSIBILITY TREE -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>08</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · The accessibility tree</div>
     <h2>Role, name, state — or it isn't there</h2>
     <div class="two">
       <div class="card r">
@@ -455,10 +467,10 @@
     <div class="key">ARIA only edits the tree — it adds no behaviour. A <code>div</code> with <code>role="button"</code> still needs <code>tabindex</code>, Enter and Space. The native element brings all three, so it comes first.</div>
 </section>
 
-  <!-- L3b · THE SCREEN READER CONTRACT -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>08</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · The contract you'll build to</div>
-    <h2>The roles lessons 4 and 5 build to</h2>
+<!-- L2b · THE SCREEN READER CONTRACT -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>09</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · The contract you'll build to</div>
+    <h2>The roles lessons 3 and 4 build to</h2>
     <table class="grid">
       <tr><th>Role</th><th>On</th><th>Must carry</th></tr>
       <tr><td><code>combobox</code></td><td>The search input itself</td><td><code>aria-expanded</code>, <code>aria-controls</code>, <code>aria-activedescendant</code>, <code>aria-autocomplete="list"</code></td></tr>
@@ -470,9 +482,9 @@
     <div class="key">A component isn't finished when it looks right. It's finished when the tree says what the screen shows.</div>
 </section>
 
-  <!-- L3c · THE KEYBOARD PATH -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>09</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Focus and the keyboard path</div>
+<!-- L2c · THE KEYBOARD PATH -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>10</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Focus and the keyboard path</div>
     <h2>Tab between widgets, arrows within</h2>
     <div class="two">
       <div class="card a">
@@ -493,9 +505,30 @@
     <div class="key">Fifty jobs in a list are one Tab stop, not fifty. <code>tabindex="0"</code> joins the order, <code>"-1"</code> is focusable by script only, and a positive tabindex is always a bug.</div>
 </section>
 
-  <!-- L4a · THE COMBOBOX CONTRACT -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 4</div><div class="cx-page"><b>10</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Build · The ARIA combobox</div>
+<!-- L2z · READ NEXT -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 2" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>11</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Read next</div>
+    <h2>The tree, the focus order, the keys</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://developer.mozilla.org/en-US/docs/Glossary/Accessibility_tree" target="_blank" rel="noopener">Accessibility tree — MDN</a><small>role, name, state</small></li>
+          <li><a href="https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/" target="_blank" rel="noopener">Developing a keyboard interface — WAI-ARIA APG</a><small>Tab between widgets, arrows within</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://developer.chrome.com/docs/devtools/accessibility/reference" target="_blank" rel="noopener">Accessibility features reference — Chrome DevTools</a><small>read the tree your markup produced</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+<!-- L3a · THE COMBOBOX CONTRACT -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>12</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Build · The ARIA combobox</div>
     <h2>The autocomplete, as the tree sees it</h2>
     <pre><code>&lt;<span class="ty">label</span> htmlFor=<span class="st">"q"</span>&gt;Search jobs&lt;/<span class="ty">label</span>&gt;
 &lt;<span class="ty">input</span> id=<span class="st">"q"</span> role=<span class="st">"combobox"</span> value={query} onChange={onType} onKeyDown={onKey}
@@ -512,9 +545,9 @@
     <div class="key"><code>↓</code> <code>↑</code> move the active option (<code>↓</code> opens the list) · <code>Enter</code> chooses · <code>Escape</code> closes, a second one clears · typing keeps editing. DOM focus never leaves the input.</div>
 </section>
 
-  <!-- L4b · THE RACE -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 4</div><div class="cx-page"><b>11</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Build · Race conditions</div>
+<!-- L3b · THE RACE -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>13</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Build · Race conditions</div>
     <h2>Whichever response lands last wins</h2>
     <p class="say">Debounce waits for typing to pause, so fewer requests start. It does nothing about the <b>order</b> they come back in.</p>
     <div class="fig" style="max-width:940px">
@@ -536,9 +569,9 @@
     <div class="key w">Debounce decides how many requests run. Only cancelling — or ignoring — the stale one decides which result renders. You need both.</div>
 </section>
 
-  <!-- L4c · DEBOUNCE AND ABORT -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 4</div><div class="cx-page"><b>12</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Build · Debounce and abort</div>
+<!-- L3c · DEBOUNCE AND ABORT -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>14</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Build · Debounce and abort</div>
     <h2>One effect: wait, fetch, cancel</h2>
     <pre><code><span class="fn">useEffect</span>(() =&gt; {
   <span class="kw">if</span> (query.<span class="fn">trim</span>().length &lt; <span class="st">2</span>) { <span class="fn">setJobs</span>([]); <span class="kw">return</span>; }
@@ -555,9 +588,31 @@
     <div class="ex"><b>Build stage</b><span class="br">module-7/autocomplete</span><i>check it out in the job board repo, then make its tests pass</i></div>
 </section>
 
-  <!-- L5a · THE MODAL -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>13</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Build · The modal</div>
+<!-- L3z · READ NEXT -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 3" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>15</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Read next</div>
+    <h2>The combobox contract, and the race</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/" target="_blank" rel="noopener">Combobox pattern — WAI-ARIA APG</a><small>every attribute and key</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController" target="_blank" rel="noopener">AbortController — MDN</a><small>cancel the request already in flight</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard/tree/module-7/autocomplete/start" target="_blank" rel="noopener">module-7/autocomplete/start</a><small>the stage this build starts from</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard/tree/module-7/autocomplete/solution" target="_blank" rel="noopener">module-7/autocomplete/solution</a><small>compare once your tests are green</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+<!-- L4a · THE MODAL -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 4</div><div class="cx-page"><b>16</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Build · The modal</div>
     <h2>Trap focus, then give it back</h2>
     <pre><code><span class="kw">function</span> <span class="fn">openModal</span>() {
   returnTo.current = document.activeElement <span class="kw">as</span> <span class="ty">HTMLElement</span>;   <span class="cmt">// remember the trigger</span>
@@ -575,9 +630,9 @@
     <div class="key">Native <code>&lt;dialog&gt;</code> with <code>showModal()</code> makes the page behind inert and closes on Escape for free. Labelling it, and checking focus lands back on the trigger, stay your job.</div>
 </section>
 
-  <!-- L5b · THE KEYBOARD MAP -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>14</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Build · Dropdown, tabs, toast</div>
+<!-- L4b · THE KEYBOARD MAP -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 4</div><div class="cx-page"><b>17</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Build · Dropdown, tabs, toast</div>
     <h2>Every overlay has a keyboard contract</h2>
     <table class="grid">
       <tr><th>Widget</th><th>Keys</th><th>Where focus goes</th></tr>
@@ -589,9 +644,9 @@
     <div class="key w">A dropdown of navigation links is a disclosure, not a menu: a button with <code>aria-expanded</code> and a plain list of links. <code>role="menu"</code> promises app-style arrow keys — use it only if you build them.</div>
 </section>
 
-  <!-- L5c · TOASTS AND LIVE REGIONS -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>15</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Build · Toasts and live regions</div>
+<!-- L4c · TOASTS AND LIVE REGIONS -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 4</div><div class="cx-page"><b>18</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Build · Toasts and live regions</div>
     <h2>Announce it without moving focus</h2>
     <pre><code><span class="cmt">// Mounted once, empty, at the app root: a live region must exist before its text changes</span>
 &lt;<span class="ty">div</span> role=<span class="st">"status"</span> className=<span class="st">"sr-only"</span>&gt;{announcement}&lt;/<span class="ty">div</span>&gt;
@@ -605,9 +660,32 @@
     <div class="ex"><b>Build stage</b><span class="br">module-7/overlays</span><i>modal, dropdown, tabs and toast — make its tests pass</i></div>
 </section>
 
-  <!-- L6a · THE PLATFORM VALIDATES -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 6</div><div class="cx-page"><b>16</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 6 · Forms without a library</div>
+<!-- L4z · READ NEXT -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 4" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 4</div><div class="cx-page"><b>19</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Read next</div>
+    <h2>Overlays, by the pattern book</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/" target="_blank" rel="noopener">Dialog (modal) pattern — WAI-ARIA APG</a><small>focus in, focus trapped, focus back</small></li>
+          <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/" target="_blank" rel="noopener">Tabs pattern — WAI-ARIA APG</a><small>roving tabindex, arrows within</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions" target="_blank" rel="noopener">ARIA live regions — MDN</a><small>announce without moving focus</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog" target="_blank" rel="noopener">The dialog element — MDN</a><small>showModal() makes the page behind inert</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inert" target="_blank" rel="noopener">inert — MDN</a><small>take a subtree out of focus and the tree</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+<!-- L5a · THE PLATFORM VALIDATES -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>20</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Forms without a library</div>
     <h2>Keep the rules, own the messages</h2>
     <pre><code>&lt;<span class="ty">form</span> noValidate onSubmit={onSubmit}&gt;                  <span class="cmt">{/* keep the checks, drop the browser bubbles */}</span>
   &lt;<span class="ty">label</span> htmlFor=<span class="st">"email"</span>&gt;Email&lt;/<span class="ty">label</span>&gt;
@@ -626,9 +704,9 @@
     <div class="key"><code>noValidate</code> turns off the browser's bubbles, not its checks. <code>validity</code> still works, and your message, linked by <code>aria-describedby</code>, is the one a screen reader reads.</div>
 </section>
 
-  <!-- L6b · WHEN TO SHOW THE ERROR -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 6</div><div class="cx-page"><b>17</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 6 · Validation timing</div>
+<!-- L5b · WHEN TO SHOW THE ERROR -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>21</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Validation timing</div>
     <h2>Submit checks all; blur checks one</h2>
     <pre><code><span class="kw">function</span> <span class="fn">onSubmit</span>(e: <span class="ty">React.SubmitEvent</span>&lt;<span class="ty">HTMLFormElement</span>&gt;) {
   e.<span class="fn">preventDefault</span>();
@@ -647,9 +725,30 @@
     </table>
 </section>
 
-  <!-- L7a · WINDOWING -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 7</div><div class="cx-page"><b>18</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 7 · Build · Windowing</div>
+<!-- L5z · READ NEXT -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 5" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>22</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Read next</div>
+    <h2>The platform already validates</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation" target="_blank" rel="noopener">Constraint validation — MDN</a><small>the rules the browser runs for you</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/ValidityState" target="_blank" rel="noopener">ValidityState — MDN</a><small>every flag messageFor() reads</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://web.dev/learn/forms" target="_blank" rel="noopener">Learn Forms — web.dev</a><small>a full course on accessible forms</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+<!-- L6a · WINDOWING -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 6</div><div class="cx-page"><b>23</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · Build · Windowing</div>
     <h2>Render only what's on screen</h2>
     <div class="fig" style="max-width:940px">
       <svg viewBox="0 0 940 150" role="img" aria-label="A list of ten thousand jobs; only the rows inside the viewport plus a few overscan rows on each side are rendered">
@@ -675,9 +774,9 @@
     <div class="key">Ten thousand jobs in memory, about twenty rows in the DOM — at any scroll position.</div>
 </section>
 
-  <!-- L7b · POOLING AND RECYCLING -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 7</div><div class="cx-page"><b>19</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 7 · Build · Pooling and recycling</div>
+<!-- L6b · POOLING AND RECYCLING -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 6</div><div class="cx-page"><b>24</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · Build · Pooling and recycling</div>
     <h2>Recycle the node, change its data</h2>
     <div class="two">
       <div class="card r">
@@ -699,9 +798,9 @@ recycled.<span class="fn">forEach</span>((el, k) =&gt; {
 });</code></pre>
 </section>
 
-  <!-- L7c · THE VIRTUALLIST STATE MACHINE -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 7</div><div class="cx-page"><b>20</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 7 · Build · The whole machine</div>
+<!-- L6c · THE VIRTUALLIST STATE MACHINE -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 6</div><div class="cx-page"><b>25</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · Build · The whole machine</div>
     <h2>Two phases: warm up, then recycle</h2>
     <pre style="font-size:14px"><code><span class="kw">class</span> <span class="ty">VirtualList</span> {
   <span class="kw">async</span> <span class="fn">onBottomVisible</span>() {                          <span class="cmt">// an IntersectionObserver on the bottom sentinel</span>
@@ -723,61 +822,30 @@ recycled.<span class="fn">forEach</span>((el, k) =&gt; {
     <div class="ex"><b>Build stage</b><span class="br">module-7/virtual-list</span><i>a thousand jobs through a handful of live rows — make its tests pass</i></div>
 </section>
 
-  <!-- L8a · CONTAINER QUERIES AND FLUID TYPE -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 8</div><div class="cx-page"><b>21</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 8 · Container queries and fluid type</div>
-    <h2>Ask the container, not the window</h2>
-    <pre><code>.job-list { container-type: inline-size; }
-
-.job-card { display: grid; gap: <span class="fn">var</span>(--space-2); }                   <span class="cmt">/* narrow: stacked */</span>
-<span class="kw">@container</span> (min-width: <span class="st">36rem</span>) {
-  .job-card { grid-template-columns: <span class="st">4rem 1fr auto</span>; }               <span class="cmt">/* wide: logo · details · save */</span>
-}
-
-h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <span class="st">1.25rem + 2vw</span>, <span class="st">3rem</span>); }               <span class="cmt">/* fluid, with a floor and a ceiling */</span></code></pre>
-    <div class="key">The same <code>JobCard</code> sits in a narrow sidebar and a wide feed on one screen. A media query sees one window; a container query sees the space each card was actually given.</div>
-</section>
-
-  <!-- L8b · INPUT MODALITY AND REDUCED MOTION -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 8</div><div class="cx-page"><b>22</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 8 · Input modality and motion</div>
-    <h2>Input, hover and motion — not width</h2>
-    <pre><code><span class="kw">@media</span> (hover: hover) <span class="kw">and</span> (pointer: fine) {                      <span class="cmt">/* a mouse: hide until hover…   */</span>
-  .job-card .actions { opacity: <span class="st">0</span>; }
-  .job-card:<span class="fn">is</span>(:hover, :focus-within) .actions { opacity: <span class="st">1</span>; }    <span class="cmt">/* …or keyboard focus inside */</span>
-}
-<span class="kw">@media</span> (pointer: coarse) {                                        <span class="cmt">/* a thumb, not a cursor */</span>
-  .icon-button { min-width: <span class="st">44px</span>; min-height: <span class="st">44px</span>; }
-}
-<span class="kw">@media</span> (prefers-reduced-motion: reduce) {                          <span class="cmt">/* less movement, same feedback */</span>
-  .drawer { transform: none; transition: opacity <span class="st">.2s</span>; }
-}</code></pre>
-    <div class="key">Hover is a bonus, never the only way in. Reduced motion means less movement, not no feedback — swap the slide for a fade.</div>
-</section>
-
-  <!-- L8c · OBSERVE THE ELEMENT -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 8</div><div class="cx-page"><b>23</b> / 24</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 8 · When JavaScript needs to know</div>
-    <h2>Observe the element, not the window</h2>
-    <div class="three">
+<!-- L6z · READ NEXT -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 6" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 6</div><div class="cx-page"><b>26</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · Read next</div>
+    <h2>Windowing, and the observers behind it</h2>
+    <div class="two">
       <div class="card a">
-        <h3 class="cy">ResizeObserver</h3>
-        <p>Fires when one element's box changes, not on every window resize. Use it when script needs the number — a virtual grid's column count, a chart's width. Read <code>inlineSize</code>, so RTL and vertical text still work.</p>
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://web.dev/articles/virtualize-long-lists-react-window" target="_blank" rel="noopener">Virtualize large lists — web.dev</a><small>windowing, measured</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API" target="_blank" rel="noopener">Intersection Observer API — MDN</a><small>the sentinel that loads the next page</small></li>
+        </ul>
       </div>
-      <div class="card g">
-        <h3 class="g">IntersectionObserver</h3>
-        <p>Tells you when an element enters or leaves a viewport or scroll container, without a scroll listener. Lesson 7's sentinels, lazy images, a sticky header's shadow.</p>
-      </div>
-      <div class="card p">
-        <h3 class="p">matchMedia</h3>
-        <p>The script side of a media feature, with a <code>change</code> event. Check <code>prefers-reduced-motion</code> before a JS animation; react when a pointer is attached.</p>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver" target="_blank" rel="noopener">ResizeObserver — MDN</a><small>when JavaScript needs the container size</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener">Rasmi — the job board repo</a><small>every stage the builds start from</small></li>
+        </ul>
       </div>
     </div>
-    <div class="key">CSS first. Reach for an observer only when script genuinely needs the answer — and disconnect it on unmount.</div>
 </section>
 
-  <!-- CLOSING -->
-  <section class="slide" data-chip="MODULE 07 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 8</div><div class="cx-page"><b>24</b> / 24</div><!--/catalyst-brand:chrome-->
+<!-- CLOSING -->
+<section class="slide" data-chip="MODULE 07 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 6</div><div class="cx-page"><b>27</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 07 · done</div>
     <h2>What you can now build live</h2>
     <div class="two">
@@ -855,6 +923,10 @@ h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <
   });
   document.getElementById('stage').addEventListener('click',e=>{ e.clientX>innerWidth/2?next():prev(); });
   render();
+</script>
+<script>
+/* A link on a Read-next slide opens in a new tab; it must not also turn the slide. */
+document.getElementById('stage').addEventListener('click',e=>{ if(e.target.closest('a[href]')) e.stopPropagation(); },true);
 </script>
 <!--catalyst-brand:copy-->
 <script>
