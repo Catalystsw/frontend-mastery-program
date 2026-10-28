@@ -321,7 +321,7 @@
 <span class="kw">interface</span> <span class="ty">Vector</span> { x: <span class="ty">number</span>; y: <span class="ty">number</span>; }
 
 <span class="kw">const</span> p: <span class="ty">Point</span> = { x: <span class="st">1</span>, y: <span class="st">2</span> } <span class="kw">as</span> <span class="ty">Vector</span>;
-<span class="kw">const</span> q: <span class="ty">Point</span> = { x: <span class="st">1</span>, y: <span class="st">2</span> }; <span class="ok">// fine — no cast needed</span>
+<span class="kw">const</span> q: <span class="ty">Point</span> = { x: <span class="st">1</span>, y: <span class="st">2</span> }; <span class="ok">// fine, no cast</span>
 <span class="cmt">// same shape, any name (or no name) — assignable</span></code></pre>
       </div>
     </div>
@@ -352,7 +352,7 @@
         <rect x="700" y="70" width="140" height="56" rx="9" fill="#121C30" stroke="#F8717A"/>
         <text x="770" y="103" text-anchor="middle" class="lbl b" font-size="14">never</text>
         <rect x="395" y="0" width="90" height="42" rx="9" fill="none" stroke="#FBBF24" stroke-dasharray="4 4"/>
-        <text x="440" y="26" text-anchor="middle" class="lbl" font-size="12" fill="#FBBF24">any</text>
+        <text x="440" y="26" text-anchor="middle" class="lbl" font-size="12" fill="#FBBF24" style="fill:#FBBF24">any</text>
         <text x="90" y="144" class="lbl s" font-size="11">least specific</text>
         <text x="730" y="144" class="lbl s" font-size="11" text-anchor="end">most specific</text>
       </svg>
@@ -366,9 +366,9 @@
     <h2>Only one of these turns the checker off</h2>
     <table class="grid">
       <tr><th>Type</th><th>What you can do with it</th><th>Where it shows up</th></tr>
-      <tr><td><b class="r">any</b></td><td>Anything, unchecked — <code>a.b.c()</code> compiles whether or not it exists.</td><td>Giving up, or a boundary nobody typed yet.</td></tr>
-      <tr><td><b class="cy">unknown</b></td><td>Nothing, until you narrow it — every operation is rejected first.</td><td>Data whose shape you genuinely don't know yet (a boundary you <i>did</i> think about).</td></tr>
-      <tr><td><b class="r">never</b></td><td>Nothing can be assigned to it, and it can't be reached.</td><td>Exhaustiveness checks; the return type of a function whose only job is to throw.</td></tr>
+      <tr><td><b class="r" style="color:var(--bad)">any</b></td><td>Anything, unchecked — <code>a.b.c()</code> compiles whether or not it exists.</td><td>Giving up, or a boundary nobody typed yet.</td></tr>
+      <tr><td><b class="cy" style="color:var(--cy)">unknown</b></td><td>Nothing, until you narrow it — every operation is rejected first.</td><td>Data whose shape you genuinely don't know yet (a boundary you <i>did</i> think about).</td></tr>
+      <tr><td><b class="r" style="color:var(--bad)">never</b></td><td>Nothing can be assigned to it, and it can't be reached.</td><td>Exhaustiveness checks; the return type of a function whose only job is to throw.</td></tr>
     </table>
     <div class="key w"><code>fetch('/api/listings').then(r =&gt; r.json())</code> returns <code>Promise&lt;any&gt;</code> — the one place <code>any</code> sneaks back into a strict codebase uninvited.</div>
 </section>
@@ -392,8 +392,11 @@
       </div>
       <div class="card g">
         <h3 class="g">a predicate</h3>
-        <pre><code><span class="kw">function</span> <span class="fn">isListing</span>(x: <span class="ty">unknown</span>): x <span class="kw">is</span> <span class="ty">Listing</span> {
-  <span class="kw">return</span> <span class="kw">typeof</span> x === <span class="st">'object'</span> &amp;&amp; x !== <span class="kw">null</span> &amp;&amp; <span class="st">'id'</span> <span class="kw">in</span> x;
+        <pre><code><span class="kw">function</span> <span class="fn">isListing</span>(x: <span class="ty">unknown</span>)
+  : x <span class="kw">is</span> <span class="ty">Listing</span> {
+  <span class="kw">return</span> <span class="kw">typeof</span> x === <span class="st">'object'</span>
+    &amp;&amp; x !== <span class="kw">null</span>
+    &amp;&amp; <span class="st">'id'</span> <span class="kw">in</span> x;
 }</code></pre>
       </div>
     </div>
@@ -417,7 +420,7 @@
     <span class="kw">default</span>:         <span class="kw">return</span> <span class="kw">null</span>;
   }
 }</code></pre>
-    <div class="key g">Five independent booleans describe thirty-two states; this describes exactly four. The <code>status</code> field is the discriminant. Narrow on it once in a <code>switch</code>, and every branch gets exactly the fields that state actually has — <code>state.data</code> is a type error outside the <code>'success'</code> branch.</div>
+    <div class="key g">Five booleans describe thirty-two states; this union describes exactly four. Narrow on <code>status</code> once and each branch gets only that state's fields — <code>state.data</code> is an error outside <code>'success'</code>.</div>
 </section>
 
   <!-- L2c · EXHAUSTIVENESS WITH never -->
@@ -437,7 +440,7 @@
     <span class="kw">default</span>: <span class="kw">return</span> <span class="fn">assertNever</span>(state); <span class="no">// ❌ once a 5th status is added, this stops compiling</span>
   }
 }</code></pre>
-    <div class="key">Handle every case, and what's left at <code>default</code> is <code>never</code> — the same bottom type from Lesson 1. Forget a case later and <code>state</code> there is no longer <code>never</code>; the build fails at the exact switch that needs updating.</div>
+    <div class="key">Handle every case and what is left at <code>default</code> is <code>never</code>. Forget one later and the build fails at the exact switch that needs it.</div>
 </section>
 
   <!-- L3a · GENERICS -->
@@ -455,7 +458,7 @@
 ): <span class="ty">Record</span>&lt;<span class="ty">K</span>, <span class="ty">T</span>[]&gt; { <span class="cmt">/* … */</span> }
 
 <span class="kw">const</span> byCompany = <span class="fn">groupBy</span>(listings, l =&gt; l.company); <span class="cmt">// T and K both inferred</span></code></pre>
-    <div class="key">Nothing here says "pass me a type." You call <code>groupBy(listings, …)</code> like any other function — TypeScript infers <code>T</code> and <code>K</code> from the arguments, the same way it infers a value's type from what you assign it.</div>
+    <div class="key">You call <code>groupBy(listings, …)</code> like any function — TypeScript infers <code>T</code> and <code>K</code> from the arguments.</div>
 </section>
 
   <!-- L3b · CONSTRAINING WITH keyof -->

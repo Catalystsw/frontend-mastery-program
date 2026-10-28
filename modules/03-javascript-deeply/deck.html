@@ -1444,10 +1444,10 @@ panel.remove()
         <pre><code><span class="kw">function</span> <span class="fn">deepClone</span>(value, seen = <span class="kw">new</span> <span class="ty">WeakMap</span>()) {
   <span class="kw">if</span> (value === <span class="kw">null</span> || <span class="kw">typeof</span> value !== <span class="st">'object'</span>) <span class="kw">return</span> value
   <span class="kw">if</span> (value <span class="kw">instanceof</span> <span class="ty">Date</span>) <span class="kw">return new</span> <span class="ty">Date</span>(value.getTime())
-  <span class="kw">if</span> (seen.has(value)) <span class="kw">return</span> seen.get(value)   <span class="cmt">// a cycle</span>
+  <span class="kw">if</span> (seen.has(value)) <span class="kw">return</span> seen.get(value) <span class="cmt">// cycle</span>
 
   <span class="kw">const</span> copy = Array.isArray(value) ? [] : {}
-  seen.set(value, copy)                        <span class="cmt">// before the children</span>
+  seen.set(value, copy)   <span class="cmt">// before the children</span>
   <span class="kw">for</span> (<span class="kw">const</span> [key, entry] <span class="kw">of</span> Object.entries(value)) {
     copy[key] = <span class="fn">deepClone</span>(entry, seen)
   }
