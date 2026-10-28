@@ -98,7 +98,7 @@
     write, starting from a failing test.</p>
     <div class="stats">
       <div><div class="v">13</div><div class="k">Modules</div></div>
-      <div><div class="v">120</div><div class="k">Lessons</div></div>
+      <div><div class="v">111</div><div class="k">Lessons</div></div>
       <div><div class="v">13</div><div class="k">Build checkpoints</div></div>
       <div><div class="v">1</div><div class="k">Shipped product</div></div>
     </div>
@@ -108,7 +108,7 @@
   <section class="sec" id="curriculum">
     <div class="card curr">
       <div class="sec-head"><b class="bar"></b><span class="num">01</span><h2>Curriculum</h2></div>
-      <p class="sec-sub">13 modules · 120 lessons · click any module to expand</p>
+      <p class="sec-sub">13 modules · 111 lessons · click any module to expand</p>
 
       <div class="act-row"><span class="t">Act I · Modules 1–4</span><span class="d">The platform under the framework</span></div>
 
@@ -167,19 +167,14 @@
       </details>
 
       <details class="mod">
-        <summary><span class="mnum">04</span><span class="mttl">TypeScript for Frontend Engineers<em>Types that make the wrong state impossible</em></span><span class="count">9 lessons</span></summary>
+        <summary><span class="mnum">04</span><span class="mttl">TypeScript for Frontend Engineers<em>Types that make the wrong state impossible</em></span><span class="count">4 lessons</span></summary>
         <div class="mbody">
           <p class="aim"><b>By the end:</b> you model a domain with types that make the wrong state unrepresentable, and you know the point where more types stop paying for themselves.</p>
           <ol class="lessons">
-            <li>Structural typing: TypeScript does not care what you named it</li>
-            <li>Generics are parameters for types, nothing more</li>
-            <li>Narrowing, and the difference between <code>unknown</code> and <code>any</code></li>
-            <li>Discriminated unions kill the five-boolean component</li>
-            <li>Utility and mapped types you will actually reach for</li>
-            <li>Typing async data, and where the lies get in</li>
-            <li>Schema validation at the boundary, types on the inside</li>
-            <li><code>tsconfig</code> strictness, flag by flag, and what each one catches</li>
-            <li>Model the job board's domain end to end<span class="build">Build</span></li>
+            <li>Structural typing, and every type as a set — <code>unknown</code>, <code>any</code>, <code>never</code></li>
+            <li>Narrowing and discriminated unions — the compiler finds the state you forgot</li>
+            <li>Generics, <code>keyof</code>, utility and mapped types — types built from types</li>
+            <li>Types at the boundary: schema validation and <code>tsconfig</code> strictness<span class="build">Build</span></li>
           </ol>
         </div>
       </details>
@@ -207,18 +202,14 @@
       </details>
 
       <details class="mod">
-        <summary><span class="mnum">06</span><span class="mttl">React + TypeScript in Production<em>The module a team lead will judge you on</em></span><span class="count">8 lessons</span></summary>
+        <summary><span class="mnum">06</span><span class="mttl">React + TypeScript in Production<em>The module a team lead will judge you on</em></span><span class="count">4 lessons</span></summary>
         <div class="mbody">
           <p class="aim"><b>By the end:</b> you write components a reviewer can read — typed props, typed events, and state machines instead of boolean soup.</p>
           <ol class="lessons">
-            <li>Typing props, children and refs without fighting the compiler</li>
-            <li>Typing events, forms and the handlers between them</li>
-            <li>Generic components: one <code>Select</code>, every option type</li>
-            <li>Polymorphic components and the <code>as</code> prop</li>
-            <li>Typed hooks and typed reducers</li>
-            <li>Discriminated state machines instead of five booleans</li>
-            <li>A typed API layer the UI can trust</li>
-            <li>Build the typed primitives the whole app will use<span class="build">Build</span></li>
+            <li>Typing props, children, refs and events — the component contract</li>
+            <li>Generic and polymorphic components — one <code>Select</code>, every option type</li>
+            <li>Typed hooks and reducers — discriminated state instead of five booleans</li>
+            <li>A typed API layer, and the typed primitives the whole app will use<span class="build">Build</span></li>
           </ol>
         </div>
       </details>

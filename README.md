@@ -7,7 +7,7 @@ write lives in a second repository, and the two are used side by side.
 | Repository | What it is |
 |---|---|
 | **this one** | Decks and pages — one folder per module. Read-only for students. |
-| [`frontend-mastery-jobboard`](https://github.com/eng-AhmedMahmoud/frontend-mastery-jobboard) | **Rasmi**, the job board you build across the whole program. Every exercise is a branch here. |
+| [`frontend-mastery-jobboard`](https://github.com/Catalystsw/frontend-mastery-jobboard) | **Rasmi**, the job board you build across the whole program. Every exercise is a branch here. |
 
 ---
 
@@ -15,10 +15,10 @@ write lives in a second repository, and the two are used side by side.
 
 ```sh
 # 1 · the material
-git clone https://github.com/eng-AhmedMahmoud/frontend-mastery-program.git
+git clone https://github.com/Catalystsw/frontend-mastery-program.git
 
 # 2 · the exercise repo, cloned next to it
-git clone https://github.com/eng-AhmedMahmoud/frontend-mastery-jobboard.git
+git clone https://github.com/Catalystsw/frontend-mastery-jobboard.git
 cd frontend-mastery-jobboard && pnpm install
 ```
 
@@ -49,7 +49,7 @@ hidden behind a key or waiting in view-source.
 program/
   program-page.html       the program at a glance
 curriculum/
-  curriculum-page.html    every lesson, in order — 13 modules, 120 lessons
+  curriculum-page.html    every lesson, in order — 13 modules, 111 lessons
 modules/
   01-foundations/
     deck.html             what companies actually test — 28 slides
@@ -72,7 +72,7 @@ copying a single deck somewhere else.
 
 ### The modules
 
-Thirteen modules, 120 lessons, 13 build checkpoints. `curriculum/curriculum-page.html` lists
+Thirteen modules, 111 lessons, 13 build checkpoints. `curriculum/curriculum-page.html` lists
 every lesson; this is the shape of it.
 
 | # | Module | # | Module |
@@ -191,5 +191,5 @@ a real key ever lands in history, rotate it — deleting the commit is not enoug
 
 Open an issue on this repository for anything in the material — a slide that is wrong, a
 figure that does not render, a lesson that needs a step spelled out. For the code, open it on
-the [job board repo](https://github.com/eng-AhmedMahmoud/frontend-mastery-jobboard) instead,
+the [job board repo](https://github.com/Catalystsw/frontend-mastery-jobboard) instead,
 and say which stage branch you are on.
