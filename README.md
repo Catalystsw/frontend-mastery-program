@@ -49,7 +49,7 @@ hidden behind a key or waiting in view-source.
 program/
   program-page.html       the program at a glance
 curriculum/
-  curriculum-page.html    every lesson, in order — 13 modules, 76 lessons
+  curriculum-page.html    every lesson, in order — 13 modules, 75 lessons
 modules/
   01-foundations/
     deck.html             what companies actually test — 26 slides
@@ -57,7 +57,7 @@ modules/
   02-browser-runtime/
     deck.html             the browser as a runtime — 23 slides
   03-javascript-deeply/
-    deck.html             the language under the framework — 40 slides, one video per lesson
+    deck.html             the language under the framework — 41 slides, one video per lesson
   04-typescript-frontend/
     deck.html             types that make the wrong state impossible — 20 slides
   05-react-deeply/
@@ -89,7 +89,7 @@ copying a single deck somewhere else.
 
 ### The modules
 
-Thirteen modules, 76 lessons, 13 build checkpoints. `curriculum/curriculum-page.html` lists
+Thirteen modules, 75 lessons, 13 build checkpoints. `curriculum/curriculum-page.html` lists
 every lesson; this is the shape of it.
 
 | # | Module | # | Module |

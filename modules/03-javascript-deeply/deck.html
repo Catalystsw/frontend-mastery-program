@@ -141,9 +141,92 @@
   .cmb-out{font:600 min(1.4vw,16px)/1.4 var(--sans); color:var(--grey2)}
   .cmb-out b.ok{color:var(--good)} .cmb-out b.no{color:var(--bad)}
 
+  /* ---- fetch outcome explorer: one response, walked stage by stage ---------------- */
+  .fx{display:flex; flex-direction:column; gap:10px; width:100%}
+  .fx .cmb-seg{flex-wrap:wrap}
+  .fx-rows{display:flex; flex-direction:column; gap:7px}
+  .fx-row{display:grid; grid-template-columns:132px 1fr; align-items:center; gap:14px;
+    background:var(--panel2); border:1px solid var(--line2); border-radius:9px; padding:10px 14px;
+    font:600 13px/1.3 var(--mono); color:var(--grey3); opacity:.35; transform:translateX(-8px);
+    transition:opacity .3s, transform .3s, border-color .3s, background .3s}
+  .fx-row b{color:var(--ink); font-weight:700}
+  .fx-row.on{opacity:1; transform:none}
+  .fx-row.ok{border-color:var(--good); background:rgba(52,211,153,.08)} .fx-row.ok span{color:var(--good)}
+  .fx-row.no{border-color:var(--bad); background:rgba(248,113,122,.08)} .fx-row.no span{color:var(--bad)}
+  .fx-row.warn{border-color:var(--ochre); background:rgba(251,191,36,.08)} .fx-row.warn span{color:var(--ochre)}
+  .fx-row.moot{opacity:.4}
+  .fx .cmb-out b.warn{color:var(--ochre)}
+
+  /* ---- retry timeline: each try on its own row, the wait before it drawn to scale ---- */
+  .rt{display:flex; flex-direction:column; gap:10px; width:100%}
+  .rt .cmb-seg{flex-wrap:wrap}
+  .rt-rows{display:flex; flex-direction:column; gap:7px}
+  .rt-row{display:grid; grid-template-columns:50px 1fr; align-items:center; gap:12px; transition:opacity .3s}
+  .rt-row > b{font:700 12.5px/1 var(--mono); color:var(--muted)}
+  .rt-track{position:relative; height:32px; border-radius:8px; background:var(--panel2); border:1px solid var(--line2)}
+  .rt-try{position:absolute; top:4px; bottom:4px; width:16.67%}
+  .rt-try i{position:absolute; left:0; top:0; bottom:0; width:0; box-sizing:border-box; border-radius:6px;
+    background:rgba(34,211,238,.18); border:1px solid var(--cy); opacity:0}
+  .rt-try.live i{width:100%; opacity:1; transition:width var(--ms) linear}
+  .rt-try em{position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+    font:700 12px/1 var(--mono); font-style:normal; white-space:nowrap; color:var(--ink2)}
+  .rt-try.ok i{background:rgba(52,211,153,.16); border-color:var(--good)} .rt-try.ok em{color:var(--good)}
+  .rt-try.no i{background:rgba(248,113,122,.16); border-color:var(--bad)} .rt-try.no em{color:var(--bad)}
+  .rt-try.warn i{background:rgba(251,191,36,.14); border-color:var(--ochre)} .rt-try.warn em{color:var(--ochre)}
+  .rt-wait{position:absolute; top:50%; height:0}
+  .rt-wait i{position:absolute; left:6px; top:-1px; width:0; border-top:2px dashed var(--grey3)}
+  .rt-wait.live i{width:calc(100% - 12px); transition:width var(--ms) linear}
+  .rt-wait em{position:absolute; left:50%; top:0; transform:translate(-50%,-50%); padding:0 5px; background:var(--panel2);
+    font:600 11px/1 var(--mono); font-style:normal; white-space:nowrap; color:var(--muted); opacity:0}
+  .rt-wait.live em{opacity:1}
+  .rt-row.moot{opacity:.4}
+  .rt-row.moot .rt-track::after{content:"not tried"; position:absolute; left:12px; top:50%; transform:translateY(-50%);
+    font:600 11px/1 var(--mono); color:var(--muted)}
+  .rt .cmb-out b.warn{color:var(--ochre)}
+  .rt-axis{margin-left:62px; text-align:right; font:600 11px/1 var(--mono); color:var(--grey3)}
+
+  /* ---- step player: a figure that plays itself when its slide opens ----------------
+     .anim gets s1..sN cumulatively. On any child: aN appears, xN fades, dN draws (pathLength=1),
+     gN turns green, rN turns red, cN is cut, hN hides — each at step N. */
+  .anim{width:100%}
+  .anim svg{display:block; width:100%; height:auto; overflow:visible}
+  .anim rect,.anim path,.anim text{transition:stroke .35s, fill .35s, opacity .45s}
+  .anim g{transition:opacity .45s}
+  .anim .lbl{font-size:14px} .anim .lbl.s{font-size:11.5px}
+  .anim rect{fill:var(--panel2); stroke:var(--grey3); stroke-width:1.5}
+  .anim path.e{fill:none; stroke:var(--grey3); stroke-width:2}
+  .anim path.ah{fill:var(--grey3); stroke:none}
+  .anim rect.root{fill:#0C2733; stroke:var(--cy)}
+  .anim rect.bad{fill:#2A1014; stroke:var(--bad)}
+  .anim text.bad{fill:var(--bad)} .anim text.good{fill:var(--good)}
+  .anim .a1,.anim .a2,.anim .a3,.anim .a4,.anim .a5,.anim .a6{opacity:0}
+  .anim.s1 .a1,.anim.s2 .a2,.anim.s3 .a3,.anim.s4 .a4,.anim.s5 .a5,.anim.s6 .a6{opacity:1}
+  .anim.s1 .x1,.anim.s2 .x2,.anim.s3 .x3,.anim.s4 .x4,.anim.s5 .x5,.anim.s6 .x6{opacity:.12}
+  .anim.s1 .h1,.anim.s2 .h2,.anim.s3 .h3,.anim.s4 .h4,.anim.s5 .h5,.anim.s6 .h6{opacity:0}
+  .anim .lbl.mono{font-family:var(--mono); font-size:13px} .anim .lbl.s.mono{font-size:11.5px}
+  .anim.lg .lbl{font-size:16px} .anim.lg .lbl.s{font-size:13px} .anim.lg .lbl.mono{font-size:15px} .anim.lg .lbl.s.mono{font-size:12.5px}
+  .anim .d1,.anim .d2,.anim .d3,.anim .d4,.anim .d5,.anim .d6{stroke-dasharray:1; stroke-dashoffset:1; transition:stroke-dashoffset .6s ease, stroke .35s}
+  .anim.s1 .d1,.anim.s2 .d2,.anim.s3 .d3,.anim.s4 .d4,.anim.s5 .d5,.anim.s6 .d6{stroke-dashoffset:0}
+  .anim .slow{transition:stroke-dashoffset 2.8s linear !important}
+  .anim .mid{transition:stroke-dashoffset 1.1s ease-in-out !important}
+  .anim .lbl.l{font-size:17px}
+  .anim.s1 rect.g1,.anim.s2 rect.g2,.anim.s3 rect.g3,.anim.s4 rect.g4,.anim.s5 rect.g5,.anim.s6 rect.g6{fill:#0C2A22; stroke:var(--good)}
+  .anim.s1 path.e.g1,.anim.s2 path.e.g2,.anim.s3 path.e.g3,.anim.s4 path.e.g4,.anim.s5 path.e.g5,.anim.s6 path.e.g6{stroke:var(--good)}
+  .anim.s1 path.ah.g1,.anim.s1 text.g1,.anim.s2 path.ah.g2,.anim.s2 text.g2,.anim.s3 path.ah.g3,.anim.s3 text.g3,.anim.s4 path.ah.g4,.anim.s4 text.g4,.anim.s5 path.ah.g5,.anim.s5 text.g5,.anim.s6 path.ah.g6,.anim.s6 text.g6{fill:var(--good)}
+  .anim.s1 rect.r1,.anim.s2 rect.r2,.anim.s3 rect.r3,.anim.s4 rect.r4,.anim.s5 rect.r5,.anim.s6 rect.r6{fill:#2A1014; stroke:var(--bad)}
+  .anim.s1 path.e.r1,.anim.s2 path.e.r2,.anim.s3 path.e.r3,.anim.s4 path.e.r4,.anim.s5 path.e.r5,.anim.s6 path.e.r6{stroke:var(--bad)}
+  .anim.s1 path.ah.r1,.anim.s1 text.r1,.anim.s2 path.ah.r2,.anim.s2 text.r2,.anim.s3 path.ah.r3,.anim.s3 text.r3,.anim.s4 path.ah.r4,.anim.s4 text.r4,.anim.s5 path.ah.r5,.anim.s5 text.r5,.anim.s6 path.ah.r6,.anim.s6 text.r6{fill:var(--bad)}
+  .anim.s1 path.e.c1,.anim.s2 path.e.c2,.anim.s3 path.e.c3,.anim.s4 path.e.c4,.anim.s5 path.e.c5,.anim.s6 path.e.c6{stroke:var(--bad); stroke-dasharray:.03 .03; opacity:.45}
+  .anim.s1 path.ah.c1,.anim.s2 path.ah.c2,.anim.s3 path.ah.c3,.anim.s4 path.ah.c4,.anim.s5 path.ah.c5,.anim.s6 path.ah.c6{fill:var(--bad); opacity:.45}
+  .anim.rs,.anim.rs *{transition:none !important}
+  .anim-bar{display:flex; align-items:center; gap:14px; margin-top:10px; min-height:38px}
+  .anim-say{font:600 min(1.4vw,16px)/1.4 var(--sans); color:var(--ink2)}
+  .anim-say i{display:none; font-style:normal} .anim-say i.on{display:inline}
+  .anim-say b.good{color:var(--good)} .anim-say b.bad{color:var(--bad)}
+
   /* ---- debounce / throttle timeline ----------------------------------------------
-     The same event stream runs on both slides; only the rule that decides when the
-     second row lights changes. Simulated from the real definitions rather than drawn
+     One event stream, one row per rule; only the rule that decides when a row
+     lights changes. Simulated from the real definitions rather than drawn
      by hand, so the marks land where the function would actually fire. */
   .tl{width:100%; max-width:900px; margin-top:24px}
   .tl-row{display:grid; grid-template-columns:104px 1fr; align-items:center; gap:16px; margin-bottom:16px}
@@ -387,7 +470,7 @@
 <div id="stage">
 
   <!-- MODULE 03 · VIDEO 1 -->
-  <section class="slide" style="justify-content:center" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>01</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" style="justify-content:center" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>01</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 03 · JavaScript, Deeply</div>
     <h1>The language<br>under the framework</h1>
     <div class="sub">Execution contexts, closures, <span class="mono">this</span>, prototypes, modules, promises and memory — ending with the interview toolbelt written from an empty file.</div>
@@ -412,9 +495,9 @@
   </section>
 
   <!-- MODULE 03 · VIDEO 1 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>02</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>02</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 03 · the route through this module</div>
-    <h2>Ten lessons</h2>
+    <h2>Nine lessons</h2>
     <div class="two">
       <ul class="plist">
         <li><b>1 ·</b> Execution contexts and scope<small>drawn, not described</small></li>
@@ -427,15 +510,14 @@
         <li><b>6 ·</b> Callbacks → promises → async/await<small>and the states in between</small></li>
         <li><b>7 ·</b> Errors across async boundaries<small>the <code>try</code> that catches nothing</small></li>
         <li><b>8 ·</b> Memory and leaks<small>the leak your single-page app has right now</small></li>
-        <li><b>9 ·</b> The toolbelt, part 1<small>debounce and throttle, from an empty file</small></li>
-        <li><b>10 ·</b> The toolbelt, part 2<small>deepClone, EventEmitter, promiseAll</small></li>
+        <li><b>9 ·</b> The interview toolbelt<small>debounce, throttle, deepClone, EventEmitter, from an empty file</small></li>
       </ul>
     </div>
     <a class="ex" href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener"><b>The repo</b><span class="br">frontend-mastery-jobboard</span><i>every exercise in this module · open on GitHub ↗</i></a>
   </section>
 
   <!-- MODULE 03 · VIDEO 1 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>03</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>03</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · what a call actually costs</div>
     <h2>Every function call pushes a context</h2>
     <div class="two tight stk" id="stk">
@@ -469,7 +551,7 @@
   </section>
 
   <!-- MODULE 03 · VIDEO 1 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>04</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>04</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · proof, in six lines</div>
     <h2>Lexical, not dynamic</h2>
     <div class="two tight">
@@ -498,7 +580,7 @@
   </section>
 
   <!-- MODULE 03 · VIDEO 2 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 2</div><div class="cx-page"><b>05</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 2</div><div class="cx-page"><b>05</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · the definition that survives an interview</div>
     <h2>A function plus the environment it was born in</h2>
     <div class="two tight">
@@ -527,7 +609,7 @@
   </section>
 
   <!-- MODULE 03 · VIDEO 2 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 2</div><div class="cx-page"><b>06</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 2</div><div class="cx-page"><b>06</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Where you already rely on it</div>
     <h2>Three shapes, one mechanism</h2>
     <div class="three">
@@ -557,7 +639,7 @@ store.state  <span class="no">// undefined</span></code></pre>
   </section>
 
   <!-- MODULE 03 · VIDEO 2 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 2</div><div class="cx-page"><b>07</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 2</div><div class="cx-page"><b>07</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">The other edge of the same knife</div>
     <h2>What the closure keeps alive</h2>
     <div class="two">
@@ -583,7 +665,7 @@ store.state  <span class="no">// undefined</span></code></pre>
   </section>
 
   <!-- MODULE 03 · VIDEO 3 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 3</div><div class="cx-page"><b>08</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 3</div><div class="cx-page"><b>08</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · read the call, not the definition</div>
     <h2>Four rules, checked in this order</h2>
     <div class="two tight">
@@ -615,7 +697,7 @@ obj.<span class="fn">who</span>()                  <span class="cmt">// 2 · imp
   </section>
 
   <!-- MODULE 03 · VIDEO 3 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 3</div><div class="cx-page"><b>09</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 3</div><div class="cx-page"><b>09</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">The bug you have shipped at least once</div>
     <h2>A method passed by reference loses its dot</h2>
     <div class="two tight">
@@ -643,7 +725,7 @@ input.addEventListener(<span class="st">'input'</span>, s.handle)
   </section>
 
   <!-- MODULE 03 · VIDEO 4 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 4</div><div class="cx-page"><b>10</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 4</div><div class="cx-page"><b>10</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · delegation, without classes</div>
     <h2>Inheritance without classes or constructors</h2>
     <div class="two tight">
@@ -670,7 +752,7 @@ console.log(<span class="ty">Object</span>.getPrototypeOf(userA) === protoUser);
   </section>
 
   <!-- MODULE 03 · VIDEO 4 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 4</div><div class="cx-page"><b>11</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 4</div><div class="cx-page"><b>11</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · what <code>class</code> is hiding</div>
     <h2>What 'class' is actually hiding</h2>
     <div class="two tight">
@@ -701,7 +783,7 @@ console.log(<span class="kw">typeof</span> <span class="ty">User</span>); <span 
   </section>
 
   <!-- MODULE 03 · VIDEO 4 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 4</div><div class="cx-page"><b>12</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 4</div><div class="cx-page"><b>12</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · intercepting the object model</div>
     <h2>Intercept and control property access</h2>
     <div class="two tight">
@@ -741,7 +823,7 @@ userProxy.age = <span class="st">'thirty'</span>; <span class="cmt">// throws Ty
   </section>
 
   <!-- MODULE 03 · VIDEO 5 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>13</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>13</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · before the first import</div>
     <h2>Which module system is this file?</h2>
     <div class="two tight">
@@ -773,7 +855,7 @@ eslint.config<span class="kw">.cjs</span>           <span class="cmt">// .cjs wi
   </section>
 
   <!-- MODULE 03 · VIDEO 5 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>14</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>14</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · at runtime</div>
     <h2>What 'import' actually does at runtime</h2>
     <div class="two tight">
@@ -806,7 +888,7 @@ console.log(count); <span class="cmt">// 0 ← <bdi dir="rtl" style="font:1.15em
   </section>
 
   <!-- MODULE 03 · VIDEO 5 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>15</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>15</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · why that bites in tests</div>
     <h2>Why senior engineers call it an anti-pattern</h2>
     <div class="two tight">
@@ -843,7 +925,7 @@ console.log(count); <span class="cmt">// 0 ← <bdi dir="rtl" style="font:1.15em
   </section>
 
   <!-- MODULE 03 · VIDEO 5 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>16</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>16</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · why that bites on the server</div>
     <h2>One copy, every user</h2>
     <div class="two tight">
@@ -882,7 +964,7 @@ console.log(count); <span class="cmt">// 0 ← <bdi dir="rtl" style="font:1.15em
   </section>
 
   <!-- MODULE 03 · VIDEO 5 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>17</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>17</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · who reads your imports</div>
     <h2>Webpack, Vite, Turbopack</h2>
     <table class="grid">
@@ -911,36 +993,8 @@ math[action](1, 2);
   </section>
 
   <!-- MODULE 03 · VIDEO 6 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>18</b> / 40</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 6 · one object, three states, one transition</div>
-    <h2>A promise settles once, and never moves again</h2>
-    <div class="fig" style="max-width:920px">
-      <svg viewBox="0 0 920 170" role="img" aria-label="Pending transitions once to fulfilled or rejected">
-        <rect x="0" y="56" width="200" height="58" rx="10" fill="#121C30" stroke="#FBBF24"/>
-        <text x="100" y="82" text-anchor="middle" class="lbl b" font-size="15">pending</text>
-        <text x="100" y="102" text-anchor="middle" class="lbl s">no value yet</text>
-        <path class="draw" pathLength="1" d="M206 76 L296 34" stroke="#34D399" stroke-width="2"/>
-        <path class="draw" pathLength="1" d="M206 94 L296 136" stroke="#F8717A" stroke-width="2"/>
-        <rect x="302" y="4" width="230" height="58" rx="10" fill="#0C2A22" stroke="#34D399"/>
-        <text x="417" y="30" text-anchor="middle" class="lbl b" font-size="15">fulfilled (value)</text>
-        <text x="417" y="50" text-anchor="middle" class="lbl s">.then runs · await returns</text>
-        <rect x="302" y="108" width="230" height="58" rx="10" fill="#2A1014" stroke="#F8717A"/>
-        <text x="417" y="134" text-anchor="middle" class="lbl b" font-size="15">rejected (reason)</text>
-        <text x="417" y="154" text-anchor="middle" class="lbl s">.catch runs · await throws</text>
-        <path class="draw" pathLength="1" d="M538 33 L596 33" stroke="#64748B" stroke-width="2"/>
-        <path class="draw" pathLength="1" d="M538 137 L596 137" stroke="#64748B" stroke-width="2"/>
-        <rect x="602" y="46" width="318" height="78" rx="10" fill="#0C2733" stroke="#22D3EE"/>
-        <text x="761" y="74" text-anchor="middle" class="lbl b" font-size="14">settled — permanently</text>
-        <text x="761" y="96" text-anchor="middle" class="lbl s">callbacks attached later still fire, from the</text>
-        <text x="761" y="112" text-anchor="middle" class="lbl s">stored result, on the microtask queue</text>
-      </svg>
-    </div>
-    <div class="key">A promise <b>starts the moment it is created</b>, not when you await it — and <code>.then</code> on a settled promise still defers to a microtask.</div>
-  </section>
-
-  <!-- MODULE 03 · VIDEO 6 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>19</b> / 40</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Before promises · inversion of control</div>
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>18</b> / 41</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · before promises, inversion of control</div>
     <h2>A callback hands someone else your next step</h2>
     <div class="two tight">
       <pre class="dense"><code><span class="cmt">// error-first callbacks, three steps deep</span>
@@ -967,7 +1021,35 @@ math[action](1, 2);
   </section>
 
   <!-- MODULE 03 · VIDEO 6 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>20</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>19</b> / 41</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">One object, three states, one transition</div>
+    <h2>A promise settles once, and never moves again</h2>
+    <div class="fig" style="max-width:920px">
+      <svg viewBox="0 0 920 170" role="img" aria-label="Pending transitions once to fulfilled or rejected">
+        <rect x="0" y="56" width="200" height="58" rx="10" fill="#121C30" stroke="#FBBF24"/>
+        <text x="100" y="82" text-anchor="middle" class="lbl b" font-size="15">pending</text>
+        <text x="100" y="102" text-anchor="middle" class="lbl s">no value yet</text>
+        <path class="draw" pathLength="1" d="M206 76 L296 34" stroke="#34D399" stroke-width="2"/>
+        <path class="draw" pathLength="1" d="M206 94 L296 136" stroke="#F8717A" stroke-width="2"/>
+        <rect x="302" y="4" width="230" height="58" rx="10" fill="#0C2A22" stroke="#34D399"/>
+        <text x="417" y="30" text-anchor="middle" class="lbl b" font-size="15">fulfilled (value)</text>
+        <text x="417" y="50" text-anchor="middle" class="lbl s">.then runs · await returns</text>
+        <rect x="302" y="108" width="230" height="58" rx="10" fill="#2A1014" stroke="#F8717A"/>
+        <text x="417" y="134" text-anchor="middle" class="lbl b" font-size="15">rejected (reason)</text>
+        <text x="417" y="154" text-anchor="middle" class="lbl s">.catch runs · await throws</text>
+        <path class="draw" pathLength="1" d="M538 33 L596 33" stroke="#64748B" stroke-width="2"/>
+        <path class="draw" pathLength="1" d="M538 137 L596 137" stroke="#64748B" stroke-width="2"/>
+        <rect x="602" y="46" width="318" height="78" rx="10" fill="#0C2733" stroke="#22D3EE"/>
+        <text x="761" y="74" text-anchor="middle" class="lbl b" font-size="14">settled — permanently</text>
+        <text x="761" y="96" text-anchor="middle" class="lbl s">callbacks attached later still fire, from the</text>
+        <text x="761" y="112" text-anchor="middle" class="lbl s">stored result, on the microtask queue</text>
+      </svg>
+    </div>
+    <div class="key">A promise <b>starts the moment it is created</b>, not when you await it — and <code>.then</code> on a settled promise still defers to a microtask.</div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 6 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>20</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">new Promise · wrapping a callback API</div>
     <h2>Promisify once, await everywhere</h2>
     <div class="two tight">
@@ -999,7 +1081,78 @@ math[action](1, 2);
   </section>
 
   <!-- MODULE 03 · VIDEO 6 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>21</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>21</b> / 41</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">sleep at work · the same retry, written twice</div>
+    <h2>Try three times, wait a second between</h2>
+    <div class="two tight">
+      <pre class="dense"><code><span class="cmt">// 1 · callbacks only</span>
+<span class="kw">function</span> <span class="fn">getJobsWithRetry</span>(attempt, done) {
+  fetch(<span class="st">'/api/jobs'</span>)
+    .then((res) =&gt; <span class="fn">done</span>(<span class="kw">null</span>, res))
+    .catch((err) =&gt; {
+      <span class="kw">if</span> (attempt &gt;= <span class="st">3</span>) <span class="kw">return</span> <span class="fn">done</span>(err);
+      <span class="fn">setTimeout</span>(() =&gt; {
+        <span class="fn">getJobsWithRetry</span>(attempt + <span class="st">1</span>, done); <span class="cmt">// call itself again</span>
+      }, <span class="st">1000</span>);
+    });
+}
+
+<span class="fn">getJobsWithRetry</span>(<span class="st">1</span>, (err, res) =&gt; {
+  <span class="kw">if</span> (err) console.log(<span class="st">'failed'</span>);
+  <span class="kw">else</span> console.log(<span class="st">'ok'</span>);
+});</code></pre>
+      <pre class="dense"><code><span class="cmt">// 2 · with sleep, which returns a promise</span>
+<span class="kw">async function</span> <span class="fn">getJobsWithRetry</span>() {
+  <span class="kw">for</span> (<span class="kw">let</span> attempt = <span class="st">1</span>; attempt &lt;= <span class="st">3</span>; attempt++) {
+    <span class="kw">try</span> {
+      <span class="kw">return await</span> fetch(<span class="st">'/api/jobs'</span>);
+    } <span class="kw">catch</span> (err) {
+      <span class="kw">if</span> (attempt === <span class="st">3</span>) <span class="kw">throw</span> err;
+      <span class="kw">await</span> <span class="fn">sleep</span>(<span class="st">1000</span>); <span class="cmt">// wait a second, then loop</span>
+    }
+  }
+}</code></pre>
+    </div>
+    <div class="key">Same requests, same timing. The promise adds no new power and no speed — only a different shape. The next slide is what that shape buys.</div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 6 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>22</b> / 41</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Usage · the difference shows up at the call site</div>
+    <h2>The shape decides two things</h2>
+    <div class="two tight">
+      <div class="card a">
+        <h3 class="cy">1 · Who calls it</h3>
+        <pre class="dense"><code><span class="cmt">// callback: the caller is forced into callbacks too</span>
+<span class="fn">getJobsWithRetry</span>(<span class="st">1</span>, (err, res) =&gt; {
+  <span class="cmt">// everything that needs res lives in here</span>
+});
+
+<span class="cmt">// promise: the result is a value like any other</span>
+<span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">getJobsWithRetry</span>();
+<span class="kw">const</span> [jobs, user] = <span class="kw">await</span> <span class="ty">Promise</span>.all([
+  <span class="fn">getJobsWithRetry</span>(),
+  <span class="fn">getUser</span>(),
+]);</code></pre>
+        <p>The gain is not inside the function. It shows up <b>everywhere the function is used</b>.</p>
+      </div>
+      <div class="card r">
+        <h3 class="no">2 · The bug the callback hides</h3>
+        <pre class="dense"><code>fetch(<span class="st">'/api/jobs'</span>)
+  .then((res) =&gt; <span class="fn">done</span>(<span class="kw">null</span>, res))
+  .catch((err) =&gt; { <span class="cmt">/* retry */</span> });</code></pre>
+        <ul class="plist">
+          <li>The caller's code inside <code>done</code> throws<small><code>.catch</code> catches it, though the network was fine</small></li>
+          <li>It reads as a failed request and retries<small><code>fetch</code> runs again, then <code>done</code> runs again</small></li>
+          <li>Success code runs two or three times<small>and the server gets every one of those requests</small></li>
+        </ul>
+      </div>
+    </div>
+    <div class="key g">With <code>async</code>/<code>await</code> the result comes back once, and a throw in the caller's code stays with the caller — it never reaches the retry.</div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 6 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>23</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">The same fetch, written three ways</div>
     <h2>await is a <span class="cy">.then</span> you can read top to bottom</h2>
     <div class="two tight">
@@ -1028,7 +1181,7 @@ math[action](1, 2);
   </section>
 
   <!-- MODULE 03 · VIDEO 6 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>22</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>24</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Series or parallel · it is where the await goes</div>
     <h2>Two awaits in a row is a waterfall</h2>
     <div class="two tight">
@@ -1071,7 +1224,7 @@ ids.forEach(<span class="kw">async</span> (id) =&gt; { <span class="kw">await</s
   </section>
 
   <!-- MODULE 03 · VIDEO 6 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>23</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>25</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">The four combinators, and when each is right</div>
     <h2>Pick by what failure should mean</h2>
     <table class="grid tight-t">
@@ -1101,34 +1254,104 @@ ids.forEach(<span class="kw">async</span> (id) =&gt; { <span class="kw">await</s
   </section>
 
   <!-- MODULE 03 · VIDEO 7 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>24</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>26</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 7 · fetch, the rejection that never comes</div>
     <h2>A 500 is a successful request</h2>
     <div class="two tight">
-      <div>
-        <pre><code><span class="cmt">// looks safe, ships a broken screen</span>
-<span class="kw">const</span> res = <span class="kw">await</span> fetch(<span class="st">'/api/jobs'</span>)
-<span class="kw">const</span> jobs = <span class="kw">await</span> res.json()
-<span class="no">// 404 → res.ok false → json() throws</span>
-<span class="no">// "Unexpected token &lt; in JSON"</span></code></pre>
-        <div class="key r"><code>fetch</code> rejects only on a <b>network</b> failure — DNS, offline, CORS, abort. Any HTTP status your server sends, 200 to 599, is a fulfilled promise.</div>
-      </div>
-      <div>
-        <pre><code><span class="kw">async function</span> <span class="fn">getJSON</span>(url, opts) {
-  <span class="kw">const</span> res = <span class="kw">await</span> fetch(url, opts)
-  <span class="kw">if</span> (!res.ok) {
-    <span class="kw">throw new</span> <span class="ty">HttpError</span>(res.status, url)
+      <pre class="dense"><code><span class="cmt">// looks safe, ships a broken screen</span>
+<span class="kw">async function</span> <span class="fn">loadJobs</span>() {
+  <span class="kw">try</span> {
+    <span class="kw">const</span> res = <span class="kw">await</span> fetch(<span class="st">'/api/jobs'</span>);
+    <span class="cmt">// a 404 or a 500 still lands here</span>
+    <span class="kw">const</span> jobs = <span class="kw">await</span> res.json();
+    <span class="cmt">// 404: the body is an HTML page → throws</span>
+    <span class="cmt">// 500: the body is { error: 'db down' }</span>
+    <span class="fn">renderJobs</span>(jobs);
+    <span class="cmt">// → "jobs.map is not a function"</span>
+  } <span class="kw">catch</span> (err) {
+    <span class="fn">showError</span>(err.message);
+    <span class="no">// 404 → "Unexpected token '&lt;'…"</span>
+    <span class="no">// the real cause never reaches here</span>
   }
-  <span class="kw">return</span> res.json()
 }</code></pre>
-        <div class="key g">One wrapper, used everywhere. Now a 404 and a dropped connection arrive at the same <code>catch</code>, carrying enough information to tell them apart.</div>
+      <div class="fx" data-fx="raw">
+        <div class="cmb-seg">
+          <button type="button" class="cmb-b on" data-s="200">200 OK</button>
+          <button type="button" class="cmb-b" data-s="404">404 page</button>
+          <button type="button" class="cmb-b" data-s="500">500 JSON</button>
+          <button type="button" class="cmb-b" data-s="offline">offline</button>
+        </div>
+        <div class="fx-rows">
+          <div class="fx-row"><b>fetch()</b><span>…</span></div>
+          <div class="fx-row"><b>res.ok</b><span>…</span></div>
+          <div class="fx-row"><b>res.json()</b><span>…</span></div>
+          <div class="fx-row"><b>your code</b><span>…</span></div>
+        </div>
+        <div class="cmb-bar">
+          <button type="button" class="cmb-run">replay</button>
+          <span class="cmb-out">Pick a response, watch where it goes.</span>
+        </div>
       </div>
     </div>
-    <div class="say">It bites the other way too: <code>res.json()</code> on a 204 throws, and an abort rejects with an <code>AbortError</code> you want to swallow.</div>
+    <div class="key r"><code>fetch</code> rejects only on a <b>network</b> failure — DNS, offline, CORS, abort. Any HTTP status your server sends, 200 to 599, is a fulfilled promise.</div>
   </section>
 
   <!-- MODULE 03 · VIDEO 7 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>25</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>27</b> / 41</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">The fix · one wrapper, used everywhere</div>
+    <h2>Turn every failure into a rejection, once</h2>
+    <div class="two tight">
+      <div>
+      <pre class="dense"><code><span class="kw">class</span> <span class="ty">HttpError</span> <span class="kw">extends</span> <span class="ty">Error</span> {
+  <span class="fn">constructor</span>(status, url) {
+    <span class="kw">super</span>(<span class="st">`${status} from ${url}`</span>);
+    <span class="kw">this</span>.name = <span class="st">'HttpError'</span>;
+    <span class="kw">this</span>.status = status;
+  }
+}
+
+<span class="kw">async function</span> <span class="fn">getJSON</span>(url, opts) {
+  <span class="kw">const</span> res = <span class="kw">await</span> fetch(url, opts); <span class="cmt">// network only</span>
+  <span class="kw">if</span> (!res.ok) <span class="kw">throw new</span> <span class="ty">HttpError</span>(res.status, url);
+  <span class="kw">if</span> (res.status === <span class="st">204</span>) <span class="kw">return null</span>; <span class="cmt">// no body</span>
+  <span class="kw">return</span> res.json();
+}</code></pre>
+        <div class="key g">Now a 404 and a dropped connection arrive at the same <code>catch</code>, carrying enough information to tell them apart.</div>
+      </div>
+      <div>
+        <pre class="dense"><code><span class="cmt">// the call site: one catch, every failure</span>
+<span class="kw">try</span> {
+  <span class="fn">renderJobs</span>(<span class="kw">await</span> <span class="fn">getJSON</span>(<span class="st">'/api/jobs'</span>, { signal }));
+} <span class="kw">catch</span> (err) {
+  <span class="kw">if</span> (err.name === <span class="st">'AbortError'</span>) <span class="kw">return</span>; <span class="cmt">// ours</span>
+  <span class="kw">if</span> (err <span class="kw">instanceof</span> <span class="ty">HttpError</span>) <span class="fn">showError</span>(err.status);
+  <span class="kw">else</span> <span class="fn">showOffline</span>();
+}</code></pre>
+        <div class="fx" data-fx="wrapped" style="margin-top:12px">
+          <div class="cmb-seg">
+            <button type="button" class="cmb-b on" data-s="404">404</button>
+            <button type="button" class="cmb-b" data-s="500">500</button>
+            <button type="button" class="cmb-b" data-s="204">204</button>
+            <button type="button" class="cmb-b" data-s="offline">offline</button>
+            <button type="button" class="cmb-b" data-s="abort">abort</button>
+          </div>
+          <div class="fx-rows">
+            <div class="fx-row"><b>fetch()</b><span>…</span></div>
+            <div class="fx-row"><b>if (!res.ok)</b><span>…</span></div>
+            <div class="fx-row"><b>204 · json()</b><span>…</span></div>
+            <div class="fx-row"><b>catch</b><span>…</span></div>
+          </div>
+          <div class="cmb-bar">
+            <button type="button" class="cmb-run">replay</button>
+            <span class="cmb-out">Pick a response, watch where it goes.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 7 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>28</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">What a try can see</div>
     <h2>A try only catches what it awaits</h2>
     <div class="two tight">
@@ -1162,7 +1385,7 @@ ids.forEach(<span class="kw">async</span> (id) =&gt; { <span class="kw">await</s
   </section>
 
   <!-- MODULE 03 · VIDEO 7 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>26</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>29</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">AbortController · cancellation</div>
     <h2>Cancel what nobody is waiting for</h2>
     <div class="two tight">
@@ -1194,61 +1417,106 @@ fetch(url, { signal: <span class="ty">AbortSignal</span>.<span class="fn">timeou
   </section>
 
   <!-- MODULE 03 · VIDEO 7 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>27</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>30</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Typed errors · cause · retry</div>
     <h2>Errors that know whether a retry helps</h2>
     <div class="two tight">
-      <pre class="dense"><code><span class="kw">class</span> <span class="ty">HttpError</span> <span class="kw">extends</span> <span class="ty">Error</span> {
-  <span class="fn">constructor</span>(status, url, options) {
-    <span class="kw">super</span>(<span class="st">`${status} from ${url}`</span>, options);
-    <span class="kw">this</span>.name = <span class="st">'HttpError'</span>;
-    <span class="kw">this</span>.status = status;
-  }
+      <pre class="dense"><code><span class="cmt">// would the same request work a moment later?</span>
+<span class="kw">function</span> <span class="fn">retryable</span>(e) {
+  <span class="kw">if</span> (e.name === <span class="st">'AbortError'</span>) <span class="kw">return false</span>; <span class="cmt">// we cancelled</span>
+  <span class="kw">if</span> (e <span class="kw">instanceof</span> <span class="ty">HttpError</span>) <span class="kw">return</span> e.status &gt;= 500;
+  <span class="kw">return true</span>; <span class="cmt">// the network dropped</span>
 }
 
-<span class="cmt">// wrap, don't replace: keep the original</span>
-<span class="kw">throw new</span> <span class="ty">Error</span>(<span class="st">'Could not load jobs'</span>, { cause: err });</code></pre>
-      <pre class="dense"><code><span class="cmt">// 4xx fails the same way every time; abort was ours</span>
-<span class="kw">const</span> <span class="fn">retryable</span> = (e) =&gt;
-  e <span class="kw">instanceof</span> <span class="ty">HttpError</span> ? e.status &gt;= 500
-                         : e.name !== <span class="st">'AbortError'</span>;
-
 <span class="kw">async function</span> <span class="fn">withRetry</span>(fn, tries = 3) {
-  <span class="kw">for</span> (<span class="kw">let</span> i = 1; ; i++) {
-    <span class="kw">try</span> { <span class="kw">return await</span> <span class="fn">fn</span>(); }
-    <span class="kw">catch</span> (e) {
+  <span class="kw">for</span> (<span class="kw">let</span> i = 1; i &lt;= tries; i++) {
+    <span class="kw">try</span> {
+      <span class="kw">return await</span> <span class="fn">fn</span>();
+    } <span class="kw">catch</span> (e) {
       <span class="kw">if</span> (i === tries || !<span class="fn">retryable</span>(e)) <span class="kw">throw</span> e;
-      <span class="kw">await</span> <span class="fn">sleep</span>(2 ** i * 150); <span class="cmt">// 300 ms, 600 ms</span>
+      <span class="kw">await</span> <span class="fn">sleep</span>(i * 300); <span class="cmt">// 300 ms, then 600 ms</span>
     }
   }
 }</code></pre>
+      <div>
+        <pre class="dense"><code><span class="cmt">// the call site keeps the real reason as cause</span>
+<span class="kw">try</span> {
+  <span class="fn">renderJobs</span>(<span class="kw">await</span> <span class="fn">withRetry</span>(() =&gt; <span class="fn">getJSON</span>(<span class="st">'/api/jobs'</span>)));
+} <span class="kw">catch</span> (e) {
+  <span class="kw">throw new</span> <span class="ty">Error</span>(<span class="st">'Could not load jobs'</span>, { cause: e });
+}</code></pre>
+        <div class="rt" style="margin-top:12px">
+          <div class="cmb-seg">
+            <button type="button" class="cmb-b on" data-s="flaky">503 · drop · 200</button>
+            <button type="button" class="cmb-b" data-s="down">503 × 3</button>
+            <button type="button" class="cmb-b" data-s="404">404</button>
+            <button type="button" class="cmb-b" data-s="abort">abort</button>
+          </div>
+          <div class="rt-rows">
+            <div class="rt-row"><b>try 1</b><div class="rt-track"><span class="rt-try" style="left:0"><i></i><em></em></span></div></div>
+            <div class="rt-row"><b>try 2</b><div class="rt-track"><span class="rt-wait" style="left:16.67%; width:16.67%"><i></i><em>300 ms</em></span><span class="rt-try" style="left:33.33%"><i></i><em></em></span></div></div>
+            <div class="rt-row"><b>try 3</b><div class="rt-track"><span class="rt-wait" style="left:50%; width:33.33%"><i></i><em>600 ms</em></span><span class="rt-try" style="left:83.33%"><i></i><em></em></span></div></div>
+            <div class="rt-axis">time →</div>
+          </div>
+          <div class="cmb-bar">
+            <button type="button" class="cmb-run">replay</button>
+            <span class="cmb-out">Pick a server, watch the tries.</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="key">Retry network drops and 5xx, with backoff. Never retry a 4xx or an abort, and keep the first error as <code>cause</code>.</div>
+    <div class="key">Retry network drops and 5xx, waiting longer each time. Never retry a 4xx or an abort, and keep the real error as <code>cause</code>.</div>
   </section>
 
   <!-- MODULE 03 · VIDEO 7 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>28</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>31</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Where to catch, and what to say</div>
     <h2>Three boundaries, three jobs</h2>
     <div class="three">
       <div class="card a">
         <h3 class="cy">At the call</h3>
-        <p>Only if you can <b>do</b> something: retry, fall back to cache, use a default. Catching to <code>console.log</code> and continuing is how a broken screen becomes a silent one.</p>
+        <p>Only if you can <b>do</b> something: retry, fall back to cache, use a default. Never <code>console.log</code> and carry on.</p>
       </div>
       <div class="card g">
         <h3 class="g">At the feature</h3>
-        <p>One boundary per screen — an error boundary in React, one <code>catch</code> per route loader. It owns the user-facing message and the retry button.</p>
+        <p>One boundary per screen. It owns the message the user sees and the retry button.</p>
       </div>
       <div class="card w">
         <h3 class="w">At the top</h3>
-        <p><code>unhandledrejection</code> and <code>window.onerror</code> feed your telemetry. This is a smoke alarm, not a fire extinguisher — anything reaching here is a bug in the two above.</p>
+        <p><code>unhandledrejection</code> feeds telemetry. A smoke alarm: anything here is a bug.</p>
+      </div>
+    </div>
+    <div class="anim" data-at="0,1100,2300,3500,4700,6000" style="max-width:1060px; margin-top:12px">
+      <svg viewBox="0 0 1000 150" role="img" aria-label="Three errors and where each one stops: a 503 is retried at the call, a 404 reaches the feature boundary, an unawaited TypeError reaches the top">
+        <rect x="0" y="0" width="322" height="150" rx="12" style="fill:var(--panel2); stroke:var(--line2); opacity:.55"/>
+        <rect x="339" y="0" width="322" height="150" rx="12" style="fill:var(--panel2); stroke:var(--line2); opacity:.55"/>
+        <rect x="678" y="0" width="322" height="150" rx="12" style="fill:var(--panel2); stroke:var(--line2); opacity:.55"/>
+
+        <g class="a1"><rect class="bad" x="12" y="13" width="96" height="30" rx="8"/><text x="60" y="34" text-anchor="middle" class="lbl l b bad">503</text></g>
+        <path class="e d1" pathLength="1" style="stroke:var(--bad); stroke-width:2.5" d="M108 28 L160 28"/>
+        <g class="a2"><circle cx="168" cy="28" r="8" style="fill:var(--cy)"/><text x="186" y="34" class="lbl l b" style="fill:var(--cy)">retry → jobs ✓</text></g>
+
+        <g class="a3"><rect class="bad" x="12" y="60" width="96" height="30" rx="8"/><text x="60" y="81" text-anchor="middle" class="lbl l b bad">404</text></g>
+        <path class="e d3 mid" pathLength="1" style="stroke:var(--bad); stroke-width:2.5" d="M108 75 L452 75"/>
+        <text x="166" y="66" class="lbl a3">can't fix it → lets it go</text>
+        <g class="a4"><circle cx="460" cy="75" r="8" style="fill:var(--good)"/><text x="478" y="81" class="lbl l b" style="fill:var(--good)">error screen + Retry</text></g>
+
+        <g class="a5"><rect class="bad" x="12" y="107" width="96" height="30" rx="8"/><text x="60" y="128" text-anchor="middle" class="lbl l b bad">TypeError</text></g>
+        <path class="e d5 mid" pathLength="1" style="stroke:var(--bad); stroke-width:2.5" d="M108 122 L752 122"/>
+        <text x="200" y="113" class="lbl a5">nobody awaited it</text>
+        <text x="478" y="113" class="lbl a5">no catch ever sees it</text>
+        <g class="a6"><circle cx="760" cy="122" r="8" style="fill:var(--ochre)"/><text x="778" y="128" class="lbl l b" style="fill:var(--ochre)">telemetry: a bug</text></g>
+      </svg>
+      <div class="anim-bar" style="margin-top:6px">
+        <button type="button" class="cmb-run anim-replay">replay</button>
+        <span class="anim-say"><i>A <b class="bad">503</b>: the call can do something about it…</i><i>…so it retries, and the user just sees jobs. Nothing above ever hears of it.</i><i>A <b class="bad">404</b>: no retry will fix it, so the call lets it go…</i><i>…to the screen's one boundary: <b class="good">an error message and a Retry button</b>.</i><i>A <b class="bad">TypeError</b> in a promise nobody awaited: no try can see it…</i><i>…until the top reports it. That is a bug to fix, not a message to show.</i></span>
       </div>
     </div>
     <div class="key">"A <code>try</code> only catches a throw in the same turn of the loop — so I <code>await</code>, wrap <code>fetch</code> so a status becomes a rejection, and give each feature one boundary."</div>
   </section>
 
   <!-- MODULE 03 · VIDEO 8 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 8</div><div class="cx-page"><b>29</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 8</div><div class="cx-page"><b>32</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 8 · what a leak actually is</div>
     <h2>Memory is freed when nothing can reach it</h2>
     <div class="two">
@@ -1264,14 +1532,45 @@ user = <span class="kw">null</span>
 <span class="no">// still reachable through `seen` → never freed</span></code></pre>
       </div>
       <div>
-        <p class="say" style="margin-top:14px">The garbage collector starts from what is always alive — globals, <code>window</code>, the function running right now — and follows every reference. Whatever it can reach stays. Everything else is freed.</p>
+        <div class="anim" data-at="0,1300,2500,3500,4500,5700">
+          <svg viewBox="0 0 540 250" role="img" aria-label="The collector starts at the roots, follows every reference, and frees the object nothing reaches">
+            <rect class="root g3" x="0" y="95" width="130" height="60" rx="10"/>
+            <text x="65" y="121" text-anchor="middle" class="lbl b g3">roots</text>
+            <text x="65" y="139" text-anchor="middle" class="lbl s">window · globals</text>
+            <path class="e d1 g4" pathLength="1" d="M130 112 L190 50"/><path class="ah g4" d="M190 50 L187.6 58.9 L181.2 52.7 Z"/>
+            <path class="e d1 g4" pathLength="1" d="M130 138 L190 200"/><path class="ah g4" d="M190 200 L181.2 197.3 L187.6 191.1 Z"/>
+            <rect class="g4" x="190" y="20" width="110" height="46" rx="9"/>
+            <text x="245" y="40" text-anchor="middle" class="lbl b">user</text>
+            <text x="245" y="56" text-anchor="middle" class="lbl s">a variable</text>
+            <rect class="g4" x="190" y="184" width="110" height="46" rx="9"/>
+            <text x="245" y="204" text-anchor="middle" class="lbl b">seen</text>
+            <text x="245" y="220" text-anchor="middle" class="lbl s">an array</text>
+            <path class="e d1 c2" pathLength="1" d="M300 43 L370 43"/><path class="ah c2" d="M370 43 l-8 -4.5 v9 z"/>
+            <text x="335" y="84" text-anchor="middle" class="lbl b bad a2">user = null</text>
+            <path class="e d1 g5" pathLength="1" d="M300 207 L370 207"/><path class="ah g5" d="M370 207 l-8 -4.5 v9 z"/>
+            <g class="x6">
+              <rect x="370" y="20" width="165" height="46" rx="9"/>
+              <text x="452" y="40" text-anchor="middle" class="lbl b">{ name: 'Sara' }</text>
+              <text x="452" y="56" text-anchor="middle" class="lbl s">+ bigImage</text>
+            </g>
+            <text x="452" y="96" text-anchor="middle" class="lbl b bad a6">freed</text>
+            <rect class="g5" x="370" y="184" width="165" height="46" rx="9"/>
+            <text x="452" y="204" text-anchor="middle" class="lbl b">{ name: 'Omar' }</text>
+            <text x="452" y="220" text-anchor="middle" class="lbl s">+ bigImage</text>
+            <text x="452" y="166" text-anchor="middle" class="lbl b good a6">kept — seen reaches it</text>
+          </svg>
+          <div class="anim-bar">
+            <button type="button" class="cmb-run anim-replay">replay</button>
+            <span class="anim-say"><i>Two objects, each reachable through a variable.</i><i><code>user = null</code> — the only arrow to Sara is gone.</i><i>The collector starts from the roots…</i><i>…follows every arrow it finds…</i><i>…and marks everything it reaches.</i><i>Nothing reached Sara: <b class="bad">freed</b>. Omar is <b class="good">kept</b>.</i></span>
+          </div>
+        </div>
         <div class="key w">A leak is not memory you lost. It is memory you can <b>still reach</b> — by accident, through something you forgot about.</div>
       </div>
     </div>
   </section>
 
   <!-- MODULE 03 · VIDEO 8 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 8</div><div class="cx-page"><b>30</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 8</div><div class="cx-page"><b>33</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 8 · the leak your single-page app has right now</div>
     <h2>A listener you never removed keeps everything it remembers</h2>
     <div class="two">
@@ -1293,25 +1592,42 @@ user = <span class="kw">null</span>
 }</code></pre>
       </div>
       <div>
-        <ul class="plist">
-          <li><code>window</code> lives as long as the tab<small>so its list of listeners lives that long too</small></li>
-          <li>That list holds <code>onResize</code><small>the function you passed in</small></li>
-          <li><code>onResize</code> is a closure<small>it remembers <code>panel</code> and <code>user</code> — lesson 2</small></li>
-          <li>So the removed panel is still in memory<small>off the screen, never freed</small></li>
-        </ul>
+        <div class="anim" data-at="0,1000,2000,3000,4200">
+          <svg viewBox="0 0 540 236" role="img" aria-label="window holds its listener list, which holds onResize, which remembers the removed panel">
+            <rect class="root a1 r5" x="0" y="0" width="210" height="40" rx="9"/>
+            <text x="105" y="25" text-anchor="middle" class="lbl b a1">window</text>
+            <text x="230" y="25" class="lbl a1">lives as long as the tab</text>
+            <path class="e d2 r5" pathLength="1" d="M105 40 L105 65"/><path class="ah a2 r5" d="M105 65 l-4.5 -8 h9 z"/>
+            <rect class="a2 r5" x="0" y="65" width="210" height="40" rx="9"/>
+            <text x="105" y="90" text-anchor="middle" class="lbl b a2">'resize' listeners</text>
+            <text x="230" y="90" class="lbl a2">holds onResize, the function you passed</text>
+            <path class="e d3 r5" pathLength="1" d="M105 105 L105 130"/><path class="ah a3 r5" d="M105 130 l-4.5 -8 h9 z"/>
+            <rect class="a3 r5" x="0" y="130" width="210" height="40" rx="9"/>
+            <text x="105" y="155" text-anchor="middle" class="lbl b a3">onResize · a closure</text>
+            <text x="230" y="155" class="lbl a3">remembers panel and user — lesson 2</text>
+            <path class="e d4 r5" pathLength="1" d="M105 170 L105 195"/><path class="ah a4 r5" d="M105 195 l-4.5 -8 h9 z"/>
+            <rect class="bad a4" x="0" y="195" width="210" height="40" rx="9"/>
+            <text x="105" y="220" text-anchor="middle" class="lbl b a4">panel · user</text>
+            <text x="230" y="220" class="lbl b bad a4">off the page, never freed</text>
+          </svg>
+          <div class="anim-bar">
+            <button type="button" class="cmb-run anim-replay">replay</button>
+            <span class="anim-say"><i><code>window</code> is alive as long as the tab is open…</i><i>…its listener list holds <code>onResize</code>…</i><i>…<code>onResize</code> remembers <code>panel</code> and <code>user</code>…</i><i>…so the panel you removed is still reachable.</i><i>One missing <code>removeEventListener</code> keeps the <b class="bad">whole chain</b> alive.</i></span>
+          </div>
+        </div>
         <div class="key r">The page never reloads in a single-page app, so nothing wipes this for you. Open and close the profile fifty times: fifty panels, still alive.</div>
       </div>
     </div>
   </section>
 
   <!-- MODULE 03 · VIDEO 8 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 8</div><div class="cx-page"><b>31</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 8</div><div class="cx-page"><b>34</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 8 · the fix</div>
     <h2>Every add needs a remove</h2>
-    <div class="two">
+    <div class="two tight">
       <div>
         <h3 class="g">Remove the same function</h3>
-        <pre><code>window.addEventListener(<span class="st">'resize'</span>, onResize)
+        <pre class="dense"><code>window.addEventListener(<span class="st">'resize'</span>, onResize)
 
 <span class="kw">return function</span> <span class="fn">closeProfile</span>() {
   panel.remove()
@@ -1321,7 +1637,7 @@ user = <span class="kw">null</span>
       </div>
       <div>
         <h3 class="g">Or one abort for all of them</h3>
-        <pre><code><span class="kw">const</span> controller = <span class="kw">new</span> <span class="ty">AbortController</span>()
+        <pre class="dense"><code><span class="kw">const</span> controller = <span class="kw">new</span> <span class="ty">AbortController</span>()
 <span class="kw">const</span> { signal } = controller
 
 window.addEventListener(<span class="st">'resize'</span>, onResize, { signal })
@@ -1333,16 +1649,31 @@ window.addEventListener(<span class="st">'scroll'</span>, onScroll, { signal })
 }</code></pre>
       </div>
     </div>
+    <div class="anim" data-at="0,500,3400" style="max-width:940px; margin-top:14px">
+      <svg viewBox="0 0 1000 152" role="img" aria-label="Heap over twenty open and close cycles: without the remove it climbs every cycle, with it it stays flat">
+        <path class="e a1" d="M60 4 L60 130 L945 130"/>
+        <text x="52" y="14" text-anchor="end" class="lbl b a1">heap</text>
+        <text x="945" y="148" text-anchor="end" class="lbl a1">open + close the profile, 20 times →</text>
+        <path class="e d2 slow" pathLength="1" style="stroke:var(--bad); stroke-width:2.5" d="M70 122 L83 108 L98 108 L111 117 L127 103 L142 103 L155 112 L170 98 L185 98 L198 107 L214 93 L229 93 L242 102 L257 88 L272 88 L285 97 L301 83 L316 83 L329 92 L344 78 L359 78 L372 87 L388 73 L403 73 L416 82 L431 68 L446 68 L459 77 L475 63 L490 63 L503 72 L518 58 L533 58 L546 67 L562 53 L577 53 L590 62 L605 48 L620 48 L633 57 L649 43 L664 43 L677 52 L692 38 L707 38 L720 47 L736 33 L751 33 L764 42 L779 28 L794 28 L807 37 L823 23 L838 23 L851 32 L866 18 L881 18 L894 27 L910 13 L925 13 L938 22 L940 22"/>
+        <path class="e d2 slow" pathLength="1" style="stroke:var(--good); stroke-width:2.5" d="M70 122 L83 108 L98 108 L111 122 L127 108 L142 108 L155 122 L170 108 L185 108 L198 122 L214 108 L229 108 L242 122 L257 108 L272 108 L285 122 L301 108 L316 108 L329 122 L344 108 L359 108 L372 122 L388 108 L403 108 L416 122 L431 108 L446 108 L459 122 L475 108 L490 108 L503 122 L518 108 L533 108 L546 122 L562 108 L577 108 L590 122 L605 108 L620 108 L633 122 L649 108 L664 108 L677 122 L692 108 L707 108 L720 122 L736 108 L751 108 L764 122 L779 108 L794 108 L807 122 L823 108 L838 108 L851 122 L866 108 L881 108 L894 122 L910 108 L925 108 L938 122 L940 122"/>
+        <text x="80" y="24" class="lbl b bad a3">forgot the remove — every close leaves a panel behind</text>
+        <text x="930" y="98" text-anchor="end" class="lbl b good a3">add + remove — back to the same level every time</text>
+      </svg>
+      <div class="anim-bar" style="margin-top:4px">
+        <button type="button" class="cmb-run anim-replay">replay</button>
+        <span class="anim-say"><i>Heap size while the profile opens and closes.</i><i>Both versions grow on open and drop on close…</i><i>…but without the remove, each close <b class="bad">keeps one panel</b>. Twenty closes, twenty panels.</i></span>
+      </div>
+    </div>
     <div class="key w"><code>removeEventListener('resize', () =&gt; …)</code> removes nothing — an arrow written twice is two different functions. Same rule for timers: every <code>setInterval</code> needs its <code>clearInterval</code>.</div>
   </section>
 
   <!-- MODULE 03 · VIDEO 8 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 8</div><div class="cx-page"><b>32</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 8</div><div class="cx-page"><b>35</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 8 · Map or WeakMap</div>
     <h2>WeakMap: notes that disappear with the thing they describe</h2>
     <div class="two tight">
       <div>
-        <pre><code><span class="cmt">// Map holds its keys for ever</span>
+        <pre class="dense"><code><span class="cmt">// Map holds its keys for ever</span>
 <span class="kw">const</span> notes = <span class="kw">new</span> <span class="ty">Map</span>()
 notes.set(panel, { opened: Date.now() })
 panel.remove()
@@ -1353,52 +1684,77 @@ panel.remove()
 notes.set(panel, { opened: Date.now() })
 panel.remove()
 <span class="ok">// nothing else holds panel → panel and its note are freed</span></code></pre>
-      </div>
-      <div>
-        <table class="grid">
+        <table class="grid" style="margin-top:14px">
           <tr><th></th><th>Keeps its key alive</th><th>Can loop over it</th></tr>
           <tr><td><code>Map</code> / <code>Set</code></td><td><b class="r">Yes</b></td><td>Yes</td></tr>
           <tr><td><code>WeakMap</code> / <code>WeakSet</code></td><td><b class="g">No</b></td><td>No — that is the price</td></tr>
         </table>
-        <div class="key">Use a <code>WeakMap</code> to attach extra data to an object you do not own — a DOM node, someone else's object. Use a <code>Map</code> when you own the data, and put a limit on its size.</div>
+      </div>
+      <div>
+      <div class="anim" data-at="0,1400,2800">
+        <svg viewBox="0 0 540 214" role="img" aria-label="After panel.remove, a Map still holds the panel and its note; a WeakMap lets both be freed">
+          <text x="0" y="12" class="lbl b">Map</text>
+          <rect x="0" y="20" width="120" height="34" rx="8"/>
+          <text x="60" y="42" text-anchor="middle" class="lbl b">document</text>
+          <rect class="root r3" x="0" y="64" width="120" height="34" rx="8"/>
+          <text x="60" y="86" text-anchor="middle" class="lbl b">notes</text>
+          <path class="e d1 c2" pathLength="1" d="M120 37 L200 54"/><path class="ah c2" d="M200 54 L191.2 56.7 L193.1 47.9 Z"/>
+          <path class="e d1 r3" pathLength="1" d="M120 81 L200 66"/><path class="ah r3" d="M200 66 L193 71.9 L191.3 63.1 Z"/>
+          <rect class="r3" x="200" y="43" width="120" height="34" rx="8"/>
+          <text x="260" y="65" text-anchor="middle" class="lbl b">panel</text>
+          <path class="e d1 r3" pathLength="1" d="M320 60 L380 60"/><path class="ah r3" d="M380 60 l-8 -4.5 v9 z"/>
+          <rect class="r3" x="380" y="43" width="150" height="34" rx="8"/>
+          <text x="455" y="65" text-anchor="middle" class="lbl b">{ opened }</text>
+          <text x="455" y="98" text-anchor="middle" class="lbl b bad a3">still held — for ever</text>
+
+          <text x="0" y="128" class="lbl b">WeakMap</text>
+          <rect x="0" y="136" width="120" height="34" rx="8"/>
+          <text x="60" y="158" text-anchor="middle" class="lbl b">document</text>
+          <rect class="root" x="0" y="180" width="120" height="34" rx="8"/>
+          <text x="60" y="202" text-anchor="middle" class="lbl b">notes</text>
+          <path class="e d1 c2" pathLength="1" d="M120 153 L200 170"/><path class="ah c2" d="M200 170 L191.2 172.7 L193.1 163.9 Z"/>
+          <path class="e x3" pathLength="1" style="stroke-dasharray:.04 .035" d="M120 197 L200 182"/><path class="ah x3" d="M200 182 L193 187.9 L191.3 179.1 Z"/>
+          <g class="x3">
+            <rect x="200" y="159" width="120" height="34" rx="8"/>
+            <text x="260" y="181" text-anchor="middle" class="lbl b">panel</text>
+            <path class="e" d="M320 176 L380 176"/><path class="ah" d="M380 176 l-8 -4.5 v9 z"/>
+            <rect x="380" y="159" width="150" height="34" rx="8"/>
+            <text x="455" y="181" text-anchor="middle" class="lbl b">{ opened }</text>
+          </g>
+          <text x="390" y="214" text-anchor="middle" class="lbl b good a3">freed — key and note together</text>
+        </svg>
+        <div class="anim-bar">
+          <button type="button" class="cmb-run anim-replay">replay</button>
+          <span class="anim-say"><i>The page and the notes both point at <code>panel</code>. The WeakMap's arrow is dashed: it does not count.</i><i><code>panel.remove()</code> — the page lets go.</i><i>The Map still holds it: <b class="bad">kept</b>. Nothing real holds it in the WeakMap: <b class="good">freed</b>, note and all.</i></span>
+        </div>
+      </div>
+      <div class="key" style="margin-top:14px">Use a <code>WeakMap</code> to attach extra data to an object you do not own — a DOM node, someone else's object. Use a <code>Map</code> when you own the data, and put a limit on its size.</div>
       </div>
     </div>
   </section>
 
     <!-- MODULE 03 · VIDEO 9 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>33</b> / 40</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 9 · utility 1, wait for quiet</div>
-    <h2><span class="cy">debounce</span>(fn, wait)</h2>
-    <p class="say">Every call <b>resets</b> the timer. <code>fn</code> runs once, <code>wait</code> ms after the last call — a burst collapses to a single run.</p>
-    <div class="tl" data-mode="debounce">
+  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>36</b> / 41</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 9 · utilities 1 and 2, one burst, two rules</div>
+    <h2><span class="cy">debounce</span> waits for quiet, <span class="g">throttle</span> keeps a rate</h2>
+    <p class="say"><b>debounce(fn, wait)</b>: every call resets the timer, and <code>fn</code> runs once, <code>wait</code> ms after the last call. <b>throttle(fn, limit)</b>: the first call runs at once, then at most one per window.</p>
+    <div class="tl">
       <div class="tl-row"><span class="tl-lab">events</span><div class="tl-track" data-track="ev"></div></div>
-      <div class="tl-row"><span class="tl-lab cy">debounce</span><div class="tl-track" data-track="out"></div></div>
+      <div class="tl-row"><span class="tl-lab cy">debounce</span><div class="tl-track" data-track="debounce"></div></div>
+      <div class="tl-row"><span class="tl-lab g">throttle</span><div class="tl-track" data-track="throttle"></div></div>
       <div class="tl-bar">
         <button type="button" class="tl-btn">replay</button>
-        <span class="tl-say">Nothing fires until the typing stops.</span>
+        <span class="tl-say">Same events. Debounce waits for silence; throttle guarantees a rate.</span>
       </div>
     </div>
-    <div class="key">Search-as-you-type, autosave, resize-settled, validating a field after typing stops.</div>
+    <div class="two tight" style="margin-top:4px">
+      <div class="key" style="margin-top:0">Debounce: search-as-you-type, autosave, resize-settled, validating a field after typing stops.</div>
+      <div class="key g" style="margin-top:0">Throttle: scroll position, mousemove, drag, analytics pings, infinite-scroll checks.</div>
+    </div>
   </section>
 
   <!-- MODULE 03 · VIDEO 9 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>34</b> / 40</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 9 · utility 2, allow one per window</div>
-    <h2><span class="g">throttle</span>(fn, limit)</h2>
-    <p class="say">The first call runs <b>immediately</b>, then everything is ignored until the window expires — a steady stream becomes a steady rate.</p>
-    <div class="tl" data-mode="throttle">
-      <div class="tl-row"><span class="tl-lab">events</span><div class="tl-track" data-track="ev"></div></div>
-      <div class="tl-row"><span class="tl-lab g">throttle</span><div class="tl-track" data-track="out"></div></div>
-      <div class="tl-bar">
-        <button type="button" class="tl-btn">replay</button>
-        <span class="tl-say">Fires at once, then at most once per window.</span>
-      </div>
-    </div>
-    <div class="key g">Scroll position, mousemove, drag, analytics pings, infinite-scroll checks.</div>
-  </section>
-
-  <!-- MODULE 03 · VIDEO 9 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>35</b> / 40</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>37</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 9 · live coding, from an empty file</div>
     <h2>Both, in nine lines each</h2>
     <div class="two tight">
@@ -1435,9 +1791,9 @@ panel.remove()
     <div class="key w">Not an arrow at the top level: <code>debounce(obj.method)</code> would silently lose its receiver. Lesson 3, cashed in.</div>
   </section>
 
-  <!-- MODULE 03 · VIDEO 10 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 10"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 10</div><div class="cx-page"><b>36</b> / 40</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 10 · utility 3, a copy that shares nothing</div>
+  <!-- MODULE 03 · VIDEO 9 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>38</b> / 41</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 9 · utility 3, a copy that shares nothing</div>
     <h2><span class="cy">deepClone</span>(value)</h2>
     <div class="two tight">
       <div>
@@ -1454,21 +1810,42 @@ panel.remove()
   <span class="kw">return</span> copy
 }</code></pre>
       </div>
-      <div>
-        <ul class="plist">
-          <li>Primitives come back as they are<small>check <code>null</code> first — <code>typeof null</code> is <code>'object'</code></small></li>
-          <li>A <code>Date</code> gets its own branch<small>a plain object copy turns it into <code>{}</code></small></li>
-          <li>Arrays start as <code>[]</code>, not <code>{}</code><small>or the copy is an object with numeric keys</small></li>
-          <li>Cycles go through the <code>WeakMap</code><small>record the copy before copying its children</small></li>
-        </ul>
+      <div class="anim lg" data-at="0,1300,2600,3900,5300">
+        <svg viewBox="0 0 590 300" role="img" aria-label="A spread copy shares the nested array and date with the original; deepClone makes new ones, and records each copy in seen before its children">
+<rect x="0" y="14" width="130" height="40" rx="8" class="root"/>
+<text x="65" y="39" text-anchor="middle" class="lbl b">filters</text>
+<rect x="180" y="104" width="150" height="40" rx="8"/>
+<text x="255" y="129" text-anchor="middle" class="lbl mono">[ 'react' ]</text>
+<rect x="180" y="184" width="150" height="40" rx="8"/>
+<text x="255" y="209" text-anchor="middle" class="lbl mono">Date</text>
+<path class="e " pathLength="1" d="M110 54 L180 124"/><path class="ah " d="M180 124 L170.1 121.2 L177.2 114.1 Z"/>
+<path class="e " pathLength="1" d="M80 54 L180 204"/><path class="ah " d="M180 204 L170.8 199.3 L179.2 193.7 Z"/>
+<text x="152" y="82" class="lbl s">tags</text>
+<text x="136" y="152" text-anchor="end" class="lbl s">since</text>
+<g class="a2"><rect x="410" y="14" width="130" height="40" rx="8"/><text x="475" y="39" text-anchor="middle" class="lbl b">copy</text></g>
+<text x="475" y="8" text-anchor="middle" class="lbl s mono a2 h4">{ ...filters }</text>
+<text x="475" y="8" text-anchor="middle" class="lbl s mono good a4">deepClone(filters)</text>
+<path class="e d2 r3 x4" pathLength="1" d="M410 54 L330 124"/><path class="ah a2 r3 x4" d="M330 124 L333.5 114.3 L340.1 121.8 Z"/>
+<path class="e d2 x4" pathLength="1" d="M424 54 L330 204"/><path class="ah a2 x4" d="M330 204 L330.5 193.7 L339 199 Z"/>
+<g class="a3 h4"><rect x="180" y="104" width="150" height="40" rx="8" style="fill:#2A1014; stroke:var(--bad)"/><text x="255" y="129" text-anchor="middle" class="lbl mono bad" style="font-size:13.5px">[ 'react', 'vue' ]</text><text x="255" y="164" text-anchor="middle" class="lbl s bad">filters.tags changed too</text></g>
+<g class="a4"><rect x="390" y="104" width="150" height="40" rx="8" class="g4"/><text x="465" y="129" text-anchor="middle" class="lbl mono good">[ 'react' ]</text></g>
+<g class="a4"><rect x="390" y="184" width="150" height="40" rx="8" class="g4"/><text x="465" y="209" text-anchor="middle" class="lbl mono good">new Date(…)</text></g>
+<path class="e d4 g4" pathLength="1" d="M465 54 L465 104"/><path class="ah a4 g4" d="M465 104 L460 95 L470 95 Z"/>
+<path class="e d4 g4" pathLength="1" d="M540 30 C 586 30, 586 204, 540 204"/><path class="ah a4 g4" d="M540 204 L549 199 L549 209 Z"/>
+<g class="a5"><rect x="110" y="252" width="370" height="40" rx="8" style="fill:#1A1530; stroke:var(--plum)"/><text x="128" y="277" class="lbl b" style="fill:var(--plum)">seen</text><text x="176" y="277" class="lbl mono">filters → copy · tags → copy.tags</text></g>
+</svg>
+        <div class="anim-bar">
+          <button type="button" class="cmb-run anim-replay">replay</button>
+          <span class="anim-say"><i><code>filters</code> holds an array and a <code>Date</code>. A primitive would simply be returned.</i><i><code>{ ...filters }</code> copies one level: the new object points at the <b class="bad">same</b> array and Date.</i><i><code>copy.tags.push('vue')</code>, and <b class="bad">filters.tags changed too</b>.</i><i>Start again with <code>deepClone</code>: a new <code>[]</code>, a <code>new Date(…)</code>. <b class="good">Nothing shared.</b></i><i>Each copy goes into <code>seen</code> before its children, so a cycle finds it there instead of recursing for ever.</i></span>
+        </div>
       </div>
     </div>
     <div class="key">In app code, <code>structuredClone(value)</code> already does this. The interview wants to see you write it — and name the four cases.</div>
   </section>
 
-  <!-- MODULE 03 · VIDEO 10 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 10"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 10</div><div class="cx-page"><b>37</b> / 40</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 10 · utility 4, subscribe and broadcast</div>
+  <!-- MODULE 03 · VIDEO 9 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>39</b> / 41</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 9 · utility 4, subscribe and broadcast</div>
     <h2><span class="g">EventEmitter</span></h2>
     <div class="two tight">
       <div>
@@ -1492,65 +1869,42 @@ panel.remove()
   }
 }</code></pre>
       </div>
-      <div>
-        <ul class="plist">
-          <li>A <code>Set</code> per event<small>no duplicates, and removing one is instant</small></li>
-          <li><code>on</code> returns its own unsubscribe<small>every add needs a remove — lesson 8</small></li>
-          <li>Empty set → delete the key<small>or the map grows for ever in a long-lived app</small></li>
-          <li><code>emit</code> loops over a copy<small>a listener that unsubscribes mid-emit would change the set you are looping over</small></li>
-          <li><code>once</code> is the follow-up question<small><code>on</code> plus a wrapper that unsubscribes itself, then calls through</small></li>
-        </ul>
+      <div class="anim lg" data-at="0,1300,2700,4100">
+        <svg viewBox="0 0 540 264" role="img" aria-label="An emitter keeps one Set of listeners per event; emit calls each, unsubscribing removes one, and the last one out deletes the key">
+<rect x="0" y="106" width="120" height="48" rx="8" class="root"/>
+<text x="60" y="127" text-anchor="middle" class="lbl b">emitter</text>
+<text x="60" y="145" text-anchor="middle" class="lbl s mono">#listeners</text>
+<text x="0" y="180" class="lbl s mono good a2 h3">emit('saved', job)</text>
+<g class="x4"><rect x="160" y="108" width="112" height="44" rx="8"/><text x="216" y="135" text-anchor="middle" class="lbl mono">'saved'</text><text x="216" y="98" text-anchor="middle" class="lbl s">key → Set</text><path class="e " pathLength="1" d="M120 130 L160 130"/><path class="ah " d="M160 130 L151 135 L151 125 Z"/></g>
+<text x="216" y="174" text-anchor="middle" class="lbl s mono a2 h4">for … of [...set]</text>
+<text x="216" y="174" text-anchor="middle" class="lbl s bad a4">empty → key deleted</text>
+<path class="e d1 g2 c4" pathLength="1" d="M272 124 L350 40"/><path class="ah a1 g2 c4" d="M350 40 L347.5 50 L340.2 43.2 Z"/>
+<path class="e d1 g2 c3" pathLength="1" d="M272 130 L350 130"/><path class="ah a1 g2 c3" d="M350 130 L341 135 L341 125 Z"/>
+<path class="e d1 g2 c4" pathLength="1" d="M272 136 L350 220"/><path class="ah a1 g2 c4" d="M350 220 L340.2 216.8 L347.5 210 Z"/>
+<g class="a1 x4"><rect x="350" y="16" width="190" height="48" rx="8" class="g2"/><text x="445" y="45" text-anchor="middle" class="lbl b">A · showToast</text></g>
+<g class="a1 x3"><rect x="350" y="106" width="190" height="48" rx="8" class="g2"/><text x="445" y="135" text-anchor="middle" class="lbl b">B · refreshList</text></g>
+<g class="a1 x4"><rect x="350" y="196" width="190" height="48" rx="8" class="g2"/><text x="445" y="225" text-anchor="middle" class="lbl b">C · track</text></g>
+<text x="445" y="176" text-anchor="middle" class="lbl s mono bad a3">B: unsubscribe()</text>
+</svg>
+        <div class="anim-bar">
+          <button type="button" class="cmb-run anim-replay">replay</button>
+          <span class="anim-say"><i>Three <code>on('saved', …)</code> calls: one <code>Set</code> per event, so the same function can't be added twice.</i><i><code>emit('saved', job)</code> calls each one, looping over a copy: a listener added mid-emit waits for the next event.</i><i><code>on</code> returned an unsubscribe. B calls it and <b class="bad">stops hearing</b>. Every add needs a remove.</i><i>A and C leave too. The last one out <b class="good">deletes the key</b>, or the Map keeps an empty Set per event name for ever.</i></span>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- MODULE 03 · VIDEO 10 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 10"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 10</div><div class="cx-page"><b>38</b> / 40</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 10 · utility 5, rebuild Promise.all</div>
-    <h2><span class="cy">promiseAll</span>(values)</h2>
-    <div class="two tight">
-      <div>
-        <pre><code><span class="kw">function</span> <span class="fn">promiseAll</span>(values) {
-  <span class="kw">return new</span> <span class="ty">Promise</span>((resolve, reject) =&gt; {
-    <span class="kw">if</span> (values.length === <span class="st">0</span>) <span class="kw">return</span> resolve([])
-
-    <span class="kw">const</span> results = <span class="kw">new</span> <span class="ty">Array</span>(values.length)
-    <span class="kw">let</span> finished = <span class="st">0</span>
-
-    values.forEach((value, index) =&gt; {
-      Promise.resolve(value).then((result) =&gt; {
-        results[index] = result          <span class="cmt">// its own slot</span>
-        finished += <span class="st">1</span>
-        <span class="kw">if</span> (finished === values.length) resolve(results)
-      }, reject)                         <span class="cmt">// first rejection wins</span>
-    })
-  })
-}</code></pre>
-      </div>
-      <div>
-        <ul class="plist">
-          <li><code>results[index]</code>, never <code>push</code><small>they finish out of order; the answer must keep the input order</small></li>
-          <li>A counter, not <code>results.length</code><small><code>new Array(3).length</code> is already 3</small></li>
-          <li>Empty input resolves at once<small>no <code>.then</code> ever runs, so nothing else would call <code>resolve</code></small></li>
-          <li><code>Promise.resolve(value)</code><small>plain values and promises take the same path</small></li>
-        </ul>
-      </div>
-    </div>
-    <div class="key">The counter and the index are closures — lesson 2. The "first rejection wins" rule is lesson 6's combinator table, written by hand.</div>
-  </section>
-
-  <!-- MODULE 03 · VIDEO 10 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 10"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 10</div><div class="cx-page"><b>39</b> / 40</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 10 · build</div>
-    <h2>Five utilities, five test files, all green</h2>
+  <!-- MODULE 03 · VIDEO 9 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>40</b> / 41</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 9 · build</div>
+    <h2>Four utilities, four test files, all green</h2>
     <div class="two">
       <div>
         <ul class="plist">
-          <li><code>src/utils/debounce.ts</code><small>lesson 9</small></li>
-          <li><code>src/utils/throttle.ts</code><small>lesson 9</small></li>
+          <li><code>src/utils/debounce.ts</code><small>one call after the burst, cancel()</small></li>
+          <li><code>src/utils/throttle.ts</code><small>leading call, trailing call, cancel()</small></li>
           <li><code>src/utils/deep-clone.ts</code><small>Dates, arrays, cycles</small></li>
           <li><code>src/utils/event-emitter.ts</code><small>on, off, once, emit</small></li>
-          <li><code>src/utils/promise-all.ts</code><small>order kept, empty input, first rejection</small></li>
         </ul>
       </div>
       <div>
@@ -1563,11 +1917,11 @@ git checkout module-3/utils/guided -- src/utils/deep-clone.ts</code></pre>
         <div class="key g">The files are TypeScript, but the function bodies are the JavaScript on these slides. The types are module 4.</div>
       </div>
     </div>
-    <a class="ex" href="https://github.com/Catalystsw/frontend-mastery-jobboard/tree/module-3/utils/start" target="_blank" rel="noopener"><b>Build</b><span class="br">module-3/utils/start</span><i>five utilities, failing tests first · open on GitHub ↗</i></a>
+    <a class="ex" href="https://github.com/Catalystsw/frontend-mastery-jobboard/tree/module-3/utils/start" target="_blank" rel="noopener"><b>Build</b><span class="br">module-3/utils/start</span><i>four utilities, failing tests first · open on GitHub ↗</i></a>
   </section>
 
-  <!-- MODULE 03 · VIDEO 10 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 10"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 10</div><div class="cx-page"><b>40</b> / 40</div><!--/catalyst-brand:chrome-->
+  <!-- MODULE 03 · VIDEO 9 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>41</b> / 41</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 03 · done</div>
     <h2>What you can now explain &amp; defend</h2>
     <div class="two">
@@ -1578,7 +1932,7 @@ git checkout module-3/utils/guided -- src/utils/deep-clone.ts</code></pre>
           <li>Prototypes, delegation and what <code>class</code> hides<small>with the memory numbers to back the choice</small></li>
           <li>ESM live bindings vs CommonJS copies<small>and what <code>import</code> does at runtime</small></li>
           <li>Promise states, combinators and async boundaries<small>including the <code>try</code> that catches nothing</small></li>
-          <li>The five utilities, from an empty file<small>debounce, throttle, deepClone, EventEmitter, promiseAll</small></li>
+          <li>The four utilities, from an empty file<small>debounce, throttle, deepClone, EventEmitter</small></li>
         </ul>
       </div>
       <div class="card b">
@@ -1587,6 +1941,7 @@ git checkout module-3/utils/guided -- src/utils/deep-clone.ts</code></pre>
         <p style="margin-top:10px">Deliverable before you start: <code>module-3/utils/*</code> green, with your own notes on each trade-off.</p>
       </div>
     </div>
+    <a class="ex" href="https://github.com/Catalystsw/frontend-mastery-jobboard/tree/module-3/utils/start" target="_blank" rel="noopener"><b>Close the module</b><span class="br">module-3/utils/start</span><i>the exercise that closes module 3 · open on GitHub ↗</i></a>
   </section>
 
 </div>
@@ -1737,10 +2092,11 @@ git checkout module-3/utils/guided -- src/utils/deep-clone.ts</code></pre>
   }
 
   document.querySelectorAll('.tl').forEach(function(tl){
-    var mode = tl.dataset.mode;
-    var ev = tl.querySelector('[data-track=ev]'), out = tl.querySelector('[data-track=out]');
-    var colour = mode === 'debounce' ? 'cy' : 'g';
-    var fires = mode === 'debounce' ? debounceFires() : throttleFires();
+    var ev = tl.querySelector('[data-track=ev]');
+    var outs = [].map.call(tl.querySelectorAll('[data-track=debounce],[data-track=throttle]'), function(track){
+      var d = track.dataset.track === 'debounce';
+      return { track:track, colour:d ? 'cy' : 'g', fires:d ? debounceFires() : throttleFires() };
+    });
     var timers = [], heads = [];
 
     function dot(track, t, cls){
@@ -1761,14 +2117,16 @@ git checkout module-3/utils/guided -- src/utils/deep-clone.ts</code></pre>
     function stop(){
       timers.forEach(clearTimeout); timers = [];
       heads.forEach(function(h){ h.remove(); }); heads = [];
-      ev.querySelectorAll('.tl-dot').forEach(function(d){ d.remove(); });
-      out.querySelectorAll('.tl-dot').forEach(function(d){ d.remove(); });
+      tl.querySelectorAll('.tl-dot').forEach(function(d){ d.remove(); });
     }
     function run(){
       stop();
-      head(ev); head(out);
+      head(ev);
       EVENTS.forEach(function(t){ timers.push(setTimeout(function(){ dot(ev, t); }, t)); });
-      fires.forEach(function(t){ timers.push(setTimeout(function(){ dot(out, t, colour); }, t)); });
+      outs.forEach(function(o){
+        head(o.track);
+        o.fires.forEach(function(t){ timers.push(setTimeout(function(){ dot(o.track, t, o.colour); }, t)); });
+      });
       timers.push(setTimeout(run, TOTAL + 900));
     }
 
@@ -1899,6 +2257,197 @@ git checkout module-3/utils/guided -- src/utils/deep-clone.ts</code></pre>
   var slide = root.closest('.slide');
   new MutationObserver(function(){ if (slide.classList.contains('on')) run(); else reset(); })
     .observe(slide, { attributes:true, attributeFilter:['class'] });
+})();
+</script>
+
+<script>
+/* fetch outcome explorer — walks one response through each stage, one stage at a time */
+(function(){
+  var SPEC = {
+    raw: {
+      '200':   { rows:[['ok','fulfilled · status 200'], ['ok','true'], ['ok','[ 12 jobs ]'], ['ok','renderJobs(jobs) ✓']],
+                 out:'<b class="ok">Works</b> — and it is the only case anyone tests by hand.' },
+      '404':   { rows:[['warn','fulfilled · status 404'], ['warn','false — nobody checks'], ['no','throws SyntaxError (HTML body)'], ['no','catch: "Unexpected token \'<\'"']],
+                 out:'The catch runs, but with a <b class="no">JSON error</b>. The 404 itself is gone.' },
+      '500':   { rows:[['warn','fulfilled · status 500'], ['warn','false — nobody checks'], ['warn','{ error: \'db down\' }'], ['no','TypeError: jobs.map is not a function']],
+                 out:'<b class="no">Nothing rejected.</b> The crash lands in renderJobs, far from the request.' },
+      offline: { rows:[['no','rejected · TypeError: Failed to fetch'], ['moot','never reached'], ['moot','never reached'], ['no','catch: "Failed to fetch"']],
+                 out:'The <b class="warn">only</b> case where fetch rejects — and the only one this catch was written for.' }
+    },
+    wrapped: {
+      '404':   { rows:[['warn','fulfilled · status 404'], ['no','throw new HttpError(404)'], ['moot','skipped'], ['ok','HttpError · err.status 404 → showError']],
+                 out:'<b class="ok">Rejected at the check</b>, with the status still attached.' },
+      '500':   { rows:[['warn','fulfilled · status 500'], ['no','throw new HttpError(500)'], ['moot','skipped'], ['ok','HttpError · err.status 500 → showError']],
+                 out:'Same path as the 404 — <b class="ok">err.status</b> tells them apart, and says a retry might help.' },
+      '204':   { rows:[['ok','fulfilled · status 204'], ['ok','ok — nothing thrown'], ['ok','204 → return null'], ['moot','not reached · renderJobs(null)']],
+                 out:'No body to parse: <b class="ok">null</b>, instead of json() throwing on an empty response.' },
+      offline: { rows:[['no','rejected · TypeError: Failed to fetch'], ['moot','never reached'], ['moot','never reached'], ['ok','not an HttpError → showOffline']],
+                 out:'The network failure reaches the <b class="ok">same catch</b>, told apart by its type.' },
+      abort:   { rows:[['warn','rejected · AbortError'], ['moot','never reached'], ['moot','never reached'], ['moot','AbortError → return, it was ours']],
+                 out:'We cancelled it ourselves: <b class="warn">dropped on purpose</b>, never shown.' }
+    }
+  };
+
+  document.querySelectorAll('.fx').forEach(function(root){
+    var spec = SPEC[root.dataset.fx];
+    if (!spec) return;
+    var rows = [].slice.call(root.querySelectorAll('.fx-row'));
+    var out = root.querySelector('.cmb-out');
+    var btns = [].slice.call(root.querySelectorAll('.cmb-b'));
+    var pick = (root.querySelector('.cmb-b.on') || btns[0]).dataset.s;
+    var timers = [];
+
+    function paint(i, s){
+      rows[i].className = 'fx-row on ' + s.rows[i][0];
+      rows[i].querySelector('span').textContent = s.rows[i][1];
+    }
+    function reset(){
+      timers.forEach(clearTimeout); timers = [];
+      rows.forEach(function(r){ r.className = 'fx-row'; r.querySelector('span').textContent = '…'; });
+      out.textContent = '…';
+    }
+    function show(){                          // the settled frame, for print and the slide menu
+      var s = spec[pick];
+      reset(); s.rows.forEach(function(_, i){ paint(i, s); }); out.innerHTML = s.out;
+    }
+    function run(){
+      var s = spec[pick];
+      reset();
+      s.rows.forEach(function(_, i){ timers.push(setTimeout(function(){ paint(i, s); }, 250 + i * 520)); });
+      timers.push(setTimeout(function(){ out.innerHTML = s.out; }, 250 + s.rows.length * 520));
+    }
+
+    btns.forEach(function(b){
+      b.addEventListener('click', function(){
+        pick = b.dataset.s;
+        btns.forEach(function(x){ x.classList.toggle('on', x === b); });
+        run();
+      });
+    });
+    root.querySelector('.cmb-run').addEventListener('click', run);
+    ['click','pointerdown'].forEach(function(t){
+      root.addEventListener(t, function(e){ e.stopPropagation(); });
+    });
+    show();
+
+    var slide = root.closest('.slide'), wasOn = false;
+    new MutationObserver(function(){
+      var isOn = slide.classList.contains('on');
+      if (isOn && !wasOn) run();
+      wasOn = isOn;
+    }).observe(slide, { attributes:true, attributeFilter:['class'] });
+  });
+
+  /* retry timeline — replays withRetry against a scripted server. Each try sits on its own
+     row, and the wait before it is drawn to the same time scale, so the backoff is visible. */
+  var RT = {
+    flaky: { tries:[['no','✗ 503'], ['no','✗ drop'], ['ok','✓ 200']],
+             out:'Two failures the user never sees: <b class="ok">jobs render</b> on the third try.' },
+    down:  { tries:[['no','✗ 503'], ['no','✗ 503'], ['no','✗ 503']],
+             out:'Out of tries: the <b class="no">last 503</b> is thrown, and the call site keeps it as cause.' },
+    '404': { tries:[['no','✗ 404']],
+             out:'A 404 fails the same way every time: <b class="no">thrown at once</b>, no waiting.' },
+    abort: { tries:[['warn','✗ abort']],
+             out:'We cancelled it ourselves: <b class="warn">thrown at once</b>, and dropped at the call site.' }
+  };
+  var REQ = 300, WAIT = [0, 300, 600], SLOW = 2;   // modelled ms; played at half speed
+
+  document.querySelectorAll('.rt').forEach(function(root){
+    var rows = [].slice.call(root.querySelectorAll('.rt-row'));
+    var out = root.querySelector('.cmb-out');
+    var btns = [].slice.call(root.querySelectorAll('.cmb-b'));
+    var pick = (root.querySelector('.cmb-b.on') || btns[0]).dataset.s;
+    var timers = [];
+
+    function grow(el, ms){ el.style.setProperty('--ms', ms + 'ms'); el.classList.add('live'); }
+    function settle(el, t){ el.classList.add(t[0]); el.querySelector('em').textContent = t[1]; }
+    function reset(){
+      timers.forEach(clearTimeout); timers = [];
+      rows.forEach(function(r){
+        r.classList.remove('moot');
+        var w = r.querySelector('.rt-wait'), tr = r.querySelector('.rt-try');
+        if (w) w.className = 'rt-wait';
+        tr.className = 'rt-try'; tr.querySelector('em').textContent = '';
+      });
+      out.textContent = '…';
+    }
+    function show(){                          // the settled frame, for print and the slide menu
+      var s = RT[pick];
+      reset();
+      rows.forEach(function(r, k){
+        if (k >= s.tries.length) { r.classList.add('moot'); return; }
+        var w = r.querySelector('.rt-wait'), tr = r.querySelector('.rt-try');
+        if (w) grow(w, 0);
+        grow(tr, 0); settle(tr, s.tries[k]);
+      });
+      out.innerHTML = s.out;
+    }
+    function run(){
+      var s = RT[pick], t = 250;
+      reset();
+      rows.forEach(function(r, k){
+        if (k >= s.tries.length) { timers.push(setTimeout(function(){ r.classList.add('moot'); }, t)); return; }
+        var w = r.querySelector('.rt-wait'), tr = r.querySelector('.rt-try');
+        if (w) { timers.push(setTimeout(function(){ grow(w, WAIT[k] * SLOW); }, t)); t += WAIT[k] * SLOW; }
+        timers.push(setTimeout(function(){ grow(tr, REQ * SLOW); }, t)); t += REQ * SLOW;
+        timers.push(setTimeout(function(){ settle(tr, s.tries[k]); }, t)); t += 150;
+      });
+      timers.push(setTimeout(function(){ out.innerHTML = s.out; }, t + 150));
+    }
+
+    btns.forEach(function(b){
+      b.addEventListener('click', function(){
+        pick = b.dataset.s;
+        btns.forEach(function(x){ x.classList.toggle('on', x === b); });
+        run();
+      });
+    });
+    root.querySelector('.cmb-run').addEventListener('click', run);
+    ['click','pointerdown'].forEach(function(t){
+      root.addEventListener(t, function(e){ e.stopPropagation(); });
+    });
+    show();
+
+    var slide = root.closest('.slide'), wasOn = false;
+    new MutationObserver(function(){
+      var isOn = slide.classList.contains('on');
+      if (isOn && !wasOn) run();
+      wasOn = isOn;
+    }).observe(slide, { attributes:true, attributeFilter:['class'] });
+  });
+
+  /* step player — .anim[data-at="0,1300,…"] gets s1, s2, … at those times (ms) when its
+     slide opens; the CSS keys every change off those classes. Settled frame until then. */
+  document.querySelectorAll('.anim').forEach(function(root){
+    var at = root.dataset.at.split(',').map(Number), n = at.length, timers = [];
+    var says = [].slice.call(root.querySelectorAll('.anim-say i'));
+
+    function set(k){
+      for (var j = 1; j <= n; j++) root.classList.toggle('s' + j, j <= k);
+      says.forEach(function(el, j){ el.classList.toggle('on', j === k - 1); });
+    }
+    function play(){
+      timers.forEach(clearTimeout); timers = [];
+      root.classList.add('rs'); set(0); void root.offsetWidth; root.classList.remove('rs');
+      at.forEach(function(ms, j){ timers.push(setTimeout(function(){ set(j + 1); }, 200 + ms)); });
+    }
+    set(n);
+
+    var btn = root.querySelector('.anim-replay');
+    if (btn) {
+      btn.addEventListener('click', play);
+      ['click','pointerdown'].forEach(function(t){
+        btn.addEventListener(t, function(e){ e.stopPropagation(); });
+      });
+    }
+
+    var slide = root.closest('.slide'), wasOn = false;
+    new MutationObserver(function(){
+      var isOn = slide.classList.contains('on');
+      if (isOn && !wasOn) play();
+      wasOn = isOn;
+    }).observe(slide, { attributes:true, attributeFilter:['class'] });
+  });
 })();
 </script>
 
