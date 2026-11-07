@@ -906,5 +906,1255 @@
 })();
 </script>
 <!--/catalyst-brand:arrows-->
+<!--catalyst-brand:sandbox-->
+<style id="catalyst-sandbox">
+  /* Code sandbox — a right-hand panel with a real editor: Monaco plus the TypeScript
+     language service, so errors squiggle as you type, hovers show types, and `// ^?`
+     under a name pins its type inline. Two modes, each a small multi-file project:
+       TS     plain TypeScript; Run executes it in a worker, console output below.
+       React  components in .tsx files and CSS; a live preview re-renders as you type.
+     Injected by brand/apply_brand.py into module decks from 04 on; edit
+     brand/sandbox.html, not this block.
+
+     The slide keeps its full size: the panel sits over its right side. The panel is
+     pinned to the visible part of the page (the --vv-* offsets), so it stays whole
+     even when the page is pinch-zoomed. */
+  html.sbx-drag, html.sbx-drag *{cursor:col-resize !important; user-select:none !important}
+  html.sbx-drag.sbx-drag-y, html.sbx-drag.sbx-drag-y *{cursor:row-resize !important}
+  html.sbx-drag iframe{pointer-events:none}
+  html.sbx-open #notes{right:var(--sbx-w)}
+  html.sbx-open #dots{left:calc((100% - var(--sbx-w)) / 2)}
+
+  #sbxToggle{position:fixed; right:calc(var(--vv-r, 0px) + 118px); bottom:calc(var(--vv-b, 0px) + 16px); z-index:19; cursor:pointer; opacity:.82;
+    display:flex; align-items:center; gap:8px;
+    background:var(--panel); border:1px solid var(--line2); color:var(--ink);
+    font:600 13px/1 var(--mono); padding:7px 12px 7px 8px; border-radius:9px;
+    transition:opacity .2s}
+  #sbxToggle:hover{opacity:1; border-color:#33476A}
+  #sbxToggle b{background:var(--blue); color:#fff; font:700 10.5px/1 var(--mono); padding:4px 5px 3px; border-radius:4px}
+  html.sbx-open #sbxToggle{opacity:0; pointer-events:none}
+
+  #sbx{position:fixed; top:var(--vv-t, 0px); right:var(--vv-r, 0px); bottom:var(--vv-b, 0px); width:42vw; z-index:25; overflow:clip;
+    display:flex; flex-direction:column; text-align:left;
+    background:var(--panel); border-left:1px solid var(--line2); box-shadow:0 0 60px rgba(0,0,0,.7);
+    font:400 13px/1.45 var(--sans); color:var(--ink2);
+    transform:translateX(104%); visibility:hidden;
+    transition:transform .26s cubic-bezier(.4,0,.2,1), visibility 0s linear .26s}
+  /* `none`, not translateX(0): a transformed ancestor would trap the editor's
+     fixed-position hovers (and the enlarged preview) inside the panel. */
+  html.sbx-open #sbx{transform:none; visibility:visible; transition-delay:0s}
+  .sbx-grip{position:absolute; left:-4px; top:0; bottom:0; width:8px; cursor:col-resize; z-index:2}
+  .sbx-grip:hover, html.sbx-drag:not(.sbx-drag-y) .sbx-grip{background:linear-gradient(90deg, transparent 3px, var(--cy) 3px, var(--cy) 5px, transparent 5px)}
+
+  /* On a narrow panel the tools drop to a second row rather than squeezing the
+     TS / React switch; the version label gives way first. */
+  .sbx-head{display:flex; flex-wrap:wrap; align-items:center; gap:8px 10px; padding:10px 12px 10px 14px; border-bottom:1px solid var(--line2)}
+  .sbx-title{display:flex; align-items:center; gap:10px; flex:1 1 100px; min-width:0; white-space:nowrap}
+  .sbx-title em{font:500 11.5px/1 var(--mono); font-style:normal; color:var(--grey3); overflow:hidden; text-overflow:ellipsis; min-width:0}
+  .sbx-seg{display:flex; flex:none; border:1px solid var(--line2); border-radius:8px; overflow:hidden}
+  .sbx-tools{display:flex; flex:none; gap:6px; margin-left:auto}
+  .sbx-head button,.sbx-tabs button,.sbx-view button{cursor:pointer; font:600 11.5px/1 var(--mono); letter-spacing:.4px; color:var(--ink2);
+    background:var(--panel2); border:1px solid var(--line2); border-radius:7px; padding:7px 9px; white-space:nowrap}
+  .sbx-head button:hover,.sbx-tabs button:hover,.sbx-view button:hover{color:#fff; border-color:#33476A}
+  #sbx .sbx-seg button{border:0; border-radius:0; padding:7px 11px; background:none; color:var(--muted)}
+  #sbx .sbx-seg button + button{border-left:1px solid var(--line2)}
+  #sbx .sbx-seg button.sbx-on{background:var(--blue); color:#fff}
+  .sbx-head button.sbx-run{color:#04121A; background:var(--good); border-color:var(--good)}
+  .sbx-head button.sbx-run:hover{filter:brightness(1.08); color:#04121A}
+  .sbx-head button.sbx-tg.sbx-on{color:var(--cy); border-color:rgba(34,211,238,.5); background:rgba(34,211,238,.1)}
+  .sbx-head button.sbx-sure{color:var(--bad); border-color:var(--bad)}
+
+  /* file tabs */
+  .sbx-files{display:flex; align-items:stretch; padding:0 6px; border-bottom:1px solid var(--line2); overflow-x:auto; scrollbar-width:none; flex:none}
+  .sbx-files::-webkit-scrollbar{display:none}
+  .sbx-file{display:flex; align-items:center; gap:6px; padding:9px 9px 7px; border-bottom:2px solid transparent;
+    font:600 12px/1 var(--mono); color:var(--muted); cursor:pointer; white-space:nowrap; user-select:none}
+  .sbx-file:hover{color:var(--ink2)}
+  .sbx-file.sbx-on{color:var(--ink); border-bottom-color:var(--cy); background:var(--code)}
+  .sbx-file .sbx-dot{width:6px; height:6px; border-radius:50%; background:var(--bad); display:none}
+  .sbx-file.sbx-err .sbx-dot{display:block}
+  .sbx-file .sbx-x{font:700 13px/1 var(--mono); font-style:normal; color:var(--grey3); padding:1px 3px; border-radius:4px; visibility:hidden}
+  .sbx-file:hover .sbx-x, .sbx-file.sbx-on .sbx-x{visibility:visible}
+  .sbx-file .sbx-x:hover{color:var(--bad); background:rgba(248,113,122,.12)}
+  .sbx-file .sbx-x.sbx-sure{visibility:visible; color:var(--bad); font-size:11px}
+  .sbx-file.sbx-add{color:var(--grey3); font-size:15px; padding:7px 11px}
+  .sbx-file.sbx-add:hover{color:var(--cy)}
+  .sbx-name{align-self:center; margin:4px 2px; width:17ch; padding:4px 6px; outline:none;
+    background:var(--code); color:var(--ink); border:1px solid var(--cy); border-radius:5px; font:600 12px/1.2 var(--mono)}
+  .sbx-name.sbx-bad{border-color:var(--bad)}
+  .sbx-nerr{align-self:center; color:var(--bad); font:11.5px/1.3 var(--mono); white-space:nowrap; padding-right:8px}
+
+  .sbx-ed{flex:1; min-height:80px; position:relative; background:var(--code)}
+  .sbx-msg{position:absolute; inset:0; display:grid; place-items:center; padding:24px; text-align:center;
+    font:13px/1.6 var(--mono); color:var(--muted)}
+  .sbx-split{flex:none; height:6px; margin:-3px 0; position:relative; z-index:2; cursor:row-resize}
+  .sbx-split:hover, html.sbx-drag-y .sbx-split{background:linear-gradient(180deg, transparent 2px, var(--cy) 2px, var(--cy) 4px, transparent 4px)}
+
+  .sbx-bottom{flex:none; height:30%; min-height:96px; display:flex; flex-direction:column; border-top:1px solid var(--line2)}
+  #sbx.sbx-react .sbx-bottom{height:50%}
+  .sbx-tabs{display:flex; align-items:center; gap:2px; padding:0 10px; border-bottom:1px solid var(--line); flex:none}
+  #sbx .sbx-tabs button{background:none; border:0; border-bottom:2px solid transparent; border-radius:0;
+    padding:10px 8px 8px; color:var(--muted); text-transform:uppercase; letter-spacing:1.2px}
+  #sbx .sbx-tabs button.sbx-on{color:var(--ink); border-bottom-color:var(--cy)}
+  #sbx .sbx-tabs button.sbx-small{margin-left:4px; text-transform:none; letter-spacing:.4px; color:var(--grey3)}
+  #sbx .sbx-tabs button.sbx-small:hover{color:var(--ink2)}
+  #sbx:not(.sbx-react) [data-tab="preview"], #sbx:not(.sbx-react) [data-act="big"]{display:none}
+  .sbx-count{font-style:normal; margin-left:6px; padding:2px 6px; border-radius:999px; background:var(--line2); color:var(--ink2)}
+  .sbx-count:empty{display:none}
+  .sbx-count.sbx-bad{background:rgba(248,113,122,.18); color:var(--bad)}
+  .sbx-status{margin-left:auto; font:600 11.5px/1 var(--mono); color:var(--muted); white-space:nowrap}
+  .sbx-status.sbx-ok{color:var(--good)} .sbx-status.sbx-bad{color:var(--bad)}
+  .sbx-pane{display:none; flex:1; min-height:0; overflow:auto; padding:6px 0}
+  .sbx-pane.sbx-on{display:block}
+  .sbx-none{padding:10px 16px; color:var(--grey3); font:13px var(--mono)}
+
+  /* live preview: a white page, like a browser tab. ⤢ lifts it over the slide. */
+  .sbx-view{display:none; flex:1; min-height:0; position:relative; background:#fff}
+  .sbx-view.sbx-on{display:block}
+  .sbx-view iframe{display:block; width:100%; height:100%; border:0; background:#fff}
+  .sbx-view .sbx-shrink{display:none; position:absolute; top:10px; right:10px; z-index:2; opacity:.9}
+  html.sbx-open .sbx-view.sbx-big{display:block; position:fixed; z-index:24;
+    top:calc(var(--vv-t, 0px) + 28px); bottom:calc(var(--vv-b, 0px) + 28px); left:calc(var(--vv-l, 0px) + 28px);
+    right:calc(var(--vv-r, 0px) + var(--sbx-w) + 28px); border-radius:12px; overflow:hidden;
+    border:1px solid var(--line2); box-shadow:0 30px 90px rgba(0,0,0,.65)}
+  html.sbx-open .sbx-view.sbx-big .sbx-shrink{display:block}
+  .sbx-bigmsg{display:none}
+  #sbx.sbx-bigview .sbx-bigmsg.sbx-on{display:block}
+
+  .sbx-pr{display:grid; grid-template-columns:14px 1fr auto; gap:10px; align-items:baseline; padding:6px 16px; cursor:pointer}
+  .sbx-pr:hover, .sbx-pr:focus-visible{background:rgba(34,211,238,.07); outline:none}
+  .sbx-pr i{font:700 11px/1 var(--mono); font-style:normal; color:var(--bad)}
+  .sbx-pr.sbx-warn i{color:var(--ochre)}
+  .sbx-pr span{white-space:pre-wrap; color:var(--ink2); font-size:13.5px}
+  .sbx-pr small{font:11.5px/1.4 var(--mono); color:var(--grey3); white-space:nowrap}
+
+  .sbx-l{padding:3px 16px; font:13px/1.55 var(--mono); color:var(--ink2); white-space:pre-wrap; word-break:break-word; border-bottom:1px solid rgba(30,41,59,.6)}
+  .sbx-l.sbx-warn{color:var(--ochre); background:rgba(251,191,36,.06)}
+  .sbx-l.sbx-error{color:var(--bad); background:rgba(248,113,122,.07)}
+  .sbx-l.sbx-meta{color:var(--grey3); border-bottom:0}
+
+  /* What `// ^?` resolves to, drawn after the comment like an editor's inlay hint. */
+  .sbx-q{margin-left:1ch; padding:0 .6ch; border-radius:4px; background:rgba(167,139,250,.14); color:#C4B5FD !important}
+  .sbx-q.sbx-q-none{background:rgba(100,116,139,.14); color:var(--grey3) !important}
+
+  /* The deck styles bare <code> and <pre> for slides; the editor's hovers use both. */
+  #sbx code{background:none; border:0; padding:0; color:inherit; font-size:inherit}
+  #sbx pre{background:none; border:0; padding:0; margin:0; max-width:none; font:inherit; color:inherit}
+
+  /* "try" rides the code block's top edge next to "copy" and appears with it. */
+  .codewrap .sbx-try{right:96px}
+
+  @media print{
+    #sbx, #sbxToggle, .sbx-try{display:none !important}
+  }
+</style>
+<script data-mode="react">
+/* Code sandbox (see the style block above). Monaco is fetched from jsDelivr on first
+   open, so a deck that never opens the panel loads nothing extra. React mode adds
+   React's type definitions (jsDelivr) and React itself (esm.sh, inside the preview).
+
+   T opens and closes it from the slides; Ctrl+` does it from anywhere, the editor and
+   the preview included. Inside the editor every key belongs to the editor; Esc (or a
+   click on the slide) hands the keyboard back to the deck. ⌘/Ctrl+Enter runs the TS
+   project, or reloads the React preview. Each deck keeps one project per mode in
+   localStorage. data-mode on this tag is the deck's default mode. */
+(function(){
+  var stage = document.getElementById('stage');
+  if (!stage) return;
+  var me = document.currentScript;
+
+  var CDN = 'https://cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min';
+  var NPM = 'https://cdn.jsdelivr.net/npm/';
+  var ESM = 'https://esm.sh/';
+  var REACT = '19.2.9';
+  var TYPES = {
+    '@types/react@19.2.18': ['index.d.ts', 'global.d.ts', 'jsx-runtime.d.ts'],
+    '@types/react-dom@19.2.7': ['index.d.ts', 'client.d.ts'],
+    'csstype@3.2.3': ['index.d.ts']
+  };
+  // The preview's import map. Everything React-shaped resolves to one copy of React;
+  // other packages come from esm.sh with React left external, so they share it.
+  var IMPORTS = {
+    'react': ESM + 'react@' + REACT + '?dev',
+    'react/jsx-runtime': ESM + 'react@' + REACT + '/jsx-runtime?dev&external=react',
+    'react/jsx-dev-runtime': ESM + 'react@' + REACT + '/jsx-dev-runtime?dev&external=react',
+    'react-dom': ESM + 'react-dom@' + REACT + '?dev&external=react',
+    'react-dom/client': ESM + 'react-dom@' + REACT + '/client?dev&external=react'
+  };
+
+  var KEY = 'catalyst-sbx:' + location.pathname + ':';
+  var root = document.documentElement;
+
+  var TS_START = {
+    'index.ts': [
+      '// TypeScript sandbox. strict mode, checked as you type.',
+      '// Hover anything for its type. Put  // ^?  under a name to pin its type.',
+      '// Cmd/Ctrl+Enter runs the project. Esc hands the keyboard back to the slides.',
+      '',
+      'type Listing = { id: string; title: string; salary?: number };',
+      '',
+      'function label(x: string | Listing) {',
+      "  if (typeof x === 'string') {",
+      '    return x.trim();',
+      '  }',
+      '  return x.title;',
+      '}',
+      '',
+      "const title = label({ id: '1', title: 'Frontend Engineer' });",
+      '//    ^?',
+      'console.log(title);',
+      ''
+    ].join('\n')
+  };
+  var REACT_START = {
+    'App.tsx': [
+      "import { useState } from 'react';",
+      "import { Counter } from './Counter';",
+      "import './styles.css';",
+      '',
+      '// Edit any tab: the preview re-renders as you type.',
+      '// The checker follows imports across tabs. Hover for types.',
+      '',
+      'export default function App() {',
+      "  const [name, setName] = useState('Frontend Engineer');",
+      '',
+      '  return (',
+      '    <main>',
+      '      <h1>Hello, {name}</h1>',
+      '      <input value={name} onChange={(e) => setName(e.target.value)} />',
+      '      <Counter step={1} />',
+      '    </main>',
+      '  );',
+      '}',
+      ''
+    ].join('\n'),
+    'Counter.tsx': [
+      "import { useState } from 'react';",
+      '',
+      'type CounterProps = { step: number };',
+      '',
+      'export function Counter({ step }: CounterProps) {',
+      '  const [count, setCount] = useState(0);',
+      '',
+      '  return (',
+      '    <button onClick={() => setCount((c) => c + step)}>',
+      "      Clicked {count} {count === 1 ? 'time' : 'times'}",
+      '    </button>',
+      '  );',
+      '}',
+      ''
+    ].join('\n'),
+    'styles.css': [
+      'body {',
+      '  font-family: system-ui, sans-serif;',
+      '  margin: 24px;',
+      '  color: #0f172a;',
+      '}',
+      '',
+      'main {',
+      '  display: grid;',
+      '  gap: 12px;',
+      '  max-width: 360px;',
+      '}',
+      '',
+      'input,',
+      'button {',
+      '  font: inherit;',
+      '  padding: 8px 12px;',
+      '  border: 1px solid #cbd5e1;',
+      '  border-radius: 8px;',
+      '}',
+      '',
+      'button {',
+      '  background: #0f172a;',
+      '  color: #fff;',
+      '  cursor: pointer;',
+      '}',
+      ''
+    ].join('\n')
+  };
+  var MODES = {
+    ts: { start: TS_START, first: 'index.ts', entries: ['index.ts', 'main.ts', 'index.tsx', 'main.tsx'] },
+    react: { start: REACT_START, first: 'App.tsx', entries: ['index.tsx', 'main.tsx', 'index.jsx', 'main.jsx'] }
+  };
+  var MOUNT = [
+    "import { createElement, StrictMode } from 'react';",
+    "import { createRoot } from 'react-dom/client';",
+    "import * as app from '__APP__';",
+    "if (!app.default) throw new Error('__FILE__ needs a default export: the component to render.');",
+    "createRoot(document.getElementById('root')).render(createElement(StrictMode, null, createElement(app.default)));"
+  ].join('\n');
+
+  function get(k, d){ try { var v = localStorage.getItem(KEY + k); return v == null ? d : v; } catch (e) { return d; } }
+  function put(k, v){ try { localStorage.setItem(KEY + k, v); } catch (e) {} }
+  function noop(){}
+  function ext(p){ return (/\.([a-z]+)$/i.exec(p) || ['', ''])[1].toLowerCase(); }
+  function isCode(p){ return /^(ts|tsx|jsx)$/.test(ext(p)); }
+  var mode = get('mode', me && me.dataset.mode === 'react' ? 'react' : 'ts');
+  if (!MODES[mode]) mode = 'ts';
+
+  /* ---- panel ------------------------------------------------------------------- */
+  var toggle = document.createElement('button');
+  toggle.id = 'sbxToggle';
+  toggle.type = 'button';
+  toggle.title = 'Code sandbox (T, or Ctrl+` from anywhere)';
+  toggle.innerHTML = '<b>TS</b>sandbox';
+
+  var panel = document.createElement('section');
+  panel.id = 'sbx';
+  panel.setAttribute('aria-label', 'Code sandbox');
+  panel.innerHTML =
+    '<div class="sbx-grip" title="Drag to resize"></div>' +
+    '<div class="sbx-head">' +
+      '<div class="sbx-title">' +
+        '<div class="sbx-seg"><button type="button" data-mode="ts">TS</button><button type="button" data-mode="react">React</button></div>' +
+        '<em class="sbx-ver">strict</em>' +
+      '</div>' +
+      '<div class="sbx-tools">' +
+        '<button type="button" class="sbx-run" data-act="run" title="⌘/Ctrl+Enter">▶ Run</button>' +
+        '<button type="button" class="sbx-tg" data-act="hints" title="Inline type hints">hints</button>' +
+        '<button type="button" data-act="smaller" title="Smaller text">A−</button>' +
+        '<button type="button" data-act="bigger" title="Bigger text">A+</button>' +
+        '<button type="button" data-act="reset" title="Back to the starter files">reset</button>' +
+        '<button type="button" data-act="close" title="Close (Ctrl+`)">✕</button>' +
+      '</div>' +
+    '</div>' +
+    '<div class="sbx-files"></div>' +
+    '<div class="sbx-ed"><div class="sbx-msg">Loading the editor…</div></div>' +
+    '<div class="sbx-split" title="Drag to resize"></div>' +
+    '<div class="sbx-bottom">' +
+      '<div class="sbx-tabs">' +
+        '<button type="button" data-tab="preview">Preview</button>' +
+        '<button type="button" data-tab="console">Console<i class="sbx-count sbx-ccount"></i></button>' +
+        '<button type="button" data-tab="problems">Problems<i class="sbx-count sbx-pcount"></i></button>' +
+        '<span class="sbx-status"></span>' +
+        '<button type="button" class="sbx-small" data-act="big" title="Show the preview over the slide">⤢</button>' +
+        '<button type="button" class="sbx-small" data-act="clear" title="Clear the console">clear</button>' +
+      '</div>' +
+      '<div class="sbx-view"><button type="button" class="sbx-shrink" data-act="big">⤡ back to the panel</button></div>' +
+      '<div class="sbx-pane sbx-bigmsg"><div class="sbx-none">The preview is over the slide. ⤢ brings it back here.</div></div>' +
+      '<div class="sbx-pane sbx-console"></div>' +
+      '<div class="sbx-pane sbx-problems"></div>' +
+    '</div>';
+  document.body.appendChild(toggle);
+  document.body.appendChild(panel);
+
+  function $(s){ return panel.querySelector(s); }
+  var host = $('.sbx-ed'), grip = $('.sbx-grip'), split = $('.sbx-split'), bottom = $('.sbx-bottom'),
+      filesEl = $('.sbx-files'), ver = $('.sbx-ver'), status = $('.sbx-status'),
+      pcount = $('.sbx-pcount'), ccount = $('.sbx-ccount'), probs = $('.sbx-problems'),
+      outp = $('.sbx-console'), view = $('.sbx-view'), bigmsg = $('.sbx-bigmsg'),
+      runBtn = $('[data-act="run"]'), hintsBtn = $('[data-act="hints"]');
+
+  var foot = document.querySelector('#nav .navfoot');
+  if (foot) foot.insertAdjacentHTML('beforeend', ' · <kbd>T</kbd> or <kbd>Ctrl</kbd><kbd>`</kbd> sandbox');
+
+  /* ---- open, close, resize ----------------------------------------------------- */
+  // The visible part of the page. Normally the whole window; when the page is
+  // pinch-zoomed, a smaller window into it, offset from the top-left corner.
+  var vv = window.visualViewport;
+  function seen(){
+    var de = document.documentElement;
+    return vv ? { l: vv.offsetLeft, t: vv.offsetTop, w: vv.width, h: vv.height, W: de.clientWidth, H: de.clientHeight }
+              : { l: 0, t: 0, w: de.clientWidth, h: de.clientHeight, W: de.clientWidth, H: de.clientHeight };
+  }
+  var open = false, width = +get('width', 0) || Math.round(seen().w * 0.42);
+  function clampW(w){ var v = seen().w; return Math.round(Math.max(Math.min(360, v), Math.min(w, v * 0.72))); }
+  function layout(){
+    var v = seen(), w = clampW(width), st = root.style;
+    panel.style.width = w + 'px';
+    st.setProperty('--sbx-w', (open ? w : 0) + 'px');
+    st.setProperty('--vv-l', v.l + 'px');
+    st.setProperty('--vv-t', v.t + 'px');
+    st.setProperty('--vv-r', Math.max(0, v.W - v.l - v.w) + 'px');
+    st.setProperty('--vv-b', Math.max(0, v.H - v.t - v.h) + 'px');
+  }
+  function setOpen(v){
+    open = v;
+    root.classList.toggle('sbx-open', v);
+    layout();
+    if (v) ensureEditor().then(function(){ editor.focus(); }, noop);
+    else if (panel.contains(document.activeElement)) document.activeElement.blur();
+  }
+  addEventListener('resize', layout);
+  if (vv) { vv.addEventListener('resize', layout); vv.addEventListener('scroll', layout); }
+  layout();
+
+  function drag(el, axis, move, done){
+    el.addEventListener('pointerdown', function(e){
+      e.preventDefault();
+      el.setPointerCapture(e.pointerId);
+      root.classList.add('sbx-drag');
+      root.classList.toggle('sbx-drag-y', axis === 'y');
+      function up(){
+        el.removeEventListener('pointermove', move);
+        el.removeEventListener('pointerup', up);
+        el.removeEventListener('pointercancel', up);
+        root.classList.remove('sbx-drag', 'sbx-drag-y');
+        done();
+      }
+      el.addEventListener('pointermove', move);
+      el.addEventListener('pointerup', up);
+      el.addEventListener('pointercancel', up);
+    });
+  }
+  drag(grip, 'x', function(ev){ var v = seen(); width = clampW(v.l + v.w - ev.clientX); layout(); },
+       function(){ put('width', width); });
+  drag(split, 'y', function(ev){
+    var r = panel.getBoundingClientRect();
+    bottom.style.height = Math.max(96, Math.min(r.bottom - ev.clientY, r.height - 200)) + 'px';
+  }, function(){ put('split:' + mode, parseInt(bottom.style.height, 10) || 0); });
+
+  toggle.addEventListener('click', function(e){ e.stopPropagation(); setOpen(true); });
+
+  // Keys typed in the panel are the editor's. The deck listens on document, so they
+  // stop here — otherwise a space in a string would turn the slide. The toolbar is the
+  // exception: its buttons let go of focus once clicked, and keys there are the deck's.
+  panel.addEventListener('keydown', function(e){
+    if (!e.target.closest('.sbx-head, .sbx-tabs')) e.stopPropagation();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.metaKey || e.ctrlKey || e.altKey || (e.key || '').toLowerCase() !== 't') return;
+    e.preventDefault();
+    setOpen(!open);
+  });
+  // Ctrl+` works even mid-typing: caught on the way down, before the editor sees it.
+  // The preview frame has its own document, so it forwards the same key (see bridge).
+  function isToggleKey(e){ return e.ctrlKey && !e.metaKey && !e.altKey && e.code === 'Backquote'; }
+  document.addEventListener('keydown', function(e){
+    if (!isToggleKey(e)) return;
+    e.preventDefault();
+    e.stopPropagation();
+    setOpen(!open);
+  }, true);
+
+  // With the panel open, "right half advances" means the right half of the slide that
+  // is still showing, not of the window. A click on the slide while typing just
+  // leaves the editor. Read on pointerdown: by `click`, the press has moved focus.
+  var typing = false;
+  document.addEventListener('pointerdown', function(){ typing = panel.contains(document.activeElement); }, true);
+  stage.addEventListener('click', function(e){
+    if (!open || e.target.closest('a[href],button')) return;
+    e.stopPropagation();
+    if (typing) { typing = false; if (panel.contains(document.activeElement)) document.activeElement.blur(); return; }
+    var v = seen(), mid = v.l + (v.w - clampW(width)) / 2;
+    var go = e.clientX > mid ? window.next : window.prev;
+    if (typeof go === 'function') go();
+  }, true);
+
+  /* ---- editor ------------------------------------------------------------------ */
+  var monaco, editor, ready, queries, typesReady, ambientLib, ambientKey = '',
+      models = {}, order = [], views = {}, active = null, errs = {}, problems = 0,
+      fontSize = +get('font', 0) || 16, hints = get('hints', 'on') === 'on';
+
+  function loadMonaco(){
+    return new Promise(function(resolve, reject){
+      if (window.monaco && window.monaco.editor) return resolve(window.monaco);
+      // Workers can't be started straight from another origin; a same-origin blob
+      // that pulls the CDN worker in with importScripts can.
+      window.MonacoEnvironment = { getWorkerUrl: function(){
+        return URL.createObjectURL(new Blob([
+          "self.MonacoEnvironment={baseUrl:'" + CDN + "/'};importScripts('" + CDN + "/vs/base/worker/workerMain.js');"
+        ], { type: 'text/javascript' }));
+      } };
+      var s = document.createElement('script');
+      s.src = CDN + '/vs/loader.js';
+      s.onload = function(){
+        window.require.config({ paths: { vs: CDN + '/vs' } });
+        window.require(['vs/editor/editor.main'], function(){ resolve(window.monaco); }, reject);
+      };
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  function ensureEditor(){
+    if (!ready) ready = loadMonaco().then(function(m){ monaco = m; return build(); }, function(err){
+      ready = null;
+      host.querySelector('.sbx-msg').textContent =
+        'Couldn’t load the editor. It comes from cdn.jsdelivr.net, so it needs a connection. Press T twice to retry.';
+      throw err;
+    });
+    return ready;
+  }
+
+  function build(){
+    var ts = monaco.languages.typescript, d = ts.typescriptDefaults;
+    d.setCompilerOptions({
+      target: ts.ScriptTarget.ESNext, module: ts.ModuleKind.ESNext,
+      moduleResolution: ts.ModuleResolutionKind.NodeJs,
+      moduleDetection: 3,          // force: every file is a module, so `name` can't clash with the DOM's
+      jsx: ts.JsxEmit.ReactJSX, allowJs: true, esModuleInterop: true,
+      strict: true, noFallthroughCasesInSwitch: true, noImplicitOverride: true,
+      useDefineForClassFields: true, allowNonTsExtensions: true, skipLibCheck: true
+    });
+    d.setDiagnosticsOptions({ noSemanticValidation: false, noSyntaxValidation: false });
+    d.setInlayHintsOptions({
+      includeInlayVariableTypeHints: true, includeInlayVariableTypeHintsWhenTypeMatchesName: false,
+      includeInlayFunctionLikeReturnTypeHints: true, includeInlayFunctionParameterTypeHints: true,
+      includeInlayPropertyDeclarationTypeHints: true, includeInlayEnumMemberValueHints: true,
+      includeInlayParameterNameHints: 'none'
+    });
+    d.setEagerModelSync(true);
+    ver.textContent = 'TS ' + ts.typescriptVersion + ' · strict';
+
+    // Token colours as [scope, colour, style] rows, not one object literal per scope:
+    // the commit-time secret scanner reads a long quoted scope name next to the
+    // word token as a leaked credential.
+    monaco.editor.defineTheme('catalyst', {
+      base: 'vs-dark', inherit: true,
+      rules: [
+        ['', 'CBD5E1'], ['keyword', '22D3EE'], ['string', 'FBBF24'], ['string.escape', 'FCD34D'],
+        ['number', '34D399'], ['regexp', '34D399'], ['type.identifier', 'A78BFA'],
+        ['comment', '64748B', 'italic'], ['delimiter', '94A3B8'], ['tag', '22D3EE'],
+        ['attribute.name', 'A78BFA'], ['attribute.value', 'FBBF24']
+      ].map(function(r){ return { token: r[0], foreground: r[1], fontStyle: r[2] || '' }; }),
+      colors: {
+        'editor.background': '#0B1220', 'editor.foreground': '#CBD5E1',
+        'editorLineNumber.foreground': '#334155', 'editorLineNumber.activeForeground': '#94A3B8',
+        'editor.lineHighlightBackground': '#121C3099', 'editor.lineHighlightBorder': '#00000000',
+        'editor.selectionBackground': '#22D3EE33', 'editor.inactiveSelectionBackground': '#22D3EE1A',
+        'editorCursor.foreground': '#22D3EE',
+        'editorIndentGuide.background1': '#1E293B', 'editorIndentGuide.activeBackground1': '#334155',
+        'editorWidget.background': '#0E1525', 'editorWidget.border': '#243349',
+        'editorHoverWidget.background': '#0E1525', 'editorHoverWidget.border': '#243349',
+        'editorSuggestWidget.background': '#0E1525', 'editorSuggestWidget.border': '#243349',
+        'editorSuggestWidget.selectedBackground': '#22D3EE26',
+        'editorError.foreground': '#F8717A', 'editorWarning.foreground': '#FBBF24',
+        'editorInlayHint.foreground': '#94A3B8', 'editorInlayHint.background': '#121C30',
+        'scrollbarSlider.background': '#24334980', 'scrollbarSlider.hoverBackground': '#334155A0'
+      }
+    });
+
+    host.textContent = '';
+    editor = monaco.editor.create(host, {
+      model: null, theme: 'catalyst', automaticLayout: true,
+      fontFamily: 'Consolas, "SF Mono", Menlo, "Cascadia Mono", monospace',
+      fontSize: fontSize, lineHeight: Math.round(fontSize * 1.55),
+      minimap: { enabled: false }, scrollBeyondLastLine: false, padding: { top: 14, bottom: 14 },
+      tabSize: 2, lineNumbersMinChars: 3, glyphMargin: false, folding: false,
+      fixedOverflowWidgets: true, hover: { delay: 250 }, stickyScroll: { enabled: false },
+      inlayHints: { enabled: hints ? 'on' : 'off' },
+      bracketPairColorization: { enabled: false }, renderLineHighlight: 'line',
+      cursorBlinking: 'smooth', smoothScrolling: true
+    });
+    hintsBtn.classList.toggle('sbx-on', hints);
+    queries = editor.createDecorationsCollection();
+
+    var K = monaco.KeyMod, C = monaco.KeyCode;
+    editor.addCommand(K.CtrlCmd | C.Enter, run);
+    editor.addCommand(K.CtrlCmd | C.KeyS, saveProject);
+    editor.addCommand(C.Escape, function(){ document.activeElement.blur(); },
+      '!suggestWidgetVisible && !parameterHintsVisible && !findWidgetVisible && !renameInputVisible' +
+      ' && !inSnippetMode && !editorHasSelection && !editorHasMultipleSelections && !referenceSearchVisible');
+
+    monaco.editor.onDidChangeMarkers(function(uris){
+      var mine = uris.some(function(u){ return owns(u); });
+      if (mine) { report(); ask(); }
+    });
+    return loadMode(mode);
+  }
+
+  /* ---- projects: one per mode, a handful of files ------------------------------ */
+  function uriOf(p){ return monaco.Uri.parse('file:///' + mode + '/' + p); }
+  function owns(u){ return order.some(function(p){ return models[p].uri.toString() === u.toString(); }); }
+  function langOf(p){
+    var x = ext(p);
+    return x === 'css' ? 'css' : x === 'json' ? 'json' : 'typescript';
+  }
+  function loadProject(m){
+    try {
+      var p = JSON.parse(get('proj:' + m, ''));
+      if (p && p.files && Object.keys(p.files).length) return p;
+    } catch (e) {}
+    var old = m === 'ts' ? get('code', null) : null;     // the single-file sandbox's buffer
+    if (old != null) {
+      try { localStorage.removeItem(KEY + 'code'); } catch (e) {}
+      return { files: { 'index.ts': old }, active: 'index.ts' };
+    }
+    return { files: JSON.parse(JSON.stringify(MODES[m].start)), active: MODES[m].first };
+  }
+  var saveT;
+  function saveProject(){
+    clearTimeout(saveT);
+    if (!order.length) return;
+    var files = {};
+    order.forEach(function(p){ files[p] = models[p].getValue(); });
+    put('proj:' + mode, JSON.stringify({ files: files, active: active }));
+  }
+  function saveSoon(){ clearTimeout(saveT); saveT = setTimeout(saveProject, 400); }
+
+  var askT, liveT, ambT;
+  function changed(){
+    saveSoon();
+    clearTimeout(askT); askT = setTimeout(ask, 250);
+    clearTimeout(ambT); ambT = setTimeout(ambient, 600);
+    if (mode === 'react') { clearTimeout(liveT); liveT = setTimeout(preview, 650); }
+  }
+  function addModel(p, text, at){
+    var uri = uriOf(p), old = monaco.editor.getModel(uri);
+    if (old) old.dispose();
+    var m = monaco.editor.createModel(text, langOf(p), uri);
+    m.onDidChangeContent(changed);
+    models[p] = m;
+    if (at == null) order.push(p); else order.splice(at, 0, p);
+    return m;
+  }
+  function dropModel(p){
+    order.splice(order.indexOf(p), 1);
+    models[p].dispose();
+    delete models[p]; delete views[p]; delete errs[p];
+  }
+
+  function loadMode(m){
+    saveProject();
+    order.slice().forEach(dropModel);
+    active = null;
+    mode = m;
+    put('mode', m);
+    panel.classList.toggle('sbx-react', m === 'react');
+    panel.querySelectorAll('.sbx-seg button').forEach(function(b){ b.classList.toggle('sbx-on', b.dataset.mode === m); });
+    runBtn.textContent = m === 'react' ? '↻ Reload' : '▶ Run';
+    runBtn.title = (m === 'react' ? 'Reload the preview' : 'Run the project') + ' (⌘/Ctrl+Enter)';
+    var h = +get('split:' + m, 0);
+    bottom.style.height = h ? h + 'px' : '';
+    big(false);
+    outp.textContent = '';
+    ccount.textContent = '';
+    showTab(m === 'react' ? 'preview' : 'problems');
+    stop();
+    var proj = loadProject(m);
+    var types = m === 'react' || /from\s*['"]react/.test(JSON.stringify(proj.files)) ? reactTypes() : null;
+    return Promise.resolve(types).catch(noop).then(function(){
+      if (mode !== m) return;
+      Object.keys(proj.files).forEach(function(p){ addModel(p, proj.files[p]); });
+      openFile(models[proj.active] ? proj.active : order[0]);
+      ambient();
+      report();
+      if (m === 'react') preview();
+    });
+  }
+
+  function openFile(p){
+    if (!models[p]) return;
+    if (active && models[active] && editor.getModel() === models[active]) views[active] = editor.saveViewState();
+    active = p;
+    editor.setModel(models[p]);
+    if (views[p]) editor.restoreViewState(views[p]);
+    renderTabs();
+    ask();
+    saveSoon();
+  }
+
+  function reactTypes(){
+    if (typesReady) return typesReady;
+    var d = monaco.languages.typescript.typescriptDefaults, jobs = [];
+    status.textContent = 'loading React types…';
+    Object.keys(TYPES).forEach(function(pkg){
+      var dir = 'file:///node_modules/' + pkg.replace(/@[^@\/]+$/, '') + '/';
+      TYPES[pkg].forEach(function(f){
+        jobs.push(fetch(NPM + pkg + '/' + f)
+          .then(function(r){ if (!r.ok) throw new Error(pkg + '/' + f + ': ' + r.status); return r.text(); })
+          .then(function(t){ d.addExtraLib(t, dir + f); }));
+      });
+    });
+    typesReady = Promise.all(jobs).catch(function(e){ typesReady = null; throw e; });
+    return typesReady;
+  }
+
+  // A package that ships no types here (anything but React) is declared as `any`, so
+  // importing it type-checks; the preview still fetches the real thing from esm.sh.
+  var SPEC = /(\bfrom\s*|\bimport\s*\(\s*|\bimport\s+)(['"])([^'"\n]+)\2/g;
+  function ambient(){
+    var names = {};
+    order.forEach(function(p){
+      if (!isCode(p)) return;
+      models[p].getValue().replace(SPEC, function(all, pre, q, s){
+        if (/^[.\/]|^[a-z]+:/i.test(s)) return all;
+        if (/^react(-dom)?(\/|$)/.test(s)) reactTypes().catch(noop);
+        else names[s] = 1;
+        return all;
+      });
+    });
+    var list = Object.keys(names).sort(), key = list.join('\n');
+    if (key === ambientKey) return;
+    ambientKey = key;
+    if (ambientLib) ambientLib.dispose();
+    ambientLib = list.length ? monaco.languages.typescript.typescriptDefaults.addExtraLib(
+      list.map(function(n){ return 'declare module ' + JSON.stringify(n) + ';'; }).join('\n'),
+      'file:///node_modules/@types/sbx-ambient/index.d.ts') : null;
+  }
+
+  /* ---- file tabs ----------------------------------------------------------------- */
+  function renderTabs(){
+    filesEl.textContent = '';
+    order.forEach(function(p){
+      var t = document.createElement('div');
+      t.className = 'sbx-file' + (p === active ? ' sbx-on' : '') + (errs[p] ? ' sbx-err' : '');
+      t.dataset.path = p;
+      t.innerHTML = '<i class="sbx-dot"></i><span></span>' +
+        (order.length > 1 ? '<i class="sbx-x" title="Delete this file">×</i>' : '');
+      t.children[1].textContent = p;
+      t.title = p + ' · double-click to rename';
+      filesEl.appendChild(t);
+    });
+    var add = document.createElement('div');
+    add.className = 'sbx-file sbx-add';
+    add.title = 'New file';
+    add.textContent = '+';
+    filesEl.appendChild(add);
+  }
+  function validName(n, except){
+    if (!/\.[a-z]+$/i.test(n)) n += mode === 'react' ? '.tsx' : '.ts';
+    if (!/^[\w-][\w.-]*(\/[\w-][\w.-]*)*\.(tsx|ts|jsx|css|json)$/.test(n))
+      return { err: 'letters, digits, - _ /, ending .tsx .ts .jsx .css or .json' };
+    if (models[n] && n !== except) return { err: n + ' already exists' };
+    return { name: n };
+  }
+  function template(n){
+    var base = n.split('/').pop().replace(/\..*$/, '');
+    var comp = /^[A-Z][A-Za-z0-9]*$/.test(base) ? base : 'Component';
+    if (/\.(tsx|jsx)$/.test(n)) return 'export function ' + comp + '() {\n  return <div>' + comp + '</div>;\n}\n';
+    if (/\.ts$/.test(n)) return 'export {};\n';
+    if (/\.json$/.test(n)) return '{}\n';
+    return '';
+  }
+  // An inline name box, used for both "new file" and "rename". Enter commits, Esc or
+  // leaving the box cancels; a bad name keeps the box open and says why.
+  function nameBox(before, initial, commit){
+    var box = document.createElement('input'), why = document.createElement('span'), over = false;
+    box.className = 'sbx-name';
+    box.value = initial;
+    box.spellcheck = false;
+    why.className = 'sbx-nerr';
+    filesEl.insertBefore(why, before ? before.nextSibling : null);
+    filesEl.insertBefore(box, why);
+    function end(){ if (!over) { over = true; renderTabs(); } }
+    box.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') { e.preventDefault(); end(); return; }
+      if (e.key !== 'Enter') return;
+      e.preventDefault();
+      var r = validName(box.value.trim(), initial);
+      if (r.err) { box.classList.add('sbx-bad'); why.textContent = r.err; return; }
+      over = true;
+      commit(r.name);
+    });
+    box.addEventListener('blur', function(){ setTimeout(end, 0); });
+    box.focus();
+    box.setSelectionRange(0, initial.replace(/\.[a-z]+$/i, '').length);
+  }
+  function newFile(){
+    nameBox(filesEl.querySelector('.sbx-add').previousSibling, '', function(n){
+      addModel(n, template(n));
+      openFile(n);
+      editor.focus();
+      changed();
+    });
+    filesEl.querySelector('.sbx-add').remove();
+  }
+  function renameFile(p, tab){
+    nameBox(tab, p, function(n){
+      if (n !== p) {
+        var text = models[p].getValue(), at = order.indexOf(p), vs = views[p], was = active === p;
+        dropModel(p);
+        addModel(n, text, at);
+        views[n] = vs;
+        if (was) { active = null; openFile(n); }
+      }
+      renderTabs();
+      changed();
+    });
+    tab.remove();
+  }
+  function deleteFile(p){
+    dropModel(p);
+    if (active === p) { active = null; openFile(order[0]); } else renderTabs();
+    report();
+    changed();
+  }
+  filesEl.addEventListener('click', function(e){
+    var x = e.target.closest('.sbx-x'), t = e.target.closest('.sbx-file');
+    if (!t || !editor) return;
+    if (t.classList.contains('sbx-add')) return newFile();
+    if (x) {
+      // Two clicks to delete: the first arms it, the second (within 2.5 s) does it.
+      if (x.classList.contains('sbx-sure')) return deleteFile(t.dataset.path);
+      x.classList.add('sbx-sure');
+      x.textContent = 'delete?';
+      setTimeout(function(){ if (x.isConnected) { x.classList.remove('sbx-sure'); x.textContent = '×'; } }, 2500);
+      return;
+    }
+    if (t.dataset.path !== active) openFile(t.dataset.path);
+  });
+  filesEl.addEventListener('dblclick', function(e){
+    var t = e.target.closest('.sbx-file[data-path]');
+    if (t && !e.target.closest('.sbx-x')) renameFile(t.dataset.path, t);
+  });
+
+  // The TypeScript worker registers itself a beat after the first .ts model appears;
+  // until then getTypeScriptWorker rejects, so keep asking for a few seconds.
+  function client(uris){
+    return new Promise(function(resolve, reject){
+      var tries = 0;
+      (function attempt(){
+        monaco.languages.typescript.getTypeScriptWorker().then(function(w){ resolve(w.apply(null, uris)); },
+          function(e){ if (++tries > 60) reject(e); else setTimeout(attempt, 100); });
+      })();
+    });
+  }
+
+  /* ---- problems ---------------------------------------------------------------- */
+  function report(){
+    if (!monaco) return;
+    var S = monaco.MarkerSeverity, all = [];
+    errs = {};
+    order.forEach(function(p, n){
+      monaco.editor.getModelMarkers({ resource: models[p].uri }).forEach(function(m){
+        if (m.severity < S.Warning) return;
+        all.push({ p: p, n: n, m: m });
+        if (m.severity === S.Error) errs[p] = (errs[p] || 0) + 1;
+      });
+    });
+    all.sort(function(a, b){ return a.n - b.n || a.m.startLineNumber - b.m.startLineNumber || a.m.startColumn - b.m.startColumn; });
+    problems = all.filter(function(x){ return x.m.severity === S.Error; }).length;
+    pcount.textContent = all.length || '';
+    pcount.classList.toggle('sbx-bad', problems > 0);
+    status.textContent = problems ? problems + (problems > 1 ? ' errors' : ' error') : '✓ type-checks';
+    status.className = 'sbx-status ' + (problems ? 'sbx-bad' : 'sbx-ok');
+    filesEl.querySelectorAll('.sbx-file[data-path]').forEach(function(t){ t.classList.toggle('sbx-err', !!errs[t.dataset.path]); });
+    probs.textContent = '';
+    if (!all.length) {
+      probs.innerHTML = '<div class="sbx-none">No problems. The checker is happy with every file.</div>';
+      return;
+    }
+    all.forEach(function(x){
+      var m = x.m, row = document.createElement('div');
+      row.className = 'sbx-pr' + (m.severity === S.Error ? '' : ' sbx-warn');
+      row.tabIndex = 0;
+      var code = m.code && typeof m.code === 'object' ? m.code.value : m.code;
+      row.innerHTML = '<i>' + (m.severity === S.Error ? '✕' : '!') + '</i><span></span><small></small>';
+      row.children[1].textContent = m.message;
+      row.children[2].textContent = x.p + ' ' + m.startLineNumber + ':' + m.startColumn + (code ? ' · ts(' + code + ')' : '');
+      function jump(){
+        if (active !== x.p) openFile(x.p);
+        var at = { lineNumber: m.startLineNumber, column: m.startColumn };
+        editor.setPosition(at);
+        editor.revealPositionInCenterIfOutsideViewport(at);
+        editor.focus();
+      }
+      row.addEventListener('click', jump);
+      row.addEventListener('keydown', function(e){ if (e.key === 'Enter') jump(); });
+      probs.appendChild(row);
+    });
+  }
+
+  /* ---- // ^? -------------------------------------------------------------------- */
+  // A line that is only `// ^?` asks for the type of whatever sits above the caret on
+  // the line before — the TypeScript playground's twoslash query.
+  var asking = 0;
+  function ask(){
+    if (!queries || !active) return;
+    var model = models[active], seq = ++asking, asks = [];
+    if (!isCode(active)) { queries.clear(); return; }
+    var lines = model.getLinesContent();
+    for (var n = 1; n < lines.length; n++) {
+      if (!/^\s*\/\/\s*\^\?\s*$/.test(lines[n])) continue;
+      var col = lines[n].indexOf('^?') + 1;
+      asks.push({
+        line: n + 1, end: lines[n].length + 1,
+        at: col <= lines[n - 1].length ? model.getOffsetAt({ lineNumber: n, column: col }) : -1
+      });
+    }
+    if (!asks.length) { queries.clear(); return; }
+    client([model.uri]).then(function(c){
+      return Promise.all(asks.map(function(a){
+        return a.at < 0 ? null : c.getQuickInfoAtPosition(model.uri.toString(), a.at);
+      }));
+    }).then(function(infos){
+      if (seq !== asking || editor.getModel() !== model) return;
+      queries.set(asks.map(function(a, k){
+        var info = infos[k];
+        var text = info ? info.displayParts.map(function(p){ return p.text; }).join('').replace(/\s+/g, ' ') : 'nothing to show here';
+        if (text.length > 160) text = text.slice(0, 159) + '…';
+        return {
+          range: new monaco.Range(a.line, a.end, a.line, a.end),
+          options: { showIfCollapsed: true, after: { content: text, inlineClassName: info ? 'sbx-q' : 'sbx-q sbx-q-none' } }
+        };
+      }));
+    }, noop);
+  }
+
+  /* ---- building: TypeScript → one ES module per file ---------------------------- */
+  function compileAll(){
+    var code = order.filter(isCode);
+    return client(code.map(function(p){ return models[p].uri; })).then(function(c){
+      return Promise.all(code.map(function(p){
+        return c.getEmitOutput(models[p].uri.toString()).then(function(o){
+          var f = o.outputFiles.filter(function(f){ return /\.js$/.test(f.name); })[0];
+          return f ? f.text : '';
+        });
+      }));
+    }).then(function(outs){
+      var js = {};
+      code.forEach(function(p, n){ js[p] = outs[n]; });
+      return js;
+    });
+  }
+  function resolve(from, spec){
+    var parts = spec.charAt(0) === '/' ? [] : from.split('/').slice(0, -1);
+    spec.split('/').forEach(function(s){ if (s === '..') parts.pop(); else if (s && s !== '.') parts.push(s); });
+    var p = parts.join('/'), js = p.replace(/\.js$/, '');
+    return [p, p + '.tsx', p + '.ts', p + '.jsx', js + '.tsx', js + '.ts', p + '/index.tsx', p + '/index.ts']
+      .filter(function(c){ return models[c]; })[0] || null;
+  }
+  function bare(spec, inPreview){
+    if (/^[a-z]+:/i.test(spec) || (inPreview && IMPORTS[spec])) return null;
+    var pinned = spec.replace(/^(react-dom|react)(?=\/|$)/, '$1@' + REACT);
+    return ESM + pinned + (pinned.indexOf('?') < 0 ? '?' : '&') + 'dev' + (inPreview ? '&external=react,react-dom' : '');
+  }
+  // The module source for one file. Relative imports go through `local`, which returns
+  // whatever URL or import-map key the runner uses for that file.
+  function moduleFor(p, js, local, inPreview){
+    var x = ext(p), text = models[p].getValue();
+    if (x === 'css') return inPreview
+      ? 'const s = document.createElement("style"); s.dataset.file = ' + JSON.stringify(p) +
+        '; s.textContent = ' + JSON.stringify(text) + '; document.head.appendChild(s);'
+      : '';
+    if (x === 'json') {
+      try { JSON.parse(text); } catch (e) { throw new Error(p + ' is not valid JSON: ' + e.message); }
+      return 'export default ' + text + ';';
+    }
+    return (js || '').replace(SPEC, function(all, pre, q, spec){
+      var to;
+      if (/^\.{0,2}\//.test(spec)) {
+        var r = resolve(p, spec);
+        if (!r) throw new Error('Cannot find "' + spec + '", imported by ' + p + '.');
+        to = local(r);
+      } else to = bare(spec, inPreview);
+      return to == null ? all : pre + q + to + q;
+    });
+  }
+  function pick(list){ return list.filter(function(p){ return models[p]; })[0]; }
+
+  /* ---- console ------------------------------------------------------------------- */
+  var cerrs = 0;
+  function line(cls, text){
+    var el = document.createElement('div');
+    el.className = 'sbx-l' + (cls ? ' sbx-' + cls : '');
+    el.textContent = text;
+    outp.appendChild(el);
+    while (outp.children.length > 500) outp.firstChild.remove();
+    outp.scrollTop = outp.scrollHeight;
+    if (cls === 'error') { cerrs++; ccount.textContent = cerrs; ccount.classList.add('sbx-bad'); }
+  }
+  function clearConsole(){ outp.textContent = ''; cerrs = 0; ccount.textContent = ''; ccount.classList.remove('sbx-bad'); }
+
+  // Shared by the TS worker and the preview page: console arguments as one line of
+  // text, close to what a browser console prints. Stringified into both, so it stays
+  // self-contained.
+  function inspect(v, d, seen){
+    if (v === null) return 'null';
+    var t = typeof v;
+    if (t === 'string') return d ? "'" + v + "'" : v;
+    if (t === 'bigint') return v + 'n';
+    if (t !== 'object' && t !== 'function') return String(v);
+    if (t === 'function') return /^class\b/.test(Function.prototype.toString.call(v))
+      ? '[class ' + (v.name || 'anonymous') + ']' : '[Function: ' + (v.name || 'anonymous') + ']';
+    if (seen.indexOf(v) >= 0) return '[Circular]';
+    if (v instanceof Error) return v.name + ': ' + v.message;
+    if (v instanceof Date) return isNaN(v) ? 'Invalid Date' : v.toISOString();
+    if (v instanceof RegExp) return String(v);
+    if (v instanceof Promise) return 'Promise { … }';
+    if (typeof Node !== 'undefined' && v instanceof Node) return v.nodeType === 1 ? '<' + v.nodeName.toLowerCase() + '>' : '#' + v.nodeName;
+    if (v.$$typeof) return '<' + (typeof v.type === 'string' ? v.type : (v.type && (v.type.displayName || v.type.name)) || 'Component') + ' />';
+    if (d > 3) return Array.isArray(v) ? '[Array]' : '[Object]';
+    seen = seen.concat([v]);
+    var f = function(x){ return inspect(x, d + 1, seen); };
+    if (Array.isArray(v)) return v.length ? '[ ' + v.map(f).join(', ') + ' ]' : '[]';
+    if (v instanceof Map) return 'Map(' + v.size + ') {' + (v.size ? ' ' + Array.from(v, function(e){ return f(e[0]) + ' => ' + f(e[1]); }).join(', ') + ' ' : '') + '}';
+    if (v instanceof Set) return 'Set(' + v.size + ') {' + (v.size ? ' ' + Array.from(v, f).join(', ') + ' ' : '') + '}';
+    var proto = Object.getPrototypeOf(v), keys = Object.keys(v);
+    var name = proto === null ? '[Object: null prototype] ' : (proto.constructor && proto.constructor !== Object ? proto.constructor.name + ' ' : '');
+    return name + (keys.length ? '{ ' + keys.map(function(k){
+      return (/^[A-Za-z_$][\w$]*$/.test(k) ? k : "'" + k + "'") + ': ' + f(v[k]);
+    }).join(', ') + ' }' : '{}');
+  }
+
+  // console.log('%s has %d', a, b): fill the placeholders the way a console does, drop
+  // %c styling, print whatever is left over after them. React's warnings use this.
+  function format(args){
+    args = [].slice.call(args);
+    var out = [];
+    if (typeof args[0] === 'string' && /%[sdifoOc]/.test(args[0])) {
+      var rest = args.slice(1);
+      out.push(args[0].replace(/%([sdifoOc%])/g, function(all, k){
+        if (k === '%') return '%';
+        if (!rest.length) return all;
+        var v = rest.shift();
+        if (k === 'c') return '';
+        if (k === 'd' || k === 'i') return String(parseInt(v, 10));
+        if (k === 'f') return String(parseFloat(v));
+        return inspect(v, k === 's' ? 0 : 1, []);
+      }));
+      args = rest;
+    }
+    return out.concat(args.map(function(v){ return inspect(v, 0, []); })).join(' ');
+  }
+
+  /* ---- TS mode: run in a worker --------------------------------------------------- */
+  // A module worker, not the page: an infinite loop can be killed, and nothing the
+  // snippet does can reach the deck. The price is no DOM — `document` is undefined.
+  function prelude(){
+    function send(level, args){ postMessage({ t: level, a: format(args) }); }
+    ['log', 'info', 'debug', 'table', 'dir'].forEach(function(k){ console[k] = function(){ send('log', arguments); }; });
+    console.warn = function(){ send('warn', arguments); };
+    console.error = function(){ send('error', arguments); };
+    console.assert = function(ok){ if (!ok) send('error', ['Assertion failed'].concat([].slice.call(arguments, 1))); };
+    function fail(e){ return e && e.name ? e.name + ': ' + e.message : String(e); }
+    self.addEventListener('error', function(e){ e.preventDefault(); postMessage({ t: 'fail', a: 'Uncaught ' + fail(e.error || e.message) }); });
+    self.addEventListener('unhandledrejection', function(e){ e.preventDefault(); postMessage({ t: 'error', a: 'Uncaught (in promise) ' + fail(e.reason) }); });
+  }
+
+  var runner, blobs = [], watchdog, idle;
+  function stop(){
+    if (runner) { runner.terminate(); runner = null; }
+    blobs.forEach(function(u){ URL.revokeObjectURL(u); }); blobs = [];
+    clearTimeout(watchdog); clearTimeout(idle);
+  }
+  function blob(code){ var u = URL.createObjectURL(new Blob([code], { type: 'text/javascript' })); blobs.push(u); return u; }
+  function runTs(){
+    showTab('console');
+    clearConsole();
+    var errs0 = problems;
+    line('meta', errs0
+      ? '▶ running with ' + errs0 + ' type error' + (errs0 > 1 ? 's' : '') + '. Types are erased, so the JavaScript runs anyway.'
+      : '▶ running');
+    compileAll().then(function(js){
+      stop();
+      var entry = pick(MODES.ts.entries) || (isCode(active) ? active : order.filter(isCode)[0]);
+      if (!entry) return line('error', 'Nothing to run: add a .ts file.');
+      // Blob URLs can't be imported relatively, so each file's imports are rewritten
+      // to its dependencies' blob URLs — built leaves first, which rules out cycles.
+      var urls = {}, walking = {};
+      function url(p){
+        if (urls[p]) return urls[p];
+        if (walking[p]) throw new Error('Circular import through ' + p + '. Run needs imports that only point one way.');
+        walking[p] = true;
+        return (urls[p] = blob(moduleFor(p, js[p], url, false) + '\n//# sourceURL=' + p));
+      }
+      var main = blob('var inspect = ' + inspect + ', format = ' + format + ';\n(' + prelude + ')();\n' +
+        'import(' + JSON.stringify(url(entry)) + ').then(function(){ postMessage({ t: "done" }); },' +
+        ' function(e){ postMessage({ t: "fail", a: "Uncaught " + (e && e.name ? e.name + ": " + e.message : String(e)) }); });\n');
+      var w, settled = false;
+      try { w = runner = new Worker(main, { type: 'module' }); }
+      catch (e) { return line('error', 'This browser can’t start a module worker: ' + e.message); }
+      w.onmessage = function(e){
+        var m = e.data;
+        if (m.t === 'done' || m.t === 'fail') {
+          settled = true;
+          line(m.t === 'fail' ? 'error' : 'meta', m.t === 'fail' ? m.a : '✓ done');
+          clearTimeout(idle); idle = setTimeout(stop, 15000);   // let timers and promises land
+        } else line(m.t === 'log' ? '' : m.t, m.a);
+      };
+      w.onerror = function(e){ e.preventDefault(); settled = true; line('error', e.message || 'The script couldn’t start.'); };
+      watchdog = setTimeout(function(){
+        if (!settled && runner === w) { stop(); line('error', '⏹ stopped after 3 s. The script never finished: an infinite loop?'); }
+      }, 3000);
+    }).catch(function(e){ line('error', e && e.message || String(e)); });
+  }
+
+  /* ---- React mode: live preview ---------------------------------------------------- */
+  // The preview is a sandboxed iframe with no access to the deck. Each file becomes a
+  // data: URL module under an import-map key (@sbx/App.tsx), so files can import each
+  // other in any order, cycles included. CSS files become modules that add a <style>.
+  function bridge(){
+    var send = function(t, a){ try { parent.postMessage({ sbx: 1, t: t, a: a }, '*'); } catch (e) {} };
+    ['log', 'info', 'debug', 'warn', 'error'].forEach(function(k){
+      var orig = console[k];
+      console[k] = function(){
+        send(k === 'warn' || k === 'error' ? k : 'log', format(arguments));
+        return orig.apply(console, arguments);
+      };
+    });
+    // An opaque-origin frame has no storage; an in-memory stand-in keeps demos working.
+    try { window.localStorage.length; } catch (e) {
+      var mem = function(){
+        var s = {};
+        return { getItem: function(k){ return k in s ? s[k] : null; }, setItem: function(k, v){ s[k] = String(v); },
+          removeItem: function(k){ delete s[k]; }, clear: function(){ s = {}; },
+          key: function(i){ return Object.keys(s)[i] || null; }, get length(){ return Object.keys(s).length; } };
+      };
+      try {
+        Object.defineProperty(window, 'localStorage', { value: mem(), configurable: true });
+        Object.defineProperty(window, 'sessionStorage', { value: mem(), configurable: true });
+      } catch (e2) {}
+    }
+    function describe(e){ return e && e.name ? e.name + ': ' + e.message : String(e); }
+    function fail(e){
+      send('error', (e && e.name === 'Build error' ? '' : 'Uncaught ') + describe(e));
+      var box = document.getElementById('sbx-error');
+      if (!box) {
+        box = document.createElement('pre');
+        box.id = 'sbx-error';
+        box.style.cssText = 'position:fixed;left:0;right:0;bottom:0;margin:0;max-height:70%;overflow:auto;z-index:2147483647;' +
+          'padding:14px 16px;background:#FFF1F2;color:#9F1239;border-top:3px solid #E11D48;' +
+          'font:13px/1.55 ui-monospace,Menlo,Consolas,monospace;white-space:pre-wrap';
+        (document.body || document.documentElement).appendChild(box);
+      }
+      box.textContent = describe(e);
+    }
+    window.sbxFail = fail;
+    addEventListener('keydown', function(e){
+      if (e.ctrlKey && !e.metaKey && !e.altKey && e.code === 'Backquote') { e.preventDefault(); send('toggle', ''); }
+    }, true);
+    addEventListener('error', function(e){ fail(e.error || e.message); });
+    addEventListener('unhandledrejection', function(e){ fail(e.reason); });
+  }
+  function page(imports, entry, error){
+    var esc = function(s){ return s.replace(/</g, '\\u003c'); };
+    return '<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">' +
+      (imports ? '<script type="importmap">' + esc(JSON.stringify({ imports: imports })) + '<\/script>' : '') +
+      '<script>var inspect = ' + inspect + ', format = ' + format + ';(' + bridge + ')();<\/script>' +
+      '<style>html{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}<\/style>' +
+      '<\/head><body><div id="root"></div>' +
+      (entry ? '<script type="module">import(' + JSON.stringify(entry) + ').catch(function(e){ sbxFail(e); });<\/script>' : '') +
+      (error ? '<script>sbxFail(' + esc(JSON.stringify({ name: 'Build error', message: error })) + ');<\/script>' : '') +
+      '<\/body><\/html>';
+  }
+  var frame, building = 0;
+  function dataUrl(code, p){ return 'data:text/javascript;charset=utf-8,' + encodeURIComponent(code + '\n//# sourceURL=' + p); }
+  function preview(){
+    if (mode !== 'react' || !monaco) return;
+    clearTimeout(liveT);
+    if (!frame) {
+      frame = document.createElement('iframe');
+      frame.title = 'Preview';
+      frame.setAttribute('sandbox', 'allow-scripts allow-forms allow-modals allow-popups');
+      view.insertBefore(frame, view.firstChild);
+    }
+    var seq = ++building;
+    compileAll().then(function(js){
+      if (seq !== building) return;
+      var imports = {};
+      Object.keys(IMPORTS).forEach(function(k){ imports[k] = IMPORTS[k]; });
+      order.forEach(function(p){
+        imports['@sbx/' + p] = dataUrl(moduleFor(p, js[p], function(r){ return '@sbx/' + r; }, true), p);
+      });
+      var entry = pick(MODES.react.entries);
+      if (!entry) {
+        var app = pick(['App.tsx', 'App.jsx']);
+        if (!app) throw new Error('Nothing to render: add App.tsx with a default export, the component to show.');
+        imports['@sbx/mount'] = dataUrl(MOUNT.replace('__APP__', '@sbx/' + app).replace('__FILE__', app), 'mount.js');
+        entry = 'mount';
+      }
+      clearConsole();
+      frame.srcdoc = page(imports, '@sbx/' + entry);
+    }).catch(function(e){
+      if (seq !== building) return;
+      clearConsole();
+      frame.srcdoc = page(null, null, e && e.message || String(e));
+    });
+  }
+  addEventListener('message', function(e){
+    if (!frame || e.source !== frame.contentWindow || !e.data || e.data.sbx !== 1) return;
+    if (e.data.t === 'toggle') return setOpen(!open);
+    line(e.data.t === 'log' ? '' : e.data.t, String(e.data.a));
+  });
+  function big(v){
+    view.classList.toggle('sbx-big', v);
+    panel.classList.toggle('sbx-bigview', v);
+    $('[data-act="big"]').title = v ? 'Put the preview back in the panel' : 'Show the preview over the slide';
+  }
+
+  function run(){ if (mode === 'react') { showTab('preview'); preview(); } else runTs(); }
+
+  /* ---- toolbar, tabs, "try" ------------------------------------------------------ */
+  function showTab(tab){
+    panel.querySelectorAll('[data-tab]').forEach(function(b){ b.classList.toggle('sbx-on', b.dataset.tab === tab); });
+    var isBig = view.classList.contains('sbx-big');
+    view.classList.toggle('sbx-on', tab === 'preview' && !isBig);
+    bigmsg.classList.toggle('sbx-on', tab === 'preview' && isBig);
+    outp.classList.toggle('sbx-on', tab === 'console');
+    probs.classList.toggle('sbx-on', tab === 'problems');
+  }
+  function current(){ var b = panel.querySelector('[data-tab].sbx-on'); return b ? b.dataset.tab : 'problems'; }
+  function replace(text){
+    setOpen(true);
+    ensureEditor().then(function(){
+      var model = models[active];
+      editor.pushUndoStop();
+      editor.executeEdits('sandbox', [{ range: model.getFullModelRange(), text: text, forceMoveMarkers: true }]);
+      editor.pushUndoStop();
+      editor.setPosition({ lineNumber: 1, column: 1 });
+      editor.revealLine(1);
+      editor.focus();
+    }, noop);
+  }
+  function zoom(by){
+    fontSize = Math.max(12, Math.min(26, fontSize + by));
+    put('font', fontSize);
+    if (editor) editor.updateOptions({ fontSize: fontSize, lineHeight: Math.round(fontSize * 1.55) });
+  }
+  function arm(b, label, then){
+    if (b.classList.contains('sbx-sure')) { b.classList.remove('sbx-sure'); b.textContent = label; return then(); }
+    b.classList.add('sbx-sure');
+    b.textContent = label + '?';
+    setTimeout(function(){ b.classList.remove('sbx-sure'); b.textContent = label; }, 2500);
+  }
+
+  panel.addEventListener('click', function(e){
+    var b = e.target.closest('.sbx-head button, .sbx-tabs button, .sbx-view button'); if (!b) return;
+    b.blur();
+    if (b.dataset.tab) return showTab(b.dataset.tab);
+    if (b.dataset.mode) {
+      if (b.dataset.mode === mode && editor) return;
+      if (!editor) { mode = b.dataset.mode; put('mode', mode); return setOpen(true); }
+      return loadMode(b.dataset.mode);
+    }
+    switch (b.dataset.act) {
+      case 'close': setOpen(false); break;
+      case 'run': ensureEditor().then(run, noop); break;
+      case 'clear': clearConsole(); break;
+      case 'smaller': zoom(-1); break;
+      case 'bigger': zoom(1); break;
+      case 'big': big(!view.classList.contains('sbx-big')); showTab(current()); break;
+      case 'reset':
+        // Every file of this mode goes back to the starter, so it asks twice.
+        arm(b, 'reset', function(){
+          if (!editor) return;
+          put('proj:' + mode, '');
+          order.slice().forEach(dropModel);
+          order = []; active = null;
+          loadMode(mode);
+        });
+        break;
+      case 'hints':
+        hints = !hints; put('hints', hints ? 'on' : 'off');
+        b.classList.toggle('sbx-on', hints);
+        if (editor) editor.updateOptions({ inlayHints: { enabled: hints ? 'on' : 'off' } });
+        break;
+    }
+  });
+  panel.querySelectorAll('.sbx-seg button').forEach(function(b){ b.classList.toggle('sbx-on', b.dataset.mode === mode); });
+  panel.classList.toggle('sbx-react', mode === 'react');
+
+  // Every code block on a slide gets "try" beside "copy": it loads the snippet into
+  // the open file (one ⌘Z brings back what was there). Terminal transcripts are skipped.
+  document.querySelectorAll('.slide .codewrap > pre').forEach(function(pre){
+    var lines = pre.textContent.replace(/ /g, ' ').split('\n');
+    if (lines.some(function(l){ return /^\s*\$\s?/.test(l); })) return;
+    var text = lines.join('\n').replace(/^\s*\n/, '').replace(/\s+$/, '') + '\n';
+    if (!text.trim()) return;
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'copy sbx-try';
+    b.textContent = 'try ▸';
+    b.setAttribute('aria-label', 'Open this code in the sandbox');
+    b.addEventListener('click', function(e){ e.stopPropagation(); replace(text); });
+    pre.parentNode.appendChild(b);
+  });
+})();
+</script>
+<!--/catalyst-brand:sandbox-->
 </body>
 </html>
