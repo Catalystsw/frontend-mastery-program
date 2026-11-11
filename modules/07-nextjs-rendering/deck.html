@@ -6,7 +6,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Module 11 — Frontend System Design · Frontend Mastery</title>
+<title>Module 07 — Next.js &amp; Rendering Architecture · Frontend Mastery</title>
 <style>
   :root{
     --bg:#070A14; --panel:#0E1525; --panel2:#121C30; --code:#0B1220;
@@ -82,8 +82,6 @@
   .plist li{font:600 min(2vw,22px)/1.35 var(--sans); color:var(--ink); padding:9px 0 9px 32px; position:relative}
   .plist li::before{content:"▷"; position:absolute; left:0; top:11px; color:var(--cy); font-size:15px}
   .plist li small{display:block; color:var(--muted); font-weight:400; font-size:.72em; margin-top:3px}
-  .plist a{color:inherit; text-decoration:none; border-bottom:1px solid var(--line2)}
-  .plist a:hover{color:var(--cy); border-color:var(--cy)}
 
   table.grid{border-collapse:collapse; width:100%; max-width:1040px; margin-top:20px; font-size:min(1.6vw,17.5px)}
   table.grid th{text-align:left; font:700 12px/1 var(--mono); letter-spacing:1.4px; text-transform:uppercase; color:var(--muted); padding:10px 12px; border-bottom:2px solid var(--line2)}
@@ -190,6 +188,11 @@
     .frag{opacity:1 !important; transform:none !important}
     *{animation:none !important}
   }
+
+  /* Read-next slides: links a presenter can click without advancing the deck. */
+  .refs li a{color:var(--ink); text-decoration:underline; text-decoration-color:var(--cy);
+    text-decoration-thickness:2px; text-underline-offset:4px}
+  .refs li a:hover, .refs li a:focus-visible{color:var(--cy)}
 </style>
 <!--catalyst-brand:style-->
 <link rel="icon" type="image/png" href="data:image/png;base64,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">
@@ -282,550 +285,609 @@
 
 <div id="bar"></div>
 <div id="stage">
-  <section class="slide" style="justify-content:center" data-chip="MODULE 11 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 1</div><div class="cx-page"><b>01</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Module 11 · Frontend System Design</div>
-    <h1>Forty-Five Minutes,<br>Run to a Script</h1>
-    <div class="sub">What the round scores, the RADIO script that fills it, and how a codebase grows past one team.</div>
+<!-- 1 · TITLE -->
+  <section class="slide" style="justify-content:center" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>01</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Module 07 · Next.js &amp; Rendering Architecture</div>
+    <h1>A Rendering Strategy<br>for Every Route</h1>
+    <div class="sub">Five lessons on where your HTML gets made, how long it stays true, and the routes where Next.js is the wrong answer.</div>
     <div class="fig" style="max-width:980px">
-      <svg viewBox="0 0 980 70" role="img" aria-label="Five lessons: scoring and RADIO, the whiteboard, scaling the code, feed search and chat, shop dashboard and editor">
+      <svg viewBox="0 0 980 64" role="img" aria-label="Five lessons: boundaries, rendering and caching per route, actions and auth, SEO and when not to use Next.js, the port">
         <g>
-          <rect x="0" y="8" width="180" height="54" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="90" y="29" text-anchor="middle" class="lbl s" style="letter-spacing:1.4px">LESSON 1</text>
-          <text x="90" y="49" text-anchor="middle" class="lbl b">Scoring &amp; RADIO</text>
-          <rect x="200" y="8" width="180" height="54" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="290" y="29" text-anchor="middle" class="lbl s" style="letter-spacing:1.4px">LESSON 2</text>
-          <text x="290" y="49" text-anchor="middle" class="lbl b">On the whiteboard</text>
-          <rect x="400" y="8" width="180" height="54" rx="9" fill="#121C30" stroke="#FBBF24"/>
-          <text x="490" y="29" text-anchor="middle" class="lbl s" style="letter-spacing:1.4px">LESSON 3</text>
-          <text x="490" y="49" text-anchor="middle" class="lbl b">Scaling the code</text>
-          <rect x="600" y="8" width="180" height="54" rx="9" fill="#121C30" stroke="#2196F3"/>
-          <text x="690" y="29" text-anchor="middle" class="lbl s" style="letter-spacing:1.4px">LESSON 4</text>
-          <text x="690" y="49" text-anchor="middle" class="lbl b">Feed, search, chat</text>
-          <rect x="800" y="8" width="180" height="54" rx="9" fill="#121C30" stroke="#F8717A"/>
-          <text x="890" y="29" text-anchor="middle" class="lbl s" style="letter-spacing:1.4px">LESSON 5</text>
-          <text x="890" y="49" text-anchor="middle" class="lbl b">Shop, dashboard, editor</text>
+          <rect x="0" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="90" y="26" text-anchor="middle" class="lbl s">Lesson 1</text>
+          <text x="90" y="45" text-anchor="middle" class="lbl b">Boundaries</text>
+          <rect x="200" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="290" y="26" text-anchor="middle" class="lbl s">Lesson 2</text>
+          <text x="290" y="45" text-anchor="middle" class="lbl b">Render &amp; cache</text>
+          <rect x="400" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#F8717A"/>
+          <text x="490" y="26" text-anchor="middle" class="lbl s">Lesson 3</text>
+          <text x="490" y="45" text-anchor="middle" class="lbl b">Actions &amp; auth</text>
+          <rect x="600" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#A78BFA"/>
+          <text x="690" y="26" text-anchor="middle" class="lbl s">Lesson 4</text>
+          <text x="690" y="45" text-anchor="middle" class="lbl b">SEO, or not Next</text>
+          <rect x="800" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#FBBF24"/>
+          <text x="890" y="26" text-anchor="middle" class="lbl s">Lesson 5</text>
+          <text x="890" y="45" text-anchor="middle" class="lbl b">The port</text>
         </g>
       </svg>
     </div>
 </section>
 
-  <!-- L1a · THE RUBRIC -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 1</div><div class="cx-page"><b>02</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 1 · What the round is scoring</div>
-    <h2>Six axes, and the diagram is one of them</h2>
-    <table class="grid">
-      <tr><th>Axis</th><th>Strong signal</th><th>What sinks it</th></tr>
-      <tr><td><b class="cy">Problem framing</b></td><td>Asks about scale, devices and scope first, and writes the answers down</td><td>Drawing boxes in minute one</td></tr>
-      <tr><td><b class="g">Architecture</b></td><td>A few boxes with clear jobs; data flow you can trace with a finger</td><td>The mockup redrawn as a component tree</td></tr>
-      <tr><td><b class="b">Technical depth</b></td><td>Goes deep where it matters: data model, API shape, rendering</td><td>Library names instead of mechanisms</td></tr>
-      <tr><td><b class="w">Trade-offs</b></td><td>Names the alternative and its cost, then picks one</td><td>“It depends”, and no decision</td></tr>
-      <tr><td><b class="p">User experience</b></td><td>Loading, errors, performance, accessibility, unprompted</td><td>Only the happy path exists</td></tr>
-      <tr><td><b class="r">Communication</b></td><td>Narrates, checks in, keeps the clock</td><td>Silent drawing, or asking permission for everything</td></tr>
-    </table>
-    <div class="key">This is the module's rubric. Nobody fails for picking the “wrong” cache; people fail for never saying why.</div>
-</section>
-
-  <!-- L1b · RADIO ON A CLOCK -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 1</div><div class="cx-page"><b>03</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 1 · The RADIO script</div>
-    <h2>Five sections, one clock</h2>
-    <p class="say"><b>R</b>equirements, <b>A</b>rchitecture, <b>D</b>ata model, <b>I</b>nterface, <b>O</b>ptimizations. Every section has a time limit and something it leaves on the board.</p>
-    <div class="fig">
-      <svg viewBox="0 0 1000 180" role="img" aria-label="A 45-minute timeline: requirements 8 minutes, architecture 10, data model 6, interface 7, optimizations 11, wrap-up 3">
-        <text x="89" y="36" text-anchor="middle" class="lbl s">8 min</text>
-        <text x="289" y="36" text-anchor="middle" class="lbl s">10 min</text>
-        <text x="467" y="36" text-anchor="middle" class="lbl s">6 min</text>
-        <text x="611" y="36" text-anchor="middle" class="lbl s">7 min</text>
-        <text x="811" y="36" text-anchor="middle" class="lbl s">11 min</text>
-        <text x="967" y="36" text-anchor="middle" class="lbl s">3</text>
-        <rect x="1" y="46" width="176" height="50" rx="8" fill="#22D3EE" fill-opacity=".14" stroke="#22D3EE"/>
-        <text x="89" y="76" text-anchor="middle" class="lbl b">R · Requirements</text>
-        <rect x="179" y="46" width="220" height="50" rx="8" fill="#34D399" fill-opacity=".14" stroke="#34D399"/>
-        <text x="289" y="76" text-anchor="middle" class="lbl b">A · Architecture</text>
-        <rect x="401" y="46" width="131" height="50" rx="8" fill="#2196F3" fill-opacity=".16" stroke="#2196F3"/>
-        <text x="467" y="76" text-anchor="middle" class="lbl b">D · Data model</text>
-        <rect x="534" y="46" width="154" height="50" rx="8" fill="#FBBF24" fill-opacity=".14" stroke="#FBBF24"/>
-        <text x="611" y="76" text-anchor="middle" class="lbl b">I · Interface</text>
-        <rect x="690" y="46" width="242" height="50" rx="8" fill="#A78BFA" fill-opacity=".16" stroke="#A78BFA"/>
-        <text x="811" y="76" text-anchor="middle" class="lbl b">O · Optimizations</text>
-        <rect x="934" y="46" width="65" height="50" rx="8" fill="#121C30" stroke="#64748B" stroke-dasharray="4 4"/>
-        <text x="967" y="76" text-anchor="middle" class="lbl b">Wrap</text>
-        <text x="1" y="116" class="lbl s">0</text>
-        <text x="178" y="116" text-anchor="middle" class="lbl s">8</text>
-        <text x="400" y="116" text-anchor="middle" class="lbl s">18</text>
-        <text x="533" y="116" text-anchor="middle" class="lbl s">24</text>
-        <text x="689" y="116" text-anchor="middle" class="lbl s">31</text>
-        <text x="933" y="116" text-anchor="middle" class="lbl s">42</text>
-        <text x="999" y="116" text-anchor="end" class="lbl s">45</text>
-        <text x="89" y="146" text-anchor="middle" class="lbl">scope in / out</text>
-        <text x="89" y="166" text-anchor="middle" class="lbl">the numbers</text>
-        <text x="289" y="146" text-anchor="middle" class="lbl">four to six boxes</text>
-        <text x="289" y="166" text-anchor="middle" class="lbl">arrows = data flow</text>
-        <text x="467" y="146" text-anchor="middle" class="lbl">entities, ids</text>
-        <text x="467" y="166" text-anchor="middle" class="lbl">where state lives</text>
-        <text x="611" y="146" text-anchor="middle" class="lbl">API calls</text>
-        <text x="611" y="166" text-anchor="middle" class="lbl">component props</text>
-        <text x="811" y="146" text-anchor="middle" class="lbl">performance, a11y, offline</text>
-        <text x="811" y="166" text-anchor="middle" class="lbl">errors, edge cases</text>
-        <text x="967" y="146" text-anchor="middle" class="lbl">recap</text>
-        <text x="967" y="166" text-anchor="middle" class="lbl">questions</text>
+  <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>02</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · The App Router mental model</div>
+    <h2>Server by default, client by exception</h2>
+    <div class="fig" style="max-width:1000px">
+      <svg viewBox="0 0 1000 272" role="img" aria-label="Component tree of a job page: layout and page on the server, three server leaves, and two client leaves inside a client boundary">
+        <rect x="390" y="0" width="220" height="48" rx="9" fill="#121C30" stroke="#22D3EE"/>
+        <text x="500" y="21" text-anchor="middle" class="lbl b" font-size="14">RootLayout</text>
+        <text x="500" y="38" text-anchor="middle" class="lbl s" font-size="11">server · app/layout.tsx</text>
+        <path class="draw" pathLength="1" d="M500,48 L500,82" stroke="#64748B" fill="none"/>
+        <rect x="390" y="84" width="220" height="48" rx="9" fill="#121C30" stroke="#22D3EE"/>
+        <text x="500" y="105" text-anchor="middle" class="lbl b" font-size="14">JobPage</text>
+        <text x="500" y="122" text-anchor="middle" class="lbl s" font-size="11">server · async · awaits getJob()</text>
+        <path class="draw" pathLength="1" d="M500,132 L112,182" stroke="#64748B" fill="none"/>
+        <path class="draw" pathLength="1" d="M500,132 L306,182" stroke="#64748B" fill="none"/>
+        <path class="draw" pathLength="1" d="M500,132 L500,182" stroke="#64748B" fill="none"/>
+        <path class="draw" pathLength="1" d="M500,132 L694,182" stroke="#34D399" fill="none"/>
+        <path class="draw" pathLength="1" d="M500,132 L888,182" stroke="#34D399" fill="none"/>
+        <rect x="592" y="170" width="402" height="76" rx="12" fill="none" stroke="#34D399" stroke-dasharray="5 5"/>
+        <text x="984" y="164" text-anchor="end" class="lbl s" font-size="11" style="fill:#34D399">'use client' boundary</text>
+        <rect x="24" y="184" width="176" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
+        <text x="112" y="206" text-anchor="middle" class="lbl b" font-size="13">JobHeader</text>
+        <text x="112" y="224" text-anchor="middle" class="lbl s" font-size="11">server · 0 KB to the browser</text>
+        <rect x="218" y="184" width="176" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
+        <text x="306" y="206" text-anchor="middle" class="lbl b" font-size="13">JobDescription</text>
+        <text x="306" y="224" text-anchor="middle" class="lbl s" font-size="11">server · its parser stays here</text>
+        <rect x="412" y="184" width="176" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
+        <text x="500" y="206" text-anchor="middle" class="lbl b" font-size="13">SimilarJobs</text>
+        <text x="500" y="224" text-anchor="middle" class="lbl s" font-size="11">server · its own fetch</text>
+        <rect x="606" y="184" width="176" height="52" rx="9" fill="#121C30" stroke="#34D399"/>
+        <text x="694" y="206" text-anchor="middle" class="lbl b" font-size="13">ApplyButton</text>
+        <text x="694" y="224" text-anchor="middle" class="lbl s" font-size="11">client · onClick, pending</text>
+        <rect x="800" y="184" width="176" height="52" rx="9" fill="#121C30" stroke="#34D399"/>
+        <text x="888" y="206" text-anchor="middle" class="lbl b" font-size="13">SaveToggle</text>
+        <text x="888" y="224" text-anchor="middle" class="lbl s" font-size="11">client · useState</text>
+        <rect x="24" y="256" width="12" height="12" rx="3" fill="none" stroke="#22D3EE"/>
+        <text x="44" y="267" class="lbl" font-size="12">Server Component — renders on the server, ships no JS</text>
+        <rect x="520" y="256" width="12" height="12" rx="3" fill="none" stroke="#34D399"/>
+        <text x="540" y="267" class="lbl" font-size="12">Client Component — HTML on the server, then hydrates</text>
       </svg>
     </div>
-    <div class="key w">A skipped section costs more than a thin one. When the clock says O and you're still on A, say so out loud, and move.</div>
+    <div class="key">A Server Component renders on the server and sends its <i>result</i>, never its code. <code>'use client'</code> marks a door into the browser bundle: that file and everything it imports ship to the client — and it still renders to HTML on the server first.</div>
 </section>
 
-  <!-- L1 · READ NEXT -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 1</div><div class="cx-page"><b>04</b> / 21</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>03</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Two kinds of component</div>
+    <h2>What each side can and cannot do</h2>
+    <table class="grid">
+      <tr><th></th><th>Server Component</th><th>Client Component</th></tr>
+      <tr><td><b>Read data</b></td><td><code>await</code> the database or an API right in the component</td><td>Receive it as props, or fetch after hydration</td></tr>
+      <tr><td><b>Secrets</b></td><td>Safe — env keys, DB clients, <code>import 'server-only'</code></td><td><span class="r">Never.</span> Everything in this file is public JavaScript</td></tr>
+      <tr><td><b>State &amp; events</b></td><td>No <code>useState</code>, <code>useEffect</code> or <code>onClick</code></td><td>Yes — this is what it exists for</td></tr>
+      <tr><td><b>Browser APIs</b></td><td>No <code>window</code>, no <code>localStorage</code></td><td>Yes, once mounted</td></tr>
+      <tr><td><b>Cost to the user</b></td><td class="g">Zero JavaScript shipped</td><td class="w">Its code plus everything it imports</td></tr>
+    </table>
+    <div class="key w">Props that cross from server to client must be serializable: strings, numbers, plain objects, arrays, Dates, promises — and server actions. A plain function or a class instance can't make the trip.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>04</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Where the boundary goes</div>
+    <h2>Push <code>'use client'</code> down to the leaves</h2>
+    <div class="two tight" style="grid-template-columns:1fr 1.2fr">
+      <div class="card r">
+        <h3 class="r">One button made the page client</h3>
+        <pre><code><span class="st">'use client'</span> <span class="cmt">// line 1 of page.tsx</span>
+
+<span class="kw">export default function</span> <span class="fn">JobPage</span>() {
+  <span class="kw">const</span> { id } = <span class="fn">useParams</span>()
+  <span class="kw">const</span> [job, setJob] = <span class="fn">useState</span>&lt;<span class="ty">Job</span>&gt;()
+  <span class="fn">useEffect</span>(() =&gt; {
+    <span class="fn">getJob</span>(id).<span class="fn">then</span>(setJob)
+  }, [id])
+  <span class="no">// what a crawler gets: a spinner</span>
+  <span class="kw">if</span> (!job) <span class="kw">return</span> &lt;<span class="ty">Spinner</span> /&gt;
+  <span class="kw">return</span> &lt;<span class="ty">JobView</span> job={job} /&gt;
+}</code></pre>
+      </div>
+      <div class="card g">
+        <h3 class="g">Server page, one client leaf</h3>
+        <pre><code><span class="cmt">// app/jobs/[id]/page.tsx — no directive: server</span>
+<span class="kw">type</span> <span class="ty">Props</span> = { params: <span class="ty">Promise</span>&lt;{ id: <span class="ty">string</span> }&gt; }
+
+<span class="kw">export default async function</span> <span class="fn">JobPage</span>(
+  { params }: <span class="ty">Props</span>
+) {
+  <span class="kw">const</span> { id } = <span class="kw">await</span> params
+  <span class="kw">const</span> job = <span class="kw">await</span> <span class="fn">getJob</span>(id)
+  <span class="kw">return</span> &lt;<span class="ty">article</span>&gt;
+    &lt;<span class="ty">JobView</span> job={job} /&gt;
+    &lt;<span class="ty">ApplyButton</span> jobId={job.id} /&gt; <span class="ok">// client</span>
+  &lt;/<span class="ty">article</span>&gt;
+}</code></pre>
+      </div>
+    </div>
+    <div class="key g">Only <code>ApplyButton</code> crosses over. A client component can still wrap server-rendered <code>children</code>.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>05</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Read next</div>
-    <h2>Go deeper: the design round</h2>
+    <h2>The boundary, in the docs</h2>
     <div class="two">
       <div class="card a">
         <h3 class="cy">References</h3>
-        <ul class="plist" style="margin-top:4px">
-          <li><a href="https://web.dev/articles/rendering-on-the-web" target="_blank" rel="noopener" onclick="event.stopPropagation()">Rendering on the Web ↗</a><small>the rendering trade-offs you name in Architecture</small></li>
-          <li><a href="https://web.dev/articles/vitals" target="_blank" rel="noopener" onclick="event.stopPropagation()">Web Vitals ↗</a><small>the numbers behind Optimizations</small></li>
-          <li><a href="https://www.w3.org/WAI/ARIA/apg/" target="_blank" rel="noopener" onclick="event.stopPropagation()">WAI-ARIA Authoring Practices Guide ↗</a><small>the accessibility half of the user-experience axis</small></li>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://nextjs.org/docs/app/getting-started/server-and-client-components" target="_blank" rel="noopener">Server and Client Components — Next.js</a><small>where the boundary goes, and what crosses it</small></li>
+          <li><a href="https://react.dev/reference/rsc/server-components" target="_blank" rel="noopener">Server Components — react.dev</a><small>the React model underneath the App Router</small></li>
+          <li><a href="https://react.dev/reference/rsc/use-client" target="_blank" rel="noopener">&#x27;use client&#x27; — react.dev</a><small>a directive marks a door, not a component</small></li>
         </ul>
       </div>
-      <div class="card g">
-        <h3 class="g">Resources</h3>
-        <ul class="plist" style="margin-top:4px">
-          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard/blob/main/ARCHITECTURE.md" target="_blank" rel="noopener" onclick="event.stopPropagation()">Rasmi's ARCHITECTURE.md ↗</a><small>a real codebase's decisions, written down</small></li>
-        </ul>
-      </div>
-    </div>
-</section>
-
-  <!-- L2a · THE REQUIREMENTS BOARD -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 2</div><div class="cx-page"><b>05</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 2 · Requirements</div>
-    <h2>Eight minutes that decide the next thirty</h2>
-    <p class="say">Prompt: <b>“Design the search page for a job board.”</b> The board after requirements: a number on every line that can take one.</p>
-    <div class="fig">
-      <svg viewBox="0 0 1000 236" role="img" aria-label="Requirements board with three columns: functional scope, non-functional numbers, and what is out of scope">
-        <rect x="0" y="0" width="320" height="234" rx="12" fill="#121C30" stroke="#22D3EE"/>
-        <text x="20" y="30" class="lbl b" style="fill:#22D3EE">Functional · what it does</text>
-        <line x1="20" y1="44" x2="300" y2="44" stroke="#243349"/>
-        <text x="20" y="72" class="lbl">–  Search by keyword and location</text>
-        <text x="20" y="104" class="lbl">–  Filter: remote, salary, job type</text>
-        <text x="20" y="136" class="lbl">–  More results load as you scroll</text>
-        <text x="20" y="168" class="lbl">–  Save a listing when signed in</text>
-        <text x="20" y="200" class="lbl">–  Every search has its own URL</text>
-        <rect x="340" y="0" width="320" height="234" rx="12" fill="#121C30" stroke="#FBBF24"/>
-        <text x="360" y="30" class="lbl b" style="fill:#FBBF24">Non-functional · how well</text>
-        <line x1="360" y1="44" x2="640" y2="44" stroke="#243349"/>
-        <text x="360" y="72" class="lbl">–  500k listings, 20 per page</text>
-        <text x="360" y="104" class="lbl">–  Results in under 300 ms at p75</text>
-        <text x="360" y="136" class="lbl">–  Mid-range Android on 4G</text>
-        <text x="360" y="168" class="lbl">–  Keyboard and screen reader (WCAG AA)</text>
-        <text x="360" y="200" class="lbl">–  Offline: not needed (said out loud)</text>
-        <rect x="680" y="0" width="320" height="234" rx="12" fill="#121C30" stroke="#F8717A" stroke-dasharray="6 5"/>
-        <text x="700" y="30" class="lbl b" style="fill:#F8717A">Out of scope · said, not built</text>
-        <line x1="700" y1="44" x2="980" y2="44" stroke="#243349"/>
-        <text x="700" y="72" class="lbl">–  Posting a listing</text>
-        <text x="700" y="104" class="lbl">–  Recommendations</text>
-        <text x="700" y="136" class="lbl">–  Employer dashboards</text>
-        <text x="700" y="168" class="lbl">–  Sign-up and login (assume a session)</text>
-        <text x="700" y="200" class="lbl">–  Admin moderation</text>
-      </svg>
-    </div>
-    <div class="key">Functional says what it does. Non-functional says how well, for whom, on what, and that column is where most of the design comes from.</div>
-</section>
-
-  <!-- L2b · QUESTIONS THAT FORK THE DESIGN -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 2</div><div class="cx-page"><b>06</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 2 · Questions that fork the design</div>
-    <h2>Each good question moves a box</h2>
-    <table class="grid">
-      <tr><th>Ask</th><th>One answer → design</th><th>The other answer → design</th></tr>
-      <tr><td><b>How much data?</b></td><td>Hundreds → filter in memory</td><td>Hundreds of thousands → server search, cursor pages, a virtualized list</td></tr>
-      <tr><td><b>Which devices?</b></td><td>Desktop on office wifi → a rich client</td><td>Low-end phones on 3G → a tight JS budget, server rendering, sized images</td></tr>
-      <tr><td><b>Offline?</b></td><td>No → plain fetch and a cache</td><td>Yes → service worker, IndexedDB, an outbox queue and a conflict rule</td></tr>
-      <tr><td><b>How fresh?</b></td><td>On reload → refetch on focus</td><td>Within a second → server push over SSE or WebSocket</td></tr>
-      <tr><td><b>First load and SEO?</b></td><td>Behind login → a client-rendered shell</td><td>Public and indexed → server-render the content routes</td></tr>
-      <tr><td><b>Who must use it?</b></td><td colspan="2">Always everyone: keyboard paths, focus order and live announcements are decided now, not in minute forty</td></tr>
-    </table>
-    <div class="key w">Skip any question whose answer wouldn't change the board. The clock is already running.</div>
-</section>
-
-  <!-- L3a · COMPONENTS AND DATA FLOW -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 2</div><div class="cx-page"><b>07</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 2 · Components and data flow</div>
-    <h2>Boxes are jobs, arrows are data</h2>
-    <div class="fig">
-      <svg viewBox="0 0 1000 270" role="img" aria-label="Server API sends JSON to a normalized client store, which feeds a controller, which passes props to view components; user events flow back to the controller, which sends requests to the server">
-        <defs>
-          <marker id="m11a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/></marker>
-        </defs>
-        <rect x="0" y="90" width="170" height="80" rx="10" fill="#121C30" stroke="#A78BFA"/>
-        <text x="85" y="125" text-anchor="middle" class="lbl b">Server / API</text>
-        <text x="85" y="148" text-anchor="middle" class="lbl s">search · listings · saves</text>
-        <rect x="245" y="90" width="210" height="80" rx="10" fill="#121C30" stroke="#2196F3"/>
-        <text x="350" y="125" text-anchor="middle" class="lbl b">Client store</text>
-        <text x="350" y="148" text-anchor="middle" class="lbl s">normalized cache, by id</text>
-        <rect x="530" y="90" width="200" height="80" rx="10" fill="#121C30" stroke="#34D399"/>
-        <text x="630" y="125" text-anchor="middle" class="lbl b">Controller</text>
-        <text x="630" y="148" text-anchor="middle" class="lbl s">fetch · paginate · optimistic writes</text>
-        <rect x="805" y="0" width="195" height="262" rx="12" fill="#121C30" stroke="#22D3EE"/>
-        <text x="902" y="28" text-anchor="middle" class="lbl b">View</text>
-        <rect x="820" y="44" width="165" height="40" rx="8" fill="#0B1220" stroke="#243349"/>
-        <text x="902" y="69" text-anchor="middle" class="lbl">SearchBar</text>
-        <rect x="820" y="96" width="165" height="40" rx="8" fill="#0B1220" stroke="#243349"/>
-        <text x="902" y="121" text-anchor="middle" class="lbl">FilterPanel</text>
-        <rect x="820" y="148" width="165" height="40" rx="8" fill="#0B1220" stroke="#243349"/>
-        <text x="902" y="173" text-anchor="middle" class="lbl">ResultList (virtual)</text>
-        <rect x="820" y="200" width="165" height="40" rx="8" fill="#0B1220" stroke="#243349"/>
-        <text x="902" y="225" text-anchor="middle" class="lbl">ListingCard × n</text>
-        <path class="draw" pathLength="1" d="M171,115 L243,115" stroke="#94A3B8" fill="none" marker-end="url(#m11a)"/>
-        <text x="207" y="106" text-anchor="middle" class="lbl s">JSON</text>
-        <path class="draw" pathLength="1" d="M456,115 L528,115" stroke="#94A3B8" fill="none" marker-end="url(#m11a)"/>
-        <text x="492" y="106" text-anchor="middle" class="lbl s">state</text>
-        <path class="draw" pathLength="1" d="M731,115 L803,115" stroke="#94A3B8" fill="none" marker-end="url(#m11a)"/>
-        <text x="767" y="106" text-anchor="middle" class="lbl s">props</text>
-        <path d="M804,148 L732,148" stroke="#22D3EE" stroke-dasharray="5 4" fill="none" marker-end="url(#m11a)"/>
-        <text x="767" y="166" text-anchor="middle" class="lbl s" style="fill:#22D3EE">events</text>
-        <path d="M630,171 L630,226 L85,226 L85,173" stroke="#34D399" stroke-dasharray="5 4" fill="none" marker-end="url(#m11a)"/>
-        <text x="357" y="250" text-anchor="middle" class="lbl s" style="fill:#34D399">requests: debounced query, next cursor</text>
-      </svg>
-    </div>
-    <div class="key">Draw these four boxes before any component tree. The round is grading where state lives and who is allowed to change it, not how many components you can name.</div>
-</section>
-
-  <!-- L3b · CURSOR VS OFFSET -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 2</div><div class="cx-page"><b>08</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 2 · Contracts from the client's side</div>
-    <h2>Offset pages drift; cursors don't</h2>
-    <div class="fig">
-      <svg viewBox="0 0 1000 146" role="img" aria-label="A new item N arrives above A, B, C. Asking for offset 3 returns C, D, E, so C appears twice. Asking for items after C returns D, E, F.">
-        <path d="M340,22 L340,16 L656,16 L656,22" stroke="#64748B" fill="none"/>
-        <text x="498" y="10" text-anchor="middle" class="lbl s">page 1, loaded before N arrived</text>
-        <text x="0" y="57" class="lbl b">the feed now</text>
-        <rect x="230" y="30" width="96" height="44" rx="8" fill="#121C30" stroke="#FBBF24" stroke-dasharray="5 4"/>
-        <text x="278" y="57" text-anchor="middle" class="lbl b" style="fill:#FBBF24">N</text>
-        <rect x="340" y="30" width="96" height="44" rx="8" fill="#121C30" stroke="#243349"/>
-        <text x="388" y="57" text-anchor="middle" class="lbl b">A</text>
-        <rect x="450" y="30" width="96" height="44" rx="8" fill="#121C30" stroke="#243349"/>
-        <text x="498" y="57" text-anchor="middle" class="lbl b">B</text>
-        <rect x="560" y="30" width="96" height="44" rx="8" fill="#121C30" stroke="#F8717A"/>
-        <text x="608" y="57" text-anchor="middle" class="lbl b">C</text>
-        <rect x="670" y="30" width="96" height="44" rx="8" fill="#121C30" stroke="#243349"/>
-        <text x="718" y="57" text-anchor="middle" class="lbl b">D</text>
-        <rect x="780" y="30" width="96" height="44" rx="8" fill="#121C30" stroke="#243349"/>
-        <text x="828" y="57" text-anchor="middle" class="lbl b">E</text>
-        <rect x="890" y="30" width="96" height="44" rx="8" fill="#121C30" stroke="#243349"/>
-        <text x="938" y="57" text-anchor="middle" class="lbl b">F</text>
-        <text x="0" y="106" class="lbl b" style="fill:#F8717A">?offset=3&amp;limit=3  →  C, D, E</text>
-        <path d="M560,90 L560,101 L876,101 L876,90" stroke="#F8717A" fill="none"/>
-        <text x="886" y="106" class="lbl b" style="fill:#F8717A">C again</text>
-        <text x="0" y="140" class="lbl b" style="fill:#34D399">?after=C&amp;limit=3  →  D, E, F</text>
-        <path d="M670,124 L670,135 L986,135 L986,124" stroke="#34D399" fill="none"/>
-      </svg>
-    </div>
-    <table class="grid">
-      <tr><th></th><th>Offset · <code>?page=7</code></th><th>Cursor · <code>?after=…</code></th></tr>
-      <tr><td><b>Jump to page 7</b></td><td><span class="g">✓</span> trivial</td><td><span class="r">✗</span> next and previous only</td></tr>
-      <tr><td><b>Inserts while reading</b></td><td><span class="r">✗</span> duplicates or skipped rows</td><td><span class="g">✓</span> stable</td></tr>
-      <tr><td><b>Deep pages on the server</b></td><td><span class="r">✗</span> scans rows, then throws them away</td><td><span class="g">✓</span> an index seek, same cost on every page</td></tr>
-      <tr><td><b>Fits</b></td><td>numbered pages, admin tables with totals</td><td>feeds, infinite scroll, chat history</td></tr>
-    </table>
-</section>
-
-  <!-- L2 · READ NEXT -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 2</div><div class="cx-page"><b>09</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 2 · Read next</div>
-    <h2>Go deeper: requirements and contracts</h2>
-    <div class="two">
-      <div class="card a">
-        <h3 class="cy">References</h3>
-        <ul class="plist" style="margin-top:4px">
-          <li><a href="https://graphql.org/learn/pagination/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Pagination — GraphQL ↗</a><small>cursors versus offsets, explained by the spec's authors</small></li>
-          <li><a href="https://www.rfc-editor.org/rfc/rfc9457" target="_blank" rel="noopener" onclick="event.stopPropagation()">RFC 9457: Problem Details for HTTP APIs ↗</a><small>a standard single error shape</small></li>
-          <li><a href="https://redux.js.org/usage/structuring-reducers/normalizing-state-shape" target="_blank" rel="noopener" onclick="event.stopPropagation()">Normalizing state shape — Redux ↗</a><small>entities by id, stored once</small></li>
-        </ul>
-      </div>
-      <div class="card g">
-        <h3 class="g">Resources</h3>
-        <ul class="plist" style="margin-top:4px">
-          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener" onclick="event.stopPropagation()">Rasmi — the job board repo ↗</a><small>the domain types this lesson draws on the board</small></li>
-        </ul>
-      </div>
-    </div>
-</section>
-
-  <!-- L4a · THE MODULAR MONOLITH -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 3</div><div class="cx-page"><b>10</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · The modular monolith</div>
-    <h2>One deploy, hard walls inside it</h2>
-    <div class="fig">
-      <svg viewBox="0 0 1000 250" role="img" aria-label="One app with four feature modules, each with a public index file and private internals; features import each other only through index files, deep imports are blocked by a lint rule; all features use a shared layer">
-        <defs>
-          <marker id="m11b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/></marker>
-          <marker id="m11c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#34D399"/></marker>
-          <marker id="m11d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#F8717A"/></marker>
-        </defs>
-        <rect x="0" y="0" width="1000" height="248" rx="14" fill="none" stroke="#64748B" stroke-dasharray="6 5"/>
-        <text x="18" y="26" class="lbl b">apps/web · one build, one deploy</text>
-        <rect x="20" y="44" width="220" height="96" rx="10" fill="#121C30" stroke="#FBBF24"/>
-        <text x="130" y="72" text-anchor="middle" class="lbl b">features/search</text>
-        <rect x="30" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#34D399"/>
-        <text x="75" y="119" text-anchor="middle" class="lbl s">index.ts</text>
-        <rect x="140" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#64748B" stroke-dasharray="3 3"/>
-        <text x="185" y="119" text-anchor="middle" class="lbl s">internal/</text>
-        <rect x="265" y="44" width="220" height="96" rx="10" fill="#121C30" stroke="#FBBF24"/>
-        <text x="375" y="72" text-anchor="middle" class="lbl b">features/listing</text>
-        <rect x="275" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#34D399"/>
-        <text x="320" y="119" text-anchor="middle" class="lbl s">index.ts</text>
-        <rect x="385" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#64748B" stroke-dasharray="3 3"/>
-        <text x="430" y="119" text-anchor="middle" class="lbl s">internal/</text>
-        <rect x="510" y="44" width="220" height="96" rx="10" fill="#121C30" stroke="#FBBF24"/>
-        <text x="620" y="72" text-anchor="middle" class="lbl b">features/apply</text>
-        <rect x="520" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#34D399"/>
-        <text x="565" y="119" text-anchor="middle" class="lbl s">index.ts</text>
-        <rect x="630" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#64748B" stroke-dasharray="3 3"/>
-        <text x="675" y="119" text-anchor="middle" class="lbl s">internal/</text>
-        <rect x="755" y="44" width="220" height="96" rx="10" fill="#121C30" stroke="#FBBF24"/>
-        <text x="865" y="72" text-anchor="middle" class="lbl b">features/account</text>
-        <rect x="765" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#34D399"/>
-        <text x="810" y="119" text-anchor="middle" class="lbl s">index.ts</text>
-        <rect x="875" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#64748B" stroke-dasharray="3 3"/>
-        <text x="920" y="119" text-anchor="middle" class="lbl s">internal/</text>
-        <path d="M241,114 L273,114" stroke="#34D399" fill="none" marker-end="url(#m11c)"/>
-        <path d="M600,44 C600,18 440,14 432,98" stroke="#F8717A" stroke-dasharray="5 4" fill="none" marker-end="url(#m11d)"/>
-        <text x="528" y="20" text-anchor="middle" class="lbl b" style="fill:#F8717A">✕ lint error</text>
-        <path d="M130,141 L130,188" stroke="#94A3B8" fill="none" marker-end="url(#m11b)"/>
-        <path d="M375,141 L375,188" stroke="#94A3B8" fill="none" marker-end="url(#m11b)"/>
-        <path d="M620,141 L620,188" stroke="#94A3B8" fill="none" marker-end="url(#m11b)"/>
-        <path d="M865,141 L865,188" stroke="#94A3B8" fill="none" marker-end="url(#m11b)"/>
-        <rect x="20" y="190" width="955" height="44" rx="10" fill="#121C30" stroke="#2196F3"/>
-        <text x="497" y="217" text-anchor="middle" class="lbl b">shared/ui · shared/lib · shared/api-client</text>
-      </svg>
-    </div>
-    <pre><code><span class="cmt">// eslint: a feature is importable only through its index.ts</span>
-<span class="st">"no-restricted-imports"</span>: [<span class="st">"error"</span>, { patterns: [<span class="st">"@/features/*/*"</span>] }]</code></pre>
-    <div class="key"><b>Fixes:</b> features that can't reach into each other, so one team can own one. <b>Doesn't fix:</b> one build, one release train. Everybody still ships together.</div>
-</section>
-
-  <!-- L4c · PAIN FIRST -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 3</div><div class="cx-page"><b>11</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · What each actually fixes</div>
-    <h2>Name the pain before the architecture</h2>
-    <table class="grid">
-      <tr><th>The pain</th><th>Modular monolith</th><th>Monorepo</th><th>Micro-frontends</th></tr>
-      <tr><td><b>Features reach into each other's internals</b></td><td><span class="g">✓</span> lint-enforced walls</td><td><span class="w">~</span> only if packages have walls</td><td><span class="w">~</span> yes, at runtime cost</td></tr>
-      <tr><td><b>Two apps copy-paste the same UI</b></td><td><span class="r">✗</span> one app only</td><td><span class="g">✓</span> shared packages</td><td><span class="w">~</span> still needs a shared library</td></tr>
-      <tr><td><b>One change needs PRs in three repos</b></td><td><span class="g">✓</span> one repo already</td><td><span class="g">✓</span> one atomic commit</td><td><span class="r">✗</span> makes it worse</td></tr>
-      <tr><td><b>One team's release blocks another's</b></td><td><span class="r">✗</span> one release train</td><td><span class="r">✗</span> one train per app</td><td><span class="g">✓</span> independent deploys</td></tr>
-      <tr><td><b>CI is too slow</b></td><td><span class="w">~</span> build caching</td><td><span class="g">✓</span> affected-only tasks</td><td><span class="w">~</span> smaller builds, more of them</td></tr>
-    </table>
-    <div class="key w">Most teams asking for micro-frontends have the first row's pain. That row is fixed by walls, not by separate deploys.</div>
-</section>
-
-  <!-- L5b · THE REAL COST -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 3</div><div class="cx-page"><b>12</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · The real cost</div>
-    <h2>The bill arrives in production</h2>
-    <table class="grid">
-      <tr><th>Cost</th><th>What it looks like</th></tr>
-      <tr><td><b class="r">Duplicate dependencies</b></td><td>Two copies of React or a date library on one page. The bundle grows by whatever you failed to share.</td></tr>
-      <tr><td><b class="r">Version skew</b></td><td>The shell is on design system v3 and one app is on v2, so one page has two button styles.</td></tr>
-      <tr><td><b class="w">Shared state and routing</b></td><td>Session, cart count and the URL need a contract between apps, with an owner.</td></tr>
-      <tr><td><b class="w">Performance</b></td><td>Remote entry, then manifest, then chunk: a waterfall before first render.</td></tr>
-      <tr><td><b class="p">Testing</b></td><td>Every app passes on its own; the page they make together is only tested in staging.</td></tr>
-      <tr><td><b class="p">Operations</b></td><td>N pipelines, N rollbacks, and a platform team to keep the shell alive.</td></tr>
-    </table>
-    <div class="key r">Micro-frontends buy independent deploys, which is an org-chart problem. If your teams aren't blocking each other's releases, you're paying all of this for nothing.</div>
-</section>
-
-  <!-- L5c · THE LADDER -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 3</div><div class="cx-page"><b>13</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Defending the choice</div>
-    <h2>Climb only when the step below stops working</h2>
-    <div class="fig">
-      <svg viewBox="0 0 1000 250" role="img" aria-label="Three ascending steps: modular monolith, then monorepo when a second app needs the same code, then micro-frontends when teams block each other's releases">
-        <defs>
-          <marker id="m11f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/></marker>
-        </defs>
-        <text x="0" y="34" class="lbl b">Each step up adds cost and coordination.</text>
-        <text x="0" y="58" class="lbl">Climb when a named trigger fires,</text>
-        <text x="0" y="80" class="lbl">not because the step above sounds senior.</text>
-        <rect x="0" y="176" width="320" height="70" rx="10" fill="#34D399" fill-opacity=".12" stroke="#34D399"/>
-        <text x="160" y="205" text-anchor="middle" class="lbl b">1 · Modular monolith</text>
-        <text x="160" y="228" text-anchor="middle" class="lbl s">start here: one app, lint-enforced walls</text>
-        <rect x="340" y="98" width="320" height="70" rx="10" fill="#2196F3" fill-opacity=".14" stroke="#2196F3"/>
-        <text x="500" y="127" text-anchor="middle" class="lbl b">2 · Monorepo</text>
-        <text x="500" y="150" text-anchor="middle" class="lbl s">when a second app needs the same code</text>
-        <rect x="680" y="20" width="320" height="70" rx="10" fill="#A78BFA" fill-opacity=".14" stroke="#A78BFA"/>
-        <text x="840" y="49" text-anchor="middle" class="lbl b">3 · Micro-frontends</text>
-        <text x="840" y="72" text-anchor="middle" class="lbl s">when teams block each other's releases</text>
-        <path d="M260,174 L260,133 L336,133" stroke="#94A3B8" fill="none" marker-end="url(#m11f)"/>
-        <path d="M600,96 L600,55 L676,55" stroke="#94A3B8" fill="none" marker-end="url(#m11f)"/>
-      </svg>
-    </div>
-    <div class="key g">Say it as one sentence: <i>“We start as a modular monolith with enforced feature boundaries, move to a monorepo when the employer app arrives, and split deploys only if release coordination becomes the bottleneck.”</i></div>
-</section>
-
-  <!-- L3 · READ NEXT -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 3</div><div class="cx-page"><b>14</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Read next</div>
-    <h2>Go deeper: scaling the codebase</h2>
-    <div class="two">
-      <div class="card a">
-        <h3 class="cy">References</h3>
-        <ul class="plist" style="margin-top:4px">
-          <li><a href="https://webpack.js.org/concepts/module-federation/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Module Federation — webpack ↗</a><small>how micro-frontends share code at runtime</small></li>
-          <li><a href="https://nx.dev/concepts/decisions/why-monorepos" target="_blank" rel="noopener" onclick="event.stopPropagation()">Why monorepos — Nx ↗</a><small>what a monorepo does and doesn't solve</small></li>
-          <li><a href="https://pnpm.io/workspaces" target="_blank" rel="noopener" onclick="event.stopPropagation()">Workspaces — pnpm ↗</a><small>many packages in one repo</small></li>
-        </ul>
-      </div>
-      <div class="card g">
-        <h3 class="g">Resources</h3>
-        <ul class="plist" style="margin-top:4px">
-          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener" onclick="event.stopPropagation()">Rasmi — the job board repo ↗</a><small>feature folders with one door each</small></li>
-        </ul>
-      </div>
-    </div>
-</section>
-
-  <!-- L6a · FEED + AUTOCOMPLETE -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 4</div><div class="cx-page"><b>15</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Walked</div>
-    <h2>Feed and autocomplete: lists that move</h2>
-    <div class="two">
-      <div class="card a">
-        <h3 class="cy">News feed</h3>
-        <div class="key" style="margin-top:4px; font-size:min(1.75vw,19px)"><b>Key decision:</b> cursor pages into a normalized cache, rendered as a virtualized list.</div>
-        <p style="margin-top:14px"><b>Because</b> posts arrive while you read, and one author or like count shows up in many places.</p>
-        <p style="margin-top:10px"><b>Say before they ask:</b> a “new posts” pill instead of shifting the list; reserved media height so nothing jumps; an IntersectionObserver sentinel to fetch the next page.</p>
-      </div>
-      <div class="card w">
-        <h3 class="w">Autocomplete</h3>
-        <div class="key w" style="margin-top:4px; font-size:min(1.75vw,19px)"><b>Key decision:</b> debounce, cancel stale requests, cache results by query.</div>
-        <p style="margin-top:14px"><b>Because</b> every keystroke is a request, and responses come back out of order.</p>
-        <p style="margin-top:10px"><b>Say before they ask:</b> drop any response that isn't for the latest query (AbortController); the combobox pattern with <b>aria-activedescendant</b>; cached “rea” results for when the user backspaces.</p>
-      </div>
-    </div>
-</section>
-
-  <!-- L4b · REAL-TIME, AND THE CHAT -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 4</div><div class="cx-page"><b>16</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Real-time, and the chat</div>
-    <h2>Pick the simplest transport that's fast enough</h2>
-    <table class="grid">
-      <tr><th></th><th>Polling</th><th>Server-Sent Events</th><th>WebSocket</th></tr>
-      <tr><td><b>Direction</b></td><td>Client asks</td><td>Server → client</td><td>Both ways</td></tr>
-      <tr><td><b>Built on</b></td><td>Ordinary requests</td><td>One long HTTP response</td><td>An upgraded connection</td></tr>
-      <tr><td><b>Reconnect</b></td><td>Nothing to reconnect</td><td>Automatic, resumes via <code>Last-Event-ID</code></td><td>Yours to write, with backoff</td></tr>
-      <tr><td><b>Idle cost</b></td><td>A request every interval</td><td>One open connection</td><td>One connection + heartbeats</td></tr>
-      <tr><td><b>Fits</b></td><td>“12 new jobs” banner</td><td>Application status changes</td><td>Chat with a recruiter</td></tr>
-    </table>
-    <div class="key g"><b>Chat:</b> a WebSocket for push, optimistic sends with a client-made id, order by server sequence — and on reconnect, fetch everything after the last sequence you saw.</div>
-</section>
-
-  <!-- L4 · READ NEXT -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 4</div><div class="cx-page"><b>17</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Read next</div>
-    <h2>Go deeper: feeds, search and real-time</h2>
-    <div class="two">
-      <div class="card a">
-        <h3 class="cy">References</h3>
-        <ul class="plist" style="margin-top:4px">
-          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events" target="_blank" rel="noopener" onclick="event.stopPropagation()">Using server-sent events — MDN ↗</a><small>EventSource, event ids and reconnection</small></li>
-          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API" target="_blank" rel="noopener" onclick="event.stopPropagation()">The WebSocket API — MDN ↗</a><small>two-way messaging, and what you must handle yourself</small></li>
-          <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Combobox pattern — WAI-ARIA APG ↗</a><small>the autocomplete's keyboard and ARIA contract</small></li>
-        </ul>
-      </div>
-      <div class="card g">
-        <h3 class="g">Resources</h3>
-        <ul class="plist" style="margin-top:4px">
-          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard/tree/module-7/autocomplete/solution" target="_blank" rel="noopener" onclick="event.stopPropagation()">The race-safe autocomplete ↗</a><small>the one you built in module 7</small></li>
-        </ul>
-      </div>
-    </div>
-</section>
-
-  <!-- L5a · E-COMMERCE -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 5</div><div class="cx-page"><b>18</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Walked</div>
-    <h2>E-commerce: the cart can be optimistic, checkout can't</h2>
-    <div class="two">
       <div class="card b">
-        <h3 class="b">E-commerce</h3>
-        <div class="key" style="margin-top:4px; font-size:min(1.75vw,19px)"><b>Key decision:</b> server-render product and listing pages; the cart can be optimistic, checkout can't.</div>
-        <p style="margin-top:14px"><b>Because</b> first load and search ranking drive revenue, and a wrong price or a double charge is the worst bug you can ship.</p>
-      </div>
-      <div class="card w">
-        <h3 class="w">Say before they ask</h3>
-        <ul class="plist" style="margin-top:4px">
-          <li>Filters live in the URL<small>shareable, back-button safe, crawlable</small></li>
-          <li>Price and stock re-checked on the server<small>the client's total is a preview, never the charge</small></li>
-          <li>An idempotency key on “Place order”<small>a double click or a retry charges once</small></li>
-          <li>The product photo is the LCP<small>sized, eager, high priority</small></li>
+        <h3 class="b">Resources</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://nextjs.org/learn/dashboard-app" target="_blank" rel="noopener">Next.js Learn — the dashboard course</a><small>the official hands-on App Router course</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/07-nextjs-rendering" target="_blank" rel="noopener">Module 7 slides</a><small>the deck this video walks through</small></li>
         </ul>
       </div>
     </div>
 </section>
 
-  <!-- L6c · DASHBOARD + EDITOR -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 5</div><div class="cx-page"><b>19</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Walked</div>
-    <h2>Dashboard and editor: where the hard part hides</h2>
+  <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>06</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Five ways to make HTML</div>
+    <h2>One question: when is the HTML made?</h2>
+    <table class="grid">
+      <tr><th>Strategy</th><th>HTML is made</th><th>Fresh as of</th><th>What puts a route here</th></tr>
+      <tr><td><b class="b">SSG</b></td><td>Once, at build</td><td>The last deploy</td><td><code>generateStaticParams</code>, nothing read from the request</td></tr>
+      <tr><td><b class="p">ISR</b></td><td>At build, then again in the background</td><td>A window you choose, or the last on-demand revalidate</td><td><code>next: { revalidate: 300 }</code> on the fetch · <code>revalidatePath</code></td></tr>
+      <tr><td><b class="w">SSR</b></td><td>On every request</td><td>This request</td><td>Reading <code>cookies()</code>, <code>headers()</code>, <code>searchParams</code> · <code>await connection()</code></td></tr>
+      <tr><td><b class="g">Streaming</b></td><td>On every request, in pieces</td><td>This request, fast parts first</td><td><code>loading.tsx</code>, or <code>&lt;Suspense&gt;</code> around the slow part</td></tr>
+      <tr><td><b class="r">CSR</b></td><td>In the browser, after JS runs</td><td>Whenever the client refetches</td><td><code>'use client'</code> plus a fetch after mount</td></tr>
+    </table>
+    <div class="key">Whatever a given version's defaults are, a route can only be static if nothing in it needs the request. Know which row each route lands on — and which line of code put it there.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>07</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Choosing per route</div>
+    <h2>Three questions pick the strategy</h2>
+    <div class="fig" style="max-width:980px">
+      <svg viewBox="0 0 980 300" role="img" aria-label="Decision flow: depends on who is asking leads to dynamic with streaming; depends on the query leads to dynamic with cached data; never changes after deploy leads to static; otherwise ISR">
+        <rect x="0" y="0" width="200" height="70" rx="10" fill="#121C30" stroke="#243349"/>
+        <text x="100" y="31" text-anchor="middle" class="lbl b" font-size="14">Depends on who's asking?</text>
+        <text x="100" y="51" text-anchor="middle" class="lbl s" font-size="11">cookies · the session</text>
+        <path class="draw" pathLength="1" d="M200,35 L257,35" stroke="#64748B" fill="none"/>
+        <text x="229" y="27" text-anchor="middle" class="lbl s" font-size="11">no</text>
+        <rect x="260" y="0" width="200" height="70" rx="10" fill="#121C30" stroke="#243349"/>
+        <text x="360" y="31" text-anchor="middle" class="lbl b" font-size="14">Depends on the query?</text>
+        <text x="360" y="51" text-anchor="middle" class="lbl s" font-size="11">searchParams · filters</text>
+        <path class="draw" pathLength="1" d="M460,35 L517,35" stroke="#64748B" fill="none"/>
+        <text x="489" y="27" text-anchor="middle" class="lbl s" font-size="11">no</text>
+        <rect x="520" y="0" width="200" height="70" rx="10" fill="#121C30" stroke="#243349"/>
+        <text x="620" y="31" text-anchor="middle" class="lbl b" font-size="14">Changes after deploy?</text>
+        <text x="620" y="51" text-anchor="middle" class="lbl s" font-size="11">edits · new rows</text>
+        <path class="draw" pathLength="1" d="M720,35 L777,35" stroke="#A78BFA" fill="none"/>
+        <text x="749" y="27" text-anchor="middle" class="lbl s" font-size="11" style="fill:#A78BFA">yes</text>
+        <rect x="780" y="0" width="200" height="70" rx="10" fill="#121C30" stroke="#A78BFA"/>
+        <text x="880" y="24" text-anchor="middle" class="lbl b" font-size="14">ISR</text>
+        <text x="880" y="43" text-anchor="middle" class="lbl s" font-size="11">on a timer → /</text>
+        <text x="880" y="59" text-anchor="middle" class="lbl s" font-size="11">on demand → /jobs/[id]</text>
+        <path class="draw" pathLength="1" d="M100,70 L100,137" stroke="#FBBF24" fill="none"/>
+        <text x="110" y="108" class="lbl s" font-size="11" style="fill:#FBBF24">yes</text>
+        <path class="draw" pathLength="1" d="M360,70 L360,137" stroke="#FBBF24" fill="none"/>
+        <text x="370" y="108" class="lbl s" font-size="11" style="fill:#FBBF24">yes</text>
+        <path class="draw" pathLength="1" d="M620,70 L620,137" stroke="#2196F3" fill="none"/>
+        <text x="630" y="108" class="lbl s" font-size="11" style="fill:#2196F3">no</text>
+        <rect x="0" y="140" width="200" height="70" rx="10" fill="#121C30" stroke="#FBBF24"/>
+        <text x="100" y="171" text-anchor="middle" class="lbl b" font-size="14">Dynamic + streaming</text>
+        <text x="100" y="191" text-anchor="middle" class="lbl s" font-size="11">/dashboard</text>
+        <rect x="260" y="140" width="200" height="70" rx="10" fill="#121C30" stroke="#FBBF24"/>
+        <text x="360" y="171" text-anchor="middle" class="lbl b" font-size="14">Dynamic, cached data</text>
+        <text x="360" y="191" text-anchor="middle" class="lbl s" font-size="11">/jobs?q=react</text>
+        <rect x="520" y="140" width="200" height="70" rx="10" fill="#121C30" stroke="#2196F3"/>
+        <text x="620" y="171" text-anchor="middle" class="lbl b" font-size="14">Static (SSG)</text>
+        <text x="620" y="191" text-anchor="middle" class="lbl s" font-size="11">/login · /about</text>
+        <rect x="0" y="246" width="980" height="46" rx="10" fill="none" stroke="#34D399" stroke-dasharray="5 5"/>
+        <text x="490" y="274" text-anchor="middle" class="lbl" font-size="13">Inside any of them, interactive leaves are Client Components — CSR for the part that needs it, never the whole page</text>
+      </svg>
+    </div>
+    <div class="key">Write the answer next to the route before you write the route. If you can't say why a page is dynamic, it probably shouldn't be.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>08</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · The caching layers, in order</div>
+    <h2>Four caches stand between a click and your database</h2>
+    <div class="fig" style="max-width:1000px">
+      <svg viewBox="0 0 1000 180" role="img" aria-label="A request passes the router cache in the browser, then the full route cache, request memoization and the data cache on the server, before reaching the database">
+        <text x="209" y="12" text-anchor="middle" class="lbl s" font-size="11" style="fill:#22D3EE">BROWSER</text>
+        <text x="597" y="12" text-anchor="middle" class="lbl s" font-size="11" style="fill:#2196F3">SERVER</text>
+        <text x="950" y="12" text-anchor="middle" class="lbl s" font-size="11">SOURCE</text>
+        <line x1="306" y1="2" x2="306" y2="146" stroke="#243349" stroke-dasharray="4 4"/>
+        <line x1="888" y1="2" x2="888" y2="146" stroke="#243349" stroke-dasharray="4 4"/>
+        <rect x="0" y="56" width="100" height="50" rx="9" fill="#121C30" stroke="#64748B"/>
+        <text x="50" y="78" text-anchor="middle" class="lbl b" font-size="13">Click</text>
+        <text x="50" y="95" text-anchor="middle" class="lbl s" font-size="11">or a URL</text>
+        <path class="draw" pathLength="1" d="M100,81 L122,81" stroke="#64748B" fill="none"/>
+        <rect x="124" y="26" width="170" height="110" rx="10" fill="#121C30" stroke="#22D3EE"/>
+        <text x="209" y="50" text-anchor="middle" class="lbl b" font-size="13">1 · Router cache</text>
+        <text x="209" y="72" text-anchor="middle" class="lbl s" font-size="11">RSC payload of visited</text>
+        <text x="209" y="87" text-anchor="middle" class="lbl s" font-size="11">and prefetched segments</text>
+        <text x="209" y="118" text-anchor="middle" class="lbl s" font-size="11" style="fill:#FBBF24">lives: this tab, briefly</text>
+        <path class="draw" pathLength="1" d="M294,81 L316,81" stroke="#64748B" fill="none"/>
+        <rect x="318" y="26" width="170" height="110" rx="10" fill="#121C30" stroke="#2196F3"/>
+        <text x="403" y="50" text-anchor="middle" class="lbl b" font-size="13">2 · Full route cache</text>
+        <text x="403" y="72" text-anchor="middle" class="lbl s" font-size="11">HTML + RSC payload</text>
+        <text x="403" y="87" text-anchor="middle" class="lbl s" font-size="11">of static routes</text>
+        <text x="403" y="118" text-anchor="middle" class="lbl s" font-size="11" style="fill:#FBBF24">lives: until revalidated</text>
+        <path class="draw" pathLength="1" d="M488,81 L510,81" stroke="#64748B" fill="none"/>
+        <rect x="512" y="26" width="170" height="110" rx="10" fill="#121C30" stroke="#A78BFA"/>
+        <text x="597" y="50" text-anchor="middle" class="lbl b" font-size="13">3 · Request memo</text>
+        <text x="597" y="72" text-anchor="middle" class="lbl s" font-size="11">same call, same args,</text>
+        <text x="597" y="87" text-anchor="middle" class="lbl s" font-size="11">inside one render</text>
+        <text x="597" y="118" text-anchor="middle" class="lbl s" font-size="11" style="fill:#FBBF24">lives: one request</text>
+        <path class="draw" pathLength="1" d="M682,81 L704,81" stroke="#64748B" fill="none"/>
+        <rect x="706" y="26" width="170" height="110" rx="10" fill="#121C30" stroke="#FBBF24"/>
+        <text x="791" y="50" text-anchor="middle" class="lbl b" font-size="13">4 · Data cache</text>
+        <text x="791" y="72" text-anchor="middle" class="lbl s" font-size="11">fetch and cached-</text>
+        <text x="791" y="87" text-anchor="middle" class="lbl s" font-size="11">function results</text>
+        <text x="791" y="118" text-anchor="middle" class="lbl s" font-size="11" style="fill:#FBBF24">lives: across requests</text>
+        <path class="draw" pathLength="1" d="M876,81 L898,81" stroke="#64748B" fill="none"/>
+        <rect x="900" y="56" width="100" height="50" rx="9" fill="#121C30" stroke="#64748B"/>
+        <text x="950" y="78" text-anchor="middle" class="lbl b" font-size="13">Database</text>
+        <text x="950" y="95" text-anchor="middle" class="lbl s" font-size="11">or an API</text>
+        <text x="500" y="172" text-anchor="middle" class="lbl" font-size="13">Each arrow is a miss: a request only travels right when the layer before it had nothing fresh to give.</text>
+      </svg>
+    </div>
+    <div class="key w">Every “why is this stale?” bug lives in one of these four boxes. Name the box before you touch a setting — the fix for each one is different.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>09</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Who controls each layer</div>
+    <h2>Opt in, opt out, invalidate</h2>
+    <table class="grid">
+      <tr><th>Layer</th><th>You opt in with</th><th>It's skipped when</th><th>You clear it with</th></tr>
+      <tr><td><b class="cy">1 · Router</b></td><td>Nothing — visited and prefetched segments are kept</td><td>A hard reload</td><td><code>router.refresh()</code>, or an action that revalidates</td></tr>
+      <tr><td><b class="b">2 · Full route</b></td><td>A route that needs nothing from the request</td><td>It reads cookies, headers, <code>searchParams</code> or uncached data</td><td><code>revalidatePath</code>, revalidating its data, a deploy</td></tr>
+      <tr><td><b class="p">3 · Request memo</b></td><td>Automatic for GET <code>fetch</code>; <code>React.cache()</code> for anything else</td><td>—</td><td>Nothing to clear: it dies with the request</td></tr>
+      <tr><td><b class="w">4 · Data</b></td><td><code>next: { revalidate }</code>, <code>cache: 'force-cache'</code>, or <code>'use cache'</code></td><td>The fetch didn't opt in — uncached is the default since Next 15</td><td><code>revalidateTag</code>, <code>revalidatePath</code>, the timer</td></tr>
+    </table>
+    <div class="key">A mutation changes layer 4 first. Revalidate the data, and the route and router caches built from it follow — in a server action, the user's own browser included.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>10</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Read next</div>
+    <h2>Rendering and caching, at the source</h2>
     <div class="two">
-      <div class="card p">
-        <h3 class="p">Dashboard</h3>
-        <div class="key" style="margin-top:4px; font-size:min(1.75vw,19px)"><b>Key decision:</b> every widget fetches, loads and fails on its own.</div>
-        <p style="margin-top:14px"><b>Because</b> one slow query must not blank the whole page, and each widget needs fresh data at a different rate.</p>
-        <p style="margin-top:10px"><b>Say before they ask:</b> an error boundary and skeleton per widget; the shared time range in the URL; data downsampled on the server; canvas once points reach the thousands; a table view behind every chart.</p>
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://web.dev/articles/rendering-on-the-web" target="_blank" rel="noopener">Rendering on the Web — web.dev</a><small>CSR, SSR, static and streaming, framework-neutral</small></li>
+          <li><a href="https://nextjs.org/docs/app/guides/caching" target="_blank" rel="noopener">Caching in Next.js</a><small>the four layers, how to opt in, how to invalidate</small></li>
+          <li><a href="https://nextjs.org/docs/app/guides/incremental-static-regeneration" target="_blank" rel="noopener">Incremental Static Regeneration</a><small>time-based and on-demand revalidation</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://nextjs.org/docs/app/api-reference/file-conventions/loading" target="_blank" rel="noopener">loading.js — streaming a route segment</a><small>Suspense around a whole segment</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/07-nextjs-rendering" target="_blank" rel="noopener">Module 7 slides</a><small>the deck this video walks through</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>11</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Server actions</div>
+    <h2>A form that posts straight to a server function</h2>
+    <pre><code><span class="st">'use server'</span> <span class="cmt">// features/jobs/actions.ts</span>
+<span class="kw">export async function</span> <span class="fn">postJob</span>(prev: <span class="ty">FormState</span>, form: <span class="ty">FormData</span>): <span class="ty">Promise</span>&lt;<span class="ty">FormState</span>&gt; {
+  <span class="kw">const</span> session = <span class="kw">await</span> <span class="fn">verifySession</span>()                              <span class="cmt">// 1 · who is this?</span>
+  <span class="kw">if</span> (session.role !== <span class="st">'company'</span>) <span class="kw">return</span> { error: <span class="st">'Not allowed'</span> }       <span class="cmt">// 2 · may they?</span>
+
+  <span class="kw">const</span> input = NewJobSchema.<span class="fn">safeParse</span>(<span class="ty">Object</span>.<span class="fn">fromEntries</span>(form))       <span class="cmt">// 3 · is it valid?</span>
+  <span class="kw">if</span> (!input.success) <span class="kw">return</span> { error: <span class="st">'Check the highlighted fields'</span> }
+
+  <span class="kw">const</span> job = <span class="kw">await</span> <span class="fn">createJob</span>(session.employerId, input.data)
+  <span class="fn">revalidatePath</span>(<span class="st">'/jobs'</span>)                                           <span class="cmt">// the list now shows it</span>
+  <span class="fn">redirect</span>(`/jobs/${job.id}`)                                       <span class="cmt">// throws: nothing after it runs</span>
+}</code></pre>
+    <p class="say">Client side: <code>useActionState(postJob, {})</code> gives the form its action and a pending flag. It submits even before JS loads.</p>
+    <div class="key r">An action is a public endpoint. Authenticate, authorise and validate inside it — every time.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>12</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · The door and the side entrance</div>
+    <h2>Middleware checks for a wristband, not a password</h2>
+    <div class="two tight">
+      <div class="card w">
+        <h3 class="w">proxy.ts · middleware.ts before 16</h3>
+        <pre><code><span class="kw">export function</span> <span class="fn">proxy</span>(req: <span class="ty">NextRequest</span>) {
+  <span class="kw">if</span> (!req.cookies.<span class="fn">has</span>(<span class="st">'session'</span>)) {
+    <span class="kw">const</span> login = <span class="kw">new</span> <span class="ty">URL</span>(<span class="st">'/login'</span>, req.url)
+    <span class="kw">return</span> NextResponse.<span class="fn">redirect</span>(login)
+  }
+  <span class="kw">return</span> NextResponse.<span class="fn">next</span>()
+}
+
+<span class="kw">export const</span> config = {
+  matcher: [<span class="st">'/dashboard/:path*'</span>],
+}</code></pre>
+      </div>
+      <div class="card b">
+        <h3 class="b">route.ts · the side entrance</h3>
+        <pre><code><span class="cmt">// app/api/jobs/[id]/route.ts</span>
+<span class="kw">type</span> <span class="ty">Ctx</span> = { params: <span class="ty">Promise</span>&lt;{ id: <span class="ty">string</span> }&gt; }
+
+<span class="kw">export async function</span> <span class="fn">GET</span>(
+  _req: <span class="ty">Request</span>,
+  { params }: <span class="ty">Ctx</span>,
+) {
+  <span class="kw">const</span> { id } = <span class="kw">await</span> params
+  <span class="kw">const</span> job = <span class="kw">await</span> <span class="fn">getJob</span>(id)
+  <span class="kw">return</span> <span class="ty">Response</span>.<span class="fn">json</span>(<span class="fn">toPublicJob</span>(job))
+}</code></pre>
+      </div>
+    </div>
+    <div class="key r">A cookie being present proves nothing about who sent it. Middleware makes the cheap, optimistic redirect; the real check lives next to the data, in <code>verifySession()</code> — two slides on.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>13</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Sessions that survive a refresh</div>
+    <h2>Put the session where the server can read it</h2>
+    <div class="fig" style="max-width:1000px">
+      <svg viewBox="0 0 1000 200" role="img" aria-label="Two timelines after a refresh: a token in localStorage produces a logged-out flash; an httpOnly cookie lets the server render the dashboard on the first byte">
+        <text x="0" y="14" class="lbl b" font-size="13" style="fill:#F8717A">Token in localStorage</text>
+        <rect x="0" y="24" width="205" height="56" rx="9" fill="#121C30" stroke="#243349"/>
+        <text x="102" y="47" text-anchor="middle" class="lbl b" font-size="13">Refresh</text>
+        <text x="102" y="65" text-anchor="middle" class="lbl s" font-size="11">no token sent — JS hasn't run</text>
+        <path class="draw" pathLength="1" d="M205,52 L262,52" stroke="#64748B" fill="none"/>
+        <rect x="265" y="24" width="205" height="56" rx="9" fill="#121C30" stroke="#243349"/>
+        <text x="367" y="47" text-anchor="middle" class="lbl b" font-size="13">Server renders</text>
+        <text x="367" y="65" text-anchor="middle" class="lbl s" font-size="11">the logged-out shell</text>
+        <path class="draw" pathLength="1" d="M470,52 L527,52" stroke="#64748B" fill="none"/>
+        <rect x="530" y="24" width="205" height="56" rx="9" fill="#121C30" stroke="#243349"/>
+        <text x="632" y="47" text-anchor="middle" class="lbl b" font-size="13">JS loads, reads token</text>
+        <text x="632" y="65" text-anchor="middle" class="lbl s" font-size="11">then fetches the user</text>
+        <path class="draw" pathLength="1" d="M735,52 L792,52" stroke="#F8717A" fill="none"/>
+        <rect x="795" y="24" width="205" height="56" rx="9" fill="#121C30" stroke="#F8717A"/>
+        <text x="897" y="47" text-anchor="middle" class="lbl b" font-size="13">Re-render</text>
+        <text x="897" y="65" text-anchor="middle" class="lbl s" font-size="11">flash of the wrong page</text>
+        <text x="0" y="124" class="lbl b" font-size="13" style="fill:#34D399">httpOnly session cookie</text>
+        <rect x="0" y="134" width="205" height="56" rx="9" fill="#121C30" stroke="#243349"/>
+        <text x="102" y="157" text-anchor="middle" class="lbl b" font-size="13">Refresh</text>
+        <text x="102" y="175" text-anchor="middle" class="lbl s" font-size="11">the cookie rides along</text>
+        <path class="draw" pathLength="1" d="M205,162 L262,162" stroke="#64748B" fill="none"/>
+        <rect x="265" y="134" width="205" height="56" rx="9" fill="#121C30" stroke="#243349"/>
+        <text x="367" y="157" text-anchor="middle" class="lbl b" font-size="13">Server verifies</text>
+        <text x="367" y="175" text-anchor="middle" class="lbl s" font-size="11">verifySession() → the user</text>
+        <path class="draw" pathLength="1" d="M470,162 L527,162" stroke="#64748B" fill="none"/>
+        <rect x="530" y="134" width="205" height="56" rx="9" fill="#121C30" stroke="#243349"/>
+        <text x="632" y="157" text-anchor="middle" class="lbl b" font-size="13">HTML is the dashboard</text>
+        <text x="632" y="175" text-anchor="middle" class="lbl s" font-size="11">their applications, first byte</text>
+        <path class="draw" pathLength="1" d="M735,162 L792,162" stroke="#34D399" fill="none"/>
+        <rect x="795" y="134" width="205" height="56" rx="9" fill="#121C30" stroke="#34D399"/>
+        <text x="897" y="157" text-anchor="middle" class="lbl b" font-size="13">No flash</text>
+        <text x="897" y="175" text-anchor="middle" class="lbl s" font-size="11">and page JS can't read it</text>
+      </svg>
+    </div>
+    <div class="key">The flags that make a cookie a session, not a liability: <code>HttpOnly</code> so scripts can't read it, <code>Secure</code>, <code>SameSite=Lax</code>, a short <code>Max-Age</code>, and a value that's signed or encrypted.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>14</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Check next to the data</div>
+    <h2>One <code>verifySession()</code>, wherever data is read</h2>
+    <div class="two tight" style="grid-template-columns:1.25fr 1fr">
+      <div class="card g">
+        <h3 class="g">lib/session.ts · the data access layer</h3>
+        <pre><code><span class="kw">import</span> <span class="st">'server-only'</span>
+<span class="kw">import</span> { cache } <span class="kw">from</span> <span class="st">'react'</span>
+<span class="kw">import</span> { cookies } <span class="kw">from</span> <span class="st">'next/headers'</span>
+
+<span class="kw">export const</span> verifySession = <span class="fn">cache</span>(<span class="kw">async</span> () =&gt; {
+  <span class="kw">const</span> raw = (<span class="kw">await</span> <span class="fn">cookies</span>()).<span class="fn">get</span>(<span class="st">'session'</span>)?.value
+  <span class="kw">const</span> session = raw ? <span class="kw">await</span> <span class="fn">decrypt</span>(raw) : <span class="kw">null</span>
+  <span class="kw">if</span> (!session) <span class="fn">redirect</span>(<span class="st">'/login'</span>)
+  <span class="kw">return</span> session <span class="cmt">// { userId, role, employerId }</span>
+})</code></pre>
+      </div>
+      <div class="card a">
+        <h3 class="cy">Where it gets called</h3>
+        <pre><code><span class="no">// ✗ only in (dashboard)/layout.tsx</span>
+<span class="cmt">// layouts don't re-run on client</span>
+<span class="cmt">// navigation, and an action is its</span>
+<span class="cmt">// own entry point — both skip it</span>
+
+<span class="ok">// ✓ in every page, action and query</span>
+<span class="kw">const</span> s = <span class="kw">await</span> <span class="fn">verifySession</span>()
+<span class="kw">const</span> apps = <span class="kw">await</span> <span class="fn">getApplications</span>(s)</code></pre>
+      </div>
+    </div>
+    <div class="key g"><code>cache()</code> makes five calls in one render cost one cookie read and one lookup. <code>server-only</code> turns importing this file from a Client Component into a build error instead of a leak.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>15</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Read next</div>
+    <h2>Writes and sessions, read properly</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://nextjs.org/docs/app/getting-started/mutating-data" target="_blank" rel="noopener">Updating data — Next.js</a><small>server functions, forms and revalidation</small></li>
+          <li><a href="https://nextjs.org/docs/app/guides/authentication" target="_blank" rel="noopener">Authentication — Next.js</a><small>sessions, the data access layer, verifySession</small></li>
+          <li><a href="https://nextjs.org/docs/app/guides/data-security" target="_blank" rel="noopener">Data security — Next.js</a><small>why every action authenticates, authorises and validates</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie" target="_blank" rel="noopener">Set-Cookie — MDN</a><small>HttpOnly, Secure, SameSite, Max-Age</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://nextjs.org/docs/app/getting-started/route-handlers-and-middleware" target="_blank" rel="noopener">Route handlers and middleware — Next.js</a><small>the side entrance and the door</small></li>
+          <li><a href="https://github.com/vercel/next.js/security/advisories/GHSA-f82v-jwr5-mffw" target="_blank" rel="noopener">The 2025 middleware bypass advisory</a><small>why middleware is never the real lock</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 4</div><div class="cx-page"><b>16</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Metadata in the first byte</div>
+    <h2>Found in public, invisible behind login</h2>
+    <div class="two tight" style="grid-template-columns:1.2fr 1fr">
+      <div class="card b">
+        <h3 class="b">/jobs/[id] · be found</h3>
+        <pre><code><span class="kw">export async function</span> <span class="fn">generateMetadata</span>(
+  { params }: <span class="ty">Props</span>,
+): <span class="ty">Promise</span>&lt;<span class="ty">Metadata</span>&gt; {
+  <span class="kw">const</span> job = <span class="kw">await</span> <span class="fn">getJob</span>((<span class="kw">await</span> params).id)
+  <span class="kw">return</span> {
+    title: `${job.title} at ${job.employer.name}`,
+    description: job.summary,
+    alternates: { canonical: `/jobs/${job.id}` },
+  }
+}
+<span class="cmt">// the page also renders JobPosting JSON-LD</span>
+<span class="cmt">// in a &lt;script type="application/ld+json"&gt;</span></code></pre>
       </div>
       <div class="card r">
-        <h3 class="r">Rich-text editor</h3>
-        <div class="key r" style="margin-top:4px; font-size:min(1.75vw,19px)"><b>Key decision:</b> a document model is the source of truth; contenteditable is only the view.</div>
-        <p style="margin-top:14px"><b>Because</b> the DOM can't give you reliable undo, selection or saving on its own.</p>
-        <p style="margin-top:10px"><b>Say before they ask:</b> edits as transactions, which gives you undo; IME composition and selection; paste sanitized against XSS. Name OT and CRDTs for collaboration, then scope it out unless asked.</p>
+        <h3 class="r">(dashboard) · stay out</h3>
+        <pre><code><span class="cmt">// app/(dashboard)/layout.tsx</span>
+<span class="kw">export const</span> metadata: <span class="ty">Metadata</span> = {
+  title: <span class="st">'Dashboard'</span>,
+  robots: { index: <span class="kw">false</span>, follow: <span class="kw">false</span> },
+}</code></pre>
+        <p style="margin-top:12px">Every page in the group inherits it. A crawler without a session never gets past the redirect anyway — <b>this is the second lock, not the first</b>.</p>
       </div>
     </div>
+    <div class="key w"><code>robots.txt</code> asks crawlers not to look — it's public and only advisory. <code>noindex</code> tells them not to list. Only auth keeps a page private. The dashboard gets the last two.</div>
 </section>
 
-  <!-- L5 · READ NEXT -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 5</div><div class="cx-page"><b>20</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Read next</div>
-    <h2>Go deeper: shops, dashboards and editors</h2>
+  <section class="slide" data-chip="MODULE 07 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 4</div><div class="cx-page"><b>17</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · When NOT to reach for Next.js</div>
+    <h2>No route needs a server? Don't run one</h2>
+    <table class="grid">
+      <tr><th>If you're building</th><th>Reach for</th><th>Because</th></tr>
+      <tr><td><b>An admin tool, or a dashboard that lives entirely behind a login</b></td><td>A Vite SPA and your API</td><td>Nothing to index, no first visit to win — static hosting, one less runtime to patch</td></tr>
+      <tr><td><b>A canvas editor, a whiteboard, a spreadsheet</b></td><td>A client-side app</td><td>Nearly every component would be <code>'use client'</code>; the server half buys nothing</td></tr>
+      <tr><td><b>Docs or a blog with little interaction</b></td><td>A static-site generator</td><td>Prebuilt HTML, near-zero JS, no server at all</td></tr>
+      <tr><td><b>A page inside an existing Rails, Django or Laravel app</b></td><td>Its templates, plus islands of React</td><td>A second server tier is a second deploy and an extra network hop</td></tr>
+      <tr><td><b>An embeddable widget, an extension, an offline-first app</b></td><td>A bundler and a library build</td><td>There's no request to render on</td></tr>
+    </table>
+    <div class="key g">Rasmi's verdict: the public job pages need it — search, first paint, shared links. The dashboard alone wouldn't; it rides along because it shares the session, the components and the domain.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 4</div><div class="cx-page"><b>18</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Read next</div>
+    <h2>Be found — or choose not to need Next.js</h2>
     <div class="two">
       <div class="card a">
         <h3 class="cy">References</h3>
-        <ul class="plist" style="margin-top:4px">
-          <li><a href="https://datatracker.ietf.org/doc/draft-ietf-httpapi-idempotency-key-header/" target="_blank" rel="noopener" onclick="event.stopPropagation()">The Idempotency-Key HTTP header (IETF draft) ↗</a><small>making a retried POST safe</small></li>
-          <li><a href="https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary" target="_blank" rel="noopener" onclick="event.stopPropagation()">Error boundaries — React reference ↗</a><small>one per dashboard widget</small></li>
-          <li><a href="https://prosemirror.net/docs/guide/" target="_blank" rel="noopener" onclick="event.stopPropagation()">ProseMirror guide ↗</a><small>a document model and transactions, in depth</small></li>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://nextjs.org/docs/app/getting-started/metadata-and-og-images" target="_blank" rel="noopener">Metadata and OG images — Next.js</a><small>metadata in the first byte</small></li>
+          <li><a href="https://developers.google.com/search/docs/appearance/structured-data/job-posting" target="_blank" rel="noopener">Job posting structured data — Google</a><small>the JSON-LD that gets a listing into job search</small></li>
+          <li><a href="https://developers.google.com/search/docs/crawling-indexing/block-indexing" target="_blank" rel="noopener">Block indexing with noindex — Google</a><small>robots.txt asks; noindex tells; auth protects</small></li>
         </ul>
       </div>
-      <div class="card g">
-        <h3 class="g">Resources</h3>
-        <ul class="plist" style="margin-top:4px">
-          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API" target="_blank" rel="noopener" onclick="event.stopPropagation()">Canvas API — MDN ↗</a><small>when an SVG chart has too many points</small></li>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://nextjs.org/docs/app/guides/static-exports" target="_blank" rel="noopener">Static exports — Next.js</a><small>what output: &#x27;export&#x27; keeps and drops</small></li>
+          <li><a href="https://vite.dev/guide/" target="_blank" rel="noopener">Vite — getting started</a><small>the SPA you reach for when no route needs a server</small></li>
         </ul>
       </div>
     </div>
 </section>
 
-  <!-- CLOSING -->
-  <section class="slide" data-chip="MODULE 11 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 11 · VIDEO 5</div><div class="cx-page"><b>21</b> / 21</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Module 11 · done</div>
-    <h2>A design round, run to a script</h2>
+  <section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>19</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Build · Port the job board</div>
+    <h2>The route map is the spec</h2>
+    <table class="grid">
+      <tr><th>Route</th><th>Strategy</th><th>Why</th><th>Fresh after a change via</th></tr>
+      <tr><td><code>/</code></td><td><b class="p">Static, ISR hourly</b></td><td>Same for everyone; must be fast and indexable</td><td>The timer</td></tr>
+      <tr><td><code>/jobs</code></td><td><b class="w">Dynamic, streamed</b></td><td>Filters live in the query string</td><td>Cached data tagged <code>jobs</code>, revalidated by <code>postJob</code></td></tr>
+      <tr><td><code>/jobs/[id]</code></td><td><b class="p">Static + ISR, 200 at build</b></td><td>Search, shared links, JobPosting data</td><td><code>editJob</code> revalidates its path or its tag</td></tr>
+      <tr><td><code>/companies/[slug]</code></td><td><b class="p">Static + ISR</b></td><td>The employer page is searched for too</td><td>The company-profile action</td></tr>
+      <tr><td><code>/login</code></td><td><b class="b">Static</b></td><td>No data at all</td><td>—</td></tr>
+      <tr><td><code>/dashboard/**</code></td><td><b class="w">Dynamic, streamed, noindex</b></td><td>Different for every user</td><td><code>apply</code>, <code>withdraw</code>, <code>saveJob</code> actions</td></tr>
+      <tr><td><code>/api/jobs</code></td><td><b class="g">Route handler</b></td><td>The partner feed and the mobile app</td><td>Follows the data cache</td></tr>
+    </table>
+    <p class="say">Fill in the last column before you write a line of code — it's the column that turns into bugs.</p>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>20</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Build · What done looks like</div>
+    <h2>Port it, then prove every route</h2>
+    <div class="two tight">
+      <div class="card a">
+        <h3 class="cy">app/ — two route groups</h3>
+        <pre><code>app/
+├─ layout.tsx          <span class="cmt">title template</span>
+├─ (public)/
+│  ├─ page.tsx         <span class="cmt">/</span>
+│  ├─ jobs/page.tsx    <span class="cmt">/jobs</span>
+│  ├─ jobs/[id]/       <span class="cmt">/jobs/[id]</span>
+│  └─ companies/[slug]/
+├─ (auth)/login/
+├─ (dashboard)/
+│  ├─ layout.tsx       <span class="cmt">noindex</span>
+│  └─ dashboard/…      <span class="cmt">seeker, company</span>
+├─ api/jobs/route.ts
+└─ robots.ts · sitemap.ts
+proxy.ts               <span class="cmt">the door</span></code></pre>
+      </div>
+      <div class="card g">
+        <h3 class="g">Done when</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li>View source on a job page shows its content<small>title, salary and the JobPosting JSON-LD</small></li>
+          <li>Refreshing the dashboard never flashes logged-out<small>the session is read on the server</small></li>
+          <li>No cookie, no dashboard<small><code>curl</code> gets a redirect to <code>/login</code></small></li>
+          <li>A new job shows on <code>/jobs</code> without a redeploy<small>revalidation, not a rebuild</small></li>
+        </ul>
+      </div>
+    </div>
+    <p class="say">Stage: <code>module-7/next-rendering</code> — same features, same domain types, new rendering.</p>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>21</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Read next</div>
+    <h2>Everything the port leans on</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://nextjs.org/docs/app/api-reference/file-conventions/route-groups" target="_blank" rel="noopener">Route groups — Next.js</a><small>(public) and (dashboard), two layouts, one URL space</small></li>
+          <li><a href="https://nextjs.org/docs/app/api-reference/functions/generate-static-params" target="_blank" rel="noopener">generateStaticParams</a><small>the 200 jobs built at deploy</small></li>
+          <li><a href="https://nextjs.org/docs/app/api-reference/functions/revalidateTag" target="_blank" rel="noopener">revalidateTag</a><small>a new job on /jobs without a redeploy</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener">Rasmi — the job board repo</a><small>the port starts from your module 6 stage</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/07-nextjs-rendering" target="_blank" rel="noopener">Module 7 slides</a><small>the deck this video walks through</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>22</b> / 22</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Module 07 · done</div>
+    <h2>A strategy per route, defended out loud</h2>
     <div class="two">
       <div class="card a">
         <h3 class="cy">What you can now do</h3>
         <ul class="plist" style="margin-top:4px">
-          <li>Run 45 minutes to RADIO<small>requirements, architecture, data model, interface, optimizations, on a clock</small></li>
-          <li>Ask the questions that fork the design<small>scale, devices, offline, freshness, SEO, accessibility</small></li>
-          <li>Draw state, data flow and contracts<small>cursor pages, normalized responses, one error shape</small></li>
-          <li>Defend how a codebase scales<small>modular monolith, monorepo, micro-frontends, and the trigger for each</small></li>
-          <li>Walk six common prompts<small>feed, autocomplete, chat, e-commerce, dashboard, editor</small></li>
+          <li>Draw the server/client boundary on purpose<small>server by default, <code>'use client'</code> at the leaves</small></li>
+          <li>Pick SSG, ISR, SSR, streaming or CSR per route<small>and point at the line that chose it</small></li>
+          <li>Find a stale-data bug by naming its cache<small>then clear it by path or by tag</small></li>
+          <li>Write through actions with the checks inside<small>the real auth check sits next to the data</small></li>
+          <li>Say no to Next.js when no route needs a server</li>
         </ul>
       </div>
-      <div class="card b">
-        <h3 class="b">Next · Module 12 — The Capstone</h3>
-        <p>Assembly week, not build week: one deployed job board you can defend line by line. This module's trade-offs become its architecture story.</p>
-        <p style="margin-top:12px"><b>Before you move on:</b> pick one prompt from Lessons 4 and 5, set a 45-minute timer, and run RADIO out loud on paper. Then do it again with a different prompt.</p>
+      <div>
+        <div class="card g">
+          <h3 class="g">Deliverable</h3>
+          <p>Rasmi on the App Router: public pages static and indexable, the dashboard per-user and <code>noindex</code>, and a route map that names every route's strategy.</p>
+        </div>
+        <div class="card b" style="margin-top:18px">
+          <h3 class="b">Next · Module 08 — Performance, Testing &amp; Security</h3>
+          <p>You chose these strategies for speed. Next, you prove it with numbers — and keep it proven with tests.</p>
+        </div>
       </div>
     </div>
 </section>
@@ -884,7 +946,7 @@
     else if(k==='f'){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen();}
     else if(k==='p'){slides.forEach(s=>s.querySelectorAll('.frag').forEach(el=>el.classList.add('on')));window.print();}
   });
-  document.getElementById('stage').addEventListener('click',e=>{ e.clientX>innerWidth/2?next():prev(); });
+  document.getElementById('stage').addEventListener('click',e=>{ if(e.target.closest('a')) return; e.clientX>innerWidth/2?next():prev(); });
   render();
 </script>
 <!--catalyst-brand:copy-->

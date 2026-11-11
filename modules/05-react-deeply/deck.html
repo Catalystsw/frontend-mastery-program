@@ -285,30 +285,38 @@
 <div id="bar"></div>
 <div id="stage">
 <!-- 1 · TITLE -->
-<section class="slide" style="justify-content:center" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>01</b> / 25</div><!--/catalyst-brand:chrome-->
+<section class="slide" style="justify-content:center" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>01</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 05 · React, Deeply</div>
     <h1>Explain Every<br>Re-render</h1>
-    <div class="sub">How React decides what runs and when, ending with a profiler and a fix that isn't memo.</div>
+    <div class="sub">How React decides what runs and when, the components an interviewer asks for live, and a profiler with a fix that isn't memo.</div>
     <div class="fig" style="max-width:1020px">
-      <svg viewBox="0 0 1052 70" role="img" aria-label="Five lessons: render model and transitions, re-renders and keys, hooks, context and boundaries, build and profile the feed">
+      <svg viewBox="0 0 1020 166" role="img" aria-label="Nine lessons: the render model, re-renders and keys, hooks and closures, component API design, build the autocomplete, build the overlays, forms without a library, context and boundaries, build and profile the feed">
         <g>
-          <rect x="0" y="16" width="196" height="38" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="98" y="40" text-anchor="middle" class="lbl b">1 · Render model</text>
-          <rect x="214" y="16" width="196" height="38" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="312" y="40" text-anchor="middle" class="lbl b">2 · Re-renders</text>
-          <rect x="428" y="16" width="196" height="38" rx="9" fill="#121C30" stroke="#2196F3"/>
-          <text x="526" y="40" text-anchor="middle" class="lbl b">3 · Hooks</text>
-          <rect x="642" y="16" width="196" height="38" rx="9" fill="#121C30" stroke="#FBBF24"/>
-          <text x="740" y="40" text-anchor="middle" class="lbl b">4 · Context &amp; boundaries</text>
-          <rect x="856" y="16" width="196" height="38" rx="9" fill="#121C30" stroke="#A78BFA"/>
-          <text x="954" y="40" text-anchor="middle" class="lbl b">5 · Build · Profile it</text>
+          <rect x="0" y="4" width="326" height="40" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="163" y="29" text-anchor="middle" class="lbl b" font-size="12">1 · Render model</text>
+          <rect x="347" y="4" width="326" height="40" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="510" y="29" text-anchor="middle" class="lbl b" font-size="12">2 · Re-renders &amp; keys</text>
+          <rect x="694" y="4" width="326" height="40" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="857" y="29" text-anchor="middle" class="lbl b" font-size="12">3 · Hooks &amp; closures</text>
+          <rect x="0" y="62" width="326" height="40" rx="9" fill="#121C30" stroke="#2196F3"/>
+          <text x="163" y="87" text-anchor="middle" class="lbl b" font-size="12">4 · Component API design</text>
+          <rect x="347" y="62" width="326" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="510" y="87" text-anchor="middle" class="lbl b" font-size="12">5 · Build · Autocomplete</text>
+          <rect x="694" y="62" width="326" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="857" y="87" text-anchor="middle" class="lbl b" font-size="12">6 · Build · Overlays</text>
+          <rect x="0" y="120" width="326" height="40" rx="9" fill="#121C30" stroke="#2196F3"/>
+          <text x="163" y="145" text-anchor="middle" class="lbl b" font-size="12">7 · Forms, no library</text>
+          <rect x="347" y="120" width="326" height="40" rx="9" fill="#121C30" stroke="#FBBF24"/>
+          <text x="510" y="145" text-anchor="middle" class="lbl b" font-size="12">8 · Context &amp; boundaries</text>
+          <rect x="694" y="120" width="326" height="40" rx="9" fill="#121C30" stroke="#A78BFA"/>
+          <text x="857" y="145" text-anchor="middle" class="lbl b" font-size="12">9 · Build · Profile the feed</text>
         </g>
       </svg>
     </div>
 </section>
 
 <!-- L1a · RENDERING IS A FUNCTION CALL -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>02</b> / 25</div><!--/catalyst-brand:chrome-->
+<section class="slide" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>02</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · The render model</div>
     <h2>Rendering is React calling your function</h2>
     <div class="fig" style="max-width:1000px">
@@ -342,7 +350,7 @@
 </section>
 
 <!-- L1b · RENDER VS COMMIT -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>03</b> / 25</div><!--/catalyst-brand:chrome-->
+<section class="slide" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>03</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Render vs commit</div>
     <h2>Render can be thrown away. Commit can't.</h2>
     <table class="grid">
@@ -357,7 +365,7 @@
 </section>
 
 <!-- L1c · FIBER AND LANES -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>04</b> / 25</div><!--/catalyst-brand:chrome-->
+<section class="slide" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>04</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Fiber and lanes, plainly</div>
     <h2>Pausable work, ranked by urgency</h2>
     <div class="fig" style="max-width:1020px">
@@ -399,7 +407,7 @@
 </section>
 
 <!-- L1d · useTransition -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>05</b> / 25</div><!--/catalyst-brand:chrome-->
+<section class="slide" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>05</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · useTransition</div>
     <h2>Keep typing urgent. Let the list wait.</h2>
     <pre><code><span class="kw">function</span> <span class="fn">SearchBox</span>({ onSearch }: { onSearch: (q: <span class="ty">string</span>) =&gt; <span class="kw">void</span> }) {
@@ -418,7 +426,7 @@
 </section>
 
 <!-- L1z · READ NEXT -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 1" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>06</b> / 25</div><!--/catalyst-brand:chrome-->
+<section class="slide" data-chip="MODULE 05 · VIDEO 1" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>06</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Read next</div>
     <h2>Where the render model is written down</h2>
     <div class="two">
@@ -440,7 +448,7 @@
 </section>
 
 <!-- L2a · FOUR REASONS -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 2</div><div class="cx-page"><b>07</b> / 25</div><!--/catalyst-brand:chrome-->
+<section class="slide" data-chip="MODULE 05 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 2</div><div class="cx-page"><b>07</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Anatomy of a re-render</div>
     <h2>Four reasons a component runs again</h2>
     <div class="three" style="grid-template-columns:repeat(4,1fr); max-width:1200px">
@@ -465,7 +473,7 @@
 </section>
 
 <!-- L2b · RENDERING FLOWS DOWN -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 2</div><div class="cx-page"><b>08</b> / 25</div><!--/catalyst-brand:chrome-->
+<section class="slide" data-chip="MODULE 05 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 2</div><div class="cx-page"><b>08</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Rendering flows down</div>
     <h2>One setState re-runs everything below it</h2>
     <div class="fig" style="max-width:860px">
@@ -501,11 +509,11 @@
         <text x="22" y="286" class="lbl s">did not render</text>
       </svg>
     </div>
-    <div class="key">Rendering is not repainting. A card that returns the same JSX gets no DOM writes at commit. The waste is 200 function calls and a diff on every keystroke, which is exactly what the profiler shows in lesson 5.</div>
+    <div class="key">Rendering is not repainting. A card that returns the same JSX gets no DOM writes at commit. The waste is 200 function calls and a diff on every keystroke, which is exactly what the profiler shows in lesson 9.</div>
 </section>
 
 <!-- L2c · KEYS -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 2</div><div class="cx-page"><b>09</b> / 25</div><!--/catalyst-brand:chrome-->
+<section class="slide" data-chip="MODULE 05 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 2</div><div class="cx-page"><b>09</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Keys and reconciliation</div>
     <h2>Index keys put state on the wrong row</h2>
     <div class="two tight">
@@ -561,7 +569,7 @@
 </section>
 
 <!-- L2z · READ NEXT -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 2" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 2</div><div class="cx-page"><b>10</b> / 25</div><!--/catalyst-brand:chrome-->
+<section class="slide" data-chip="MODULE 05 · VIDEO 2" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 2</div><div class="cx-page"><b>10</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Read next</div>
     <h2>Re-renders and keys, from the source</h2>
     <div class="two">
@@ -583,7 +591,7 @@
 </section>
 
 <!-- L3a · STATE IS A SNAPSHOT -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 3</div><div class="cx-page"><b>11</b> / 25</div><!--/catalyst-brand:chrome-->
+<section class="slide" data-chip="MODULE 05 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 3</div><div class="cx-page"><b>11</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Hooks and the closure trap</div>
     <h2>Each render sees its own constant state</h2>
     <div class="two">
@@ -614,7 +622,7 @@
 </section>
 
 <!-- L3b · THE CLOSURE TRAP -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 3</div><div class="cx-page"><b>12</b> / 25</div><!--/catalyst-brand:chrome-->
+<section class="slide" data-chip="MODULE 05 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 3</div><div class="cx-page"><b>12</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Stale closures in effects</div>
     <h2>An effect that runs once remembers the first render</h2>
     <div class="two">
@@ -642,7 +650,7 @@
 </section>
 
 <!-- L3c · DERIVE, DON'T SYNC -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 3</div><div class="cx-page"><b>13</b> / 25</div><!--/catalyst-brand:chrome-->
+<section class="slide" data-chip="MODULE 05 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 3</div><div class="cx-page"><b>13</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · The effect you might not need</div>
     <h2>Derive it. Don't synchronise it.</h2>
     <div class="two">
@@ -671,7 +679,7 @@
 </section>
 
 <!-- L3z · READ NEXT -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 3" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 3</div><div class="cx-page"><b>14</b> / 25</div><!--/catalyst-brand:chrome-->
+<section class="slide" data-chip="MODULE 05 · VIDEO 3" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 3</div><div class="cx-page"><b>14</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Read next</div>
     <h2>Effects, refs, and the effect you delete</h2>
     <div class="two">
@@ -692,9 +700,364 @@
     </div>
 </section>
 
-<!-- L4a · ONE BIG CONTEXT -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>15</b> / 25</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Why context re-rendered everything</div>
+<!-- L4a · FIVE PROP CATEGORIES -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>15</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Props are the API</div>
+    <h2>Every prop has one of five jobs</h2>
+    <table class="grid">
+      <tr><th>Category</th><th>Its job</th><th>Rasmi's <code>JobCard</code></th></tr>
+      <tr><td><b class="cy">Data</b></td><td>What the component shows</td><td><code>job={job}</code>, <code>matchScore={0.82}</code></td></tr>
+      <tr><td><b class="g">Events</b></td><td>What the parent hears about</td><td><code>onSave={(id) =&gt; …}</code>, <code>onApply</code></td></tr>
+      <tr><td><b class="w">Config</b></td><td>How it behaves</td><td><code>density="compact"</code>, <code>headingLevel={3}</code></td></tr>
+      <tr><td><b class="p">Style</b></td><td>How it looks, from outside</td><td><code>className</code>, <code>variant="featured"</code></td></tr>
+      <tr><td><b class="b">Slots</b></td><td>Whose markup goes where</td><td><code>actions={&lt;SaveButton /&gt;}</code>, <code>children</code></td></tr>
+    </table>
+    <div class="key r"><b>The anti-pattern is boolean soup:</b> <code>showLogo</code>, <code>showSalary</code>, <code>isFeatured</code>, <code>isCompact</code>, <code>hideActions</code> — thirty-two combinations, and nobody tested them all.</div>
+</section>
+
+<!-- L4b · SLOTS AND COMPOUND COMPONENTS -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>16</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Slots and compound components</div>
+    <h2>Let the consumer own the markup</h2>
+    <pre><code>&lt;<span class="ty">Select</span> value={jobType} onChange={setJobType}&gt;
+  &lt;<span class="ty">Select.Trigger</span> placeholder=<span class="st">"Job type"</span> /&gt;
+  &lt;<span class="ty">Select.List</span>&gt;
+    &lt;<span class="ty">Select.Option</span> value=<span class="st">"full-time"</span>&gt;Full-time&lt;/<span class="ty">Select.Option</span>&gt;
+    &lt;<span class="ty">Select.Option</span> value=<span class="st">"contract"</span>&gt;Contract&lt;/<span class="ty">Select.Option</span>&gt;
+    &lt;<span class="ty">Select.Option</span> value=<span class="st">"internship"</span>&gt;Internship&lt;/<span class="ty">Select.Option</span>&gt;
+  &lt;/<span class="ty">Select.List</span>&gt;
+&lt;/<span class="ty">Select</span>&gt;</code></pre>
+    <div class="two">
+      <div class="card g">
+        <h3 class="g">Share state through context</h3>
+        <p>The root owns the state and provides it; each <code>Select.Option</code> reads it with <code>useContext</code> — at any depth, through any wrapper the consumer adds.</p>
+      </div>
+      <div class="card r">
+        <h3 class="r">Not <code>cloneElement</code></h3>
+        <p><code>Children.map</code> plus <code>cloneElement</code> only reaches direct children. Wrap one option in a layout <code>div</code> and it silently stops working.</p>
+      </div>
+    </div>
+</section>
+
+<!-- L4c · CONTROLLED VS UNCONTROLLED -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>17</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Controlled vs uncontrolled</div>
+    <h2>Who owns the value? Support both.</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">Controlled · the parent owns it</h3>
+        <p>Validate, format or sync it on every keystroke.</p>
+        <pre><code>&lt;<span class="ty">SearchBox</span> value={q} onChange={setQ} /&gt;</code></pre>
+      </div>
+      <div class="card b">
+        <h3 class="b">Uncontrolled · the component owns it</h3>
+        <p>Seed it once, read it on submit. No parent re-render per key.</p>
+        <pre><code>&lt;<span class="ty">SearchBox</span> defaultValue=<span class="st">"react"</span> /&gt;</code></pre>
+      </div>
+    </div>
+    <pre><code><span class="kw">function</span> <span class="fn">useControllableState</span>&lt;<span class="ty">T</span>&gt;(value: <span class="ty">T</span> | <span class="kw">undefined</span>, defaultValue: <span class="ty">T</span>, onChange?: (v: <span class="ty">T</span>) =&gt; <span class="kw">void</span>) {
+  <span class="kw">const</span> [inner, setInner] = <span class="fn">useState</span>(defaultValue);
+  <span class="kw">const</span> isControlled = value !== <span class="kw">undefined</span>;
+  <span class="kw">const</span> current = isControlled ? value : inner;
+  <span class="kw">function</span> <span class="fn">set</span>(next: <span class="ty">T</span>) {
+    <span class="kw">if</span> (!isControlled) <span class="fn">setInner</span>(next);   <span class="cmt">// uncontrolled: keep it ourselves</span>
+    onChange?.(next);                     <span class="cmt">// either way: tell the parent</span>
+  }
+  <span class="kw">return</span> [current, set] <span class="kw">as const</span>;
+}</code></pre>
+</section>
+
+<!-- L4d · THREE LAYERS OF TOKENS -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>18</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Design tokens</div>
+    <h2>A token is a decision with a name</h2>
+    <div class="fig" style="max-width:940px">
+      <svg viewBox="0 0 940 92" role="img" aria-label="Three token layers: primitive values feed semantic tokens, which components read">
+        <rect x="0" y="10" width="270" height="72" rx="10" fill="#121C30" stroke="#64748B"/>
+        <text x="135" y="40" text-anchor="middle" class="lbl b">Primitive · what it is</text>
+        <text x="135" y="62" text-anchor="middle" class="lbl">--blue-500: #2196F3</text>
+        <path class="draw" pathLength="1" d="M270,46 L330,46" stroke="#64748B" fill="none"/>
+        <rect x="335" y="10" width="270" height="72" rx="10" fill="#121C30" stroke="#22D3EE"/>
+        <text x="470" y="40" text-anchor="middle" class="lbl b">Semantic · what it's for</text>
+        <text x="470" y="62" text-anchor="middle" class="lbl">--color-accent</text>
+        <path class="draw" pathLength="1" d="M605,46 L665,46" stroke="#64748B" fill="none"/>
+        <rect x="670" y="10" width="270" height="72" rx="10" fill="#121C30" stroke="#34D399"/>
+        <text x="805" y="40" text-anchor="middle" class="lbl b">Component · where it's used</text>
+        <text x="805" y="62" text-anchor="middle" class="lbl">.button { background }</text>
+      </svg>
+    </div>
+    <pre><code>:root {
+  --blue-500: <span class="st">#2196F3</span>;  --red-500: <span class="st">#E5484D</span>;  --space-2: <span class="st">8px</span>;   <span class="cmt">/* primitives: raw values */</span>
+  --color-accent: <span class="fn">var</span>(--blue-500);                               <span class="cmt">/* semantic: what it means */</span>
+  --color-danger: <span class="fn">var</span>(--red-500);
+  --color-surface: <span class="st">#FFFFFF</span>;
+}
+[data-theme=<span class="st">"dark"</span>] { --color-surface: <span class="st">#0E1525</span>; }                <span class="cmt">/* a theme swaps the semantic layer */</span>
+.button { background: <span class="fn">var</span>(--color-accent); padding: <span class="fn">var</span>(--space-2); }</code></pre>
+    <div class="key">Components read semantic tokens only. Dark mode is a second set of semantic values — not a second stylesheet.</div>
+</section>
+
+<!-- L4e · CONTAINER QUERIES AND FLUID TYPE -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>19</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Container queries and fluid type</div>
+    <h2>Ask the container, not the window</h2>
+    <pre><code>.job-list { container-type: inline-size; }
+
+.job-card { display: grid; gap: <span class="fn">var</span>(--space-2); }                   <span class="cmt">/* narrow: stacked */</span>
+<span class="kw">@container</span> (min-width: <span class="st">36rem</span>) {
+  .job-card { grid-template-columns: <span class="st">4rem 1fr auto</span>; }               <span class="cmt">/* wide: logo · details · save */</span>
+}
+
+h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <span class="st">1.25rem + 2vw</span>, <span class="st">3rem</span>); }               <span class="cmt">/* fluid, with a floor and a ceiling */</span></code></pre>
+    <div class="key">The same <code>JobCard</code> sits in a narrow sidebar and a wide feed on one screen. A media query sees one window; a container query sees the space each card was actually given.</div>
+</section>
+
+<!-- L4z · READ NEXT -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 4" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>20</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Read next</div>
+    <h2>Component APIs, tokens and the container</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://react.dev/learn/sharing-state-between-components#controlled-and-uncontrolled-components" target="_blank" rel="noopener">Controlled and uncontrolled components — react.dev</a><small>who owns the value</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_containment/Container_queries" target="_blank" rel="noopener">Container queries — MDN</a><small>ask the container, not the window</small></li>
+          <li><a href="https://www.w3.org/community/design-tokens/" target="_blank" rel="noopener">Design Tokens Community Group — W3C</a><small>the shared format tokens are heading to</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard/tree/module-5/patterns/compound" target="_blank" rel="noopener">Compound Select — module-5/patterns/compound</a><small>a slot-based API, with tests</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+<!-- L5a · THE COMBOBOX CONTRACT -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 5</div><div class="cx-page"><b>21</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Build · The ARIA combobox</div>
+    <h2>The autocomplete, as the tree sees it</h2>
+    <pre><code>&lt;<span class="ty">label</span> htmlFor=<span class="st">"q"</span>&gt;Search jobs&lt;/<span class="ty">label</span>&gt;
+&lt;<span class="ty">input</span> id=<span class="st">"q"</span> role=<span class="st">"combobox"</span> value={query} onChange={onType} onKeyDown={onKey}
+  aria-autocomplete=<span class="st">"list"</span>
+  aria-expanded={open}
+  aria-controls=<span class="st">"q-list"</span>
+  aria-activedescendant={open &amp;&amp; active &gt;= <span class="st">0</span> ? <span class="st">'q-opt-'</span> + active : <span class="kw">undefined</span>} /&gt;
+&lt;<span class="ty">ul</span> id=<span class="st">"q-list"</span> role=<span class="st">"listbox"</span> aria-label=<span class="st">"Job suggestions"</span> hidden={!open}&gt;
+  {jobs.<span class="fn">map</span>((job, i) =&gt; (
+    &lt;<span class="ty">li</span> key={job.id} id={<span class="st">'q-opt-'</span> + i} role=<span class="st">"option"</span> aria-selected={i === active}
+        onMouseDown={e =&gt; e.<span class="fn">preventDefault</span>()} onClick={() =&gt; <span class="fn">choose</span>(job)}&gt;{job.title}&lt;/<span class="ty">li</span>&gt;
+  ))}
+&lt;/<span class="ty">ul</span>&gt;</code></pre>
+    <div class="key"><code>↓</code> <code>↑</code> move the active option (<code>↓</code> opens the list) · <code>Enter</code> chooses · <code>Escape</code> closes, a second one clears · typing keeps editing. DOM focus never leaves the input.</div>
+</section>
+
+<!-- L5b · THE RACE -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 5</div><div class="cx-page"><b>22</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Build · Race conditions</div>
+    <h2>Whichever response lands last wins</h2>
+    <p class="say">Debounce waits for typing to pause, so fewer requests start. It does nothing about the <b>order</b> they come back in.</p>
+    <div class="fig" style="max-width:940px">
+      <svg viewBox="0 0 940 170" role="img" aria-label="The request for re starts first and is slow; the request for react starts later and returns first; then the re response lands and overwrites the correct results">
+        <text x="770" y="14" text-anchor="end" class="lbl s">time</text>
+        <path d="M780,10 L930,10" stroke="#64748B" fill="none"/>
+        <text x="0" y="45" class="lbl b">types “re”</text>
+        <rect x="150" y="22" width="560" height="36" rx="8" fill="#121C30" stroke="#F8717A"/>
+        <text x="166" y="45" class="lbl">GET /api/jobs?q=re · slow · 420 ms</text>
+        <text x="0" y="105" class="lbl b">types “react”</text>
+        <rect x="300" y="82" width="250" height="36" rx="8" fill="#121C30" stroke="#34D399"/>
+        <text x="316" y="105" class="lbl">GET ?q=react · 180 ms</text>
+        <path class="nohead" d="M550,118 L550,142" stroke="#34D399" stroke-dasharray="3 3" fill="none"/>
+        <text x="550" y="160" text-anchor="middle" class="lbl" style="fill:#34D399">renders “react” results</text>
+        <path class="nohead" d="M710,58 L710,142" stroke="#F8717A" stroke-dasharray="3 3" fill="none"/>
+        <text x="718" y="160" class="lbl" style="fill:#F8717A">then “re” lands and overwrites</text>
+      </svg>
+    </div>
+    <div class="key w">Debounce decides how many requests run. Only cancelling — or ignoring — the stale one decides which result renders. You need both.</div>
+</section>
+
+<!-- L5c · DEBOUNCE AND ABORT -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 5</div><div class="cx-page"><b>23</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Build · Debounce and abort</div>
+    <h2>One effect: wait, fetch, cancel</h2>
+    <pre><code><span class="fn">useEffect</span>(() =&gt; {
+  <span class="kw">if</span> (query.<span class="fn">trim</span>().length &lt; <span class="st">2</span>) { <span class="fn">setJobs</span>([]); <span class="kw">return</span>; }
+  <span class="kw">const</span> ctrl = <span class="kw">new</span> <span class="ty">AbortController</span>();
+  <span class="kw">const</span> timer = <span class="fn">setTimeout</span>(() =&gt; {                          <span class="cmt">// debounce: wait for a pause</span>
+    <span class="fn">fetch</span>(<span class="st">'/api/jobs?q='</span> + <span class="fn">encodeURIComponent</span>(query), { signal: ctrl.signal })
+      .<span class="fn">then</span>(res =&gt; res.<span class="fn">json</span>())
+      .<span class="fn">then</span>(setJobs)
+      .<span class="fn">catch</span>(err =&gt; { <span class="kw">if</span> (!ctrl.signal.aborted) <span class="fn">setError</span>(err); });
+  }, <span class="st">250</span>);
+  <span class="kw">return</span> () =&gt; { <span class="fn">clearTimeout</span>(timer); ctrl.<span class="fn">abort</span>(); };   <span class="cmt">// the next keystroke cancels both</span>
+}, [query]);</code></pre>
+    <div class="key g">The cleanup is the fix: a new keystroke clears the timer that hasn't fired and aborts the request already in flight, so a stale response can never reach <code>setJobs</code>.</div>
+    <div class="ex"><b>Build stage</b><span class="br">module-5/autocomplete</span><i>check it out in the job board repo, then make its tests pass</i></div>
+</section>
+
+<!-- L5z · READ NEXT -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 5" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 5</div><div class="cx-page"><b>24</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Read next</div>
+    <h2>The combobox contract, and the race</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/" target="_blank" rel="noopener">Combobox pattern — WAI-ARIA APG</a><small>every attribute and key</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController" target="_blank" rel="noopener">AbortController — MDN</a><small>cancel the request already in flight</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard/tree/module-5/autocomplete/start" target="_blank" rel="noopener">module-5/autocomplete/start</a><small>the stage this build starts from</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard/tree/module-5/autocomplete/solution" target="_blank" rel="noopener">module-5/autocomplete/solution</a><small>compare once your tests are green</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+<!-- L6a · THE MODAL -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 6</div><div class="cx-page"><b>25</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · Build · The modal</div>
+    <h2>Trap focus, then give it back</h2>
+    <pre><code><span class="kw">function</span> <span class="fn">openModal</span>() {
+  returnTo.current = document.activeElement <span class="kw">as</span> <span class="ty">HTMLElement</span>;   <span class="cmt">// remember the trigger</span>
+  <span class="fn">setOpen</span>(<span class="kw">true</span>);                                               <span class="cmt">// an effect focuses the first field</span>
+}
+<span class="kw">function</span> <span class="fn">onKeyDown</span>(e: <span class="ty">React.KeyboardEvent</span>) {
+  <span class="kw">if</span> (e.key === <span class="st">'Escape'</span>) <span class="kw">return</span> <span class="fn">closeModal</span>();
+  <span class="kw">if</span> (e.key !== <span class="st">'Tab'</span>) <span class="kw">return</span>;
+  <span class="kw">const</span> items = <span class="ty">Array</span>.<span class="fn">from</span>(panel.current!.<span class="fn">querySelectorAll</span>&lt;<span class="ty">HTMLElement</span>&gt;(FOCUSABLE));
+  <span class="kw">const</span> first = items[<span class="st">0</span>], last = items[items.length - <span class="st">1</span>];
+  <span class="kw">if</span> (e.shiftKey &amp;&amp; document.activeElement === first) { e.<span class="fn">preventDefault</span>(); last.<span class="fn">focus</span>(); }
+  <span class="kw">if</span> (!e.shiftKey &amp;&amp; document.activeElement === last) { e.<span class="fn">preventDefault</span>(); first.<span class="fn">focus</span>(); }
+}
+<span class="kw">function</span> <span class="fn">closeModal</span>() { <span class="fn">setOpen</span>(<span class="kw">false</span>); returnTo.current?.<span class="fn">focus</span>(); }</code></pre>
+    <div class="key">Native <code>&lt;dialog&gt;</code> with <code>showModal()</code> makes the page behind inert and closes on Escape for free. Labelling it, and checking focus lands back on the trigger, stay your job.</div>
+</section>
+
+<!-- L6b · THE KEYBOARD MAP -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 6</div><div class="cx-page"><b>26</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · Build · Dropdown, tabs, toast</div>
+    <h2>Every overlay has a keyboard contract</h2>
+    <table class="grid">
+      <tr><th>Widget</th><th>Keys</th><th>Where focus goes</th></tr>
+      <tr><td><b>Modal</b><br><code>dialog</code></td><td><code>Tab</code> and <code>Shift+Tab</code> cycle inside · <code>Escape</code> closes</td><td>Inside on open; back to the trigger on close</td></tr>
+      <tr><td><b>Dropdown menu</b><br><code>aria-haspopup="menu"</code></td><td><code>Enter</code> <code>Space</code> <code>↓</code> open · <code>↑</code> <code>↓</code> <code>Home</code> <code>End</code> move · <code>Escape</code> closes</td><td>Into the menu (roving tabindex); back to the button on close</td></tr>
+      <tr><td><b>Tabs</b><br><code>tablist</code> · <code>tab</code></td><td><code>←</code> <code>→</code> move and activate · <code>Home</code> <code>End</code></td><td>One Tab stop for the whole tablist; Tab again enters the panel</td></tr>
+      <tr><td><b>Toast</b><br><code>role="status"</code></td><td>None of its own</td><td>Nowhere — a toast never takes focus</td></tr>
+    </table>
+    <div class="key w">A dropdown of navigation links is a disclosure, not a menu: a button with <code>aria-expanded</code> and a plain list of links. <code>role="menu"</code> promises app-style arrow keys — use it only if you build them.</div>
+</section>
+
+<!-- L6c · TOASTS AND LIVE REGIONS -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 6</div><div class="cx-page"><b>27</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · Build · Toasts and live regions</div>
+    <h2>Announce it without moving focus</h2>
+    <pre><code><span class="cmt">// Mounted once, empty, at the app root: a live region must exist before its text changes</span>
+&lt;<span class="ty">div</span> role=<span class="st">"status"</span> className=<span class="st">"sr-only"</span>&gt;{announcement}&lt;/<span class="ty">div</span>&gt;
+
+<span class="kw">function</span> <span class="fn">toast</span>(message: <span class="ty">string</span>) {
+  <span class="fn">setToasts</span>(list =&gt; [...list, { id: crypto.<span class="fn">randomUUID</span>(), message }]);   <span class="cmt">// the visible stack</span>
+  <span class="fn">setAnnouncement</span>(<span class="st">''</span>);                                                   <span class="cmt">// clear first, so the same</span>
+  <span class="fn">setTimeout</span>(() =&gt; <span class="fn">setAnnouncement</span>(message), <span class="st">50</span>);                        <span class="cmt">// text twice is still read</span>
+}</code></pre>
+    <div class="key">Polite (<code>role="status"</code>) for “Job saved”. Assertive (<code>role="alert"</code>) only for what must interrupt, like “Session expired”. A toast that holds a button must not vanish on a timer.</div>
+    <div class="ex"><b>Build stage</b><span class="br">module-5/overlays</span><i>modal, dropdown, tabs and toast — make its tests pass</i></div>
+</section>
+
+<!-- L6z · READ NEXT -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 6" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 6</div><div class="cx-page"><b>28</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · Read next</div>
+    <h2>Overlays, by the pattern book</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/" target="_blank" rel="noopener">Dialog (modal) pattern — WAI-ARIA APG</a><small>focus in, focus trapped, focus back</small></li>
+          <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/tabs/" target="_blank" rel="noopener">Tabs pattern — WAI-ARIA APG</a><small>roving tabindex, arrows within</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions" target="_blank" rel="noopener">ARIA live regions — MDN</a><small>announce without moving focus</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog" target="_blank" rel="noopener">The dialog element — MDN</a><small>showModal() makes the page behind inert</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/inert" target="_blank" rel="noopener">inert — MDN</a><small>take a subtree out of focus and the tree</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard/tree/module-5/overlays" target="_blank" rel="noopener">Overlays stage — module-5/overlays</a><small>modal, dropdown, tabs and toast, tested</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+<!-- L7a · THE PLATFORM VALIDATES -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 7</div><div class="cx-page"><b>29</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 7 · Forms without a library</div>
+    <h2>Keep the rules, own the messages</h2>
+    <pre><code>&lt;<span class="ty">form</span> noValidate onSubmit={onSubmit}&gt;                  <span class="cmt">{/* keep the checks, drop the browser bubbles */}</span>
+  &lt;<span class="ty">label</span> htmlFor=<span class="st">"email"</span>&gt;Email&lt;/<span class="ty">label</span>&gt;
+  &lt;<span class="ty">input</span> id=<span class="st">"email"</span> name=<span class="st">"email"</span> type=<span class="st">"email"</span> required
+    aria-invalid={<span class="ty">Boolean</span>(errors.email)} aria-describedby=<span class="st">"email-error"</span> /&gt;
+  &lt;<span class="ty">p</span> id=<span class="st">"email-error"</span>&gt;{errors.email}&lt;/<span class="ty">p</span>&gt;
+&lt;/<span class="ty">form</span>&gt;
+
+<span class="kw">function</span> <span class="fn">messageFor</span>(input: <span class="ty">HTMLInputElement</span>) {
+  <span class="kw">const</span> v = input.validity;                              <span class="cmt">// the browser already ran the rules</span>
+  <span class="kw">if</span> (v.valueMissing) <span class="kw">return</span> <span class="st">'This field is required'</span>;
+  <span class="kw">if</span> (v.typeMismatch) <span class="kw">return</span> <span class="st">'Check the format, like name@company.com'</span>;
+  <span class="kw">if</span> (v.tooShort)     <span class="kw">return</span> <span class="st">'Use at least '</span> + input.minLength + <span class="st">' characters'</span>;
+  <span class="kw">return</span> <span class="st">''</span>;
+}</code></pre>
+    <div class="key"><code>noValidate</code> turns off the browser's bubbles, not its checks. <code>validity</code> still works, and your message, linked by <code>aria-describedby</code>, is the one a screen reader reads.</div>
+</section>
+
+<!-- L7b · WHEN TO SHOW THE ERROR -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 7</div><div class="cx-page"><b>30</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 7 · Validation timing</div>
+    <h2>Submit checks all; blur checks one</h2>
+    <pre><code><span class="kw">function</span> <span class="fn">onSubmit</span>(e: <span class="ty">React.SubmitEvent</span>&lt;<span class="ty">HTMLFormElement</span>&gt;) {
+  e.<span class="fn">preventDefault</span>();
+  <span class="kw">const</span> form = e.currentTarget;
+  <span class="kw">const</span> next = <span class="fn">validate</span>(form);                        <span class="cmt">// messageFor() on every field → { name: message }</span>
+  <span class="fn">setErrors</span>(next);
+  <span class="kw">const</span> first = <span class="ty">Object</span>.<span class="fn">keys</span>(next)[<span class="st">0</span>];
+  <span class="kw">if</span> (first) <span class="kw">return</span> (form.elements.<span class="fn">namedItem</span>(first) <span class="kw">as</span> <span class="ty">HTMLElement</span>).<span class="fn">focus</span>();
+  <span class="fn">apply</span>(<span class="kw">new</span> <span class="ty">FormData</span>(form));                           <span class="cmt">// valid: send it</span>
+}</code></pre>
+    <table class="grid">
+      <tr><th>When</th><th>What you do</th></tr>
+      <tr><td><b>Submit</b></td><td>Validate every field, show every error, move focus to the first invalid one.</td></tr>
+      <tr><td><b>Blur</b></td><td>Validate the field just left — only if the user changed it.</td></tr>
+      <tr><td><b>Typing</b></td><td>Clear an error the moment it's fixed. Never show a new one mid-word.</td></tr>
+    </table>
+</section>
+
+<!-- L7z · READ NEXT -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 7" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 7</div><div class="cx-page"><b>31</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 7 · Read next</div>
+    <h2>The platform already validates</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Constraint_validation" target="_blank" rel="noopener">Constraint validation — MDN</a><small>the rules the browser runs for you</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/ValidityState" target="_blank" rel="noopener">ValidityState — MDN</a><small>every flag messageFor() reads</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li><a href="https://web.dev/learn/forms" target="_blank" rel="noopener">Learn Forms — web.dev</a><small>a full course on accessible forms</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+<!-- L8a · ONE BIG CONTEXT -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 8</div><div class="cx-page"><b>32</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 8 · Why context re-rendered everything</div>
     <h2>One context means every reader re-renders</h2>
     <div class="two tight">
       <div>
@@ -734,9 +1097,9 @@
     <div class="key w">Context has no selectors. When <code>value</code> changes by <code>Object.is</code>, every component that reads the context re-renders, whichever field it uses. Saving a job re-renders the navbar.</div>
 </section>
 
-<!-- L4b · COMPOSITION -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>16</b> / 25</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Composition over prop drilling</div>
+<!-- L8b · COMPOSITION -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 8</div><div class="cx-page"><b>33</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 8 · Composition over prop drilling</div>
     <h2>Pass the element, not the data it needs</h2>
     <div class="two tight">
       <div class="card r">
@@ -768,9 +1131,9 @@
     <div class="key">Layout no longer knows what a <code>User</code> is. Use composition when one value just needs to get past a few layers; use context when many distant components read the same value.</div>
 </section>
 
-<!-- L4c · THE BOUNDARY ITSELF -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>17</b> / 25</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Writing the boundary</div>
+<!-- L8c · THE BOUNDARY ITSELF -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 8</div><div class="cx-page"><b>34</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 8 · Writing the boundary</div>
     <h2>Still a class, and it can't catch everything</h2>
     <div class="two tight">
       <div>
@@ -803,9 +1166,9 @@
     <div class="key w">React 19 still has no hook for this. Write the class once and reuse it everywhere, with a different <code>fallback</code> per place.</div>
 </section>
 
-<!-- L4d · PORTALS -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>18</b> / 25</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Portals</div>
+<!-- L8d · PORTALS -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 8</div><div class="cx-page"><b>35</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 8 · Portals</div>
     <h2>Move it in the DOM, keep it in the React tree</h2>
     <div class="two tight">
       <div>
@@ -856,9 +1219,9 @@
     <div class="key">Only the DOM position moves, out from under <code>overflow: hidden</code> and z-index traps. Context still flows in, and events bubble through the React tree: a click inside the dialog reaches <code>ListingCard</code>'s handlers.</div>
 </section>
 
-<!-- L4e · SUSPENSE -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>19</b> / 25</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Suspense</div>
+<!-- L8e · SUSPENSE -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 8</div><div class="cx-page"><b>36</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 8 · Suspense</div>
     <h2>Suspense is a boundary for "not ready yet"</h2>
     <div class="two tight">
       <div>
@@ -900,9 +1263,9 @@
     <div class="key w">Create the promise outside render: in a route loader, a cache, or a server component. Create it inside the component and every render starts a new one.</div>
 </section>
 
-<!-- L4z · READ NEXT -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 4" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>20</b> / 25</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Read next</div>
+<!-- L8z · READ NEXT -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 8" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 8</div><div class="cx-page"><b>37</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 8 · Read next</div>
     <h2>Context, boundaries and Suspense</h2>
     <div class="two">
       <div class="card a">
@@ -923,9 +1286,9 @@
     </div>
 </section>
 
-<!-- L5a · BUILD BRIEF -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 5</div><div class="cx-page"><b>21</b> / 25</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Build</div>
+<!-- L9a · BUILD BRIEF -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 9</div><div class="cx-page"><b>38</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 9 · Build</div>
     <h2>Build the listings feed, the obvious way</h2>
     <div class="two">
       <div>
@@ -969,9 +1332,9 @@
     <div class="key">Put all the state in <code>FeedPage</code> first. That's the version most real codebases have, and it gives the profiler something to find.</div>
 </section>
 
-<!-- L5b · PROFILE IT -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 5</div><div class="cx-page"><b>22</b> / 25</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Profile it</div>
+<!-- L9b · PROFILE IT -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 9</div><div class="cx-page"><b>39</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 9 · Profile it</div>
     <h2>Record, type, stop, read</h2>
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 150" role="img" aria-label="Mock flamegraph for one keystroke: FeedPage, FeedHeader, CompanySidebar, SearchBox, FilterBar and ListingResults all rendered; FeedHeader and CompanySidebar rendered for no reason">
@@ -1008,9 +1371,9 @@
     </table>
 </section>
 
-<!-- L5c · FIX BY RESTRUCTURING -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 5</div><div class="cx-page"><b>23</b> / 25</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Fix it by moving state</div>
+<!-- L9c · FIX BY RESTRUCTURING -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 9</div><div class="cx-page"><b>40</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 9 · Fix it by moving state</div>
     <h2>Move the state down before you reach for memo</h2>
     <div class="two tight">
       <div class="card r">
@@ -1045,9 +1408,9 @@
     <div class="key g">Order of fixes: <b>derive</b> instead of storing → <b>move state down</b> to where it's used → <b>pass content in</b> as children → <b>split the context</b> → then <code>memo</code>, for whatever is still slow.</div>
 </section>
 
-<!-- L5z · READ NEXT -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 5" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 5</div><div class="cx-page"><b>24</b> / 25</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Read next</div>
+<!-- L9z · READ NEXT -->
+<section class="slide" data-chip="MODULE 05 · VIDEO 9" data-rn><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 9</div><div class="cx-page"><b>41</b> / 42</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 9 · Read next</div>
     <h2>Profile first, then fix</h2>
     <div class="two">
       <div class="card a">
@@ -1068,25 +1431,24 @@
 </section>
 
 <!-- CLOSING -->
-<section class="slide" data-chip="MODULE 05 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 5</div><div class="cx-page"><b>25</b> / 25</div><!--/catalyst-brand:chrome-->
+<section class="slide" data-chip="MODULE 05 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 9</div><div class="cx-page"><b>42</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 05 · done</div>
     <h2>React, from the render model out</h2>
     <div class="two">
       <div class="card a">
         <h3 class="cy">What you can now do</h3>
         <ul class="plist" style="margin-top:4px">
-          <li>Trace an update from setState to paint<small>render can pause, restart or be dropped; commit can't</small></li>
-          <li>Name the reason for any re-render<small>state, parent, context or hook, and keys that keep state on the right row</small></li>
+          <li>Trace an update, and name why it rendered<small>render vs commit, the four reasons, keys on the right row</small></li>
           <li>Spot a stale closure and an effect you don't need<small>refs for the latest value; derive instead of syncing</small></li>
-          <li>Keep updates local<small>split context by change rate; pass elements, not data</small></li>
-          <li>Contain failures and slow work<small>error boundaries, portals, Suspense, transitions</small></li>
+          <li>Build the components an interviewer asks for<small>slots, both state modes, combobox, overlays, forms</small></li>
+          <li>Keep updates local, contain failures<small>split context, pass elements, boundaries, Suspense</small></li>
           <li>Profile a feed and fix it without memo first<small>move state, then measure again</small></li>
         </ul>
       </div>
       <div class="card b">
-        <h3 class="b">Next · Module 06 — React + TypeScript in Production</h3>
-        <p>Typed props and events, state machines for UI that can't reach impossible states, and a typed API layer between the app and the network.</p>
-        <div class="key g" style="margin-top:auto">Before you move on: the profiled and fixed <code>module-5/feed-ui</code>, with before and after flamegraphs.</div>
+        <h3 class="b">Next · Module 06 — Data, State &amp; Routing</h3>
+        <p>The data that fills these components: what belongs on the server, what belongs in the client, and the URL as state.</p>
+        <div class="key g" style="margin-top:auto">Before you move on: autocomplete and overlays green, and <code>module-5/feed-ui</code> profiled and fixed.</div>
       </div>
     </div>
 </section>
