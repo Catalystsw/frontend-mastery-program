@@ -92,14 +92,14 @@
   <section class="card mast">
     <div class="kick">Frontend Mastery · the full curriculum</div>
     <h1>Every lesson, in order.</h1>
-    <p>Thirteen modules, three acts, one job board you never stop building. This is the
+    <p>Eleven modules, three acts, one job board you never stop building. This is the
     complete list — not a summary. Each module opens on the outcome you can check for
     yourself, and every lesson marked <span class="build">Build</span> is a branch you
     write, starting from a failing test.</p>
     <div class="stats">
-      <div><div class="v">13</div><div class="k">Modules</div></div>
-      <div><div class="v">75</div><div class="k">Lessons</div></div>
-      <div><div class="v">13</div><div class="k">Build checkpoints</div></div>
+      <div><div class="v">11</div><div class="k">Modules</div></div>
+      <div><div class="v">69</div><div class="k">Lessons</div></div>
+      <div><div class="v">11</div><div class="k">Build checkpoints</div></div>
       <div><div class="v">1</div><div class="k">Shipped product</div></div>
     </div>
   </section>
@@ -108,7 +108,7 @@
   <section class="sec" id="curriculum">
     <div class="card curr">
       <div class="sec-head"><b class="bar"></b><span class="num">01</span><h2>Curriculum</h2></div>
-      <p class="sec-sub">13 modules · 75 lessons · click any module to expand</p>
+      <p class="sec-sub">11 modules · 69 lessons · click any module to expand</p>
 
       <div class="act-row"><span class="t">Act I · Modules 1–4</span><span class="d">The platform under the framework</span></div>
 
@@ -178,16 +178,20 @@
         </div>
       </details>
 
-      <div class="act-row"><span class="t">Act II · Modules 5–10</span><span class="d">From components to a product</span></div>
+      <div class="act-row"><span class="t">Act II · Modules 5–8</span><span class="d">From components to a product</span></div>
 
       <details class="mod">
-        <summary><span class="mnum">05</span><span class="mttl">React, Deeply<em>The mental model, not the API tour</em></span><span class="count">5 lessons</span></summary>
+        <summary><span class="mnum">05</span><span class="mttl">React, Deeply<em>The mental model, not the API tour</em></span><span class="count">9 lessons</span></summary>
         <div class="mbody">
-          <p class="aim"><b>By the end:</b> you can explain a re-render you did not expect, and fix it without reaching for <code>memo</code> first. The render model is the spine of this module.</p>
+          <p class="aim"><b>By the end:</b> you can explain a re-render you did not expect, fix it without reaching for <code>memo</code> first, and build the components an interviewer asks for live — keyboard-driven, ARIA-correct, no library underneath. The render model is the spine of this module.</p>
           <ol class="lessons">
             <li>The render model — from state to DOM, and why rendering can be interrupted</li>
             <li>Anatomy of a re-render — keys, reconciliation, and state landing on the wrong row</li>
             <li>Hooks and the closure trap — and the effect you might not need</li>
+            <li>Component API design — props, slots, controlled vs uncontrolled, and the tokens underneath</li>
+            <li>Build the search autocomplete — debounce, race conditions and the ARIA combobox<span class="build">Build</span></li>
+            <li>Build the overlays — modal, dropdown, tabs, toast, with focus traps and live regions<span class="build">Build</span></li>
+            <li>Forms and validation without a form library</li>
             <li>Context, composition and boundaries — error boundaries, portals and Suspense</li>
             <li>Build the listings feed, then profile it<span class="build">Build</span></li>
           </ol>
@@ -195,35 +199,7 @@
       </details>
 
       <details class="mod">
-        <summary><span class="mnum">06</span><span class="mttl">React + TypeScript in Production<em>The module a team lead will judge you on</em></span><span class="count">4 lessons</span></summary>
-        <div class="mbody">
-          <p class="aim"><b>By the end:</b> you write components a reviewer can read — typed props, typed events, and state machines instead of boolean soup.</p>
-          <ol class="lessons">
-            <li>Typing props, children, refs and events — the component contract</li>
-            <li>Generic and polymorphic components — one <code>Select</code>, every option type</li>
-            <li>Typed hooks and reducers — discriminated state instead of five booleans</li>
-            <li>A typed API layer, and the typed primitives the whole app will use<span class="build">Build</span></li>
-          </ol>
-        </div>
-      </details>
-
-      <details class="mod">
-        <summary><span class="mnum">07</span><span class="mttl">UI Engineering — Components &amp; Accessibility<em>The highest-ROI module for the live-coding round</em></span><span class="count">6 lessons</span></summary>
-        <div class="mbody">
-          <p class="aim"><b>By the end:</b> you build the components an interviewer asks for live — keyboard-driven, ARIA-correct, no library underneath.</p>
-          <ol class="lessons">
-            <li>Component API design — props, slots, controlled vs uncontrolled, and the tokens underneath</li>
-            <li>The accessibility tree, focus, and the keyboard path</li>
-            <li>Build the search autocomplete — debounce, race conditions and the ARIA combobox<span class="build">Build</span></li>
-            <li>Build the overlays — modal, dropdown, tabs, toast, with focus traps and live regions<span class="build">Build</span></li>
-            <li>Forms and validation without a form library</li>
-            <li>Virtualization from scratch: windowing, pooling, recycling<span class="build">Build</span></li>
-          </ol>
-        </div>
-      </details>
-
-      <details class="mod">
-        <summary><span class="mnum">08</span><span class="mttl">Data, State &amp; Routing<em>Whose state is it — the server's or yours?</em></span><span class="count">5 lessons</span></summary>
+        <summary><span class="mnum">06</span><span class="mttl">Data, State &amp; Routing<em>Whose state is it — the server's or yours?</em></span><span class="count">5 lessons</span></summary>
         <div class="mbody">
           <p class="aim"><b>By the end:</b> you can say which state is the server's and which is yours — the distinction that decides mid versus senior — and defend where each piece lives.</p>
           <ol class="lessons">
@@ -237,7 +213,7 @@
       </details>
 
       <details class="mod">
-        <summary><span class="mnum">09</span><span class="mttl">Next.js &amp; Rendering Architecture<em>A strategy per route — and where Next.js is the wrong answer</em></span><span class="count">5 lessons</span></summary>
+        <summary><span class="mnum">07</span><span class="mttl">Next.js &amp; Rendering Architecture<em>A strategy per route — and where Next.js is the wrong answer</em></span><span class="count">5 lessons</span></summary>
         <div class="mbody">
           <p class="aim"><b>By the end:</b> you pick a rendering strategy per route and defend it out loud, including the routes where reaching for Next.js is the wrong call.</p>
           <ol class="lessons">
@@ -251,7 +227,7 @@
       </details>
 
       <details class="mod">
-        <summary><span class="mnum">10</span><span class="mttl">Performance, Testing &amp; Security<em>Prove the before and after with numbers</em></span><span class="count">6 lessons</span></summary>
+        <summary><span class="mnum">08</span><span class="mttl">Performance, Testing &amp; Security<em>Prove the before and after with numbers</em></span><span class="count">6 lessons</span></summary>
         <div class="mbody">
           <p class="aim"><b>By the end:</b> you set a performance budget, prove a before and after with real measurements, and ship it with tests green in CI.</p>
           <ol class="lessons">
@@ -265,10 +241,10 @@
         </div>
       </details>
 
-      <div class="act-row"><span class="t">Act III · Modules 11–13</span><span class="d">Design it. Ship it. Prove it.</span></div>
+      <div class="act-row"><span class="t">Act III · Modules 9–11</span><span class="d">Design it. Ship it. Prove it.</span></div>
 
       <details class="mod">
-        <summary><span class="mnum">11</span><span class="mttl">Frontend System Design<em>A 45-minute design round, with a script</em></span><span class="count">5 lessons</span></summary>
+        <summary><span class="mnum">09</span><span class="mttl">Frontend System Design<em>A 45-minute design round, with a script</em></span><span class="count">5 lessons</span></summary>
         <div class="mbody">
           <p class="aim"><b>By the end:</b> you run a 45-minute design round to a repeatable script — RADIO — and can defend the trade-offs of a codebase that has to scale past one team.</p>
           <ol class="lessons">
@@ -282,7 +258,7 @@
       </details>
 
       <details class="mod">
-        <summary><span class="mnum">12</span><span class="mttl">The Capstone<em>Assembly week, not build week</em></span><span class="count">4 lessons</span></summary>
+        <summary><span class="mnum">10</span><span class="mttl">The Capstone<em>Assembly week, not build week</em></span><span class="count">4 lessons</span></summary>
         <div class="mbody">
           <p class="aim"><b>By the end:</b> you ship one deployed job board you can defend line by line — and discover that most of it already exists on branches you wrote yourself.</p>
           <ol class="lessons">
@@ -295,7 +271,7 @@
       </details>
 
       <details class="mod">
-        <summary><span class="mnum">13</span><span class="mttl">Interview Preparation<em>Every format, drilled under time</em></span><span class="count">5 lessons</span></summary>
+        <summary><span class="mnum">11</span><span class="mttl">Interview Preparation<em>Every format, drilled under time</em></span><span class="count">5 lessons</span></summary>
         <div class="mbody">
           <p class="aim"><b>By the end:</b> you have drilled every format against the clock, and you can think out loud without going quiet.</p>
           <ol class="lessons">
@@ -313,7 +289,7 @@
   <div class="card foot">
     <b>13 build checkpoints.</b> Every lesson marked <span class="build">Build</span> is a
     branch in the job board repository, and each one starts with a failing test rather than a
-    blank file. You clone the repo in module 1 and never leave it — so module 12 is assembly
+    blank file. You clone the repo in module 1 and never leave it — so module 10 is assembly
     week, not build week, and the product you deploy at the end is one you can defend line by
     line.
   </div>

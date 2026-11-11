@@ -6,7 +6,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Module 13 — Interview Preparation · Frontend Mastery</title>
+<title>Module 10 — The Capstone · Frontend Mastery</title>
 <style>
   :root{
     --bg:#070A14; --panel:#0E1525; --panel2:#121C30; --code:#0B1220;
@@ -284,545 +284,490 @@
 <div id="bar"></div>
 <div id="stage">
 <!-- 1 · TITLE -->
-  <section class="slide" style="justify-content:center" data-chip="MODULE 13 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 13 · VIDEO 1</div><div class="cx-page"><b>01</b> / 20</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Module 13 · Interview Preparation</div>
-    <h1>Every Format,<br>Drilled Against the Clock</h1>
-    <div class="sub">Five lessons: keep talking while you think, plan the minutes, then rehearse every round on a timer until none of them is new.</div>
+  <section class="slide" style="justify-content:center" data-chip="MODULE 10 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 1</div><div class="cx-page"><b>01</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Module 10 · The Capstone</div>
+    <h1>Assembly Week,<br>Not Build Week</h1>
+    <div class="sub">Ship one deployed job board you can defend line by line.</div>
     <div class="fig" style="max-width:980px">
-      <svg viewBox="0 0 980 70" role="img" aria-label="Five lessons: thinking out loud and your drill schedule, quiz and utilities, the UI round, the design round, STAR, take-homes and the offer">
+      <svg viewBox="0 0 980 70" role="img" aria-label="Four lessons: assemble, auth and routes, ship it with the why and the gate, senior review">
         <g>
-          <rect x="0" y="16" width="180" height="38" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="90" y="40" text-anchor="middle" class="lbl b" font-size="12">1 · Talk, then plan</text>
-          <rect x="200" y="16" width="180" height="38" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="290" y="40" text-anchor="middle" class="lbl b" font-size="12">2 · Quiz, utilities</text>
-          <rect x="400" y="16" width="180" height="38" rx="9" fill="#121C30" stroke="#2196F3"/>
-          <text x="490" y="40" text-anchor="middle" class="lbl b" font-size="12">3 · The UI round</text>
-          <rect x="600" y="16" width="180" height="38" rx="9" fill="#121C30" stroke="#FBBF24"/>
-          <text x="690" y="40" text-anchor="middle" class="lbl b" font-size="12">4 · Design, RADIO</text>
-          <rect x="800" y="16" width="180" height="38" rx="9" fill="#121C30" stroke="#A78BFA"/>
-          <text x="890" y="40" text-anchor="middle" class="lbl b" font-size="12">5 · STAR, take-home, offer</text>
+          <rect x="0" y="16" width="230" height="38" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="115" y="40" text-anchor="middle" class="lbl b">1 · Assemble</text>
+          <rect x="250" y="16" width="230" height="38" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="365" y="40" text-anchor="middle" class="lbl b">2 · Auth &amp; routes</text>
+          <rect x="500" y="16" width="230" height="38" rx="9" fill="#121C30" stroke="#FBBF24"/>
+          <text x="615" y="40" text-anchor="middle" class="lbl b">3 · Ship it: why &amp; the gate</text>
+          <rect x="750" y="16" width="230" height="38" rx="9" fill="#121C30" stroke="#A78BFA"/>
+          <text x="865" y="40" text-anchor="middle" class="lbl b">4 · Senior review</text>
         </g>
       </svg>
     </div>
 </section>
 
 
-  <!-- L1a · SILENCE IS SCORED AS STUCK -->
-  <section class="slide" data-chip="MODULE 13 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 13 · VIDEO 1</div><div class="cx-page"><b>02</b> / 20</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 1 · Thinking out loud</div>
-    <h2>Silence is scored as stuck</h2>
-    <div class="two">
-      <div class="card r">
-        <h3 class="r">Three silent minutes</h3>
-        <p><b class="mono">0:00</b> Reads the prompt. Starts typing.</p>
-        <p><b class="mono">0:40</b> Deletes the function. Types it again.</p>
-        <p><b class="mono">2:10</b> Interviewer: “Want a hint?”</p>
-        <p><b class="mono">3:00</b> “Okay… I think this works.”</p>
-        <p style="margin-top:auto; padding-top:12px"><b class="r">Their notes:</b> couldn't tell stuck from thinking. Needed a hint. Never mentioned <code>this</code>.</p>
-      </div>
-      <div class="card g">
-        <h3 class="g">The same three minutes, narrated</h3>
-        <p><b class="mono">0:00</b> “Run fn once the calls stop for <code>wait</code> ms. I'll assume the last call's arguments win.”</p>
-        <p><b class="mono">0:40</b> “A timer in the closure — every call clears it and starts a new one.”</p>
-        <p><b class="mono">1:50</b> “Now <code>this</code>: I'll capture it at call time, not inside the timeout.”</p>
-        <p><b class="mono">2:40</b> “Let me trace two calls a hundred milliseconds apart…”</p>
-        <p style="margin-top:auto; padding-top:12px"><b class="g">Their notes:</b> clear plan, stated assumptions, caught <code>this</code> unprompted.</p>
-      </div>
-    </div>
-    <div class="key">The interviewer can only score what they hear. A right answer they didn't watch you reach is worth less than a half-finished one they followed all the way.</div>
-</section>
+  <!-- L1a · THE MAP -->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 1</div><div class="cx-page"><b>02</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · What you already have</div>
+    <h2>Most of Rasmi is already on your branches</h2>
+    <div class="fig" style="max-width:1020px">
+      <svg viewBox="0 0 980 300" role="img" aria-label="The app's layers, from app down to utils, each filled by stage branches from modules 3 to 6, with the Next.js port and the tests wrapping all of it, and only the capstone stage new this week">
+        <g>
+          <rect x="0" y="0" width="320" height="40" rx="9" fill="#121C30" stroke="#243349"/>
+          <text x="18" y="25" class="lbl b">app</text>
+          <text x="96" y="25" class="lbl">shell · routes · auth</text>
+          <rect x="336" y="0" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="439" y="25" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-6/data-layer</text>
+          <rect x="552" y="0" width="206" height="40" rx="9" fill="#121C30" stroke="#22D3EE" stroke-dasharray="5 4"/>
+          <text x="655" y="25" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px;fill:#22D3EE">module-10/capstone</text>
+          <text x="772" y="25" class="lbl s" style="fill:#22D3EE">← the only new stage</text>
 
+          <rect x="0" y="50" width="320" height="40" rx="9" fill="#121C30" stroke="#243349"/>
+          <text x="18" y="75" class="lbl b">features</text>
+          <text x="96" y="75" class="lbl">jobs · search · applications</text>
+          <rect x="336" y="50" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="439" y="75" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-5/feed-ui</text>
+          <rect x="552" y="50" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="655" y="75" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-5/autocomplete</text>
+          <rect x="768" y="50" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="871" y="75" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-6/data-layer</text>
 
-  <!-- L1b · FIVE SENTENCES -->
-  <section class="slide" data-chip="MODULE 13 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 13 · VIDEO 1</div><div class="cx-page"><b>03</b> / 20</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 1 · The narration script</div>
-    <h2>Five sentences that keep you talking</h2>
-    <table class="grid">
-      <tr><th>Moment</th><th>Say this</th><th>Instead of</th></tr>
-      <tr><td><b>Start</b></td><td>“So the task is X. I'll assume Y — stop me if that's wrong.”</td><td>Typing in silence for the first minute.</td></tr>
-      <tr><td><b>Plan</b></td><td>“Simple version first, then I'll add Z.”</td><td>Building the whole thing in your head.</td></tr>
-      <tr><td><b class="w">Stuck</b></td><td>“I'm stuck on X. Two options: A or B. I'll try A, because…”</td><td>Going quiet until it works.</td></tr>
-      <tr><td><b>Check</b></td><td>“Let me walk one input through it, line by line.”</td><td>“I think that works.”</td></tr>
-      <tr><td><b>Finish</b></td><td>“Known gaps: … With more time, I'd …”</td><td>Stopping the moment it runs.</td></tr>
-    </table>
-    <div class="key w"><b>The drill:</b> any small problem, a timer that beeps every thirty seconds, a voice memo running. Every beep should land mid-sentence. Play it back and count the gaps.</div>
-</section>
+          <rect x="0" y="100" width="320" height="40" rx="9" fill="#121C30" stroke="#243349"/>
+          <text x="18" y="125" class="lbl b">ui</text>
+          <text x="96" y="125" class="lbl">select · modal · dropdown · toast</text>
+          <rect x="336" y="100" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="439" y="125" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-5/patterns/compound</text>
+          <rect x="552" y="100" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="655" y="125" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-5/overlays</text>
 
+          <rect x="0" y="150" width="320" height="40" rx="9" fill="#121C30" stroke="#243349"/>
+          <text x="18" y="175" class="lbl b">domain</text>
+          <text x="96" y="175" class="lbl">Job · Employer · Application</text>
+          <rect x="336" y="150" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="439" y="175" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-4/domain-types</text>
 
-  <!-- L6a · THE BAND SETS THE SPLIT -->
-  <section class="slide" data-chip="MODULE 13 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 13 · VIDEO 1</div><div class="cx-page"><b>04</b> / 20</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 1 · Your drill schedule</div>
-    <h2>Your score decides where the minutes go</h2>
-    <div class="fig" style="max-width:1000px">
-      <svg viewBox="0 0 1000 226" role="img" aria-label="A ninety-minute drill day split across the five formats, by module 1 score band. 0 to 3: quiz 30, utilities 30, UI 15, design 5, behavioural 10. 4 to 6: 25, 25, 20, 10, 10. 7 to 9: 15, 20, 25, 20, 10. 10 to 12: 10, 15, 20, 30, 15">
-        <rect x="150" y="0" width="14" height="14" rx="3" fill="#22D3EE" fill-opacity=".25" stroke="#22D3EE"/>
-        <text x="170" y="12" class="lbl">Quiz</text>
-        <rect x="240" y="0" width="14" height="14" rx="3" fill="#34D399" fill-opacity=".25" stroke="#34D399"/>
-        <text x="260" y="12" class="lbl">Utilities</text>
-        <rect x="350" y="0" width="14" height="14" rx="3" fill="#2196F3" fill-opacity=".25" stroke="#2196F3"/>
-        <text x="370" y="12" class="lbl">UI build</text>
-        <rect x="460" y="0" width="14" height="14" rx="3" fill="#FBBF24" fill-opacity=".25" stroke="#FBBF24"/>
-        <text x="480" y="12" class="lbl">Design</text>
-        <rect x="560" y="0" width="14" height="14" rx="3" fill="#A78BFA" fill-opacity=".25" stroke="#A78BFA"/>
-        <text x="580" y="12" class="lbl">Behavioural + take-home</text>
-        <text x="1000" y="12" text-anchor="end" class="lbl s">minutes of a 90-minute day</text>
+          <rect x="0" y="200" width="320" height="40" rx="9" fill="#121C30" stroke="#243349"/>
+          <text x="18" y="225" class="lbl b">utils</text>
+          <text x="96" y="225" class="lbl">debounce · throttle · deepClone</text>
+          <rect x="336" y="200" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="439" y="225" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-3/utils</text>
 
-        <text x="0" y="56" class="lbl b">0–3 · foundations</text>
-        <rect x="150" y="34" width="281" height="36" rx="6" fill="#22D3EE" fill-opacity=".22" stroke="#22D3EE"/>
-        <text x="290" y="57" text-anchor="middle" class="lbl b">30</text>
-        <rect x="433" y="34" width="282" height="36" rx="6" fill="#34D399" fill-opacity=".22" stroke="#34D399"/>
-        <text x="574" y="57" text-anchor="middle" class="lbl b">30</text>
-        <rect x="717" y="34" width="140" height="36" rx="6" fill="#2196F3" fill-opacity=".22" stroke="#2196F3"/>
-        <text x="787" y="57" text-anchor="middle" class="lbl b">15</text>
-        <rect x="859" y="34" width="45" height="36" rx="6" fill="#FBBF24" fill-opacity=".22" stroke="#FBBF24"/>
-        <text x="881" y="57" text-anchor="middle" class="lbl b">5</text>
-        <rect x="906" y="34" width="94" height="36" rx="6" fill="#A78BFA" fill-opacity=".22" stroke="#A78BFA"/>
-        <text x="953" y="57" text-anchor="middle" class="lbl b">10</text>
-
-        <text x="0" y="104" class="lbl b">4–6 · mid-level</text>
-        <rect x="150" y="82" width="234" height="36" rx="6" fill="#22D3EE" fill-opacity=".22" stroke="#22D3EE"/>
-        <text x="267" y="105" text-anchor="middle" class="lbl b">25</text>
-        <rect x="386" y="82" width="235" height="36" rx="6" fill="#34D399" fill-opacity=".22" stroke="#34D399"/>
-        <text x="503" y="105" text-anchor="middle" class="lbl b">25</text>
-        <rect x="623" y="82" width="187" height="36" rx="6" fill="#2196F3" fill-opacity=".22" stroke="#2196F3"/>
-        <text x="716" y="105" text-anchor="middle" class="lbl b">20</text>
-        <rect x="812" y="82" width="92" height="36" rx="6" fill="#FBBF24" fill-opacity=".22" stroke="#FBBF24"/>
-        <text x="858" y="105" text-anchor="middle" class="lbl b">10</text>
-        <rect x="906" y="82" width="94" height="36" rx="6" fill="#A78BFA" fill-opacity=".22" stroke="#A78BFA"/>
-        <text x="953" y="105" text-anchor="middle" class="lbl b">10</text>
-
-        <text x="0" y="152" class="lbl b">7–9 · advanced</text>
-        <rect x="150" y="130" width="140" height="36" rx="6" fill="#22D3EE" fill-opacity=".22" stroke="#22D3EE"/>
-        <text x="220" y="153" text-anchor="middle" class="lbl b">15</text>
-        <rect x="292" y="130" width="187" height="36" rx="6" fill="#34D399" fill-opacity=".22" stroke="#34D399"/>
-        <text x="385" y="153" text-anchor="middle" class="lbl b">20</text>
-        <rect x="481" y="130" width="234" height="36" rx="6" fill="#2196F3" fill-opacity=".22" stroke="#2196F3"/>
-        <text x="598" y="153" text-anchor="middle" class="lbl b">25</text>
-        <rect x="717" y="130" width="187" height="36" rx="6" fill="#FBBF24" fill-opacity=".22" stroke="#FBBF24"/>
-        <text x="810" y="153" text-anchor="middle" class="lbl b">20</text>
-        <rect x="906" y="130" width="94" height="36" rx="6" fill="#A78BFA" fill-opacity=".22" stroke="#A78BFA"/>
-        <text x="953" y="153" text-anchor="middle" class="lbl b">10</text>
-
-        <text x="0" y="200" class="lbl b">10–12 · senior</text>
-        <rect x="150" y="178" width="93" height="36" rx="6" fill="#22D3EE" fill-opacity=".22" stroke="#22D3EE"/>
-        <text x="196" y="201" text-anchor="middle" class="lbl b">10</text>
-        <rect x="245" y="178" width="140" height="36" rx="6" fill="#34D399" fill-opacity=".22" stroke="#34D399"/>
-        <text x="315" y="201" text-anchor="middle" class="lbl b">15</text>
-        <rect x="387" y="178" width="187" height="36" rx="6" fill="#2196F3" fill-opacity=".22" stroke="#2196F3"/>
-        <text x="480" y="201" text-anchor="middle" class="lbl b">20</text>
-        <rect x="576" y="178" width="281" height="36" rx="6" fill="#FBBF24" fill-opacity=".22" stroke="#FBBF24"/>
-        <text x="716" y="201" text-anchor="middle" class="lbl b">30</text>
-        <rect x="859" y="178" width="141" height="36" rx="6" fill="#A78BFA" fill-opacity=".22" stroke="#A78BFA"/>
-        <text x="929" y="201" text-anchor="middle" class="lbl b">15</text>
+          <rect x="0" y="256" width="479" height="42" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="240" y="282" text-anchor="middle" class="lbl"><tspan class="lbl b" style="font-family:var(--mono);font-size:12px">module-7/next-rendering</tspan> · the Next.js shell around all of it</text>
+          <rect x="495" y="256" width="479" height="42" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="734" y="282" text-anchor="middle" class="lbl"><tspan class="lbl b" style="font-family:var(--mono);font-size:12px">module-8/perf-and-tests</tspan> · tests and budget around it</text>
+        </g>
       </svg>
     </div>
-    <p class="say">Your <b>module 1 score</b> sets the split. It shows where your instincts were before the program — and instincts are what is left when the nerves arrive.</p>
-    <div class="key">Day one, re-sit the twelve questions cold — module 1's map put a re-test under module 13. Every question you still miss becomes a quiz card, with its module number on the back.</div>
+    <div class="key">Green is yours already, written in earlier modules. The dashed stage is the only new one: it owns no feature folder — it assembles the lot, wires auth, deploys, and merges into <code>main</code>.</div>
+</section>
+
+
+  <!-- L1b · THE ASSEMBLY PLAN -->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 1</div><div class="cx-page"><b>03</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · The assembly plan</div>
+    <h2>Merge in the order the layers point</h2>
+    <div class="two">
+      <div class="card r">
+        <h3 class="r">Build week · the trap</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li>A new repo and an empty <code>src/</code><small>the autocomplete rewritten from memory, and worse</small></li>
+          <li>Deploy on Friday<small>the first time production meets your env vars</small></li>
+          <li>Tests “later”<small>so the gate never gets built</small></li>
+        </ul>
+      </div>
+      <div class="card g">
+        <h3 class="g">Assembly week</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li>Branch the capstone stage from <code>main</code><small>merge bottom-up: utils → domain → ui → features → app</small></li>
+          <li>Deploy on day one<small>an empty shell on a real URL, then every merge ships</small></li>
+          <li>Green after every merge<small>a red test points at the last merge and nothing else</small></li>
+        </ul>
+      </div>
+    </div>
+    <div class="key g">Before writing anything from scratch this week, ask which branch it already lives on. Usually the answer is one you wrote.</div>
 </section>
 
   <!-- L1 · READ NEXT -->
-  <section class="slide" data-chip="MODULE 13 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 13 · VIDEO 1</div><div class="cx-page"><b>05</b> / 20</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 1</div><div class="cx-page"><b>04</b> / 18</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Read next</div>
-    <h2>Narrate the work, then plan the minutes</h2>
+    <h2>Merge in order, deploy on day one</h2>
     <div class="two">
       <div class="card a">
         <h3 class="cy">References</h3>
         <ul class="plist reads" style="margin-top:4px">
-          <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide" target="_blank" rel="noopener">JavaScript Guide — MDN</a><small>the language gaps your score flagged</small></li>
-          <li><a href="https://web.dev/learn" target="_blank" rel="noopener">Learn — web.dev</a><small>CSS, performance and accessibility, by diagnostic area</small></li>
+          <li><a href="https://git-scm.com/docs/git-merge" target="_blank" rel="noopener">git merge — Git documentation</a><small>what a merge records, and how a conflict is resolved</small></li>
+          <li><a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/configuring-pull-request-merges/about-merge-methods-on-github" target="_blank" rel="noopener">About merge methods on GitHub</a><small>merge, squash or rebase: pick one and keep it</small></li>
+          <li><a href="https://nextjs.org/docs/app/getting-started/deploying" target="_blank" rel="noopener">Deploying — Next.js docs</a><small>the build and env the real URL runs on</small></li>
         </ul>
       </div>
       <div class="card b">
         <h3 class="b">Resources</h3>
         <ul class="plist reads" style="margin-top:4px">
-          <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/01-foundations" target="_blank" rel="noopener">Module 1 slides — the diagnostic</a><small>re-take it at the end of your schedule</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener">Rasmi — the job board repo</a><small>every stage branch you merge this week</small></li>
         </ul>
       </div>
     </div>
 </section>
 
 
-  <!-- L2a · THE THIRTY-SECOND ANSWER -->
-  <section class="slide" data-chip="MODULE 13 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 13 · VIDEO 2</div><div class="cx-page"><b>06</b> / 20</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 2 · The quiz round, under time</div>
-    <h2>A “why” answer: three beats, then stop</h2>
+  <!-- L2a · THREE CHECKPOINTS -->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 2</div><div class="cx-page"><b>05</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Three checkpoints</div>
+    <h2>Auth is three checks. Only one is security.</h2>
     <div class="fig" style="max-width:1000px">
-      <svg viewBox="0 0 1000 96" role="img" aria-label="Thirty seconds: the answer from 0 to 5 seconds, the mechanism from 5 to 20, the consequence from 20 to 30, then stop">
-        <text x="0" y="10" class="lbl s">0s</text>
-        <text x="150" y="10" text-anchor="middle" class="lbl s">5s</text>
-        <text x="600" y="10" text-anchor="middle" class="lbl s">20s</text>
-        <text x="900" y="10" text-anchor="middle" class="lbl s">30s</text>
-        <rect x="0" y="18" width="146" height="44" rx="9" fill="#121C30" stroke="#22D3EE"/>
-        <text x="73" y="45" text-anchor="middle" class="lbl b" font-size="13">The answer</text>
-        <rect x="150" y="18" width="446" height="44" rx="9" fill="#121C30" stroke="#34D399"/>
-        <text x="373" y="45" text-anchor="middle" class="lbl b" font-size="13">The mechanism — why it is true</text>
-        <rect x="600" y="18" width="296" height="44" rx="9" fill="#121C30" stroke="#FBBF24"/>
-        <text x="748" y="45" text-anchor="middle" class="lbl b" font-size="13">So what</text>
-        <rect x="904" y="18" width="96" height="44" rx="9" fill="none" stroke="#64748B" stroke-dasharray="4 4"/>
-        <text x="952" y="45" text-anchor="middle" class="lbl" font-size="13">stop</text>
-        <text x="73" y="84" text-anchor="middle" class="lbl s">one sentence</text>
-        <text x="373" y="84" text-anchor="middle" class="lbl s">what actually happens, in order</text>
-        <text x="748" y="84" text-anchor="middle" class="lbl s">what you would see because of it</text>
-        <text x="952" y="84" text-anchor="middle" class="lbl s">let them ask</text>
+      <svg viewBox="0 0 980 145" role="img" aria-label="A request to the dashboard passes middleware, then a server-side session check next to the data, then the client UI; only the server check is the real gate">
+        <g>
+          <rect x="0" y="10" width="200" height="76" rx="10" fill="#121C30" stroke="#64748B"/>
+          <text x="100" y="43" text-anchor="middle" class="lbl b" style="font-family:var(--mono)">GET /dashboard</text>
+          <text x="100" y="66" text-anchor="middle" class="lbl">with or without a cookie</text>
+          <path class="draw" pathLength="1" d="M200,48 L254,48" stroke="#64748B" fill="none"/>
+          <rect x="260" y="10" width="200" height="76" rx="10" fill="#121C30" stroke="#FBBF24"/>
+          <text x="360" y="43" text-anchor="middle" class="lbl b">middleware</text>
+          <text x="360" y="66" text-anchor="middle" class="lbl">no cookie? → /login</text>
+          <path class="draw" pathLength="1" d="M460,48 L514,48" stroke="#64748B" fill="none"/>
+          <rect x="520" y="10" width="200" height="76" rx="10" fill="#121C30" stroke="#34D399"/>
+          <text x="620" y="43" text-anchor="middle" class="lbl b" style="font-family:var(--mono)">verifySession()</text>
+          <text x="620" y="66" text-anchor="middle" class="lbl">before every read and action</text>
+          <path class="draw" pathLength="1" d="M720,48 L774,48" stroke="#64748B" fill="none"/>
+          <rect x="780" y="10" width="200" height="76" rx="10" fill="#121C30" stroke="#2196F3"/>
+          <text x="880" y="43" text-anchor="middle" class="lbl b">client UI</text>
+          <text x="880" y="66" text-anchor="middle" class="lbl">hides the Apply button</text>
+
+          <text x="100" y="114" text-anchor="middle" class="lbl">the browser</text>
+          <text x="100" y="134" text-anchor="middle" class="lbl s">cookie: httpOnly, Secure</text>
+          <text x="360" y="114" text-anchor="middle" class="lbl" style="fill:#FBBF24">fast and optimistic</text>
+          <text x="360" y="134" text-anchor="middle" class="lbl s">never the only check</text>
+          <text x="620" y="114" text-anchor="middle" class="lbl" style="fill:#34D399">the real gate</text>
+          <text x="620" y="134" text-anchor="middle" class="lbl s">sits next to the data</text>
+          <text x="880" y="114" text-anchor="middle" class="lbl" style="fill:#2196F3">UX only</text>
+          <text x="880" y="134" text-anchor="middle" class="lbl s">protects nothing</text>
+        </g>
       </svg>
     </div>
-    <p class="say">The card: <b>why does animating <code>transform</code> cost less than animating <code>top</code>?</b></p>
-    <div class="two">
-      <div class="card r">
-        <h3 class="r">Ninety seconds, no mechanism</h3>
-        <p>“So transform is GPU-accelerated and top isn't… I think it's a repaint thing? You can add will-change too, and requestAnimationFrame helps, and actually in React…”</p>
-      </div>
-      <div class="card g">
-        <h3 class="g">Thirty seconds, three beats</h3>
-        <p><b>Answer:</b> transform skips layout and paint. <b>Mechanism:</b> top changes geometry, so every frame reruns layout, paint and composite on the main thread; transform moves an already-painted layer on the compositor. <b>So what:</b> it stays smooth while the main thread is busy.</p>
-      </div>
-    </div>
-    <div class="key"><b>The drill:</b> one card, a thirty-second timer, out loud. Right answers leave the pile; misses come back tomorrow.</div>
+    <p class="say">The session lives in an <b>httpOnly cookie</b>, so it survives a refresh and script on the page can't read it. Middleware turns a missing cookie into a fast redirect. The server decides.</p>
+    <div class="key g">Middleware can only say “probably”. The server, at the moment it reads the data, is the one place that can say “no” — so that is where the check lives.</div>
 </section>
 
 
-  <!-- L2b · A UTILITY ON THE CLOCK -->
-  <section class="slide" data-chip="MODULE 13 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 13 · VIDEO 2</div><div class="cx-page"><b>07</b> / 20</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 2 · The utilities round, under time</div>
-    <h2>A utility on a forty-five-minute clock</h2>
-    <div class="fig" style="max-width:1000px">
-      <svg viewBox="0 0 1000 64" role="img" aria-label="Forty-five minutes: clarify to minute 3, examples to 8, the core to 25, follow-ups to 35, trace and gaps to 45">
-        <rect x="0" y="2" width="63" height="38" rx="8" fill="#121C30" stroke="#22D3EE"/>
-        <text x="31" y="26" text-anchor="middle" class="lbl b" font-size="13">Clarify</text>
-        <rect x="67" y="2" width="107" height="38" rx="8" fill="#121C30" stroke="#2196F3"/>
-        <text x="120" y="26" text-anchor="middle" class="lbl b" font-size="13">Examples</text>
-        <rect x="178" y="2" width="374" height="38" rx="8" fill="#121C30" stroke="#34D399"/>
-        <text x="365" y="26" text-anchor="middle" class="lbl b" font-size="13">The core, narrated</text>
-        <rect x="556" y="2" width="218" height="38" rx="8" fill="#121C30" stroke="#FBBF24"/>
-        <text x="665" y="26" text-anchor="middle" class="lbl b" font-size="13">Follow-ups</text>
-        <rect x="778" y="2" width="222" height="38" rx="8" fill="#121C30" stroke="#A78BFA"/>
-        <text x="889" y="26" text-anchor="middle" class="lbl b" font-size="13">Trace, then gaps</text>
-        <text x="0" y="58" class="lbl s">0</text>
-        <text x="67" y="58" text-anchor="middle" class="lbl s">3</text>
-        <text x="178" y="58" text-anchor="middle" class="lbl s">8</text>
-        <text x="556" y="58" text-anchor="middle" class="lbl s">25</text>
-        <text x="778" y="58" text-anchor="middle" class="lbl s">35</text>
-        <text x="1000" y="58" text-anchor="end" class="lbl s">45 min</text>
-      </svg>
-    </div>
-    <pre><code><span class="cmt">// “Write promiseAll. Same contract as Promise.all.”</span>
-<span class="kw">function</span> <span class="fn">promiseAll</span>(items) {
-  <span class="kw">return new</span> <span class="ty">Promise</span>((resolve, reject) =&gt; {
-    <span class="kw">const</span> results = <span class="kw">new</span> <span class="ty">Array</span>(items.length);
-    <span class="kw">let</span> left = items.length;
-    <span class="kw">if</span> (left === <span class="st">0</span>) <span class="kw">return</span> <span class="fn">resolve</span>(results);    <span class="ok">// asked: [] resolves at once</span>
-    items.<span class="fn">forEach</span>((item, i) =&gt; {
-      <span class="ty">Promise</span>.<span class="fn">resolve</span>(item).<span class="fn">then</span>((value) =&gt; {   <span class="ok">// asked: plain values allowed</span>
-        results[i] = value;                     <span class="ok">// by index, not finish order</span>
-        <span class="kw">if</span> (--left === <span class="st">0</span>) <span class="fn">resolve</span>(results);
-      }, reject);                               <span class="ok">// first rejection wins</span>
-    });
-  });
+  <!-- L2b · THE GATE SITS NEXT TO THE DATA -->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 2</div><div class="cx-page"><b>06</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · The gate sits next to the data</div>
+    <h2>Check the session where the data is read</h2>
+    <pre><code><span class="cmt">// data/session.server.ts — below features, so every feature may import it</span>
+<span class="kw">import</span> <span class="st">'server-only'</span>;
+
+<span class="kw">export const</span> <span class="fn">verifySession</span> = <span class="fn">cache</span>(<span class="kw">async</span> () =&gt; {
+  <span class="kw">const</span> session = <span class="kw">await</span> <span class="fn">decrypt</span>((<span class="kw">await</span> <span class="fn">cookies</span>()).<span class="fn">get</span>(<span class="st">'session'</span>)?.value);
+  <span class="kw">if</span> (!session) <span class="fn">redirect</span>(<span class="st">'/login'</span>);   <span class="cmt">// no session, no data</span>
+  <span class="kw">return</span> session;
+});
+
+<span class="cmt">// features/applications/api/applications.server.ts</span>
+<span class="kw">export async function</span> <span class="fn">getMyApplications</span>() {
+  <span class="kw">const</span> { userId } = <span class="kw">await</span> <span class="fn">verifySession</span>(); <span class="ok">// the check travels with the data</span>
+  <span class="kw">return</span> api.applications.<span class="fn">listFor</span>(userId);
 }</code></pre>
+    <div class="key w">Don't stop at the layout. A layout doesn't re-render on client-side navigation, so a check there can be skipped. A check inside the function that reads the data can't — and a new page can't forget it.</div>
+</section>
+
+
+  <!-- L2c · THE UNHAPPY PATHS -->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 2</div><div class="cx-page"><b>07</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · End to end means the unhappy paths</div>
+    <h2>Six auth paths, each with a test</h2>
+    <table class="grid">
+      <tr><th>Path</th><th>Expected</th><th>Proved by</th></tr>
+      <tr><td><b>Signed out, open <code>/dashboard</code></b></td><td>Redirect to <code>/login?next=/dashboard</code></td><td>Playwright, no cookie</td></tr>
+      <tr><td><b>Sign in from that redirect</b></td><td>Back on <code>/dashboard</code> — and <code>next</code> must be a same-site path, or it's an open redirect</td><td>Playwright, plus a unit test that rejects <code>next=https://…</code></td></tr>
+      <tr><td><b>Refresh on <code>/dashboard</code></b></td><td>Still signed in; no token in <code>localStorage</code></td><td>Playwright reload</td></tr>
+      <tr><td><b>Session expires mid-task</b></td><td>The next action sends you to sign in; nothing half-saved</td><td>Playwright, cookie cleared mid-test</td></tr>
+      <tr><td><b>Sign out, press Back</b></td><td>Cookie gone; no private data from the cache</td><td>Playwright</td></tr>
+      <tr><td><b>Dashboard in a search engine</b></td><td><code>noindex</code> on every private route</td><td>An assertion on the response</td></tr>
+    </table>
 </section>
 
   <!-- L2 · READ NEXT -->
-  <section class="slide" data-chip="MODULE 13 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 13 · VIDEO 2</div><div class="cx-page"><b>08</b> / 20</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 2</div><div class="cx-page"><b>08</b> / 18</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Read next</div>
-    <h2>Answer the why, then write it cold</h2>
+    <h2>Gate the data, then test the unhappy paths</h2>
     <div class="two">
       <div class="card a">
         <h3 class="cy">References</h3>
         <ul class="plist reads" style="margin-top:4px">
-          <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures" target="_blank" rel="noopener">Closures — MDN</a><small>the why behind debounce and once</small></li>
-          <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Using_promises" target="_blank" rel="noopener">Using promises — MDN</a><small>ordering, chaining and errors, in the spec&#x27;s words</small></li>
-          <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all" target="_blank" rel="noopener">Promise.all() — MDN</a><small>the contract your promiseAll must match</small></li>
+          <li><a href="https://nextjs.org/docs/app/guides/authentication" target="_blank" rel="noopener">Authentication — Next.js docs</a><small>why the check belongs in the data layer</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie" target="_blank" rel="noopener">Set-Cookie — MDN</a><small>HttpOnly, Secure and SameSite, attribute by attribute</small></li>
+          <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html" target="_blank" rel="noopener">Unvalidated redirects — OWASP cheat sheet</a><small>why ?next= accepts only a same-site path</small></li>
         </ul>
       </div>
       <div class="card b">
         <h3 class="b">Resources</h3>
         <ul class="plist reads" style="margin-top:4px">
-          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard/tree/module-3/utils/solution" target="_blank" rel="noopener">Toolbelt solution branch</a><small>debounce, throttle, deepClone, EventEmitter, promiseAll — rewrite each cold</small></li>
+          <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html" target="_blank" rel="noopener">Session management — OWASP cheat sheet</a><small>expiry, rotation and logout, as a checklist</small></li>
         </ul>
       </div>
     </div>
 </section>
 
 
-  <!-- L3a · THE ORDER IS THE POINT -->
-  <section class="slide" data-chip="MODULE 13 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 13 · VIDEO 3</div><div class="cx-page"><b>09</b> / 20</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · The UI round</div>
-    <h2>Same ninety minutes, a different order</h2>
+  <!-- L3b · THE DECISION RECORD -->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 3</div><div class="cx-page"><b>09</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · The decision record</div>
+    <h2>An ADR fits on one screen</h2>
+    <div class="two tight">
+      <div class="card b">
+        <h3 class="b">docs/adr/004-server-state.md</h3>
+        <pre><code><span class="kw"># ADR-004 · Server state lives in Query</span>
+
+<span class="ty">Status</span>    accepted
+<span class="ty">Context</span>   Listings, filters and applications
+          all come from the API; a hand-made
+          store copied cache + loading flags.
+<span class="ty">Decision</span>  Query owns server state, the URL
+          owns filters, useState the rest.
+<span class="ty">Cost</span>      one more dependency; query keys
+          become an API to keep stable.
+<span class="ty">Rejected</span>  Redux Toolkit: it solves client
+          state we don't have.</code></pre>
+      </div>
+      <div class="card a">
+        <h3 class="cy">The rules that keep ADRs read</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li>One decision per file<small>numbered, never renumbered</small></li>
+          <li>Fits on one screen<small>if it scrolls, it's two decisions</small></li>
+          <li>Always name the rejected option<small>that line is your interview answer</small></li>
+          <li>Never edit an accepted one<small>supersede it with a new ADR that links back</small></li>
+        </ul>
+      </div>
+    </div>
+    <div class="key w">Five to seven are enough for Rasmi: rendering per route, where server state lives, where the session lives, no component library, what earns an E2E test.</div>
+</section>
+
+
+  <!-- L3c · THE FIVE-MINUTE README -->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 3</div><div class="cx-page"><b>10</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · The five-minute README</div>
+    <h2>Five minutes, spent in order</h2>
+    <p class="say">A reviewer opens the repo with five minutes to spare. The README decides what they see in each one.</p>
     <div class="fig" style="max-width:1000px">
-      <svg viewBox="0 0 1000 186" role="img" aria-label="Two timelines of a ninety-minute UI round. Typical: styling, then mouse-only features, then debugging. The order that scores: clarify to 8, scaffold to 20, build to 65, polish to 82, explain to 90">
-        <text x="0" y="10" class="lbl s" style="fill:#F8717A">HOW THE NINETY MINUTES USUALLY GO</text>
-        <rect x="0" y="18" width="240" height="40" rx="8" fill="#121C30" stroke="#64748B"/>
-        <text x="120" y="43" text-anchor="middle" class="lbl b" font-size="13">Styling the input</text>
-        <rect x="244" y="18" width="689" height="40" rx="8" fill="#121C30" stroke="#64748B"/>
-        <text x="588" y="43" text-anchor="middle" class="lbl b" font-size="13">Features, mouse only, one after another</text>
-        <rect x="937" y="18" width="63" height="40" rx="8" fill="#121C30" stroke="#F8717A"/>
-        <text x="968" y="43" text-anchor="middle" class="lbl b" font-size="13">Debug</text>
-        <text x="0" y="86" class="lbl s" style="fill:#34D399">THE ORDER THAT SCORES</text>
-        <rect x="0" y="94" width="86" height="40" rx="8" fill="#121C30" stroke="#22D3EE"/>
-        <text x="43" y="119" text-anchor="middle" class="lbl b" font-size="13">Clarify</text>
-        <rect x="89" y="94" width="130" height="40" rx="8" fill="#121C30" stroke="#2196F3"/>
-        <text x="154" y="119" text-anchor="middle" class="lbl b" font-size="13">Scaffold</text>
-        <rect x="222" y="94" width="497" height="40" rx="8" fill="#121C30" stroke="#34D399"/>
-        <text x="470" y="119" text-anchor="middle" class="lbl b" font-size="13">Build</text>
-        <rect x="722" y="94" width="186" height="40" rx="8" fill="#121C30" stroke="#FBBF24"/>
-        <text x="815" y="119" text-anchor="middle" class="lbl b" font-size="13">Polish</text>
-        <rect x="911" y="94" width="89" height="40" rx="8" fill="#121C30" stroke="#A78BFA"/>
-        <text x="955" y="119" text-anchor="middle" class="lbl b" font-size="13">Explain</text>
-        <text x="0" y="152" class="lbl s">0</text>
-        <text x="89" y="152" text-anchor="middle" class="lbl s">8</text>
-        <text x="222" y="152" text-anchor="middle" class="lbl s">20</text>
-        <text x="722" y="152" text-anchor="middle" class="lbl s">65</text>
-        <text x="911" y="152" text-anchor="middle" class="lbl s">82</text>
-        <text x="1000" y="152" text-anchor="end" class="lbl s">90 min</text>
-        <text x="43" y="176" text-anchor="middle" class="lbl s">5 questions</text>
-        <text x="154" y="176" text-anchor="middle" class="lbl s">runs on fake data</text>
-        <text x="470" y="176" text-anchor="middle" class="lbl s">behaviour first: type, ↑ ↓, Enter, Escape, real data</text>
-        <text x="815" y="176" text-anchor="middle" class="lbl s">loading · empty · error</text>
-        <text x="955" y="176" text-anchor="middle" class="lbl s">what's next</text>
+      <svg viewBox="0 0 980 150" role="img" aria-label="A five-minute README in five parts: what it is, run it, the shape, the decisions, what's next">
+        <g>
+          <rect x="0" y="0" width="180" height="120" rx="10" fill="#121C30" stroke="#22D3EE"/>
+          <text x="90" y="26" text-anchor="middle" class="lbl" style="font-family:var(--mono);fill:#22D3EE">0:00 – 0:30</text>
+          <text x="90" y="54" text-anchor="middle" class="lbl b">What it is</text>
+          <text x="90" y="80" text-anchor="middle" class="lbl">one sentence, the live</text>
+          <text x="90" y="99" text-anchor="middle" class="lbl">URL, a GIF of search</text>
+
+          <rect x="200" y="0" width="180" height="120" rx="10" fill="#121C30" stroke="#34D399"/>
+          <text x="290" y="26" text-anchor="middle" class="lbl" style="font-family:var(--mono);fill:#34D399">0:30 – 1:30</text>
+          <text x="290" y="54" text-anchor="middle" class="lbl b">Run it</text>
+          <text x="290" y="80" text-anchor="middle" class="lbl">three commands, from</text>
+          <text x="290" y="99" text-anchor="middle" class="lbl">clone to green tests</text>
+
+          <rect x="400" y="0" width="180" height="120" rx="10" fill="#121C30" stroke="#2196F3"/>
+          <text x="490" y="26" text-anchor="middle" class="lbl" style="font-family:var(--mono);fill:#2196F3">1:30 – 3:00</text>
+          <text x="490" y="54" text-anchor="middle" class="lbl b">The shape</text>
+          <text x="490" y="80" text-anchor="middle" class="lbl">one layer diagram,</text>
+          <text x="490" y="99" text-anchor="middle" class="lbl">the two rules</text>
+
+          <rect x="600" y="0" width="180" height="120" rx="10" fill="#121C30" stroke="#FBBF24"/>
+          <text x="690" y="26" text-anchor="middle" class="lbl" style="font-family:var(--mono);fill:#FBBF24">3:00 – 4:30</text>
+          <text x="690" y="54" text-anchor="middle" class="lbl b">The decisions</text>
+          <text x="690" y="80" text-anchor="middle" class="lbl">the ADRs, one line</text>
+          <text x="690" y="99" text-anchor="middle" class="lbl">each, linked</text>
+
+          <rect x="800" y="0" width="180" height="120" rx="10" fill="#121C30" stroke="#A78BFA"/>
+          <text x="890" y="26" text-anchor="middle" class="lbl" style="font-family:var(--mono);fill:#A78BFA">4:30 – 5:00</text>
+          <text x="890" y="54" text-anchor="middle" class="lbl b">What's next</text>
+          <text x="890" y="80" text-anchor="middle" class="lbl">known gaps, and what</text>
+          <text x="890" y="99" text-anchor="middle" class="lbl">another week buys</text>
+
+          <path class="draw" pathLength="1" d="M0,138 L974,138" stroke="#243349" fill="none"/>
+        </g>
       </svg>
     </div>
-    <div class="key">Never be more than ten minutes from a version that runs. A smaller component that works at minute ninety beats a bigger one that almost does.</div>
+    <div class="key g">Test it on someone who has never seen the repo: hand them the README, start a five-minute timer, then ask what they would push back on.</div>
 </section>
 
 
-  <!-- L3b · CLARIFY, THEN SCAFFOLD -->
-  <section class="slide" data-chip="MODULE 13 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 13 · VIDEO 3</div><div class="cx-page"><b>10</b> / 20</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Clarify, then scaffold</div>
-    <h2>Eight minutes of questions, then the shape</h2>
-    <div class="two tight">
-      <div class="card a">
-        <h3 class="cy">Clarify · minutes 0–8</h3>
-        <ul class="plist" style="margin-top:4px">
-          <li>Local array, or an API?<small>decides the debounce and the stale-response guard</small></li>
-          <li>How many results?<small>ten is a list; ten thousand is virtualisation</small></li>
-          <li>Keyboard and screen reader?<small>the answer is yes — asking shows you knew</small></li>
-          <li>No results, and errors?<small>write these down: they are your polish list</small></li>
-          <li>Styled, or just working?<small>usually buys permission to skip the CSS</small></li>
-        </ul>
-      </div>
-      <div class="card b">
-        <h3 class="b">Scaffold · minutes 8–20</h3>
-        <pre><code><span class="cmt">// state first, fake data, no fetch yet</span>
-<span class="kw">const</span> [query, setQuery] = <span class="fn">useState</span>(<span class="st">''</span>);
-<span class="kw">const</span> [items, setItems] = <span class="fn">useState</span>(FAKE);
-<span class="kw">const</span> [active, setActive] = <span class="fn">useState</span>(<span class="st">-1</span>);
-<span class="kw">const</span> [status, setStatus] = <span class="fn">useState</span>(<span class="st">'idle'</span>);
+  <!-- L4a · THE GATE -->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 3</div><div class="cx-page"><b>11</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Deploy, and the gate that keeps it green</div>
+    <h2>Every push goes through the same gate</h2>
+    <div class="fig" style="max-width:1000px">
+      <svg viewBox="0 0 980 120" role="img" aria-label="Pipeline: push, then typecheck, lint, unit, e2e and budget as required checks, then a preview deploy, then production from main only">
+        <g>
+          <path class="nohead" d="M122,32 L122,24 L714,24 L714,32" stroke="#FBBF24" fill="none"/>
+          <text x="418" y="14" text-anchor="middle" class="lbl" style="fill:#FBBF24">required checks · any red blocks the merge</text>
 
-<span class="kw">return</span> (
-  &lt;<span class="ty">div</span> className=<span class="st">"ac"</span>&gt;
-    &lt;<span class="ty">input</span> value={query} onChange={onType} /&gt;
-    &lt;<span class="ty">ul</span>&gt;{items.<span class="fn">map</span>(renderItem)}&lt;/<span class="ty">ul</span>&gt;
-  &lt;/<span class="ty">div</span>&gt;
-);</code></pre>
+          <rect x="0" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#64748B"/>
+          <text x="52" y="68" text-anchor="middle" class="lbl b">push</text>
+          <path class="draw" pathLength="1" d="M104,63 L119,63" stroke="#64748B" fill="none"/>
+          <rect x="122" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="174" y="68" text-anchor="middle" class="lbl b">typecheck</text>
+          <path class="draw" pathLength="1" d="M226,63 L241,63" stroke="#64748B" fill="none"/>
+          <rect x="244" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="296" y="68" text-anchor="middle" class="lbl b">lint</text>
+          <path class="draw" pathLength="1" d="M348,63 L363,63" stroke="#64748B" fill="none"/>
+          <rect x="366" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="418" y="68" text-anchor="middle" class="lbl b">unit</text>
+          <path class="draw" pathLength="1" d="M470,63 L485,63" stroke="#64748B" fill="none"/>
+          <rect x="488" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="540" y="68" text-anchor="middle" class="lbl b">e2e</text>
+          <path class="draw" pathLength="1" d="M592,63 L607,63" stroke="#64748B" fill="none"/>
+          <rect x="610" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="662" y="68" text-anchor="middle" class="lbl b">budget</text>
+          <path class="draw" pathLength="1" d="M714,63 L729,63" stroke="#64748B" fill="none"/>
+          <rect x="732" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#2196F3"/>
+          <text x="784" y="68" text-anchor="middle" class="lbl b">preview</text>
+          <path class="draw" pathLength="1" d="M836,63 L851,63" stroke="#64748B" fill="none"/>
+          <rect x="854" y="40" width="126" height="46" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="917" y="68" text-anchor="middle" class="lbl b">production</text>
+
+          <text x="52" y="108" text-anchor="middle" class="lbl s">any branch</text>
+          <text x="174" y="108" text-anchor="middle" class="lbl s">tsc --noEmit</text>
+          <text x="296" y="108" text-anchor="middle" class="lbl s">import boundaries</text>
+          <text x="418" y="108" text-anchor="middle" class="lbl s">Vitest</text>
+          <text x="540" y="108" text-anchor="middle" class="lbl s">Playwright + MSW</text>
+          <text x="662" y="108" text-anchor="middle" class="lbl s">size · Web Vitals</text>
+          <text x="784" y="108" text-anchor="middle" class="lbl s">a URL per PR</text>
+          <text x="917" y="108" text-anchor="middle" class="lbl s">main only</text>
+        </g>
+      </svg>
+    </div>
+    <div class="two">
+      <div class="card g">
+        <h3 class="g">Deploy on day one</h3>
+        <p>Connect the repo to the host before the first merge. An empty shell on a real URL finds the build and env-var problems while they're small. Every PR then gets <b>its own preview URL</b>.</p>
+      </div>
+      <div class="card r">
+        <h3 class="r">Protect main</h3>
+        <p>Required status checks, no direct pushes, no “merge anyway”. If <code>main</code> goes red, fixing it is <b>the only work that lands next</b>.</p>
       </div>
     </div>
 </section>
 
 
-  <!-- L3c · CHECKPOINTS -->
-  <section class="slide" data-chip="MODULE 13 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 13 · VIDEO 3</div><div class="cx-page"><b>11</b> / 20</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Build, then polish</div>
-    <h2>Polish starts at a time, not a feeling</h2>
+  <!-- L4b · THE ACCESSIBILITY PASS -->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 3</div><div class="cx-page"><b>12</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · The accessibility pass</div>
+    <h2>A scanner finds some. You find the rest.</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">Automated · in CI</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li>axe on every route, in Playwright<small>zero violations is a required check</small></li>
+          <li>Tokens checked for contrast once<small>the module 5 palette passes WCAG AA</small></li>
+          <li>Roles asserted in component tests<small>Testing Library queries by role, so a lost role fails</small></li>
+        </ul>
+      </div>
+      <div class="card w">
+        <h3 class="w">Manual · a scripted run</h3>
+        <ul class="plist" style="margin-top:4px">
+          <li>Keyboard only: search → filter → apply<small>focus always visible, never lost</small></li>
+          <li>Screen reader on combobox and modal<small>options announced, focus returns on close</small></li>
+          <li>200% zoom, then 320px wide<small>no sideways scroll, nothing clipped</small></li>
+          <li>Reduced motion switched on<small>toasts and transitions respect it</small></li>
+        </ul>
+      </div>
+    </div>
+    <div class="key w">Write the manual run into the README as a dated checklist. “Accessible” is a claim; a dated checklist is evidence.</div>
+</section>
+
+
+  <!-- L4c · THE PERFORMANCE PASS -->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 3</div><div class="cx-page"><b>13</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · The performance pass</div>
+    <h2>Defend a number, its method, its commit</h2>
     <table class="grid">
-      <tr><th>Minute</th><th>Must be true</th><th>If it isn't, cut</th></tr>
-      <tr><td><b>20</b></td><td>It renders from fake data, and the file runs</td><td>All styling — plain HTML is fine</td></tr>
-      <tr><td><b>45</b></td><td>Typing filters; <code>↑</code> <code>↓</code> <code>Enter</code> work</td><td>The fetch — filter the local array instead</td></tr>
-      <tr><td><b class="w">65</b></td><td>Real data in; <code>combobox</code> and <code>listbox</code> roles wired</td><td>Every new feature — polish starts now</td></tr>
-      <tr><td><b>82</b></td><td><code>Escape</code>, empty, error and a stale response all handled</td><td>Nothing — say what's missing, out loud</td></tr>
+      <tr><th>Metric</th><th>Budget</th><th>Measured how</th><th>Enforced where</th></tr>
+      <tr><td><b>LCP</b></td><td>≤ 2.5 s</td><td>Listings page, throttled mid-range mobile in the lab; p75 in the field once there's traffic</td><td>The budget step in CI</td></tr>
+      <tr><td><b>INP</b></td><td>≤ 200 ms</td><td>Typing in the search box, toggling a filter on a long list</td><td>A Playwright trace; field data later</td></tr>
+      <tr><td><b>CLS</b></td><td>≤ 0.1</td><td>Cold load, fonts and company logos uncached</td><td>The budget step in CI</td></tr>
+      <tr><td><b>JS on the listings route</b></td><td>Your number</td><td>Bundle analysis of the production build — and the ADR that set the number</td><td>A size check in CI</td></tr>
     </table>
-    <div class="key w">Most candidates polish too early — CSS at minute fifteen — or never, adding features until the bell. Say each checkpoint out loud: “Minute forty-five, keyboard works, moving on.”</div>
+    <div class="key">“It's fast” loses the argument. “Listings LCP went from <i>before</i> to <i>after</i> on throttled mobile, in commit <i>abc123</i>” wins it — keep that sentence, with your real numbers, in the README.</div>
 </section>
 
   <!-- L3 · READ NEXT -->
-  <section class="slide" data-chip="MODULE 13 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 13 · VIDEO 3</div><div class="cx-page"><b>12</b> / 20</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 3</div><div class="cx-page"><b>14</b> / 18</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Read next</div>
-    <h2>Clarify, scaffold, then build to a checkpoint</h2>
+    <h2>Write down why, then let the gate keep it</h2>
     <div class="two">
       <div class="card a">
         <h3 class="cy">References</h3>
         <ul class="plist reads" style="margin-top:4px">
-          <li><a href="https://react.dev/learn/thinking-in-react" target="_blank" rel="noopener">Thinking in React — react.dev</a><small>the decomposition you say out loud while scaffolding</small></li>
-          <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/combobox/" target="_blank" rel="noopener">Combobox pattern — WAI-ARIA APG</a><small>the keyboard contract an autocomplete is scored on</small></li>
-          <li><a href="https://www.w3.org/WAI/ARIA/apg/patterns/" target="_blank" rel="noopener">ARIA patterns — WAI-ARIA APG</a><small>modal, tabs, menu: the other UI-round regulars</small></li>
+          <li><a href="https://adr.github.io/" target="_blank" rel="noopener">Architecture decision records</a><small>templates and worked examples of an ADR</small></li>
+          <li><a href="https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches" target="_blank" rel="noopener">About protected branches — GitHub Docs</a><small>required checks: a red one stops the merge</small></li>
+          <li><a href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener">WCAG 2.2 quick reference — W3C</a><small>the criteria your keyboard pass is checking</small></li>
         </ul>
       </div>
       <div class="card b">
         <h3 class="b">Resources</h3>
         <ul class="plist reads" style="margin-top:4px">
-          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard/tree/module-7/autocomplete/solution" target="_blank" rel="noopener">Autocomplete solution branch</a><small>rebuild it in ninety minutes, checkpoints on</small></li>
+          <li><a href="https://docs.github.com/en/actions/writing-workflows/quickstart" target="_blank" rel="noopener">GitHub Actions quickstart</a><small>the workflow file behind the gate</small></li>
+          <li><a href="https://github.com/GoogleChrome/lighthouse-ci" target="_blank" rel="noopener">Lighthouse CI</a><small>the performance budget as a CI step</small></li>
         </ul>
       </div>
     </div>
 </section>
 
 
-  <!-- L4a · RADIO ON THE CLOCK -->
-  <section class="slide" data-chip="MODULE 13 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 13 · VIDEO 4</div><div class="cx-page"><b>13</b> / 20</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · The design round, timed</div>
-    <h2>RADIO, on a forty-five-minute clock</h2>
-    <div class="fig" style="max-width:1000px">
-      <svg viewBox="0 0 1000 96" role="img" aria-label="Forty-five minutes: requirements to 7, architecture to 17, data model to 25, interface to 32, optimisations to 42, questions to 45">
-        <text x="0" y="10" class="lbl s">0</text>
-        <text x="156" y="10" text-anchor="middle" class="lbl s">7</text>
-        <text x="378" y="10" text-anchor="middle" class="lbl s">17</text>
-        <text x="556" y="10" text-anchor="middle" class="lbl s">25</text>
-        <text x="711" y="10" text-anchor="middle" class="lbl s">32</text>
-        <text x="933" y="10" text-anchor="middle" class="lbl s">42</text>
-        <text x="1000" y="10" text-anchor="end" class="lbl s">45</text>
-        <rect x="0" y="18" width="152" height="42" rx="8" fill="#121C30" stroke="#22D3EE"/>
-        <text x="76" y="44" text-anchor="middle" class="lbl b" font-size="13">R · Requirements</text>
-        <rect x="156" y="18" width="218" height="42" rx="8" fill="#121C30" stroke="#2196F3"/>
-        <text x="265" y="44" text-anchor="middle" class="lbl b" font-size="13">A · Architecture</text>
-        <rect x="378" y="18" width="174" height="42" rx="8" fill="#121C30" stroke="#34D399"/>
-        <text x="465" y="44" text-anchor="middle" class="lbl b" font-size="13">D · Data model</text>
-        <rect x="556" y="18" width="151" height="42" rx="8" fill="#121C30" stroke="#A78BFA"/>
-        <text x="631" y="44" text-anchor="middle" class="lbl b" font-size="13">I · Interface</text>
-        <rect x="711" y="18" width="218" height="42" rx="8" fill="#121C30" stroke="#FBBF24"/>
-        <text x="820" y="44" text-anchor="middle" class="lbl b" font-size="13">O · Optimisations</text>
-        <rect x="933" y="18" width="67" height="42" rx="8" fill="none" stroke="#64748B" stroke-dasharray="4 4"/>
-        <text x="966" y="44" text-anchor="middle" class="lbl" font-size="13">Q&amp;A</text>
-        <text x="76" y="84" text-anchor="middle" class="lbl s">in scope / out, written</text>
-        <text x="265" y="84" text-anchor="middle" class="lbl s">boxes, arrows, one data flow</text>
-        <text x="465" y="84" text-anchor="middle" class="lbl s">entities, and who owns each</text>
-        <text x="631" y="84" text-anchor="middle" class="lbl s">endpoints, key props</text>
-        <text x="820" y="84" text-anchor="middle" class="lbl s">two or three, each with its cost</text>
-        <text x="966" y="84" text-anchor="middle" class="lbl s">their turn</text>
-      </svg>
-    </div>
-    <p class="say">Module 11 taught the script. This lesson is the clock: the round rewards getting through all five letters, and most candidates never reach <b>O</b>.</p>
-    <div class="key">At each mark, say the transition out loud — “That's requirements; let me draw the architecture.” The interviewer hears the structure even when the content is thin.</div>
+  <!-- L5a · THE SENIOR CHECKLIST -->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 4</div><div class="cx-page"><b>15</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Capstone review</div>
+    <h2>The senior checklist</h2>
+    <table class="grid">
+      <tr><th>Area</th><th>You can show</th><th>The question you must answer</th></tr>
+      <tr><td><b>Product</b></td><td>The live URL, signed out and signed in</td><td>“What happens if I open the dashboard with no session?”</td></tr>
+      <tr><td><b>Boundaries</b></td><td>Layers point down; no feature imports another</td><td>“Where would a saved-jobs feature go, and what may it import?”</td></tr>
+      <tr><td><b>Types</b></td><td><code>strict</code>, schemas at every boundary, no stray <code>any</code></td><td>“What checks this API response at runtime?”</td></tr>
+      <tr><td><b>State</b></td><td>Server state in Query, filters in the URL</td><td>“Why isn't this in a global store?”</td></tr>
+      <tr><td><b>UI</b></td><td>The keyboard path; combobox and modal contracts</td><td>“Where does focus go when the modal closes?”</td></tr>
+      <tr><td><b>Quality</b></td><td>Green gate: types, lint, unit, e2e, budget</td><td>“Which test catches a broken redirect?”</td></tr>
+      <tr><td><b>Story</b></td><td>The five-minute README, the ADRs, the known gaps</td><td>“What would you change with another week?”</td></tr>
+    </table>
 </section>
 
 
-  <!-- L4c · EVERY OPTIMISATION HAS A COST -->
-  <section class="slide" data-chip="MODULE 13 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 13 · VIDEO 4</div><div class="cx-page"><b>14</b> / 20</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · The letter people rush</div>
-    <h2>Every optimisation comes with its cost</h2>
-    <div class="two">
-      <div class="card r">
-        <h3 class="r">What the clock usually gets</h3>
-        <p>“Then I'd make it fast — caching, lazy loading, maybe a CDN.”</p>
-        <p style="margin-top:auto; padding-top:12px">Three nouns, no reason, no cost. Nothing for the interviewer to push on, so they push on whatever you didn't say.</p>
-      </div>
+  <!-- L5b · BUILD -->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 4</div><div class="cx-page"><b>16</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Build</div>
+    <h2>Hand in a URL, a green gate, a checklist</h2>
+    <div class="three">
       <div class="card g">
-        <h3 class="g">What scores</h3>
-        <p><b>Cursor, not offset.</b> New jobs land at the top, so offset pages repeat rows. <i>Cost:</i> no jumping to page seven — fine for a feed.</p>
-        <p style="margin-top:10px"><b>Virtualise past ~200 cards.</b> The DOM stays around thirty nodes. <i>Cost:</i> find-in-page misses jobs that are off screen.</p>
+        <h3 class="g">1 · The deployed URL</h3>
+        <p>Public pages indexable, the dashboard behind auth and <code>noindex</code>. Linked at the <b>top of the README</b>.</p>
+      </div>
+      <div class="card a">
+        <h3 class="cy">2 · Green CI on main</h3>
+        <p>Typecheck, lint, unit, e2e and the budget as <b>required checks</b>, all green on the commit you hand in.</p>
+      </div>
+      <div class="card w">
+        <h3 class="w">3 · The checklist, answered</h3>
+        <p>Every row of the senior checklist, with the file, test or ADR that answers it. Gaps listed <b>honestly, not hidden</b>.</p>
       </div>
     </div>
-    <div class="key"><b>The drill:</b> one of module 11's six questions per session — feed, autocomplete, chat, e-commerce, dashboard, editor. Paper, timer, out loud. Then check it against what module 11 said the round scores.</div>
+    <div class="key g">Stage: <code>module-10/capstone</code>. Branch from <code>main</code>, merge the earlier stages bottom-up, merge back when the checklist is done. Then rehearse: open any file at random and explain why it exists, in under a minute.</div>
 </section>
 
   <!-- L4 · READ NEXT -->
-  <section class="slide" data-chip="MODULE 13 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 13 · VIDEO 4</div><div class="cx-page"><b>15</b> / 20</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 10 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 4</div><div class="cx-page"><b>17</b> / 18</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · Read next</div>
-    <h2>Every letter, and every cost, said out loud</h2>
+    <h2>Every row of the checklist points at evidence</h2>
     <div class="two">
       <div class="card a">
         <h3 class="cy">References</h3>
         <ul class="plist reads" style="margin-top:4px">
-          <li><a href="https://web.dev/articles/rendering-on-the-web" target="_blank" rel="noopener">Rendering on the Web — web.dev</a><small>the trade-offs your architecture letter leans on</small></li>
-          <li><a href="https://web.dev/articles/optimize-inp" target="_blank" rel="noopener">Optimize INP — web.dev</a><small>the cost side of an interaction optimisation</small></li>
+          <li><a href="https://web.dev/articles/vitals" target="_blank" rel="noopener">Web Vitals — web.dev</a><small>the published thresholds behind your budgets</small></li>
+          <li><a href="https://www.w3.org/WAI/test-evaluate/preliminary/" target="_blank" rel="noopener">Easy checks — W3C WAI</a><small>a first accessibility review, done by hand</small></li>
+          <li><a href="https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes" target="_blank" rel="noopener">About READMEs — GitHub Docs</a><small>the file a reviewer opens first</small></li>
         </ul>
       </div>
       <div class="card b">
         <h3 class="b">Resources</h3>
         <ul class="plist reads" style="margin-top:4px">
-          <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/11-frontend-system-design" target="_blank" rel="noopener">Module 11 slides — system design</a><small>the RADIO script and the six walked questions</small></li>
-        </ul>
-      </div>
-    </div>
-</section>
-
-
-  <!-- L5a · STAR WITH A TRADE-OFF -->
-  <section class="slide" data-chip="MODULE 13 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 13 · VIDEO 5</div><div class="cx-page"><b>16</b> / 20</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Behavioural answers</div>
-    <h2>STAR, with a trade-off you actually made</h2>
-    <p class="say">“Tell me about a technical decision you lost.”</p>
-    <div class="two">
-      <div class="card r">
-        <h3 class="r">Adjectives, no cost</h3>
-        <p>“We disagreed about how to handle search. I explained my view, the team went another way, and it worked out fine in the end.”</p>
-        <p style="margin-top:auto; padding-top:12px">No number. No trade-off. Nothing <i>you</i> did.</p>
-      </div>
-      <div class="card g">
-        <h3 class="g">STAR, with what it cost</h3>
-        <p><b>S</b> · Job board search: INP of 380 ms on mid-range phones.</p>
-        <p><b>T</b> · I owned the fix, and I wanted filtering on the server.</p>
-        <p><b>A</b> · The lead chose a client debounce to ship that sprint. I wrote down why I disagreed, built it anyway, and added a performance budget to CI.</p>
-        <p><b>R</b> · INP fell to 190 ms. Six weeks later the data outgrew it, and we moved to the server with the numbers already in hand.</p>
-      </div>
-    </div>
-    <div class="key">The trade-off is the senior signal: speed now over the right shape later — said out loud, with the evidence set up to revisit it.</div>
-</section>
-
-
-  <!-- L5b · FOUR STORIES -->
-  <section class="slide" data-chip="MODULE 13 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 13 · VIDEO 5</div><div class="cx-page"><b>17</b> / 20</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Your story bank</div>
-    <h2>Four stories, most of the questions</h2>
-    <table class="grid">
-      <tr><th>Story</th><th>It answers</th><th>Its number</th></tr>
-      <tr><td><b>A decision you lost</b></td><td>Conflict, disagreeing with a lead, influence without authority</td><td>The metric that settled it</td></tr>
-      <tr><td><b>A bug you shipped</b></td><td>Failure, ownership, what you changed afterwards</td><td>Users hit, time to fix</td></tr>
-      <tr><td><b>Something you made faster</b></td><td>Impact, measuring before guessing, priorities</td><td>Before → after</td></tr>
-      <tr><td><b>Someone you helped grow</b></td><td>Mentoring, feedback, the senior signal</td><td>What they shipped alone</td></tr>
-    </table>
-    <div class="key g"><b>The drill:</b> each story aloud, two minutes, timer on. Over two minutes? Cut the Situation — it is always the Situation. Keep the trade-off line in every one.</div>
-</section>
-
-
-  <!-- L5c · TAKE-HOME STRATEGY -->
-  <section class="slide" data-chip="MODULE 13 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 13 · VIDEO 5</div><div class="cx-page"><b>18</b> / 20</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Take-home strategy</div>
-    <h2>A take-home is read from the README</h2>
-    <div class="two tight">
-      <div>
-        <table class="grid" style="margin-top:0">
-          <tr><th>Hour</th><th>On a four-hour brief</th></tr>
-          <tr><td><b>0:00</b></td><td>Write the README's <i>Scope</i> first — what's in, what isn't</td></tr>
-          <tr><td><b>0:20</b></td><td>The core path, with tests alongside it</td></tr>
-          <tr><td><b class="w">2:45</b></td><td><b>Stop adding features.</b> What's left goes under “Not done”</td></tr>
-          <tr><td><b>3:00</b></td><td>Loading, empty, error — the states you listed</td></tr>
-          <tr><td><b>3:40</b></td><td>Finish the README: decisions, gaps, next steps</td></tr>
-        </table>
-      </div>
-      <div class="card b">
-        <h3 class="b">README.md — the parts they read</h3>
-        <pre><code><span class="kw"># Job search — take-home</span>
-<span class="kw">## Run it</span>
-pnpm install &amp;&amp; pnpm dev
-<span class="kw">## Scope</span>
-<span class="ok">Done:</span> search, filters, keyboard nav
-<span class="no">Not done:</span> saved jobs (out of time)
-<span class="kw">## Decisions</span>
-Client-side filtering: 500 rows fit
-in memory. At 50k I'd page server-side.
-<span class="kw">## With more time</span>
-An e2e test for the keyboard path.</code></pre>
-      </div>
-    </div>
-    <div class="key w">“About four hours” is part of the brief. Twelve hours of polish reads as can't-scope, not keen — spend the spare time on the README, not on features.</div>
-</section>
-
-  <!-- L5 · READ NEXT -->
-  <section class="slide" data-chip="MODULE 13 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 13 · VIDEO 5</div><div class="cx-page"><b>19</b> / 20</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Read next</div>
-    <h2>Stories, a README, and a profile that carries them</h2>
-    <div class="two">
-      <div class="card a">
-        <h3 class="cy">References</h3>
-        <ul class="plist reads" style="margin-top:4px">
-          <li><a href="https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes" target="_blank" rel="noopener">About READMEs — GitHub Docs</a><small>what a take-home reviewer reads first</small></li>
-          <li><a href="https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/managing-your-profile-readme" target="_blank" rel="noopener">Managing your profile README — GitHub Docs</a><small>the front page of your portfolio</small></li>
-          <li><a href="https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/pinning-items-to-your-profile" target="_blank" rel="noopener">Pinning items to your profile — GitHub Docs</a><small>put Rasmi first</small></li>
-        </ul>
-      </div>
-      <div class="card b">
-        <h3 class="b">Resources</h3>
-        <ul class="plist reads" style="margin-top:4px">
-          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener">Rasmi — the job board repo</a><small>the project behind every story</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener">Rasmi — the job board repo</a><small>the app you hand in</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-program" target="_blank" rel="noopener">Frontend Mastery program repo</a><small>every module deck, for the review</small></li>
         </ul>
       </div>
     </div>
@@ -830,28 +775,23 @@ An e2e test for the keyboard path.</code></pre>
 
 
   <!-- CLOSING -->
-  <section class="slide" data-chip="MODULE 13 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 13 · VIDEO 5</div><div class="cx-page"><b>20</b> / 20</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Module 13 · done</div>
-    <h2>Five formats, and none of them new</h2>
+  <section class="slide" data-chip="MODULE 10 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 4</div><div class="cx-page"><b>18</b> / 18</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Module 10 · done</div>
+    <h2>One app you can defend, line by line</h2>
     <div class="two">
       <div class="card a">
-        <h3 class="cy">What you can now do</h3>
+        <h3 class="cy">What you now have</h3>
         <ul class="plist" style="margin-top:4px">
-          <li>Quiz · a “why” in thirty seconds<small>answer, mechanism, so what — then stop</small></li>
-          <li>Utilities · blank file to passing<small>inside the clock, narrating the whole way</small></li>
-          <li>UI · clarify, scaffold, build, polish<small>never more than ten minutes from a version that runs</small></li>
-          <li>Design · RADIO in forty-five<small>all five letters, every optimisation with its cost</small></li>
-          <li>Behavioural · four two-minute stories<small>a number and a trade-off in each — and a take-home README that says where you stopped</small></li>
+          <li>Rasmi, deployed<small>assembled from branches you wrote yourself</small></li>
+          <li>Auth that holds at the data<small>middleware for speed, the server for the decision</small></li>
+          <li>A story a reviewer reads in five minutes<small>a why-README and a handful of ADRs</small></li>
+          <li>A gate that keeps it green<small>types, lint, tests, e2e and a budget on every push</small></li>
         </ul>
       </div>
-      <div class="card g">
-        <h3 class="g">Your next two weeks</h3>
-        <p><b>Day 1</b> — re-sit the twelve; misses become quiz cards.</p>
-        <p><b>Days 2–6</b> — one format a day, on the clock.</p>
-        <p><b>Days 8–12</b> — your band's split; redo whatever ran over.</p>
-        <p><b>Day 13</b> — all five, back to back. <b>Days 7 and 14</b> — rest.</p>
-        <p style="margin-top:12px">Write it in the notebook tonight, with real dates, beside both diagnostic scores.</p>
-        <div class="key g" style="margin-top:auto">Every day: ten cards out loud, and no silence longer than thirty seconds. Then go and sit the real thing.</div>
+      <div class="card b">
+        <h3 class="b">Next · Module 11 — Interview Preparation</h3>
+        <p>Every interview format, drilled against the clock: the quiz round, the utilities round, the UI round, the design round, the behavioural story and the take-home.</p>
+        <p style="margin-top:10px">Rasmi is <b>the project you point to in every one of them</b>.</p>
       </div>
     </div>
 </section>
