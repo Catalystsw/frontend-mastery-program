@@ -919,8 +919,8 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
         </ul>
       </div>
       <div class="card b">
-        <h3 class="b">Next · Module 09 — Frontend System Design</h3>
-        <p><b>A 45-minute design round, run to a script.</b> Requirements, architecture, data and interfaces, then optimizations, and that last part is where this module's numbers come in.</p>
+        <h3 class="b">Next · Module 09 — The Program Capstone</h3>
+        <p><b>Assembly week, not build week.</b> One deployed job board you can defend line by line, shipped behind this module's tests and budget.</p>
         <p style="margin-top:10px">Deliverable before you start: <code>module-8/perf-and-tests</code> green, with your before/after table in the PR.</p>
       </div>
     </div>
@@ -1228,6 +1228,7 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
 /* Code sandbox (see the style block above). Monaco is fetched from jsDelivr on first
    open, so a deck that never opens the panel loads nothing extra. React mode adds
    React's type definitions (jsDelivr) and React itself (esm.sh, inside the preview).
+   A file that imports a TYPED package (zod) pulls in that package's own types too.
 
    T opens and closes it from the slides; Ctrl+` does it from anywhere, the editor and
    the preview included. Inside the editor every key belongs to the editor; Esc (or a
@@ -1248,6 +1249,10 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
     '@types/react-dom@19.2.7': ['index.d.ts', 'client.d.ts'],
     'csstype@3.2.3': ['index.d.ts']
   };
+  // Packages that ship their own types. A file that imports one loads its .d.ts files
+  // from jsDelivr, and the runner imports the same version from esm.sh, so the checker
+  // and the code that runs agree. Any other package type-checks as `any`.
+  var TYPED = { 'zod': '4.6.7' };
   // The preview's import map. Everything React-shaped resolves to one copy of React;
   // other packages come from esm.sh with React left external, so they share it.
   var IMPORTS = {
@@ -1519,7 +1524,7 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
   }, true);
 
   /* ---- editor ------------------------------------------------------------------ */
-  var monaco, editor, ready, queries, typesReady, ambientLib, ambientKey = '',
+  var monaco, editor, ready, queries, typesReady, ambientLib, ambientKey = '', typed = {}, typeTexts = {},
       models = {}, order = [], views = {}, active = null, errs = {}, problems = 0,
       fontSize = +get('font', 0) || 16, hints = get('hints', 'on') === 'on';
 
@@ -1700,8 +1705,11 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
     showTab(m === 'react' ? 'preview' : 'problems');
     stop();
     var proj = loadProject(m);
-    var types = m === 'react' || /from\s*['"]react/.test(JSON.stringify(proj.files)) ? reactTypes() : null;
-    return Promise.resolve(types).catch(noop).then(function(){
+    var types = [m === 'react' || /from\s*['"]react/.test(JSON.stringify(proj.files)) ? reactTypes() : null];
+    Object.keys(proj.files).forEach(function(p){
+      proj.files[p].replace(SPEC, function(all, pre, q, s){ if (pkgOf(s)) types.push(pkgLoad(s)); return all; });
+    });
+    return Promise.all(types.map(function(t){ return Promise.resolve(t).catch(noop); })).then(function(){
       if (mode !== m) return;
       Object.keys(proj.files).forEach(function(p){ addModel(p, proj.files[p]); });
       openFile(models[proj.active] ? proj.active : order[0]);
@@ -1738,8 +1746,70 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
     return typesReady;
   }
 
-  // A package that ships no types here (anything but React) is declared as `any`, so
-  // importing it type-checks; the preview still fetches the real thing from esm.sh.
+  // A TYPED package: `zod` → { name: 'zod', sub: '' }, `zod/mini` → { …, sub: 'mini' }.
+  function pkgOf(s){
+    var m = /^((?:@[\w.-]+\/)?[\w.-]+)(?:\/(.+))?$/.exec(s);
+    return m && TYPED[m[1]] ? { name: m[1], sub: m[2] || '' } : null;
+  }
+  // The files an import path can mean: `x.js` is `x.d.ts`, a bare `x` is `x.d.ts` or `x/index.d.ts`.
+  function entries(sub){
+    if (!sub) return ['index.d.ts'];
+    if (/\.d\.ts$/.test(sub)) return [sub];
+    if (/\.js$/.test(sub)) return [sub.replace(/\.js$/, '.d.ts')];
+    return [sub + '.d.ts', sub + '/index.d.ts'];
+  }
+  // One .d.ts from jsDelivr, handed to the checker once; null when the package has no such file.
+  function typeText(name, f){
+    var key = name + '/' + f;
+    return typeTexts[key] || (typeTexts[key] = fetch(NPM + name + '@' + TYPED[name] + '/' + f)
+      .then(function(r){
+        if (r.status === 404) return null;
+        if (!r.ok) throw new Error(key + ': ' + r.status);
+        return r.text().then(function(t){
+          monaco.languages.typescript.typescriptDefaults.addExtraLib(t, 'file:///node_modules/' + key);
+          return t;
+        });
+      })
+      .catch(function(e){ delete typeTexts[key]; throw e; }));
+  }
+  // Every .d.ts reachable from the first of `cands` that exists, through relative imports
+  // and the package's own subpaths. `seen` belongs to one walk, so import cycles end.
+  function typeWalk(name, cands, seen){
+    var f = cands[0];
+    if (seen[f]) return Promise.resolve();
+    seen[f] = 1;
+    return typeText(name, f).then(function(t){
+      if (t == null) {
+        if (cands.length > 1) return typeWalk(name, cands.slice(1), seen);
+        throw new Error(name + '/' + f + ': not found');
+      }
+      var dir = f.split('/').slice(0, -1), jobs = [];
+      t.replace(SPEC, function(all, pre, q, s){
+        var p = pkgOf(s);
+        if (/^\.{1,2}\//.test(s)) {
+          var parts = dir.slice();
+          s.split('/').forEach(function(x){ if (x === '..') parts.pop(); else if (x && x !== '.') parts.push(x); });
+          jobs.push(typeWalk(name, entries(parts.join('/')), seen));
+        } else if (p && p.name === name) jobs.push(typeWalk(name, entries(p.sub), seen));
+        return all;
+      });
+      return Promise.all(jobs);
+    });
+  }
+  // Loads the types behind one TYPED import (`zod`, `zod/mini`), once. typed[spec] is the
+  // walk while it runs and true once it lands; a failed walk is forgotten, so it retries.
+  function pkgLoad(spec){
+    if (typed[spec]) return Promise.resolve(typed[spec]);
+    var p = pkgOf(spec);
+    status.textContent = 'loading ' + p.name + ' types…';
+    return typed[spec] = typeWalk(p.name, entries(p.sub), {}).then(
+      function(){ typed[spec] = true; ambient(); report(); },
+      function(e){ delete typed[spec]; report(); throw e; });
+  }
+
+  // A package that ships no types here (anything but React and TYPED) is declared as
+  // `any`, so importing it type-checks; the preview still fetches the real thing from
+  // esm.sh. A TYPED import is `any` too until its own types land.
   var SPEC = /(\bfrom\s*|\bimport\s*\(\s*|\bimport\s+)(['"])([^'"\n]+)\2/g;
   function ambient(){
     var names = {};
@@ -1748,7 +1818,10 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
       models[p].getValue().replace(SPEC, function(all, pre, q, s){
         if (/^[.\/]|^[a-z]+:/i.test(s)) return all;
         if (/^react(-dom)?(\/|$)/.test(s)) reactTypes().catch(noop);
-        else names[s] = 1;
+        else if (typed[s] !== true) {
+          names[s] = 1;
+          if (pkgOf(s)) pkgLoad(s).catch(noop);
+        }
         return all;
       });
     });
@@ -1985,7 +2058,8 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
   }
   function bare(spec, inPreview){
     if (/^[a-z]+:/i.test(spec) || (inPreview && IMPORTS[spec])) return null;
-    var pinned = spec.replace(/^(react-dom|react)(?=\/|$)/, '$1@' + REACT);
+    var t = pkgOf(spec), pinned = t ? t.name + '@' + TYPED[t.name] + (t.sub ? '/' + t.sub : '')
+      : spec.replace(/^(react-dom|react)(?=\/|$)/, '$1@' + REACT);
     return ESM + pinned + (pinned.indexOf('?') < 0 ? '?' : '&') + 'dev' + (inPreview ? '&external=react,react-dom' : '');
   }
   // The module source for one file. Relative imports go through `local`, which returns

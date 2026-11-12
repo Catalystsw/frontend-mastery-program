@@ -223,6 +223,15 @@
   .anim-say{font:600 min(1.4vw,16px)/1.4 var(--sans); color:var(--ink2)}
   .anim-say i{display:none; font-style:normal} .anim-say i.on{display:inline}
   .anim-say b.good{color:var(--good)} .anim-say b.bad{color:var(--bad)}
+  /* ‹ k / n › — step a figure by hand, injected before its replay button */
+  .stp{display:inline-flex; align-items:center; gap:3px; flex:none}
+  .stp .cmb-run{padding:9px 9px}
+  .stp .cmb-run.off{opacity:.35; cursor:default}
+  .stp .cmb-run.off:hover{background:var(--panel2); color:var(--grey1); border-color:var(--line2)}
+  .stp-n{min-width:3em; text-align:center; font:700 11px/1 var(--mono); color:var(--grey2); font-variant-numeric:tabular-nums}
+  .anim-bar > .cmb-run,.cmb-bar > .cmb-run{flex:none}
+  @media (max-width:1366px){.stp-n{display:none}}   /* small screens: arrows only, the caption already says which step */   /* small screens: arrows only, the caption already says which step */
+  @media print{.stp{display:none}}
 
   /* ---- debounce / throttle timeline ----------------------------------------------
      One event stream, one row per rule; only the rule that decides when a row
@@ -470,7 +479,7 @@
 <div id="stage">
 
   <!-- MODULE 03 · VIDEO 1 -->
-  <section class="slide" style="justify-content:center" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>01</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" style="justify-content:center" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>01</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 03 · JavaScript, Deeply</div>
     <h1>The language<br>under the framework</h1>
     <div class="sub">Execution contexts, closures, <span class="mono">this</span>, prototypes, modules, promises and memory — ending with the interview toolbelt written from an empty file.</div>
@@ -495,7 +504,7 @@
   </section>
 
   <!-- MODULE 03 · VIDEO 1 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>02</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>02</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 03 · the route through this module</div>
     <h2>Nine lessons</h2>
     <div class="two">
@@ -517,7 +526,7 @@
   </section>
 
   <!-- MODULE 03 · VIDEO 1 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>03</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>03</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · what a call actually costs</div>
     <h2>Every function call pushes a context</h2>
     <div class="two tight stk" id="stk">
@@ -551,7 +560,7 @@
   </section>
 
   <!-- MODULE 03 · VIDEO 1 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>04</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 1</div><div class="cx-page"><b>04</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · proof, in six lines</div>
     <h2>Lexical, not dynamic</h2>
     <div class="two tight">
@@ -580,7 +589,7 @@
   </section>
 
   <!-- MODULE 03 · VIDEO 2 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 2</div><div class="cx-page"><b>05</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 2</div><div class="cx-page"><b>05</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · the definition that survives an interview</div>
     <h2>A function plus the environment it was born in</h2>
     <div class="two tight">
@@ -609,7 +618,7 @@
   </section>
 
   <!-- MODULE 03 · VIDEO 2 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 2</div><div class="cx-page"><b>06</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 2</div><div class="cx-page"><b>06</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Where you already rely on it</div>
     <h2>Three shapes, one mechanism</h2>
     <div class="three">
@@ -639,7 +648,7 @@ store.state  <span class="no">// undefined</span></code></pre>
   </section>
 
   <!-- MODULE 03 · VIDEO 2 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 2</div><div class="cx-page"><b>07</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 2</div><div class="cx-page"><b>07</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">The other edge of the same knife</div>
     <h2>What the closure keeps alive</h2>
     <div class="two">
@@ -665,7 +674,7 @@ store.state  <span class="no">// undefined</span></code></pre>
   </section>
 
   <!-- MODULE 03 · VIDEO 3 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 3</div><div class="cx-page"><b>08</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 3</div><div class="cx-page"><b>08</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · read the call, not the definition</div>
     <h2>Four rules, checked in this order</h2>
     <div class="two tight">
@@ -697,7 +706,7 @@ obj.<span class="fn">who</span>()                  <span class="cmt">// 2 · imp
   </section>
 
   <!-- MODULE 03 · VIDEO 3 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 3</div><div class="cx-page"><b>09</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 3</div><div class="cx-page"><b>09</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">The bug you have shipped at least once</div>
     <h2>A method passed by reference loses its dot</h2>
     <div class="two tight">
@@ -725,7 +734,7 @@ input.addEventListener(<span class="st">'input'</span>, s.handle)
   </section>
 
   <!-- MODULE 03 · VIDEO 4 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 4</div><div class="cx-page"><b>10</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 4</div><div class="cx-page"><b>10</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · delegation, without classes</div>
     <h2>Inheritance without classes or constructors</h2>
     <div class="two tight">
@@ -752,7 +761,7 @@ console.log(<span class="ty">Object</span>.getPrototypeOf(userA) === protoUser);
   </section>
 
   <!-- MODULE 03 · VIDEO 4 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 4</div><div class="cx-page"><b>11</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 4</div><div class="cx-page"><b>11</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · what <code>class</code> is hiding</div>
     <h2>What 'class' is actually hiding</h2>
     <div class="two tight">
@@ -783,7 +792,7 @@ console.log(<span class="kw">typeof</span> <span class="ty">User</span>); <span 
   </section>
 
   <!-- MODULE 03 · VIDEO 4 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 4</div><div class="cx-page"><b>12</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 4</div><div class="cx-page"><b>12</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · intercepting the object model</div>
     <h2>Intercept and control property access</h2>
     <div class="two tight">
@@ -823,7 +832,7 @@ userProxy.age = <span class="st">'thirty'</span>; <span class="cmt">// throws Ty
   </section>
 
   <!-- MODULE 03 · VIDEO 5 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>13</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>13</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · before the first import</div>
     <h2>Which module system is this file?</h2>
     <div class="two tight">
@@ -855,7 +864,7 @@ eslint.config<span class="kw">.cjs</span>           <span class="cmt">// .cjs wi
   </section>
 
   <!-- MODULE 03 · VIDEO 5 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>14</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>14</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · at runtime</div>
     <h2>What 'import' actually does at runtime</h2>
     <div class="two tight">
@@ -888,7 +897,7 @@ console.log(count); <span class="cmt">// 0 ← <bdi dir="rtl" style="font:1.15em
   </section>
 
   <!-- MODULE 03 · VIDEO 5 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>15</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>15</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · why that bites in tests</div>
     <h2>Why senior engineers call it an anti-pattern</h2>
     <div class="two tight">
@@ -925,7 +934,7 @@ console.log(count); <span class="cmt">// 0 ← <bdi dir="rtl" style="font:1.15em
   </section>
 
   <!-- MODULE 03 · VIDEO 5 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>16</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>16</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · why that bites on the server</div>
     <h2>One copy, every user</h2>
     <div class="two tight">
@@ -964,7 +973,7 @@ console.log(count); <span class="cmt">// 0 ← <bdi dir="rtl" style="font:1.15em
   </section>
 
   <!-- MODULE 03 · VIDEO 5 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>17</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 5</div><div class="cx-page"><b>17</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · who reads your imports</div>
     <h2>Webpack, Vite, Turbopack</h2>
     <table class="grid">
@@ -993,7 +1002,7 @@ math[action](1, 2);
   </section>
 
   <!-- MODULE 03 · VIDEO 6 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>18</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>18</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 6 · before promises, inversion of control</div>
     <h2>A callback hands someone else your next step</h2>
     <div class="two tight">
@@ -1021,7 +1030,7 @@ math[action](1, 2);
   </section>
 
   <!-- MODULE 03 · VIDEO 6 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>19</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>19</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">One object, three states, one transition</div>
     <h2>A promise settles once, and never moves again</h2>
     <div class="fig" style="max-width:920px">
@@ -1049,7 +1058,7 @@ math[action](1, 2);
   </section>
 
   <!-- MODULE 03 · VIDEO 6 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>20</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>20</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">new Promise · wrapping a callback API</div>
     <h2>Promisify once, await everywhere</h2>
     <div class="two tight">
@@ -1081,7 +1090,7 @@ math[action](1, 2);
   </section>
 
   <!-- MODULE 03 · VIDEO 6 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>21</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>21</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">sleep at work · the same retry, written twice</div>
     <h2>Try three times, wait a second between</h2>
     <div class="two tight">
@@ -1117,7 +1126,7 @@ math[action](1, 2);
   </section>
 
   <!-- MODULE 03 · VIDEO 6 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>22</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>22</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Usage · the difference shows up at the call site</div>
     <h2>The shape decides two things</h2>
     <div class="two tight">
@@ -1152,7 +1161,7 @@ math[action](1, 2);
   </section>
 
   <!-- MODULE 03 · VIDEO 6 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>23</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>23</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">The same fetch, written three ways</div>
     <h2>await is a <span class="cy">.then</span> you can read top to bottom</h2>
     <div class="two tight">
@@ -1181,7 +1190,7 @@ math[action](1, 2);
   </section>
 
   <!-- MODULE 03 · VIDEO 6 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>24</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>24</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Series or parallel · it is where the await goes</div>
     <h2>Two awaits in a row is a waterfall</h2>
     <div class="two tight">
@@ -1224,7 +1233,7 @@ ids.forEach(<span class="kw">async</span> (id) =&gt; { <span class="kw">await</s
   </section>
 
   <!-- MODULE 03 · VIDEO 6 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>25</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 6</div><div class="cx-page"><b>25</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">The four combinators, and when each is right</div>
     <h2>Pick by what failure should mean</h2>
     <table class="grid tight-t">
@@ -1254,7 +1263,7 @@ ids.forEach(<span class="kw">async</span> (id) =&gt; { <span class="kw">await</s
   </section>
 
   <!-- MODULE 03 · VIDEO 7 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>26</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>26</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 7 · fetch, the rejection that never comes</div>
     <h2>A 500 is a successful request</h2>
     <div class="two tight">
@@ -1297,7 +1306,7 @@ ids.forEach(<span class="kw">async</span> (id) =&gt; { <span class="kw">await</s
   </section>
 
   <!-- MODULE 03 · VIDEO 7 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>27</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>27</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">The fix · one wrapper, used everywhere</div>
     <h2>Turn every failure into a rejection, once</h2>
     <div class="two tight">
@@ -1351,7 +1360,7 @@ ids.forEach(<span class="kw">async</span> (id) =&gt; { <span class="kw">await</s
   </section>
 
   <!-- MODULE 03 · VIDEO 7 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>28</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>28</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">What a try can see</div>
     <h2>A try only catches what it awaits</h2>
     <div class="two tight">
@@ -1385,7 +1394,7 @@ ids.forEach(<span class="kw">async</span> (id) =&gt; { <span class="kw">await</s
   </section>
 
   <!-- MODULE 03 · VIDEO 7 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>29</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>29</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">AbortController · cancellation</div>
     <h2>Cancel what nobody is waiting for</h2>
     <div class="two tight">
@@ -1417,7 +1426,7 @@ fetch(url, { signal: <span class="ty">AbortSignal</span>.<span class="fn">timeou
   </section>
 
   <!-- MODULE 03 · VIDEO 7 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>30</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>30</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Typed errors · cause · retry</div>
     <h2>Errors that know whether a retry helps</h2>
     <div class="two tight">
@@ -1469,7 +1478,7 @@ fetch(url, { signal: <span class="ty">AbortSignal</span>.<span class="fn">timeou
   </section>
 
   <!-- MODULE 03 · VIDEO 7 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>31</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 7"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 7</div><div class="cx-page"><b>31</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Where to catch, and what to say</div>
     <h2>Three boundaries, three jobs</h2>
     <div class="three">
@@ -1516,7 +1525,7 @@ fetch(url, { signal: <span class="ty">AbortSignal</span>.<span class="fn">timeou
   </section>
 
   <!-- MODULE 03 · VIDEO 8 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 8</div><div class="cx-page"><b>32</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 8</div><div class="cx-page"><b>32</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 8 · what a leak actually is</div>
     <h2>Memory is freed when nothing can reach it</h2>
     <div class="two">
@@ -1570,7 +1579,7 @@ user = <span class="kw">null</span>
   </section>
 
   <!-- MODULE 03 · VIDEO 8 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 8</div><div class="cx-page"><b>33</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 8</div><div class="cx-page"><b>33</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 8 · the leak your single-page app has right now</div>
     <h2>A listener you never removed keeps everything it remembers</h2>
     <div class="two">
@@ -1621,7 +1630,7 @@ user = <span class="kw">null</span>
   </section>
 
   <!-- MODULE 03 · VIDEO 8 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 8</div><div class="cx-page"><b>34</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 8</div><div class="cx-page"><b>34</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 8 · the fix</div>
     <h2>Every add needs a remove</h2>
     <div class="two tight">
@@ -1668,7 +1677,7 @@ window.addEventListener(<span class="st">'scroll'</span>, onScroll, { signal })
   </section>
 
   <!-- MODULE 03 · VIDEO 8 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 8</div><div class="cx-page"><b>35</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 8"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 8</div><div class="cx-page"><b>35</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 8 · Map or WeakMap</div>
     <h2>WeakMap: notes that disappear with the thing they describe</h2>
     <div class="two tight">
@@ -1734,7 +1743,7 @@ panel.remove()
   </section>
 
     <!-- MODULE 03 · VIDEO 9 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>36</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>36</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 9 · utilities 1 and 2, one burst, two rules</div>
     <h2><span class="cy">debounce</span> waits for quiet, <span class="g">throttle</span> keeps a rate</h2>
     <p class="say"><b>debounce(fn, wait)</b>: every call resets the timer, and <code>fn</code> runs once, <code>wait</code> ms after the last call. <b>throttle(fn, limit)</b>: the first call runs at once, then at most one per window.</p>
@@ -1754,7 +1763,7 @@ panel.remove()
   </section>
 
   <!-- MODULE 03 · VIDEO 9 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>37</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>37</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 9 · live coding, from an empty file</div>
     <h2>Both, in nine lines each</h2>
     <div class="two tight">
@@ -1792,7 +1801,7 @@ panel.remove()
   </section>
 
   <!-- MODULE 03 · VIDEO 9 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>38</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>38</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 9 · utility 3, a copy that shares nothing</div>
     <h2><span class="cy">deepClone</span>(value)</h2>
     <div class="two tight">
@@ -1800,7 +1809,7 @@ panel.remove()
         <pre><code><span class="kw">function</span> <span class="fn">deepClone</span>(value, seen = <span class="kw">new</span> <span class="ty">WeakMap</span>()) {
   <span class="kw">if</span> (value === <span class="kw">null</span> || <span class="kw">typeof</span> value !== <span class="st">'object'</span>) <span class="kw">return</span> value
   <span class="kw">if</span> (value <span class="kw">instanceof</span> <span class="ty">Date</span>) <span class="kw">return new</span> <span class="ty">Date</span>(value.getTime())
-  <span class="kw">if</span> (seen.has(value)) <span class="kw">return</span> seen.get(value) <span class="cmt">// cycle</span>
+  <span class="kw">if</span> (seen.has(value)) <span class="kw">return</span> seen.get(value) <span class="cmt">// cycle or shared</span>
 
   <span class="kw">const</span> copy = Array.isArray(value) ? [] : {}
   seen.set(value, copy)   <span class="cmt">// before the children</span>
@@ -1844,7 +1853,118 @@ panel.remove()
   </section>
 
   <!-- MODULE 03 · VIDEO 9 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>39</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>39</b> / 44</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 9 · deepClone, the two shapes that break a naive copy</div>
+    <h2 style="max-width:30ch"><span class="w">Shared</span> references and <span class="r">cycles</span></h2>
+    <div class="two tight">
+      <div>
+        <pre><code><span class="kw">const</span> employer = { name: <span class="st">'Acme'</span>, jobs: [] }
+<span class="kw">const</span> job = { title: <span class="st">'Frontend'</span>, employer }
+employer.jobs.push(job)      <span class="cmt">// a cycle</span>
+employer.featured = job      <span class="cmt">// one job, two paths</span></code></pre>
+        <div class="card w" style="margin-top:12px; padding:12px 16px">
+          <h3 class="w">Shared reference</h3>
+          <p><b>Where:</b> one object on two paths: a featured job also in <code>jobs</code>, a selected option also in <code>options</code>. <b>Naive copy:</b> two copies, so <code>===</code> between them turns <code>false</code>.</p>
+        </div>
+        <div class="card r" style="margin-top:12px; padding:12px 16px">
+          <h3 class="r">Cycle</h3>
+          <p><b>Where:</b> back-references: <code>job.employer</code>, a tree node's <code>parent</code>, the DOM's <code>parentNode</code>. <b>Naive copy:</b> the recursion never ends, until a <code>RangeError</code>.</p>
+        </div>
+      </div>
+      <div class="anim lg" data-at="0,1400,2800,4300,5700">
+        <svg viewBox="0 0 590 300" role="img" aria-label="Without seen, a job reached by two paths is cloned twice and the back edge to its employer recurses until the stack overflows; with seen, both paths get one copy and the back edge lands on the employer's copy">
+<rect x="0" y="14" width="130" height="40" rx="8" class="root"/>
+<text x="65" y="39" text-anchor="middle" class="lbl b">employer</text>
+<rect x="0" y="214" width="130" height="40" rx="8"/>
+<text x="65" y="239" text-anchor="middle" class="lbl mono">[ … ]</text>
+<rect x="170" y="114" width="110" height="40" rx="8"/>
+<text x="225" y="139" text-anchor="middle" class="lbl b">job</text>
+<path class="e" d="M40 54 L40 214"/><path class="ah" d="M40 214 L35 205 L45 205 Z"/>
+<text x="48" y="138" class="lbl s">jobs</text>
+<path class="e" d="M130 44 L190 114"/><path class="ah" d="M190 114 L179.7 109.7 L187.3 103.2 Z"/>
+<text x="160" y="92" text-anchor="end" class="lbl s">featured</text>
+<path class="e" d="M130 224 L170 150"/><path class="ah" d="M170 150 L169.6 161.2 L160.8 156.4 Z"/>
+<text x="153" y="202" class="lbl s mono">[0]</text>
+<path class="e" d="M250 114 C 250 50, 200 24, 130 24"/><path class="ah" d="M130 24 L139 19 L139 29 Z"/>
+<text x="244" y="66" class="lbl s">employer</text>
+<path class="e r2 a2 h4" d="M130 44 L190 114"/><path class="ah r2 a2 h4" d="M190 114 L179.7 109.7 L187.3 103.2 Z"/>
+<path class="e r2 a2 h4" d="M130 224 L170 150"/><path class="ah r2 a2 h4" d="M170 150 L169.6 161.2 L160.8 156.4 Z"/>
+<path class="e r3 a3 h4" d="M250 114 C 250 50, 200 24, 130 24"/><path class="ah r3 a3 h4" d="M130 24 L139 19 L139 29 Z"/>
+<g class="a2"><rect x="330" y="14" width="130" height="40" rx="8" class="g4"/><text x="395" y="39" text-anchor="middle" class="lbl b">employer′</text></g>
+<g class="a2"><rect x="330" y="214" width="130" height="40" rx="8" class="g4"/><text x="395" y="239" text-anchor="middle" class="lbl mono">[ … ]′</text></g>
+<path class="e d2 g4" pathLength="1" d="M370 54 L370 214"/><path class="ah a2 g4" d="M370 214 L365 205 L375 205 Z"/>
+<g class="a2 h4"><rect x="480" y="64" width="110" height="36" rx="8" class="bad"/><text x="535" y="87" text-anchor="middle" class="lbl b">job′</text></g>
+<g class="a2 h4"><rect x="480" y="168" width="110" height="36" rx="8" class="bad"/><text x="535" y="191" text-anchor="middle" class="lbl b">job″</text></g>
+<path class="e d2 r2 h4" pathLength="1" d="M460 44 L490 64"/><path class="ah a2 r2 h4" d="M490 64 L478.9 62.6 L484.5 54.3 Z"/>
+<path class="e d2 r2 h4" pathLength="1" d="M460 224 L490 204"/><path class="ah a2 r2 h4" d="M490 204 L478.9 205.4 L484.5 213.7 Z"/>
+<text x="535" y="140" text-anchor="middle" class="lbl s bad a2 h4">two copies</text>
+<g class="a3 h4"><rect x="480" y="6" width="110" height="34" rx="8" class="bad"/><text x="535" y="28" text-anchor="middle" class="lbl s bad">employer″ …</text></g>
+<path class="e d3 r3 h4" pathLength="1" d="M535 64 L535 40"/><path class="ah a3 r3 h4" d="M535 40 L530 49 L540 49 Z"/>
+<g class="a3 h4"><rect x="250" y="262" width="340" height="34" rx="8" class="bad"/><text x="420" y="284" text-anchor="middle" class="lbl s mono bad">RangeError: Maximum call stack size exceeded</text></g>
+<g class="a4"><rect x="480" y="114" width="110" height="40" rx="8" class="g4"/><text x="535" y="139" text-anchor="middle" class="lbl b">job′</text></g>
+<path class="e d4 g4" pathLength="1" d="M460 44 L500 114"/><path class="ah a4 g4" d="M500 114 L490.7 107.8 L499.4 102.8 Z"/>
+<path class="e d4 g4" pathLength="1" d="M460 224 L500 154"/><path class="ah a4 g4" d="M500 154 L490.7 160.2 L499.4 165.2 Z"/>
+<path class="e d5 g5" pathLength="1" d="M560 114 C 560 50, 510 24, 460 24"/><path class="ah a5 g5" d="M460 24 L469 19 L469 29 Z"/>
+<g class="a5"><rect x="170" y="262" width="420" height="34" rx="8" style="fill:#1A1530; stroke:var(--plum)"/><text x="186" y="284" class="lbl b" style="fill:var(--plum)">seen</text><text x="234" y="284" class="lbl s mono">employer→employer′ · jobs→jobs′ · job→job′</text></g>
+</svg>
+        <div class="anim-bar">
+          <button type="button" class="cmb-run anim-replay">replay</button>
+          <span class="anim-say"><i>One employer page: the featured job is also in <code>jobs</code>, and the job points back at its employer.</i><i>No <code>seen</code>: each path clones <code>job</code> again. <b class="bad">Two copies</b>, and <code>copy.featured !== copy.jobs[0]</code>.</i><i>Then <code>job.employer</code> leads back to the start, and the recursion <b class="bad">never ends</b>.</i><i>With <code>seen</code>, the second path gets the copy already made: <b class="good">one <code>job′</code></b>, reached twice.</i><i>The back edge finds <code>employer′</code> in <code>seen</code>, set before its children. <b class="good">The cycle closes on the copy.</b></i></span>
+        </div>
+        <div class="key g" style="margin-top:14px">One line fixes both: <code>seen.get(value)</code> returns the copy already made. <code>seen.set</code> runs before the children, so the back edge finds a copy still being filled.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 9 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>40</b> / 44</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 9 · deepClone, what the interviewer asks next</div>
+    <h2 style="max-width:36ch">Four follow-ups, four short answers</h2>
+    <div class="two tight" style="margin-top:14px">
+      <div class="card a" style="padding:14px 18px">
+        <h3 class="cy">“Isn't that just <code>Object.assign</code>?”</h3>
+        <p><code>Object.assign({}, x)</code> and <code>{ ...x }</code> are the same shallow copy: own keys, one level deep. Every nested object is still shared.</p>
+        <pre class="dense"><code><span class="kw">const</span> a = Object.assign({}, filters) <span class="cmt">// ≡ { ...filters }</span>
+a.tags === filters.tags              <span class="cmt">// true: shared</span></code></pre>
+      </div>
+      <div class="card p" style="padding:14px 18px">
+        <h3 class="p">“Your copy lost its methods.”</h3>
+        <p><code>{}</code> always gets <code>Object.prototype</code>, so a class instance comes back plain. <code>Object.create</code> builds the copy on the original's prototype. Lesson 4, cashed in.</p>
+        <pre class="dense"><code><span class="kw">const</span> copy = Array.isArray(value) ? []
+  : Object.create(Object.getPrototypeOf(value))</code></pre>
+      </div>
+      <div class="card w" style="padding:14px 18px">
+        <h3 class="w">“Why a <code>WeakMap</code>, not an array?”</h3>
+        <p>A visited array means a search on every call: a loop inside the recursion. <b>n</b> objects × <b>n</b> checks is <b>O(n²)</b>, ~50 million for 10,000 objects. A map lookup is O(1): the clone stays O(n).</p>
+        <pre class="dense"><code>seen.find(([o]) =&gt; o === value)  <span class="cmt">// O(n) each → O(n²)</span>
+seen.get(value)                  <span class="cmt">// O(1) each → O(n)</span></code></pre>
+      </div>
+      <div class="card r" style="padding:14px 18px">
+        <h3 class="r">“And functions?”</h3>
+        <p><code>typeof</code> says <code>'function'</code>, so the first line hands it back shared. <code>structuredClone</code> throws, JSON drops it, and nothing can copy a closure's variables: a custom clone, with your rule.</p>
+        <pre class="dense"><code>structuredClone({ onSave() {} })   <span class="cmt">// DataCloneError</span>
+_.cloneDeepWith(value, customizer) <span class="cmt">// your rule</span></code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 9 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>41</b> / 44</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 9 · deepClone, the whole picture</div>
+    <h2>Five ways to copy, and what each one keeps</h2>
+    <table class="grid ext">
+      <tr><th>Copy</th><th>Nested objects</th><th>Shared refs · cycles</th><th>Date · Map · Set</th><th>Class prototype</th><th>Functions</th></tr>
+      <tr><td><code>{ ...x }</code> · <code>Object.assign</code></td><td><span class="no">shared</span></td><td>one level only</td><td><span class="no">shared</span></td><td><span class="no">lost</span></td><td>shared</td></tr>
+      <tr><td><code>JSON.parse(JSON.stringify(x))</code></td><td><span class="ok">copied</span></td><td><span class="no">cycle throws, shared → duplicated</span></td><td><span class="no">Date → string, Map → <code>{}</code></span></td><td><span class="no">lost</span></td><td><span class="no">dropped</span></td></tr>
+      <tr><td><code>structuredClone(x)</code></td><td><span class="ok">copied</span></td><td><span class="ok">kept</span></td><td><span class="ok">copied</span></td><td><span class="no">lost</span></td><td><span class="no">throws</span></td></tr>
+      <tr><td>lodash <code>_.cloneDeep(x)</code></td><td><span class="ok">copied</span></td><td><span class="ok">kept</span></td><td><span class="ok">copied</span></td><td><span class="ok">kept</span></td><td>shared</td></tr>
+      <tr><td>our <code>deepClone(x)</code></td><td><span class="ok">copied</span></td><td><span class="ok">kept</span></td><td>Date only</td><td>lost, until <code>Object.create</code></td><td>shared</td></tr>
+    </table>
+    <div class="key">App code: <code>structuredClone</code>. Class instances: lodash <code>_.cloneDeep</code>. Functions: <code>_.cloneDeepWith</code> and a rule you choose. The interview: write the last row, then name its gaps.</div>
+  </section>
+
+  <!-- MODULE 03 · VIDEO 9 -->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>42</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 9 · utility 4, subscribe and broadcast</div>
     <h2><span class="g">EventEmitter</span></h2>
     <div class="two tight">
@@ -1895,7 +2015,7 @@ panel.remove()
   </section>
 
   <!-- MODULE 03 · VIDEO 9 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>40</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>43</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 9 · build</div>
     <h2>Four utilities, four test files, all green</h2>
     <div class="two">
@@ -1921,7 +2041,7 @@ git checkout module-3/utils/guided -- src/utils/deep-clone.ts</code></pre>
   </section>
 
   <!-- MODULE 03 · VIDEO 9 -->
-  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>41</b> / 41</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 03 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 03 · VIDEO 9</div><div class="cx-page"><b>44</b> / 44</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 03 · done</div>
     <h2>What you can now explain &amp; defend</h2>
     <div class="two">
@@ -2263,6 +2383,7 @@ git checkout module-3/utils/guided -- src/utils/deep-clone.ts</code></pre>
 <script>
 /* fetch outcome explorer — walks one response through each stage, one stage at a time */
 (function(){
+  var settlers = [];   // settled-frame functions, run before printing
   var SPEC = {
     raw: {
       '200':   { rows:[['ok','fulfilled · status 200'], ['ok','true'], ['ok','[ 12 jobs ]'], ['ok','renderJobs(jobs) ✓']],
@@ -2295,45 +2416,45 @@ git checkout module-3/utils/guided -- src/utils/deep-clone.ts</code></pre>
     var out = root.querySelector('.cmb-out');
     var btns = [].slice.call(root.querySelectorAll('.cmb-b'));
     var pick = (root.querySelector('.cmb-b.on') || btns[0]).dataset.s;
-    var timers = [];
+    var timers = [], k = 0, last = rows.length + 1;   // one step per stage, then the verdict
 
-    function paint(i, s){
-      rows[i].className = 'fx-row on ' + s.rows[i][0];
-      rows[i].querySelector('span').textContent = s.rows[i][1];
-    }
-    function reset(){
-      timers.forEach(clearTimeout); timers = [];
-      rows.forEach(function(r){ r.className = 'fx-row'; r.querySelector('span').textContent = '…'; });
-      out.textContent = '…';
-    }
-    function show(){                          // the settled frame, for print and the slide menu
+    function to(j){                           // stages 1..j shown, the verdict after the last
       var s = spec[pick];
-      reset(); s.rows.forEach(function(_, i){ paint(i, s); }); out.innerHTML = s.out;
+      rows.forEach(function(r, i){
+        r.className = i < j ? 'fx-row on ' + s.rows[i][0] : 'fx-row';
+        r.querySelector('span').textContent = i < j ? s.rows[i][1] : '…';
+      });
+      out.innerHTML = j === last ? s.out : '…';
+      k = j; ctl(j, last);
     }
+    function stop(){ timers.forEach(clearTimeout); timers = []; }
+    function show(){ stop(); to(last); }      // the settled frame, for print and the slide menu
     function run(){
-      var s = spec[pick];
-      reset();
-      s.rows.forEach(function(_, i){ timers.push(setTimeout(function(){ paint(i, s); }, 250 + i * 520)); });
-      timers.push(setTimeout(function(){ out.innerHTML = s.out; }, 250 + s.rows.length * 520));
+      stop(); to(0);
+      for (var j = 1; j <= last; j++) timers.push(setTimeout(to.bind(null, j), 250 + (j - 1) * 520));
     }
+    function open(){ if (stepping()) { stop(); to(0); } else run(); }
 
+    var replay = root.querySelector('.cmb-run');
+    var ctl = stepCtl(replay, 0, function(d){ stop(); to(Math.max(0, Math.min(last, k + d))); });
     btns.forEach(function(b){
       b.addEventListener('click', function(){
         pick = b.dataset.s;
         btns.forEach(function(x){ x.classList.toggle('on', x === b); });
-        run();
+        open();
       });
     });
-    root.querySelector('.cmb-run').addEventListener('click', run);
+    replay.addEventListener('click', run);
     ['click','pointerdown'].forEach(function(t){
       root.addEventListener(t, function(e){ e.stopPropagation(); });
     });
     show();
+    settlers.push(show);
 
     var slide = root.closest('.slide'), wasOn = false;
     new MutationObserver(function(){
       var isOn = slide.classList.contains('on');
-      if (isOn && !wasOn) run();
+      if (isOn && !wasOn) open();
       wasOn = isOn;
     }).observe(slide, { attributes:true, attributeFilter:['class'] });
   });
@@ -2419,19 +2540,25 @@ git checkout module-3/utils/guided -- src/utils/deep-clone.ts</code></pre>
   /* step player — .anim[data-at="0,1300,…"] gets s1, s2, … at those times (ms) when its
      slide opens; the CSS keys every change off those classes. Settled frame until then. */
   document.querySelectorAll('.anim').forEach(function(root){
-    var at = root.dataset.at.split(',').map(Number), n = at.length, timers = [];
+    var at = root.dataset.at.split(',').map(Number), n = at.length, timers = [], k = n;
     var says = [].slice.call(root.querySelectorAll('.anim-say i'));
+    var ctl = function(){};
 
-    function set(k){
-      for (var j = 1; j <= n; j++) root.classList.toggle('s' + j, j <= k);
-      says.forEach(function(el, j){ el.classList.toggle('on', j === k - 1); });
+    function set(j){
+      k = j;
+      for (var i = 1; i <= n; i++) root.classList.toggle('s' + i, i <= j);
+      says.forEach(function(el, i){ el.classList.toggle('on', i === j - 1); });
+      ctl(Math.max(j, 1), n);
+    }
+    function stop(){ timers.forEach(clearTimeout); timers = []; }
+    function jump(j){                         // no transitions: straight to a frame
+      stop();
+      root.classList.add('rs'); set(j); void root.offsetWidth; root.classList.remove('rs');
     }
     function play(){
-      timers.forEach(clearTimeout); timers = [];
-      root.classList.add('rs'); set(0); void root.offsetWidth; root.classList.remove('rs');
+      jump(0);
       at.forEach(function(ms, j){ timers.push(setTimeout(function(){ set(j + 1); }, 200 + ms)); });
     }
-    set(n);
 
     var btn = root.querySelector('.anim-replay');
     if (btn) {
@@ -2439,15 +2566,47 @@ git checkout module-3/utils/guided -- src/utils/deep-clone.ts</code></pre>
       ['click','pointerdown'].forEach(function(t){
         btn.addEventListener(t, function(e){ e.stopPropagation(); });
       });
+      ctl = stepCtl(btn, 1, function(d){ stop(); set(Math.max(1, Math.min(n, k + d))); });
     }
+    set(n);
+    settlers.push(function(){ jump(n); });
 
     var slide = root.closest('.slide'), wasOn = false;
     new MutationObserver(function(){
       var isOn = slide.classList.contains('on');
-      if (isOn && !wasOn) play();
+      if (isOn && !wasOn) { if (stepping()) jump(1); else play(); }
       wasOn = isOn;
     }).observe(slide, { attributes:true, attributeFilter:['class'] });
   });
+
+  /* ‹ k / n › before a figure's replay button. The first click puts the deck in stepping
+     mode: from then on every figure opens on its first step and waits for ›, while replay
+     still plays one through. Clicks stay off the stage, which would turn the slide. */
+  function stepping(){ return document.documentElement.classList.contains('stepping'); }
+  function stepCtl(before, lo, go){
+    var wrap = document.createElement('span');
+    wrap.className = 'stp';
+    wrap.innerHTML = '<button type="button" class="cmb-run" aria-label="Previous step">‹</button>'
+      + '<span class="stp-n"></span>'
+      + '<button type="button" class="cmb-run" aria-label="Next step">›</button>';
+    before.parentNode.insertBefore(wrap, before);
+    var b = wrap.querySelectorAll('button'), num = wrap.querySelector('.stp-n');
+    [-1, 1].forEach(function(d, i){
+      b[i].addEventListener('click', function(){
+        document.documentElement.classList.add('stepping');
+        go(d);
+      });
+    });
+    ['click','pointerdown'].forEach(function(t){
+      wrap.addEventListener(t, function(e){ e.stopPropagation(); });
+    });
+    return function(k, n){
+      num.textContent = k + ' / ' + n;
+      b[0].classList.toggle('off', k <= lo);
+      b[1].classList.toggle('off', k >= n);
+    };
+  }
+  window.addEventListener('beforeprint', function(){ settlers.forEach(function(f){ f(); }); });
 })();
 </script>
 
