@@ -49,7 +49,7 @@ hidden behind a key or waiting in view-source.
 program/
   program-page.html       the program at a glance
 curriculum/
-  curriculum-page.html    every lesson, in order — 11 modules, 69 lessons
+  curriculum-page.html    every lesson, in order — 11 modules, 65 lessons
 modules/
   01-foundations/
     deck.html             what companies actually test — 26 slides
@@ -68,10 +68,10 @@ modules/
     deck.html             a rendering strategy per route — 22 slides
   08-performance-testing-security/
     deck.html             prove the before and after with numbers — 23 slides
-  09-frontend-system-design/
-    deck.html             a 45-minute design round, with a script — 21 slides
-  10-capstone/
+  09-capstone/
     deck.html             assembly week, not build week — 18 slides
+  10-frontend-system-design/
+    deck.html             a 45-minute design round, with a script — 21 slides
   11-interview-preparation/
     deck.html             every format, drilled under time — 20 slides
 repo/
@@ -85,15 +85,15 @@ copying a single deck somewhere else.
 
 ### The modules
 
-Eleven modules, 69 lessons, 11 build checkpoints. `curriculum/curriculum-page.html` lists
+Eleven modules, 65 lessons, 11 build checkpoints. `curriculum/curriculum-page.html` lists
 every lesson; this is the shape of it.
 
 | # | Module | # | Module |
 |---:|---|---:|---|
 | 01 | Foundations — what companies actually test | 07 | Next.js & rendering architecture |
 | 02 | The browser as a runtime | 08 | Performance, testing & security |
-| 03 | JavaScript, deeply | 09 | Frontend system design |
-| 04 | TypeScript for frontend engineers | 10 | The capstone |
+| 03 | JavaScript, deeply | 09 | The program capstone |
+| 04 | TypeScript for frontend engineers | 10 | Frontend system design |
 | 05 | React, deeply — with the components built live | 11 | Interview preparation |
 | 06 | Data, state & routing | | |
 
@@ -101,13 +101,13 @@ every lesson; this is the shape of it.
 
 ## How the program is worked
 
-**Module 1, lesson 5** is a twelve-question diagnostic. Every question you miss names the
+**Module 1, lessons 5 and 6** are a twelve-question diagnostic. Every question you miss names the
 module that fixes it, so your score is a route through the program, not a grade.
 
 **Module 1, lesson 7** is the first exercise. From then on every module ships a slice of the
 job board, and the slices are the same product: the `debounce` written in module 3 is still
 running inside the autocomplete in module 5, and both are still in the app deployed in
-module 10.
+module 9.
 
 ### The exercise loop
 
