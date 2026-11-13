@@ -151,6 +151,239 @@
     animation:cxBar .5s cubic-bezier(.22,.72,.28,1) .12s both}
   .slide .card{transition:border-color .25s, transform .25s}
 
+  /* Title: the nine lessons deal in once the heading has landed. */
+  @keyframes cxPop{from{opacity:0; transform:translateY(10px) scale(.92)}}
+  .pop{transform-box:fill-box; transform-origin:center}
+  .slide.on .pop{animation:cxPop .5s cubic-bezier(.2,1.3,.4,1) both; animation-delay:calc(.45s + var(--i,0) * .07s)}
+
+  /* ---- step player: a figure that plays itself when its slide opens ------------------
+     Same vocabulary as module 4. .anim[data-at="0,900,…"] steps 1, 2, … at those times
+     (ms); R or the replay button plays it again; .anim-step[data-d="-1"|"1"] buttons
+     pause it and step by hand. The root carries s1..sN and data-step="N". On any
+     descendant: data-in="N" fades in at step N (an SVG path with pathLength=1 draws);
+     data-out="N" dims at step N; data-hl="N M" highlights while the step is N or M.
+     Until the script marks the root .live nothing is hidden, so the settled frame is
+     also what prints and what a reader without motion sees. */
+  .anim{width:100%}
+  .anim.live [data-in]{transition:opacity .45s, transform .55s cubic-bezier(.22,.72,.28,1), stroke-dashoffset .6s ease,
+    color .35s, border-color .35s, background-color .35s, fill .35s, stroke .35s}
+  .anim.live [data-in]:not(.in){opacity:0}
+  .anim.live path[data-in]{stroke-dasharray:1; stroke-dashoffset:1}
+  .anim.live path[data-in].in{stroke-dashoffset:0}
+  .anim.live [data-out].out{opacity:.3}
+  .anim [data-hl]{--hl:rgba(34,211,238,.17); border-radius:4px; -webkit-box-decoration-break:clone; box-decoration-break:clone;
+    transition:background-color .3s, box-shadow .3s}
+  .anim [data-hl].hl-g{--hl:rgba(52,211,153,.17)} .anim [data-hl].hl-r{--hl:rgba(248,113,122,.2)}
+  .anim [data-hl].hl-p{--hl:rgba(167,139,250,.22)} .anim [data-hl].hl-w{--hl:rgba(251,191,36,.17)}
+  .anim [data-hl].lit{background-color:var(--hl); box-shadow:0 0 0 3px var(--hl)}
+  .anim.rs,.anim.rs *{transition:none !important}
+  .anim-bar{display:flex; align-items:center; flex-wrap:wrap; gap:10px 14px; margin-top:10px; min-height:34px}
+  .anim-replay,.anim-step{cursor:pointer; background:var(--panel2); border:1px solid var(--line2); color:var(--ink2); border-radius:8px;
+    padding:7px 12px; font:700 11.5px/1 var(--mono); letter-spacing:1.2px; text-transform:uppercase;
+    transition:background .18s, color .18s, border-color .18s}
+  .anim-replay:hover,.anim-step:hover{background:var(--line2); color:#fff; border-color:var(--cy)}
+  .anim-step{padding:5px 10px; font:700 16px/1 var(--sans); letter-spacing:0}
+  .anim-step[aria-disabled="true"]{opacity:.35; cursor:default}
+  .anim-say{font:600 min(1.4vw,16px)/1.4 var(--sans); color:var(--ink2)}
+  .anim-say i{display:none; font-style:normal} .anim-say i.on{display:inline}
+
+  /* ---- live demos: small working pieces of UI on the slide ---------------------------
+     A .demo is self-contained. A click inside it never turns the slide, and neither do
+     Space, Enter, Tab or Escape on its controls, or any key typed into its inputs.
+     Each demo is wired by id in the demo script at the end of the deck and resets
+     whenever its slide opens. */
+  .demo{background:var(--panel); border:1px solid var(--line2); border-radius:12px; padding:11px 14px; margin-top:14px;
+    width:100%; max-width:1060px; font:min(1.45vw,15.5px)/1.4 var(--sans); color:var(--ink2)}
+  .demo.bare{background:none; border:0; padding:0; border-radius:0}
+  .demo .row{display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px}
+  .demo .row + .row{margin-top:9px}
+  .demo-tag{font:700 10.5px/1 var(--mono); letter-spacing:1.6px; text-transform:uppercase; color:var(--cy)}
+  .demo-hint{font-size:.9em; color:var(--grey3)}
+  .dbtn{cursor:pointer; background:var(--panel2); border:1px solid var(--line2); color:var(--ink); border-radius:8px;
+    padding:7px 12px; font:600 12.5px/1 var(--mono); transition:background .18s, border-color .18s, color .18s}
+  .dbtn:hover{border-color:var(--cy)}
+  .dbtn:focus-visible,.dinput:focus-visible{outline:2px solid var(--cy); outline-offset:2px}
+  .dbtn.on{background:rgba(34,211,238,.14); border-color:var(--cy); color:#fff}
+  .dbtn.on.g{background:rgba(52,211,153,.14); border-color:var(--good)}
+  .dinput{background:var(--code); border:1px solid var(--line2); color:#fff; border-radius:8px; padding:7px 11px;
+    font:14.5px/1.2 var(--mono); min-width:0}
+  .dinput:focus{outline:none; border-color:var(--cy); box-shadow:0 0 0 3px rgba(34,211,238,.18)}
+  .meter{font:600 12px/1 var(--mono); color:var(--muted); white-space:nowrap}
+  .meter b{display:inline-block; min-width:2ch; margin-left:5px; color:#fff; font-size:15px}
+  .meter b.good{color:var(--good)} .meter b.bad{color:var(--bad)}
+  .dom{font:13.5px/1 var(--mono); color:var(--grey3); padding:6px 9px; border-radius:7px; border:1px dashed var(--line2)}
+  .dom b{color:#fff; font-weight:600}
+  @keyframes cxFlash{15%{box-shadow:0 0 0 4px rgba(251,191,36,.5); background-color:rgba(251,191,36,.14)}}
+  @keyframes cxFlashG{15%{box-shadow:0 0 0 4px rgba(52,211,153,.5); background-color:rgba(52,211,153,.14)}}
+  @keyframes cxFlashR{15%{box-shadow:0 0 0 4px rgba(248,113,122,.55); background-color:rgba(248,113,122,.16)}}
+  @keyframes cxBump{40%{transform:scale(1.35); color:var(--ochre)}}
+  .flash{animation:cxFlash .7s ease} .flash-g{animation:cxFlashG .7s ease} .flash-r{animation:cxFlashR .8s ease}
+  .bump{animation:cxBump .35s ease}
+
+  /* L1a: the pipeline lights stage by stage on every update in the demo below it. */
+  #fx-render [data-stage]{transition:stroke-width .2s, opacity .3s, fill .3s}
+  #fx-render [data-stage].hot{stroke-width:3.5; fill:rgba(34,211,238,.16)}
+  #fx-render [data-stage].skip{opacity:.3}
+
+  /* L1d: the list preview and the pending spinner. */
+  .tlist{display:flex; flex-wrap:wrap; gap:6px; min-height:28px}
+  .tlist span{font:12.5px/1 var(--mono); color:var(--ink2); background:var(--panel2); border:1px solid var(--line2);
+    border-radius:6px; padding:6px 8px; white-space:nowrap}
+  .tlist span.more{color:var(--grey3); border-style:dashed}
+  @keyframes cxSpin{to{transform:rotate(1turn)}}
+  .pend{display:inline-flex; align-items:center; gap:6px; font:600 12px/1 var(--mono); color:var(--plum); visibility:hidden}
+  .pend::before{content:""; width:12px; height:12px; border-radius:50%; border:2px solid var(--plum); border-right-color:transparent;
+    animation:cxSpin .7s linear infinite}
+  .pend.on{visibility:visible}
+
+  /* L2b: click a component to set state in it; rendering flows down from there. */
+  #demo-tree .node{cursor:pointer; outline:none}
+  #demo-tree .node:focus-visible rect{stroke-width:3.5}
+  #demo-tree .node rect{transition:fill .25s, stroke .25s, stroke-width .2s}
+  #demo-tree .node:hover rect{stroke-width:2.5}
+  #demo-tree .node.idle rect{fill:#0E1525; stroke:#243349}
+  #demo-tree .node.idle text{fill:var(--muted); font-weight:400}
+  #demo-tree .node.src rect{fill:rgba(34,211,238,.16); stroke:#22D3EE; stroke-width:2.5}
+  #demo-tree .node.ren rect{fill:#121C30; stroke:#FBBF24; stroke-width:2.5}
+  #demo-tree .node.skip rect{fill:#0E1525; stroke:#34D399; stroke-dasharray:6 4}
+  #demo-tree .node.src text,#demo-tree .node.ren text{fill:#fff; font-weight:700}
+  #demo-tree .node.skip text{fill:var(--good)}
+
+  /* L2c: two live lists, reconciled the way React does it. */
+  .kcols{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:9px}
+  .kcol h4{font:700 12px/1 var(--mono); letter-spacing:1px; margin-bottom:7px}
+  .kcol.r h4{color:var(--bad)} .kcol.g h4{color:var(--good)}
+  .kcol ol{list-style:none; display:flex; flex-direction:column; gap:6px}
+  .kcol li{background:var(--panel2); border:1px solid var(--line2); border-radius:8px; overflow:hidden}
+  .kcol li.open{border-left:4px solid var(--ochre); background:rgba(251,191,36,.07)}
+  .krow{all:unset; box-sizing:border-box; cursor:pointer; display:flex; justify-content:space-between; align-items:center; width:100%;
+    padding:7px 11px; font:600 14px/1.2 var(--sans); color:#fff}
+  .krow:focus-visible{outline:2px solid var(--cy); outline-offset:-2px}
+  .krow i{font:600 11.5px/1 var(--mono); font-style:normal; color:var(--grey3)}
+  .kx{display:none; padding:0 11px 8px; font:12.5px/1.3 var(--mono); color:var(--ochre)}
+  .kcol li.open .kx{display:flex; align-items:center; gap:8px}
+  .kx .dinput{padding:4px 8px; font-size:12.5px; flex:1}
+  .kcol li.wrong{outline:2px solid var(--bad); outline-offset:1px}
+
+  /* L3a: each card's own saveTwo() button. */
+  .snap{display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin-top:10px}
+  .snap [data-k="log"]{font:12px/1.3 var(--mono); color:var(--grey3)}
+
+  /* L3b: the auto-save countdown. */
+  .tick{height:4px; border-radius:2px; background:var(--line2); overflow:hidden; flex:1; min-width:80px}
+  .tick i{display:block; height:100%; width:0; background:var(--cy)}
+  .tick i.run{width:100%; transition:width 3s linear}
+  .saved{font:13px/1.2 var(--mono); color:var(--ink2); padding:6px 9px; border-radius:7px; background:var(--panel2); border:1px solid var(--line2)}
+  .saved.r{border-color:rgba(248,113,122,.6)} .saved.g{border-color:rgba(52,211,153,.6)}
+  .saved q{color:#fff} .saved q::before,.saved q::after{color:var(--grey3)}
+
+  /* L3c: the synchronised list shows its stale frame before it catches up. */
+  .stale{color:var(--bad) !important; text-decoration:line-through}
+
+  .sr-only{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0}
+
+  /* L4c: the same input, owned by the parent or by itself. */
+  .ctl .dinput{width:150px}
+
+  /* L4d: swap the accent primitive and the theme; only the semantic layer moves. */
+  .tk-prev{--color-accent:#2196F3; --color-surface:#FFFFFF; --color-text:#0E1525;
+    display:inline-flex; align-items:center; gap:10px; padding:7px 10px; border-radius:9px;
+    background:var(--color-surface); color:var(--color-text); border:1px solid var(--line2); transition:background .3s, color .3s}
+  .tk-prev b{font:700 13px/1 var(--sans)}
+  .tk-prev i{font-style:normal; font:600 12.5px/1 var(--sans); color:#fff; background:var(--color-accent); padding:7px 11px; border-radius:7px; transition:background .3s}
+  .tk-prev u{text-decoration:none; color:var(--color-accent); font:600 12.5px/1 var(--sans); border-bottom:2px solid var(--color-accent); transition:color .3s, border-color .3s}
+
+  /* L4e: a resizable box with a real container query inside. */
+  .cq-box{container-type:inline-size; resize:horizontal; overflow:hidden; width:300px; min-width:220px; max-width:100%;
+    margin-top:9px; padding:10px; border:1px dashed var(--line2); border-radius:10px; transition:width .9s cubic-bezier(.22,.72,.28,1)}
+  .cq-box.dragging{transition:none}
+  .cq-card{display:grid; gap:8px; background:var(--panel2); border:1px solid var(--line2); border-radius:9px; padding:10px 12px}
+  .cq-card .lg{width:40px; height:40px; border-radius:9px; display:grid; place-items:center; background:rgba(34,211,238,.14);
+    color:var(--cy); font:700 16px/1 var(--mono)}
+  .cq-card b{display:block; color:#fff; font:700 15px/1.2 var(--sans)} .cq-card small{color:var(--muted); font-size:13px}
+  .cq-card .dbtn{justify-self:start}
+  @container (min-width: 36rem){
+    .cq-card{grid-template-columns:3rem 1fr auto; align-items:center}
+    .cq-card .dbtn{justify-self:end}
+  }
+
+  /* L5a: a working combobox; the list floats over the slide below the input. */
+  /* Floating parts (list, modal, toasts) must paint over the key line that follows: the
+     entrance animation gives every slide child its own stacking context. */
+  #demo-combo,#demo-modal,#demo-toast{position:relative; z-index:3}
+  .cb{position:relative}
+  .cb .dinput{width:240px}
+  .cb ul{position:absolute; left:0; top:calc(100% + 4px); z-index:5; min-width:280px; list-style:none; padding:4px;
+    background:var(--panel); border:1px solid var(--line2); border-radius:9px; box-shadow:var(--shadow)}
+  .cb li{padding:7px 10px; border-radius:6px; font:14px/1.2 var(--sans); color:var(--ink2); cursor:pointer}
+  .cb li[aria-selected="true"]{background:rgba(34,211,238,.16); color:#fff; box-shadow:inset 3px 0 0 var(--cy)}
+  .attrs{font:12.5px/1.4 var(--mono); color:var(--muted)} .attrs b{color:var(--cy); font-weight:600}
+
+  /* L5b: two requests race; with the cleanup on, the stale one is aborted. */
+  #fx-race .grow{transform-box:fill-box; transform-origin:left center; transform:scaleX(0)}
+  #fx-race.s1 .g-re{transform:scaleX(1); transition:transform 3.1s linear}
+  #fx-race.s2 .g-react{transform:scaleX(1); transition:transform 1.15s linear}
+  #fx-race.rs .grow{transition:none}
+  #fx-race .ab{opacity:0}
+  #fx-race.fixed.s2 .g-re{transform:scaleX(.27); transition:transform .25s}
+  #fx-race.fixed.s2 .g-re-box{stroke:#64748B; stroke-dasharray:5 4}
+  #fx-race.fixed.s2 .ab{opacity:1; transition:opacity .3s .2s}
+  #fx-race.fixed .late{display:none}
+  .race-out{display:flex; align-items:center; gap:10px; font:600 13px/1 var(--mono); color:var(--muted); margin-top:4px}
+  .race-out b{display:none; padding:7px 10px; border-radius:7px; border:1px solid var(--line2); color:#fff}
+  #fx-race:not(.s3) .race-out .r0{display:inline-block}
+  #fx-race.s3:not(.s4) .race-out .r1,#fx-race.fixed.s4 .race-out .r1{display:inline-block; border-color:var(--good); color:var(--good)}
+  #fx-race.s4:not(.fixed) .race-out .r2{display:inline-block; border-color:var(--bad); color:var(--bad); animation:cxFlashR .8s ease}
+
+  /* L6a: a real modal with a focus trap, floating over the slide. */
+  #demo-modal{position:relative}
+  .mdl{position:absolute; right:14px; bottom:calc(100% + 10px); z-index:6; width:330px; padding:16px; border-radius:12px;
+    background:var(--panel); border:1px solid var(--cy); box-shadow:0 0 0 100vmax rgba(7,10,20,.55), var(--shadow)}
+  .mdl h4{font:700 15px/1.2 var(--sans); color:#fff; margin-bottom:10px}
+  .mdl .dinput{width:100%}
+  .mdl .row{justify-content:flex-end}
+
+  /* L6c: the visible toast stack, and what the live region says. */
+  #demo-toast{position:relative}
+  .toasts{position:absolute; right:14px; bottom:calc(100% + 10px); display:flex; flex-direction:column; gap:8px; align-items:flex-end; z-index:6}
+  .toast{font:600 14px/1.2 var(--sans); color:#fff; background:var(--panel2); border:1px solid var(--line2); border-left:4px solid var(--good);
+    border-radius:9px; padding:10px 14px; box-shadow:var(--shadow); animation:cxRise .3s ease both}
+  .toast.alert{border-left-color:var(--bad)}
+  .toast.bye{opacity:0; transform:translateY(-6px); transition:opacity .35s, transform .35s}
+
+  /* L7a/b: live validity flags, and a form that follows the timing rules. */
+  .flags{display:flex; gap:6px; flex-wrap:wrap}
+  .flags span{font:600 12px/1 var(--mono); padding:6px 8px; border-radius:6px; border:1px solid var(--line2); color:var(--grey3)}
+  .flags span.on{color:var(--bad); border-color:rgba(248,113,122,.6); background:rgba(248,113,122,.08)}
+  .flags span.ok{color:var(--good); border-color:rgba(52,211,153,.6)}
+  .fm{display:flex; flex-direction:column; gap:8px}
+  .fm label{font:600 12.5px/1 var(--mono); color:var(--muted)}
+  .fm .dinput{width:100%}
+  .fm .dinput[aria-invalid="true"]{border-color:var(--bad); box-shadow:0 0 0 3px rgba(248,113,122,.15)}
+  .fm .err{min-height:16px; font:13px/1.2 var(--sans); color:var(--bad)}
+  .fm .done{font:600 13px/1.2 var(--sans); color:var(--good)}
+
+  /* L8a / L8e: context readers and Suspense branches light up from the demo. */
+  #fx-ctx [data-n]{transition:fill .25s, stroke-width .2s}
+  #fx-ctx [data-n].hit{fill:rgba(251,191,36,.22); stroke-width:3}
+  #fx-ctx [data-n].quiet{opacity:.45}
+  #fx-sus [data-b]{transition:opacity .3s, stroke-width .2s}
+  #fx-sus.go [data-b]{opacity:.25}
+  #fx-sus.go.b-pending [data-b="pending"],#fx-sus.go.b-fulfilled [data-b="fulfilled"],#fx-sus.go.b-rejected [data-b="rejected"]{opacity:1; stroke-width:3}
+  .panel{min-width:250px; padding:9px 12px; border-radius:9px; border:1px solid var(--line2); background:var(--panel2); font:600 14px/1.3 var(--sans); color:#fff}
+  .panel.err{border-color:rgba(248,113,122,.6); color:var(--bad)}
+  @keyframes cxShimmer{to{background-position:-200% 0}}
+  .panel.skel{color:transparent; background:linear-gradient(90deg, var(--panel2) 25%, #1B2945 37%, var(--panel2) 63%); background-size:200% 100%;
+    animation:cxShimmer 1.1s linear infinite}
+
+  /* L9c: render counters per component, before and after moving the state. */
+  .rc{display:flex; gap:8px; flex-wrap:wrap}
+  .rc span{font:600 12.5px/1 var(--mono); color:var(--muted); padding:7px 9px; border-radius:7px; border:1px solid var(--line2); background:var(--panel2)}
+  .rc span b{color:#fff; margin-left:6px}
+  @keyframes cxWhy{50%{stroke-width:5; fill:rgba(248,113,122,.28)}}
+  #fx-flame.s4 .why{animation:cxWhy .9s ease 2}
+  .rc span.waste{border-color:rgba(248,113,122,.6)} .rc span.waste b{color:var(--bad)}
+
   @media (prefers-reduced-motion: reduce){
     .slide.on *{animation:none !important}
     .slide .draw{stroke-dashoffset:0 !important}
@@ -288,28 +521,28 @@
 <section class="slide" style="justify-content:center" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>01</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 05 · React, Deeply</div>
     <h1>Explain Every<br>Re-render</h1>
-    <div class="sub">How React decides what runs and when, the components an interviewer asks for live, and a profiler with a fix that isn't memo.</div>
+    <div class="sub">Why React renders, the components interviewers ask for, and a fix that isn't memo.</div>
     <div class="fig" style="max-width:1020px">
       <svg viewBox="0 0 1020 166" role="img" aria-label="Nine lessons: the render model, re-renders and keys, hooks and closures, component API design, build the autocomplete, build the overlays, forms without a library, context and boundaries, build and profile the feed">
         <g>
-          <rect x="0" y="4" width="326" height="40" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="163" y="29" text-anchor="middle" class="lbl b" font-size="12">1 · Render model</text>
-          <rect x="347" y="4" width="326" height="40" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="510" y="29" text-anchor="middle" class="lbl b" font-size="12">2 · Re-renders &amp; keys</text>
-          <rect x="694" y="4" width="326" height="40" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="857" y="29" text-anchor="middle" class="lbl b" font-size="12">3 · Hooks &amp; closures</text>
-          <rect x="0" y="62" width="326" height="40" rx="9" fill="#121C30" stroke="#2196F3"/>
-          <text x="163" y="87" text-anchor="middle" class="lbl b" font-size="12">4 · Component API design</text>
-          <rect x="347" y="62" width="326" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="510" y="87" text-anchor="middle" class="lbl b" font-size="12">5 · Build · Autocomplete</text>
-          <rect x="694" y="62" width="326" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="857" y="87" text-anchor="middle" class="lbl b" font-size="12">6 · Build · Overlays</text>
-          <rect x="0" y="120" width="326" height="40" rx="9" fill="#121C30" stroke="#2196F3"/>
-          <text x="163" y="145" text-anchor="middle" class="lbl b" font-size="12">7 · Forms, no library</text>
-          <rect x="347" y="120" width="326" height="40" rx="9" fill="#121C30" stroke="#FBBF24"/>
-          <text x="510" y="145" text-anchor="middle" class="lbl b" font-size="12">8 · Context &amp; boundaries</text>
-          <rect x="694" y="120" width="326" height="40" rx="9" fill="#121C30" stroke="#A78BFA"/>
-          <text x="857" y="145" text-anchor="middle" class="lbl b" font-size="12">9 · Build · Profile the feed</text>
+          <g class="pop" style="--i:0"><rect x="0" y="4" width="326" height="40" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="163" y="29" text-anchor="middle" class="lbl b" font-size="12">1 · Render model</text></g>
+          <g class="pop" style="--i:1"><rect x="347" y="4" width="326" height="40" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="510" y="29" text-anchor="middle" class="lbl b" font-size="12">2 · Re-renders &amp; keys</text></g>
+          <g class="pop" style="--i:2"><rect x="694" y="4" width="326" height="40" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="857" y="29" text-anchor="middle" class="lbl b" font-size="12">3 · Hooks &amp; closures</text></g>
+          <g class="pop" style="--i:3"><rect x="0" y="62" width="326" height="40" rx="9" fill="#121C30" stroke="#2196F3"/>
+          <text x="163" y="87" text-anchor="middle" class="lbl b" font-size="12">4 · Component API design</text></g>
+          <g class="pop" style="--i:4"><rect x="347" y="62" width="326" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="510" y="87" text-anchor="middle" class="lbl b" font-size="12">5 · Build · Autocomplete</text></g>
+          <g class="pop" style="--i:5"><rect x="694" y="62" width="326" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="857" y="87" text-anchor="middle" class="lbl b" font-size="12">6 · Build · Overlays</text></g>
+          <g class="pop" style="--i:6"><rect x="0" y="120" width="326" height="40" rx="9" fill="#121C30" stroke="#2196F3"/>
+          <text x="163" y="145" text-anchor="middle" class="lbl b" font-size="12">7 · Forms, no library</text></g>
+          <g class="pop" style="--i:7"><rect x="347" y="120" width="326" height="40" rx="9" fill="#121C30" stroke="#FBBF24"/>
+          <text x="510" y="145" text-anchor="middle" class="lbl b" font-size="12">8 · Context &amp; boundaries</text></g>
+          <g class="pop" style="--i:8"><rect x="694" y="120" width="326" height="40" rx="9" fill="#121C30" stroke="#A78BFA"/>
+          <text x="857" y="145" text-anchor="middle" class="lbl b" font-size="12">9 · Build · Profile the feed</text></g>
         </g>
       </svg>
     </div>
@@ -319,26 +552,26 @@
 <section class="slide" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>02</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · The render model</div>
     <h2>Rendering is React calling your function</h2>
-    <div class="fig" style="max-width:1000px">
+    <div class="fig anim" id="fx-render" data-at="250,650,1050,1450" style="max-width:1000px">
       <svg viewBox="0 0 1000 110" role="img" aria-label="Trigger, then render, then commit, then the browser paints and effects run">
-        <rect x="0" y="16" width="180" height="78" rx="10" fill="#121C30" stroke="#64748B"/>
-        <text x="90" y="50" text-anchor="middle" class="lbl b">Trigger</text>
-        <text x="90" y="72" text-anchor="middle" class="lbl s">setQuery('react')</text>
-        <path class="draw" pathLength="1" d="M182,55 L222,55" stroke="#64748B" fill="none"/>
-        <rect x="226" y="16" width="250" height="78" rx="10" fill="#121C30" stroke="#22D3EE"/>
-        <text x="351" y="44" text-anchor="middle" class="lbl b">Render</text>
-        <text x="351" y="64" text-anchor="middle" class="lbl s">React calls your components</text>
-        <text x="351" y="80" text-anchor="middle" class="lbl s">and diffs the new output</text>
-        <path class="draw" pathLength="1" d="M478,55 L518,55" stroke="#64748B" fill="none"/>
-        <rect x="522" y="16" width="220" height="78" rx="10" fill="#121C30" stroke="#34D399"/>
-        <text x="632" y="44" text-anchor="middle" class="lbl b">Commit</text>
-        <text x="632" y="64" text-anchor="middle" class="lbl s">writes only what changed</text>
-        <text x="632" y="80" text-anchor="middle" class="lbl s">to the DOM</text>
-        <path class="draw" pathLength="1" d="M744,55 L774,55" stroke="#64748B" fill="none"/>
-        <rect x="778" y="16" width="222" height="78" rx="10" fill="#121C30" stroke="#2196F3"/>
-        <text x="889" y="44" text-anchor="middle" class="lbl b">Paint, then effects</text>
-        <text x="889" y="64" text-anchor="middle" class="lbl s">the browser draws the frame;</text>
-        <text x="889" y="80" text-anchor="middle" class="lbl s">useEffect runs after commit</text>
+        <rect data-stage="t" data-in="1" x="0" y="16" width="180" height="78" rx="10" fill="#121C30" stroke="#64748B"/>
+        <text data-in="1" x="90" y="50" text-anchor="middle" class="lbl b">Trigger</text>
+        <text data-in="1" x="90" y="72" text-anchor="middle" class="lbl s">setQuery('react')</text>
+        <path data-in="2" class="draw" pathLength="1" d="M182,55 L222,55" stroke="#64748B" fill="none"/>
+        <rect data-stage="r" data-in="2" x="226" y="16" width="250" height="78" rx="10" fill="#121C30" stroke="#22D3EE"/>
+        <text data-in="2" x="351" y="44" text-anchor="middle" class="lbl b">Render</text>
+        <text data-in="2" x="351" y="64" text-anchor="middle" class="lbl s">React calls your components</text>
+        <text data-in="2" x="351" y="80" text-anchor="middle" class="lbl s">and diffs the new output</text>
+        <path data-in="3" class="draw" pathLength="1" d="M478,55 L518,55" stroke="#64748B" fill="none"/>
+        <rect data-stage="c" data-in="3" x="522" y="16" width="220" height="78" rx="10" fill="#121C30" stroke="#34D399"/>
+        <text data-in="3" x="632" y="44" text-anchor="middle" class="lbl b">Commit</text>
+        <text data-in="3" x="632" y="64" text-anchor="middle" class="lbl s">writes only what changed</text>
+        <text data-in="3" x="632" y="80" text-anchor="middle" class="lbl s">to the DOM</text>
+        <path data-in="4" class="draw" pathLength="1" d="M744,55 L774,55" stroke="#64748B" fill="none"/>
+        <rect data-stage="p" data-in="4" x="778" y="16" width="222" height="78" rx="10" fill="#121C30" stroke="#2196F3"/>
+        <text data-in="4" x="889" y="44" text-anchor="middle" class="lbl b">Paint, then effects</text>
+        <text data-in="4" x="889" y="64" text-anchor="middle" class="lbl s">the browser draws the frame;</text>
+        <text data-in="4" x="889" y="80" text-anchor="middle" class="lbl s">useEffect runs after commit</text>
       </svg>
     </div>
     <pre><code><span class="kw">function</span> <span class="fn">OpenRoles</span>({ listings }: { listings: <span class="ty">Listing</span>[] }) {
@@ -346,7 +579,18 @@
 }
 <span class="cmt">// "rendering OpenRoles" = React calling OpenRoles(props) and keeping the JSX it returns.</span>
 <span class="cmt">// Nothing on the page has changed yet.</span></code></pre>
-    <div class="key">A render produces a description of the UI. The commit is the only moment the DOM changes, and it writes only the difference. An extra render costs CPU time, not DOM writes.</div>
+    <div class="demo" id="demo-render">
+      <div class="row">
+        <span class="demo-tag">try it</span>
+        <button type="button" class="dbtn" data-act="same">parent re-renders · same listings</button>
+        <button type="button" class="dbtn" data-act="add">one more listing</button>
+        <span class="meter">OpenRoles() calls<b data-k="calls">1</b></span>
+        <span class="meter">DOM writes<b data-k="writes">1</b></span>
+        <span class="dom">&lt;p&gt;<b data-k="out">3 open roles</b>&lt;/p&gt;</span>
+      </div>
+      <div class="row"><span class="demo-hint" data-k="diff"></span></div>
+    </div>
+    <div class="key">A render describes the UI. Only the commit touches the DOM, and only where something changed.</div>
 </section>
 
 <!-- L1b · RENDER VS COMMIT -->
@@ -355,55 +599,62 @@
     <h2>Render can be thrown away. Commit can't.</h2>
     <table class="grid">
       <tr><th></th><th>Render phase</th><th>Commit phase</th></tr>
-      <tr><td><b>What happens</b></td><td>React calls components and compares the result with the previous tree.</td><td>React applies the DOM changes, attaches refs, runs layout effects.</td></tr>
-      <tr><td><b>Rules</b></td><td><b class="g">Pure.</b> Same props and state, same JSX. No fetching, subscribing or DOM writes.</td><td>This is where side effects belong, along with the effects that follow it.</td></tr>
-      <tr><td><b>Can it pause?</b></td><td>Yes, for non-urgent work: React can stop between components and resume later.</td><td><b class="r">No.</b> It runs in one go, so nobody sees a half-updated page.</td></tr>
-      <tr><td><b>Can it be discarded?</b></td><td>Yes. If newer state arrives, the half-built tree is dropped and rebuilt.</td><td>No. Once it starts, it finishes.</td></tr>
-      <tr><td><b>In StrictMode (dev)</b></td><td>Your component is called twice, to expose impure code.</td><td>Effects run setup, cleanup, setup on mount, to test your cleanup.</td></tr>
+      <tr><td><b>What happens</b></td><td>React calls your components and diffs the result</td><td>React updates the DOM, refs and layout effects</td></tr>
+      <tr><td><b>Rules</b></td><td><b class="g">Pure.</b> No fetching, no DOM writes</td><td>Side effects belong here</td></tr>
+      <tr><td><b>Pause or discard?</b></td><td>Yes, for non-urgent work</td><td><b class="r">No.</b> Runs in one go</td></tr>
+      <tr><td><b>StrictMode (dev)</b></td><td>Called twice</td><td>Effects run setup, cleanup, setup</td></tr>
     </table>
-    <div class="key w">A render can be paused, repeated or thrown away, so your component body must be safe to run any number of times. If it has a side effect, it's in the wrong phase.</div>
+    <div class="key w">Render can run many times or be thrown away. Keep it pure.</div>
 </section>
 
 <!-- L1c · FIBER AND LANES -->
 <section class="slide" data-chip="MODULE 05 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 1</div><div class="cx-page"><b>04</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Fiber and lanes, plainly</div>
     <h2>Pausable work, ranked by urgency</h2>
+    <div class="anim" id="fx-lanes" data-at="500,1100,1900,2600,3400,4000,4600,5300">
     <div class="fig" style="max-width:1020px">
       <svg viewBox="0 0 1000 120" role="img" aria-label="Main thread timeline: a transition render in slices is interrupted by a keystroke, discarded, restarted, then committed">
         <text x="0" y="12" class="lbl s">main thread →</text>
-        <rect x="0" y="24" width="120" height="40" rx="7" fill="#121C30" stroke="#A78BFA"/>
-        <text x="60" y="49" text-anchor="middle" class="lbl b">render list</text>
-        <rect x="128" y="24" width="120" height="40" rx="7" fill="#121C30" stroke="#A78BFA"/>
-        <text x="188" y="49" text-anchor="middle" class="lbl b">render list</text>
-        <rect x="256" y="24" width="160" height="40" rx="7" fill="rgba(34,211,238,.14)" stroke="#22D3EE"/>
-        <text x="336" y="49" text-anchor="middle" class="lbl b">keystroke</text>
-        <rect x="424" y="24" width="120" height="40" rx="7" fill="#121C30" stroke="#A78BFA"/>
-        <text x="484" y="49" text-anchor="middle" class="lbl b">render list</text>
-        <rect x="552" y="24" width="120" height="40" rx="7" fill="#121C30" stroke="#A78BFA"/>
-        <text x="612" y="49" text-anchor="middle" class="lbl b">render list</text>
-        <rect x="680" y="24" width="120" height="40" rx="7" fill="#121C30" stroke="#A78BFA"/>
-        <text x="740" y="49" text-anchor="middle" class="lbl b">render list</text>
-        <rect x="808" y="24" width="192" height="40" rx="7" fill="rgba(52,211,153,.14)" stroke="#34D399"/>
-        <text x="904" y="49" text-anchor="middle" class="lbl b">commit list</text>
-        <line x1="0" y1="80" x2="248" y2="80" stroke="#F8717A" stroke-width="2"/>
-        <text x="0" y="100" class="lbl s" style="fill:#F8717A">half-built list for "rea": discarded</text>
-        <line x1="256" y1="80" x2="416" y2="80" stroke="#22D3EE" stroke-width="2"/>
-        <text x="264" y="100" class="lbl s" style="fill:#22D3EE">input shows "reac" now</text>
-        <line x1="424" y1="80" x2="1000" y2="80" stroke="#A78BFA" stroke-width="2"/>
-        <text x="432" y="100" class="lbl s" style="fill:#A78BFA">transition restarts with "reac"; gaps = React yielding to the browser</text>
+        <rect data-in="1" data-out="3" x="0" y="24" width="120" height="40" rx="7" fill="#121C30" stroke="#A78BFA"/>
+        <text data-in="1" data-out="3" x="60" y="49" text-anchor="middle" class="lbl b">render list</text>
+        <rect data-in="2" data-out="3" x="128" y="24" width="120" height="40" rx="7" fill="#121C30" stroke="#A78BFA"/>
+        <text data-in="2" data-out="3" x="188" y="49" text-anchor="middle" class="lbl b">render list</text>
+        <rect data-in="3" x="256" y="24" width="160" height="40" rx="7" fill="rgba(34,211,238,.14)" stroke="#22D3EE"/>
+        <text data-in="3" x="336" y="49" text-anchor="middle" class="lbl b">keystroke</text>
+        <rect data-in="5" x="424" y="24" width="120" height="40" rx="7" fill="#121C30" stroke="#A78BFA"/>
+        <text data-in="5" x="484" y="49" text-anchor="middle" class="lbl b">render list</text>
+        <rect data-in="6" x="552" y="24" width="120" height="40" rx="7" fill="#121C30" stroke="#A78BFA"/>
+        <text data-in="6" x="612" y="49" text-anchor="middle" class="lbl b">render list</text>
+        <rect data-in="7" x="680" y="24" width="120" height="40" rx="7" fill="#121C30" stroke="#A78BFA"/>
+        <text data-in="7" x="740" y="49" text-anchor="middle" class="lbl b">render list</text>
+        <rect data-in="8" x="808" y="24" width="192" height="40" rx="7" fill="rgba(52,211,153,.14)" stroke="#34D399"/>
+        <text data-in="8" x="904" y="49" text-anchor="middle" class="lbl b">commit list</text>
+        <line data-in="3" x1="0" y1="80" x2="248" y2="80" stroke="#F8717A" stroke-width="2"/>
+        <text data-in="3" x="0" y="100" class="lbl s" style="fill:#F8717A">half-built list for "rea": discarded</text>
+        <line data-in="4" x1="256" y1="80" x2="416" y2="80" stroke="#22D3EE" stroke-width="2"/>
+        <text data-in="4" x="264" y="100" class="lbl s" style="fill:#22D3EE">input shows "reac" now</text>
+        <line data-in="5" x1="424" y1="80" x2="1000" y2="80" stroke="#A78BFA" stroke-width="2"/>
+        <text data-in="5" x="432" y="100" class="lbl s" style="fill:#A78BFA">transition restarts with "reac"; gaps = React yielding to the browser</text>
       </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>Typing “rea” starts a transition: React renders the list one fiber at a time.</i><i>Between slices it yields, so the browser can paint and take input.</i><i>A key lands. Urgent lane first, and the half-built list for “rea” is thrown away.</i><i>The input commits “reac” straight away: the user sees their keystroke.</i><i>The transition restarts with “reac”…</i><i>…slice by slice, yielding in between…</i><i>…and no newer key arrives, so this time it finishes.</i><i>Commit: the whole list lands in one go. Nobody saw a half-built list.</i></span>
+    </div>
     </div>
     <div class="two">
       <div class="card p">
         <h3 class="p">Fiber · one unit of work</h3>
-        <p>One object per component instance: its type, props, hook state, and links to its child, sibling and parent. React walks them in a loop, so it can <b>stop after any fiber</b> and pick up later.</p>
+        <p>One object per component. React can <b>stop after any fiber</b> and resume later.</p>
       </div>
       <div class="card a">
         <h3 class="cy">Lane · a priority</h3>
-        <p>Every update gets one. Typing and clicks get urgent lanes; <code>startTransition</code> gets a transition lane. <b>Urgent lanes render first</b>; transition work is sliced and can be restarted.</p>
+        <p>A priority per update. Typing is urgent; <code>startTransition</code> work <b>can wait and restart</b>.</p>
       </div>
     </div>
-    <div class="key">The screen keeps showing the current tree while React builds the next one off to the side. That's why abandoning a render is safe: nothing reached the DOM.</div>
+    <div class="key">React builds the next tree off-screen, so throwing it away is safe.</div>
 </section>
 
 <!-- L1d · useTransition -->
@@ -422,7 +673,18 @@
   <span class="kw">return</span> &lt;&gt;&lt;<span class="kw">input</span> value={text} onChange={onChange} /&gt;{isPending &amp;&amp; &lt;<span class="ty">Spinner</span> /&gt;}&lt;/&gt;;
 }
 <span class="cmt">// FeedPage: const [query, setQuery] = useState('');  →  &lt;SearchBox onSearch={setQuery} /&gt;</span></code></pre>
-    <div class="key"><code>text</code> lives in <code>SearchBox</code>, so the urgent render is just the input. The transition renders the long list in slices; if another key arrives first, that half-done render is dropped and restarted with the newer query.</div>
+    <div class="demo" id="demo-transition">
+      <div class="row">
+        <span class="demo-tag">try it · type fast</span>
+        <input class="dinput" style="width:220px" placeholder="search 5,000 jobs…" aria-label="Search the job feed">
+        <button type="button" class="dbtn" data-act="tg">startTransition: off</button>
+        <span class="pend">isPending</span>
+        <span class="meter">keystroke → paint<b data-k="lag">–</b></span>
+        <span class="meter">renders dropped<b data-k="drop">0</b></span>
+      </div>
+      <div class="row"><span class="meter"><b data-k="count">5,000</b> match</span><div class="tlist"></div></div>
+    </div>
+    <div class="key"><code>text</code> stays urgent. The list renders in slices and restarts on every new key.</div>
 </section>
 
 <!-- L1z · READ NEXT -->
@@ -454,29 +716,30 @@
     <div class="three" style="grid-template-columns:repeat(4,1fr); max-width:1200px">
       <div class="card a">
         <h3 class="cy">1 · Its state changed</h3>
-        <p><code>setSaved(true)</code> with a value that differs from the current one. Same value by <code>Object.is</code>? React bails out.</p>
+        <p><code>setSaved(true)</code> with a new value. Same value? React bails out.</p>
       </div>
       <div class="card w">
         <h3 class="w">2 · Its parent rendered</h3>
-        <p>Every component in the JSX a parent returns runs again, by default, <b>whether its props changed or not.</b></p>
+        <p>Its children run again by default, <b>props changed or not.</b></p>
       </div>
       <div class="card p">
         <h3 class="p">3 · A context it reads changed</h3>
-        <p><code>useContext</code> or <code>use(Ctx)</code> subscribes it. When the provider's <code>value</code> changes, it renders, wherever it sits.</p>
+        <p>Readers render when the provider's <code>value</code> changes.</p>
       </div>
       <div class="card g">
         <h3 class="g">4 · A hook it calls changed</h3>
-        <p>A custom hook's state is the component's state. A store read with <code>useSyncExternalStore</code> renders it when the snapshot changes.</p>
+        <p>A custom hook's state is the component's state.</p>
       </div>
     </div>
-    <div class="key r"><b>"Its props changed" is not on the list.</b> Props only change because the parent rendered, and the parent rendering is what runs the child. <code>memo</code> is an opt-out from reason 2, nothing more.</div>
+    <div class="key r"><b>“Its props changed” isn't on the list.</b> New props only arrive because the parent rendered. <code>memo</code> opts out of reason 2.</div>
 </section>
 
 <!-- L2b · RENDERING FLOWS DOWN -->
 <section class="slide" data-chip="MODULE 05 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 2</div><div class="cx-page"><b>08</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Rendering flows down</div>
     <h2>One setState re-runs everything below it</h2>
-    <div class="fig" style="max-width:860px">
+    <div class="demo bare" id="demo-tree">
+    <div class="fig" style="max-width:860px;margin-top:10px">
       <svg viewBox="0 0 1000 290" role="img" aria-label="Component tree: query state in ListingsPage re-renders SearchBox, FilterBar, ListingList and every ListingCard; App, Header and SavedCount do not render">
         <line x1="500" y1="40" x2="220" y2="80" stroke="#243349" stroke-width="2"/>
         <line x1="500" y1="40" x2="710" y2="80" stroke="#243349" stroke-width="2"/>
@@ -485,22 +748,38 @@
         <line x1="710" y1="120" x2="665" y2="160" stroke="#243349" stroke-width="2"/>
         <line x1="710" y1="120" x2="850" y2="160" stroke="#243349" stroke-width="2"/>
         <line x1="850" y1="200" x2="850" y2="240" stroke="#243349" stroke-width="2"/>
-        <rect x="420" y="0" width="160" height="40" rx="9" fill="#0E1525" stroke="#243349"/>
-        <text x="500" y="25" text-anchor="middle" class="lbl">App</text>
-        <rect x="120" y="80" width="200" height="40" rx="9" fill="#0E1525" stroke="#243349"/>
-        <text x="220" y="105" text-anchor="middle" class="lbl">Header</text>
-        <rect x="120" y="160" width="200" height="40" rx="9" fill="#0E1525" stroke="#243349"/>
-        <text x="220" y="185" text-anchor="middle" class="lbl">SavedCount</text>
-        <rect x="570" y="80" width="280" height="40" rx="9" fill="rgba(34,211,238,.14)" stroke="#22D3EE"/>
-        <text x="710" y="105" text-anchor="middle" class="lbl b">ListingsPage · setQuery('react')</text>
-        <rect x="420" y="160" width="150" height="40" rx="9" fill="#121C30" stroke="#FBBF24"/>
-        <text x="495" y="185" text-anchor="middle" class="lbl b">SearchBox</text>
-        <rect x="590" y="160" width="150" height="40" rx="9" fill="#121C30" stroke="#FBBF24"/>
-        <text x="665" y="185" text-anchor="middle" class="lbl b">FilterBar</text>
-        <rect x="760" y="160" width="180" height="40" rx="9" fill="#121C30" stroke="#FBBF24"/>
-        <text x="850" y="185" text-anchor="middle" class="lbl b">ListingList</text>
-        <rect x="760" y="240" width="180" height="40" rx="9" fill="#121C30" stroke="#FBBF24"/>
-        <text x="850" y="265" text-anchor="middle" class="lbl b">ListingCard × 200</text>
+        <g class="node" data-id="app" data-name="App" data-label="App">
+          <rect x="420" y="0" width="160" height="40" rx="9" fill="#0E1525" stroke="#243349"/>
+          <text x="500" y="25" text-anchor="middle" class="lbl">App</text>
+        </g>
+        <g class="node" data-id="header" data-parent="app" data-name="Header" data-label="Header">
+          <rect x="120" y="80" width="200" height="40" rx="9" fill="#0E1525" stroke="#243349"/>
+          <text x="220" y="105" text-anchor="middle" class="lbl">Header</text>
+        </g>
+        <g class="node" data-id="saved" data-parent="header" data-name="SavedCount" data-label="SavedCount">
+          <rect x="120" y="160" width="200" height="40" rx="9" fill="#0E1525" stroke="#243349"/>
+          <text x="220" y="185" text-anchor="middle" class="lbl">SavedCount</text>
+        </g>
+        <g class="node" data-id="page" data-parent="app" data-name="ListingsPage" data-label="ListingsPage · setQuery('react')">
+          <rect x="570" y="80" width="280" height="40" rx="9" fill="rgba(34,211,238,.14)" stroke="#22D3EE"/>
+          <text x="710" y="105" text-anchor="middle" class="lbl b">ListingsPage · setQuery('react')</text>
+        </g>
+        <g class="node" data-id="search" data-parent="page" data-name="SearchBox" data-label="SearchBox">
+          <rect x="420" y="160" width="150" height="40" rx="9" fill="#121C30" stroke="#FBBF24"/>
+          <text x="495" y="185" text-anchor="middle" class="lbl b">SearchBox</text>
+        </g>
+        <g class="node" data-id="filter" data-parent="page" data-name="FilterBar" data-label="FilterBar">
+          <rect x="590" y="160" width="150" height="40" rx="9" fill="#121C30" stroke="#FBBF24"/>
+          <text x="665" y="185" text-anchor="middle" class="lbl b">FilterBar</text>
+        </g>
+        <g class="node" data-id="list" data-parent="page" data-name="ListingList" data-label="ListingList">
+          <rect x="760" y="160" width="180" height="40" rx="9" fill="#121C30" stroke="#FBBF24"/>
+          <text x="850" y="185" text-anchor="middle" class="lbl b">ListingList</text>
+        </g>
+        <g class="node" data-id="cards" data-parent="list" data-name="ListingCard × 200" data-label="ListingCard × 200">
+          <rect x="760" y="240" width="180" height="40" rx="9" fill="#121C30" stroke="#FBBF24"/>
+          <text x="850" y="265" text-anchor="middle" class="lbl b">ListingCard × 200</text>
+        </g>
         <rect x="0" y="230" width="14" height="14" rx="3" fill="rgba(34,211,238,.14)" stroke="#22D3EE"/>
         <text x="22" y="242" class="lbl s">state changed here</text>
         <rect x="0" y="252" width="14" height="14" rx="3" fill="#121C30" stroke="#FBBF24"/>
@@ -509,7 +788,14 @@
         <text x="22" y="286" class="lbl s">did not render</text>
       </svg>
     </div>
-    <div class="key">Rendering is not repainting. A card that returns the same JSX gets no DOM writes at commit. The waste is 200 function calls and a diff on every keystroke, which is exactly what the profiler shows in lesson 9.</div>
+      <div class="row">
+        <span class="demo-tag">try it · click a component</span>
+        <button type="button" class="dbtn" data-act="memo">memo(FilterBar): off</button>
+        <button type="button" class="dbtn" data-act="reset">reset</button>
+        <span class="demo-hint" data-k="out">Click any component to call setState inside it.</span>
+      </div>
+    </div>
+    <div class="key">Rendering isn't repainting. Unchanged cards write nothing, but 200 calls still run per keystroke.</div>
 </section>
 
 <!-- L2c · KEYS -->
@@ -530,42 +816,19 @@
 ))}</code></pre>
       </div>
     </div>
-    <div class="fig" style="max-width:1000px">
-      <svg viewBox="0 0 1000 158" role="img" aria-label="A row is expanded, then a new listing is prepended. With index keys the expanded state jumps to the new row; with id keys it stays on the right listing">
-        <text x="0" y="12" class="lbl s">before · first row expanded</text>
-        <rect x="0" y="22" width="290" height="36" rx="7" fill="rgba(251,191,36,.10)" stroke="#243349"/>
-        <rect x="0" y="22" width="5" height="36" fill="#FBBF24"/>
-        <text x="16" y="45" class="lbl b">Frontend Engineer · Qafla</text>
-        <text x="280" y="45" text-anchor="end" class="lbl s" style="fill:#FBBF24">expanded</text>
-        <rect x="0" y="66" width="290" height="36" rx="7" fill="#121C30" stroke="#243349"/>
-        <text x="16" y="89" class="lbl b">Data Analyst · Nilo Labs</text>
-
-        <text x="355" y="12" class="lbl s" style="fill:#F8717A">new job prepended · key={index}</text>
-        <rect x="355" y="22" width="290" height="36" rx="7" fill="rgba(251,191,36,.10)" stroke="#F8717A"/>
-        <rect x="355" y="22" width="5" height="36" fill="#FBBF24"/>
-        <text x="371" y="45" class="lbl b">Product Designer · Tamr</text>
-        <text x="635" y="45" text-anchor="end" class="lbl s" style="fill:#FBBF24">key 0</text>
-        <rect x="355" y="66" width="290" height="36" rx="7" fill="#121C30" stroke="#243349"/>
-        <text x="371" y="89" class="lbl b">Frontend Engineer · Qafla</text>
-        <text x="635" y="89" text-anchor="end" class="lbl s">key 1</text>
-        <rect x="355" y="110" width="290" height="36" rx="7" fill="#121C30" stroke="#243349"/>
-        <text x="371" y="133" class="lbl b">Data Analyst · Nilo Labs</text>
-        <text x="635" y="133" text-anchor="end" class="lbl s">key 2</text>
-
-        <text x="710" y="12" class="lbl s" style="fill:#34D399">new job prepended · key={listing.id}</text>
-        <rect x="710" y="22" width="290" height="36" rx="7" fill="#121C30" stroke="#243349"/>
-        <text x="726" y="45" class="lbl b">Product Designer · Tamr</text>
-        <text x="990" y="45" text-anchor="end" class="lbl s">key 31</text>
-        <rect x="710" y="66" width="290" height="36" rx="7" fill="rgba(251,191,36,.10)" stroke="#34D399"/>
-        <rect x="710" y="66" width="5" height="36" fill="#FBBF24"/>
-        <text x="726" y="89" class="lbl b">Frontend Engineer · Qafla</text>
-        <text x="990" y="89" text-anchor="end" class="lbl s" style="fill:#FBBF24">key 17</text>
-        <rect x="710" y="110" width="290" height="36" rx="7" fill="#121C30" stroke="#243349"/>
-        <text x="726" y="133" class="lbl b">Data Analyst · Nilo Labs</text>
-        <text x="990" y="133" text-anchor="end" class="lbl s">key 22</text>
-      </svg>
+    <div class="demo" id="demo-keys">
+      <div class="row">
+        <span class="demo-tag">try it</span>
+        <button type="button" class="dbtn" data-act="prepend">prepend a job</button>
+        <button type="button" class="dbtn" data-act="reset">reset</button>
+        <span class="demo-hint">Expand a row, type a note, then prepend.</span>
+      </div>
+      <div class="kcols">
+        <div class="kcol r"><h4>key={index}</h4><ol data-mode="index"></ol></div>
+        <div class="kcol g"><h4>key={listing.id}</h4><ol data-mode="id"></ol></div>
+      </div>
     </div>
-    <div class="key">React matches children by type and key, and by position when there's no key. Same key, same instance, same state. An index key ties state to a slot, not to a listing. Changing a key on purpose resets state: <code>&lt;ApplyForm key={listing.id} /&gt;</code>.</div>
+    <div class="key">Same key, same state. An index key ties state to a slot, not to a job.</div>
 </section>
 
 <!-- L2z · READ NEXT -->
@@ -605,6 +868,7 @@
   console.<span class="fn">log</span>(saved);  <span class="cmt">// 0</span>
 }
 <span class="no">// next render: saved === 1</span></code></pre>
+        <div class="demo bare snap" data-mode="read"><button type="button" class="dbtn">saveTwo()</button><span class="meter">saved<b data-k="v">0</b></span><span data-k="log"></span></div>
       </div>
       <div class="card g">
         <h3 class="g">Queues an update</h3>
@@ -616,9 +880,10 @@
 }
 
 <span class="ok">// next render: saved === 2</span></code></pre>
+        <div class="demo bare snap" data-mode="queue"><button type="button" class="dbtn">saveTwo()</button><span class="meter">saved<b data-k="v">0</b></span><span data-k="log"></span></div>
       </div>
     </div>
-    <div class="key"><code>saved</code> is a <code>const</code> for the whole render. Every function created during that render (handlers, effects, timers) closes over that render's values. That's the closure trap, and it's the next slide.</div>
+    <div class="key"><code>saved</code> is a constant for the whole render. Every handler and timer sees that value.</div>
 </section>
 
 <!-- L3b · THE CLOSURE TRAP -->
@@ -646,7 +911,18 @@
 }, []); <span class="ok">// one timer, newest value</span></code></pre>
       </div>
     </div>
-    <div class="key">Two honest fixes. List <code>letter</code> as a dependency and the effect restarts with fresh values (here, the timer resets on every keystroke). Or keep the latest value in a ref: one mutable box every render shares. Silencing the lint rule is not a fix.</div>
+    <div class="demo" id="demo-stale">
+      <div class="row">
+        <span class="demo-tag">try it · auto-save every 3 s</span>
+        <input class="dinput" style="flex:1;min-width:220px" placeholder="type a cover letter…" aria-label="Cover letter">
+        <div class="tick"><i></i></div>
+      </div>
+      <div class="row">
+        <span class="saved r">stale effect saved: <span data-k="stale"><q></q></span></span>
+        <span class="saved g">ref effect saved: <span data-k="fresh"><q></q></span></span>
+      </div>
+    </div>
+    <div class="key">Fix it with a dependency (the timer restarts) or a ref (one timer, latest value). Never silence the lint rule.</div>
 </section>
 
 <!-- L3c · DERIVE, DON'T SYNC -->
@@ -675,7 +951,15 @@
 <span class="ok">// one render, always in step</span></code></pre>
       </div>
     </div>
-    <div class="key g">If a value can be computed from props or state, compute it while rendering. The effect version renders with the old list first, then sets state and renders again. Too slow to recompute? Wrap it in <code>useMemo</code>. Still no effect.</div>
+    <div class="demo" id="demo-derive">
+      <div class="row">
+        <span class="demo-tag">try it</span>
+        <input class="dinput" style="width:200px" placeholder="filter jobs…" aria-label="Filter jobs">
+        <span class="saved r">synchronised · renders<b data-k="rs" style="margin:0 8px 0 6px;color:#fff">0</b><span data-k="ls"></span></span>
+        <span class="saved g">derived · renders<b data-k="rd" style="margin:0 8px 0 6px;color:#fff">0</b><span data-k="ld"></span></span>
+      </div>
+    </div>
+    <div class="key g">If you can compute it from props or state, compute it during render. No effect needed.</div>
 </section>
 
 <!-- L3z · READ NEXT -->
@@ -712,7 +996,7 @@
       <tr><td><b class="p">Style</b></td><td>How it looks, from outside</td><td><code>className</code>, <code>variant="featured"</code></td></tr>
       <tr><td><b class="b">Slots</b></td><td>Whose markup goes where</td><td><code>actions={&lt;SaveButton /&gt;}</code>, <code>children</code></td></tr>
     </table>
-    <div class="key r"><b>The anti-pattern is boolean soup:</b> <code>showLogo</code>, <code>showSalary</code>, <code>isFeatured</code>, <code>isCompact</code>, <code>hideActions</code> — thirty-two combinations, and nobody tested them all.</div>
+    <div class="key r"><b>Avoid boolean soup:</b> five <code>show*</code> and <code>is*</code> flags make 32 untested states.</div>
 </section>
 
 <!-- L4b · SLOTS AND COMPOUND COMPONENTS -->
@@ -730,11 +1014,11 @@
     <div class="two">
       <div class="card g">
         <h3 class="g">Share state through context</h3>
-        <p>The root owns the state and provides it; each <code>Select.Option</code> reads it with <code>useContext</code> — at any depth, through any wrapper the consumer adds.</p>
+        <p>The root provides state; each <code>Select.Option</code> reads it at any depth.</p>
       </div>
       <div class="card r">
         <h3 class="r">Not <code>cloneElement</code></h3>
-        <p><code>Children.map</code> plus <code>cloneElement</code> only reaches direct children. Wrap one option in a layout <code>div</code> and it silently stops working.</p>
+        <p>It only reaches direct children. Wrap an option in a <code>div</code> and it breaks.</p>
       </div>
     </div>
 </section>
@@ -746,13 +1030,13 @@
     <div class="two">
       <div class="card a">
         <h3 class="cy">Controlled · the parent owns it</h3>
-        <p>Validate, format or sync it on every keystroke.</p>
         <pre><code>&lt;<span class="ty">SearchBox</span> value={q} onChange={setQ} /&gt;</code></pre>
+        <div class="demo bare snap ctl" data-mode="ctl"><input class="dinput" placeholder="try CAPS" aria-label="Controlled input"><span class="meter">parent sees<b data-k="seen">""</b></span><span class="meter">parent renders<b data-k="renders">0</b></span><button type="button" class="dbtn" data-act="clear">parent clears it</button></div>
       </div>
       <div class="card b">
         <h3 class="b">Uncontrolled · the component owns it</h3>
-        <p>Seed it once, read it on submit. No parent re-render per key.</p>
         <pre><code>&lt;<span class="ty">SearchBox</span> defaultValue=<span class="st">"react"</span> /&gt;</code></pre>
+        <div class="demo bare snap ctl" data-mode="unc"><input class="dinput" aria-label="Uncontrolled input"><span class="meter">parent sees<b data-k="seen">—</b></span><span class="meter">parent renders<b data-k="renders">0</b></span><button type="button" class="dbtn" data-act="read">submit</button><button type="button" class="dbtn" data-act="clear">parent clears it</button></div>
       </div>
     </div>
     <pre><code><span class="kw">function</span> <span class="fn">useControllableState</span>&lt;<span class="ty">T</span>&gt;(value: <span class="ty">T</span> | <span class="kw">undefined</span>, defaultValue: <span class="ty">T</span>, onChange?: (v: <span class="ty">T</span>) =&gt; <span class="kw">void</span>) {
@@ -771,21 +1055,22 @@
 <section class="slide" data-chip="MODULE 05 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 4</div><div class="cx-page"><b>18</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · Design tokens</div>
     <h2>A token is a decision with a name</h2>
-    <div class="fig" style="max-width:940px">
+    <div class="fig anim" id="fx-tokens" data-at="200,600,1000" style="max-width:940px">
       <svg viewBox="0 0 940 92" role="img" aria-label="Three token layers: primitive values feed semantic tokens, which components read">
-        <rect x="0" y="10" width="270" height="72" rx="10" fill="#121C30" stroke="#64748B"/>
-        <text x="135" y="40" text-anchor="middle" class="lbl b">Primitive · what it is</text>
-        <text x="135" y="62" text-anchor="middle" class="lbl">--blue-500: #2196F3</text>
-        <path class="draw" pathLength="1" d="M270,46 L330,46" stroke="#64748B" fill="none"/>
-        <rect x="335" y="10" width="270" height="72" rx="10" fill="#121C30" stroke="#22D3EE"/>
-        <text x="470" y="40" text-anchor="middle" class="lbl b">Semantic · what it's for</text>
-        <text x="470" y="62" text-anchor="middle" class="lbl">--color-accent</text>
-        <path class="draw" pathLength="1" d="M605,46 L665,46" stroke="#64748B" fill="none"/>
-        <rect x="670" y="10" width="270" height="72" rx="10" fill="#121C30" stroke="#34D399"/>
-        <text x="805" y="40" text-anchor="middle" class="lbl b">Component · where it's used</text>
-        <text x="805" y="62" text-anchor="middle" class="lbl">.button { background }</text>
+        <rect data-in="1" x="0" y="10" width="270" height="72" rx="10" fill="#121C30" stroke="#64748B"/>
+        <text data-in="1" x="135" y="40" text-anchor="middle" class="lbl b">Primitive · what it is</text>
+        <text data-in="1" x="135" y="62" text-anchor="middle" class="lbl" data-t="prim">--blue-500: #2196F3</text>
+        <path data-in="2" class="draw" pathLength="1" d="M270,46 L330,46" stroke="#64748B" fill="none"/>
+        <rect data-in="2" x="335" y="10" width="270" height="72" rx="10" fill="#121C30" stroke="#22D3EE"/>
+        <text data-in="2" x="470" y="40" text-anchor="middle" class="lbl b">Semantic · what it's for</text>
+        <text data-in="2" x="470" y="62" text-anchor="middle" class="lbl" data-t="sem">--color-accent</text>
+        <path data-in="3" class="draw" pathLength="1" d="M605,46 L665,46" stroke="#64748B" fill="none"/>
+        <rect data-in="3" x="670" y="10" width="270" height="72" rx="10" fill="#121C30" stroke="#34D399"/>
+        <text data-in="3" x="805" y="40" text-anchor="middle" class="lbl b">Component · where it's used</text>
+        <text data-in="3" x="805" y="62" text-anchor="middle" class="lbl">.button { background }</text>
       </svg>
     </div>
+    <div class="demo" id="demo-tokens"><div class="row"><span class="demo-tag">try it</span><span class="meter">accent →</span><button type="button" class="dbtn" data-accent="blue">blue-500</button><button type="button" class="dbtn" data-accent="green">green-500</button><button type="button" class="dbtn" data-accent="red">red-500</button><span class="meter">theme →</span><button type="button" class="dbtn" data-th="light">light</button><button type="button" class="dbtn" data-th="dark">dark</button><span class="tk-prev"><b>Frontend Engineer</b><u>Qafla</u><i>Apply</i></span></div></div>
     <pre><code>:root {
   --blue-500: <span class="st">#2196F3</span>;  --red-500: <span class="st">#E5484D</span>;  --space-2: <span class="st">8px</span>;   <span class="cmt">/* primitives: raw values */</span>
   --color-accent: <span class="fn">var</span>(--blue-500);                               <span class="cmt">/* semantic: what it means */</span>
@@ -794,7 +1079,7 @@
 }
 [data-theme=<span class="st">"dark"</span>] { --color-surface: <span class="st">#0E1525</span>; }                <span class="cmt">/* a theme swaps the semantic layer */</span>
 .button { background: <span class="fn">var</span>(--color-accent); padding: <span class="fn">var</span>(--space-2); }</code></pre>
-    <div class="key">Components read semantic tokens only. Dark mode is a second set of semantic values — not a second stylesheet.</div>
+    <div class="key">Components read semantic tokens only. Dark mode swaps those values, not the stylesheet.</div>
 </section>
 
 <!-- L4e · CONTAINER QUERIES AND FLUID TYPE -->
@@ -809,7 +1094,8 @@
 }
 
 h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <span class="st">1.25rem + 2vw</span>, <span class="st">3rem</span>); }               <span class="cmt">/* fluid, with a floor and a ceiling */</span></code></pre>
-    <div class="key">The same <code>JobCard</code> sits in a narrow sidebar and a wide feed on one screen. A media query sees one window; a container query sees the space each card was actually given.</div>
+    <div class="demo" id="demo-cq"><div class="row"><span class="demo-tag">try it · drag the corner ⇲</span><span class="meter">container<b data-k="w">–</b></span><span class="meter">layout<b data-k="lay">–</b></span></div><div class="cq-box"><div class="cq-card"><span class="lg">Q</span><div><b>Frontend Engineer</b><small>Qafla · Cairo · Remote</small></div><button type="button" class="dbtn">Save</button></div></div></div>
+    <div class="key">A media query sees the window. A container query sees the card's own space.</div>
 </section>
 
 <!-- L4z · READ NEXT -->
@@ -850,49 +1136,68 @@ h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <
         onMouseDown={e =&gt; e.<span class="fn">preventDefault</span>()} onClick={() =&gt; <span class="fn">choose</span>(job)}&gt;{job.title}&lt;/<span class="ty">li</span>&gt;
   ))}
 &lt;/<span class="ty">ul</span>&gt;</code></pre>
-    <div class="key"><code>↓</code> <code>↑</code> move the active option (<code>↓</code> opens the list) · <code>Enter</code> chooses · <code>Escape</code> closes, a second one clears · typing keeps editing. DOM focus never leaves the input.</div>
+    <div class="demo" id="demo-combo"><div class="row"><span class="demo-tag">try it · ↓ ↑ Enter Esc</span><div class="cb"><input class="dinput" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="cb-list" aria-label="Search jobs" placeholder="type, or press ↓" autocomplete="off"><ul id="cb-list" role="listbox" aria-label="Job suggestions" hidden></ul></div><span class="meter">chosen<b data-k="picked">—</b></span><span class="attrs" data-k="aria"></span></div></div>
+    <div class="key"><code>↓</code> <code>↑</code> move · <code>Enter</code> chooses · <code>Esc</code> closes, then clears · focus never leaves the input.</div>
 </section>
 
 <!-- L5b · THE RACE -->
 <section class="slide" data-chip="MODULE 05 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 5</div><div class="cx-page"><b>22</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · Build · Race conditions</div>
     <h2>Whichever response lands last wins</h2>
-    <p class="say">Debounce waits for typing to pause, so fewer requests start. It does nothing about the <b>order</b> they come back in.</p>
+    <p class="say">Debounce cuts how many requests start, not the <b>order</b> they land in.</p>
+    <div class="anim" id="fx-race" data-at="300,1250,2400,3400">
     <div class="fig" style="max-width:940px">
       <svg viewBox="0 0 940 170" role="img" aria-label="The request for re starts first and is slow; the request for react starts later and returns first; then the re response lands and overwrites the correct results">
         <text x="770" y="14" text-anchor="end" class="lbl s">time</text>
         <path d="M780,10 L930,10" stroke="#64748B" fill="none"/>
-        <text x="0" y="45" class="lbl b">types “re”</text>
-        <rect x="150" y="22" width="560" height="36" rx="8" fill="#121C30" stroke="#F8717A"/>
-        <text x="166" y="45" class="lbl">GET /api/jobs?q=re · slow · 420 ms</text>
-        <text x="0" y="105" class="lbl b">types “react”</text>
-        <rect x="300" y="82" width="250" height="36" rx="8" fill="#121C30" stroke="#34D399"/>
-        <text x="316" y="105" class="lbl">GET ?q=react · 180 ms</text>
-        <path class="nohead" d="M550,118 L550,142" stroke="#34D399" stroke-dasharray="3 3" fill="none"/>
-        <text x="550" y="160" text-anchor="middle" class="lbl" style="fill:#34D399">renders “react” results</text>
-        <path class="nohead" d="M710,58 L710,142" stroke="#F8717A" stroke-dasharray="3 3" fill="none"/>
-        <text x="718" y="160" class="lbl" style="fill:#F8717A">then “re” lands and overwrites</text>
+        <text data-in="1" x="0" y="45" class="lbl b">types “re”</text>
+        <rect class="grow g-re g-re-box" x="150" y="22" width="560" height="36" rx="8" fill="#121C30" stroke="#F8717A"/>
+        <text data-in="1" x="166" y="45" class="lbl">GET /api/jobs?q=re · slow · 420 ms</text>
+        <text data-in="2" x="0" y="105" class="lbl b">types “react”</text>
+        <rect class="grow g-react" x="300" y="82" width="250" height="36" rx="8" fill="#121C30" stroke="#34D399"/>
+        <text x="150" y="74" class="lbl s ab" style="fill:#94A3B8">aborted by the cleanup the moment “react” starts</text>
+        <text data-in="2" x="316" y="105" class="lbl">GET ?q=react · 180 ms</text>
+        <path data-in="3" class="nohead" d="M550,118 L550,142" stroke="#34D399" stroke-dasharray="3 3" fill="none"/>
+        <text data-in="3" x="550" y="160" text-anchor="middle" class="lbl" style="fill:#34D399">renders “react” results</text>
+        <path data-in="4" class="nohead late" d="M710,58 L710,142" stroke="#F8717A" stroke-dasharray="3 3" fill="none"/>
+        <text data-in="4" x="718" y="160" class="lbl late" style="fill:#F8717A">then “re” lands and overwrites</text>
       </svg>
     </div>
-    <div class="key w">Debounce decides how many requests run. Only cancelling — or ignoring — the stale one decides which result renders. You need both.</div>
+    <div class="race-out">on screen: <b class="r0">—</b><b class="r1">“react” results ✓</b><b class="r2">“re” results ✗ stale</b></div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="demo bare"><button type="button" class="dbtn" data-act="fix">cleanup aborts the stale request: off</button></span>
+    </div>
+    </div>
+    <div class="key w">Debounce is a cost fix. Cancelling the stale request is the correctness fix.</div>
 </section>
 
 <!-- L5c · DEBOUNCE AND ABORT -->
 <section class="slide" data-chip="MODULE 05 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 5</div><div class="cx-page"><b>23</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · Build · Debounce and abort</div>
     <h2>One effect: wait, fetch, cancel</h2>
+    <div class="anim" id="fx-cleanup" data-at="600,1700,2800,4100">
     <pre><code><span class="fn">useEffect</span>(() =&gt; {
   <span class="kw">if</span> (query.<span class="fn">trim</span>().length &lt; <span class="st">2</span>) { <span class="fn">setJobs</span>([]); <span class="kw">return</span>; }
-  <span class="kw">const</span> ctrl = <span class="kw">new</span> <span class="ty">AbortController</span>();
-  <span class="kw">const</span> timer = <span class="fn">setTimeout</span>(() =&gt; {                          <span class="cmt">// debounce: wait for a pause</span>
-    <span class="fn">fetch</span>(<span class="st">'/api/jobs?q='</span> + <span class="fn">encodeURIComponent</span>(query), { signal: ctrl.signal })
-      .<span class="fn">then</span>(res =&gt; res.<span class="fn">json</span>())
-      .<span class="fn">then</span>(setJobs)
+<span data-hl="1">  <span class="kw">const</span> ctrl = <span class="kw">new</span> <span class="ty">AbortController</span>();</span>
+<span data-hl="2" class="hl-w">  <span class="kw">const</span> timer = <span class="fn">setTimeout</span>(() =&gt; {                          <span class="cmt">// debounce: wait for a pause</span></span>
+<span data-hl="3" class="hl-p">    <span class="fn">fetch</span>(<span class="st">'/api/jobs?q='</span> + <span class="fn">encodeURIComponent</span>(query), { signal: ctrl.signal })</span>
+<span data-hl="3" class="hl-p">      .<span class="fn">then</span>(res =&gt; res.<span class="fn">json</span>())</span>
+<span data-hl="3" class="hl-p">      .<span class="fn">then</span>(setJobs)</span>
       .<span class="fn">catch</span>(err =&gt; { <span class="kw">if</span> (!ctrl.signal.aborted) <span class="fn">setError</span>(err); });
-  }, <span class="st">250</span>);
-  <span class="kw">return</span> () =&gt; { <span class="fn">clearTimeout</span>(timer); ctrl.<span class="fn">abort</span>(); };   <span class="cmt">// the next keystroke cancels both</span>
+<span data-hl="2" class="hl-w">  }, <span class="st">250</span>);</span>
+<span data-hl="4" class="hl-g">  <span class="kw">return</span> () =&gt; { <span class="fn">clearTimeout</span>(timer); ctrl.<span class="fn">abort</span>(); };   <span class="cmt">// the next keystroke cancels both</span></span>
 }, [query]);</code></pre>
-    <div class="key g">The cleanup is the fix: a new keystroke clears the timer that hasn't fired and aborts the request already in flight, so a stale response can never reach <code>setJobs</code>.</div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>The query changed: a fresh <code>AbortController</code> for this run.</i><i>Wait 250 ms for the typing to pause.</i><i>Then fetch, wired to the controller's signal.</i><i>Next keystroke: the cleanup clears the timer and aborts the fetch. A stale answer never reaches <code>setJobs</code>.</i></span>
+    </div>
+    </div>
+    <div class="key g">The cleanup is the fix: each keystroke clears the timer and aborts the request in flight.</div>
     <div class="ex"><b>Build stage</b><span class="br">module-5/autocomplete</span><i>check it out in the job board repo, then make its tests pass</i></div>
 </section>
 
@@ -935,7 +1240,8 @@ h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <
   <span class="kw">if</span> (!e.shiftKey &amp;&amp; document.activeElement === last) { e.<span class="fn">preventDefault</span>(); first.<span class="fn">focus</span>(); }
 }
 <span class="kw">function</span> <span class="fn">closeModal</span>() { <span class="fn">setOpen</span>(<span class="kw">false</span>); returnTo.current?.<span class="fn">focus</span>(); }</code></pre>
-    <div class="key">Native <code>&lt;dialog&gt;</code> with <code>showModal()</code> makes the page behind inert and closes on Escape for free. Labelling it, and checking focus lands back on the trigger, stay your job.</div>
+    <div class="demo" id="demo-modal"><div class="row"><span class="demo-tag">try it · Tab, Shift+Tab, Esc</span><button type="button" class="dbtn" data-act="open">Apply</button><span class="demo-hint" data-k="log">focus: —</span></div><div class="mdl" role="dialog" aria-modal="true" aria-labelledby="mdl-h" hidden><h4 id="mdl-h">Apply · Frontend Engineer</h4><input class="dinput" placeholder="you@example.com" aria-label="Email"><div class="row" style="margin-top:12px"><button type="button" class="dbtn" data-act="close">Cancel</button><button type="button" class="dbtn on g" data-act="close">Send</button></div></div></div>
+    <div class="key">Native <code>&lt;dialog&gt;</code> with <code>showModal()</code> gives you an inert page and Escape. Labels and focus return are still yours.</div>
 </section>
 
 <!-- L6b · THE KEYBOARD MAP -->
@@ -944,12 +1250,12 @@ h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <
     <h2>Every overlay has a keyboard contract</h2>
     <table class="grid">
       <tr><th>Widget</th><th>Keys</th><th>Where focus goes</th></tr>
-      <tr><td><b>Modal</b><br><code>dialog</code></td><td><code>Tab</code> and <code>Shift+Tab</code> cycle inside · <code>Escape</code> closes</td><td>Inside on open; back to the trigger on close</td></tr>
-      <tr><td><b>Dropdown menu</b><br><code>aria-haspopup="menu"</code></td><td><code>Enter</code> <code>Space</code> <code>↓</code> open · <code>↑</code> <code>↓</code> <code>Home</code> <code>End</code> move · <code>Escape</code> closes</td><td>Into the menu (roving tabindex); back to the button on close</td></tr>
-      <tr><td><b>Tabs</b><br><code>tablist</code> · <code>tab</code></td><td><code>←</code> <code>→</code> move and activate · <code>Home</code> <code>End</code></td><td>One Tab stop for the whole tablist; Tab again enters the panel</td></tr>
-      <tr><td><b>Toast</b><br><code>role="status"</code></td><td>None of its own</td><td>Nowhere — a toast never takes focus</td></tr>
+      <tr><td><b>Modal</b><br><code>dialog</code></td><td><code>Tab</code> cycles inside · <code>Esc</code> closes</td><td>In on open, back to the trigger</td></tr>
+      <tr><td><b>Dropdown menu</b></td><td><code>↓</code> opens · <code>↑</code> <code>↓</code> move · <code>Esc</code> closes</td><td>Into the menu, back on close</td></tr>
+      <tr><td><b>Tabs</b></td><td><code>←</code> <code>→</code> move · <code>Home</code> <code>End</code></td><td>One Tab stop for the whole list</td></tr>
+      <tr><td><b>Toast</b><br><code>role="status"</code></td><td>None</td><td>Never takes focus</td></tr>
     </table>
-    <div class="key w">A dropdown of navigation links is a disclosure, not a menu: a button with <code>aria-expanded</code> and a plain list of links. <code>role="menu"</code> promises app-style arrow keys — use it only if you build them.</div>
+    <div class="key w">A nav dropdown is a disclosure: a button and links. Use <code>role="menu"</code> only if you build its arrow keys.</div>
 </section>
 
 <!-- L6c · TOASTS AND LIVE REGIONS -->
@@ -964,7 +1270,8 @@ h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <
   <span class="fn">setAnnouncement</span>(<span class="st">''</span>);                                                   <span class="cmt">// clear first, so the same</span>
   <span class="fn">setTimeout</span>(() =&gt; <span class="fn">setAnnouncement</span>(message), <span class="st">50</span>);                        <span class="cmt">// text twice is still read</span>
 }</code></pre>
-    <div class="key">Polite (<code>role="status"</code>) for “Job saved”. Assertive (<code>role="alert"</code>) only for what must interrupt, like “Session expired”. A toast that holds a button must not vanish on a timer.</div>
+    <div class="demo" id="demo-toast"><div class="row"><span class="demo-tag">try it</span><button type="button" class="dbtn" data-act="polite">Save job</button><button type="button" class="dbtn" data-act="assertive">Session expired</button><span class="saved">screen reader: <span data-k="sr">—</span></span></div><div class="toasts" aria-hidden="true"></div><div role="status" class="sr-only" data-k="status"></div><div role="alert" class="sr-only" data-k="alert"></div></div>
+    <div class="key"><code>status</code> for “Job saved”, <code>alert</code> only for “Session expired”. A toast with a button never auto-hides.</div>
     <div class="ex"><b>Build stage</b><span class="br">module-5/overlays</span><i>modal, dropdown, tabs and toast — make its tests pass</i></div>
 </section>
 
@@ -1010,7 +1317,8 @@ h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <
   <span class="kw">if</span> (v.tooShort)     <span class="kw">return</span> <span class="st">'Use at least '</span> + input.minLength + <span class="st">' characters'</span>;
   <span class="kw">return</span> <span class="st">''</span>;
 }</code></pre>
-    <div class="key"><code>noValidate</code> turns off the browser's bubbles, not its checks. <code>validity</code> still works, and your message, linked by <code>aria-describedby</code>, is the one a screen reader reads.</div>
+    <div class="demo" id="demo-validity"><div class="row"><span class="demo-tag">try it</span><input class="dinput" type="email" required minlength="6" style="width:220px" placeholder="email" aria-label="Email"><div class="flags"><span data-f="valueMissing">valueMissing</span><span data-f="typeMismatch">typeMismatch</span><span data-f="tooShort">tooShort</span><span data-f="valid">valid</span></div><span class="demo-hint" data-k="msg"></span></div></div>
+    <div class="key"><code>noValidate</code> hides the bubbles, not the checks. Read <code>validity</code>, write your own message.</div>
 </section>
 
 <!-- L7b · WHEN TO SHOW THE ERROR -->
@@ -1026,12 +1334,15 @@ h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <
   <span class="kw">if</span> (first) <span class="kw">return</span> (form.elements.<span class="fn">namedItem</span>(first) <span class="kw">as</span> <span class="ty">HTMLElement</span>).<span class="fn">focus</span>();
   <span class="fn">apply</span>(<span class="kw">new</span> <span class="ty">FormData</span>(form));                           <span class="cmt">// valid: send it</span>
 }</code></pre>
-    <table class="grid">
-      <tr><th>When</th><th>What you do</th></tr>
-      <tr><td><b>Submit</b></td><td>Validate every field, show every error, move focus to the first invalid one.</td></tr>
-      <tr><td><b>Blur</b></td><td>Validate the field just left — only if the user changed it.</td></tr>
-      <tr><td><b>Typing</b></td><td>Clear an error the moment it's fixed. Never show a new one mid-word.</td></tr>
-    </table>
+    <div class="two tight" style="align-items:start">
+      <div><table class="grid" style="margin-top:0">
+        <tr><th>When</th><th>What you do</th></tr>
+        <tr><td><b>Submit</b></td><td>Check all, show all, focus the first error</td></tr>
+        <tr><td><b>Blur</b></td><td>Check that field, if it changed</td></tr>
+        <tr><td><b>Typing</b></td><td>Clear a fixed error. Never add one mid-word</td></tr>
+    </table></div>
+      <form class="demo fm" id="demo-form" novalidate><span class="demo-tag">try it · blur, type, submit</span><label for="f-name">Name</label><input class="dinput" id="f-name" name="name" required minlength="2" aria-describedby="f-name-err"><p class="err" id="f-name-err"></p><label for="f-email">Email</label><input class="dinput" id="f-email" name="email" type="email" required aria-describedby="f-email-err"><p class="err" id="f-email-err"></p><div class="row"><button class="dbtn">Apply</button><span class="done" data-k="done"></span></div></form>
+    </div>
 </section>
 
 <!-- L7z · READ NEXT -->
@@ -1073,28 +1384,29 @@ h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <
 }
 <span class="no">// a new value object on every save</span></code></pre>
       </div>
-      <div class="fig" style="margin:0">
+      <div class="fig" id="fx-ctx" style="margin:0">
         <svg viewBox="0 0 480 270" role="img" aria-label="AppContext value feeds Navbar, ProfileMenu and every ListingCard; saving one job re-renders all of them">
           <rect x="120" y="0" width="240" height="56" rx="10" fill="#121C30" stroke="#A78BFA"/>
-          <text x="240" y="24" text-anchor="middle" class="lbl b">AppContext · value</text>
-          <text x="240" y="44" text-anchor="middle" class="lbl s">{ user, saved, setSaved }</text>
+          <text x="240" y="24" text-anchor="middle" class="lbl b" data-t="ctx">AppContext · value</text>
+          <text x="240" y="44" text-anchor="middle" class="lbl s" data-t="val">{ user, saved, setSaved }</text>
           <path class="draw" pathLength="1" d="M200,56 L80,130" stroke="#64748B" fill="none"/>
           <path class="draw" pathLength="1" d="M240,56 L240,130" stroke="#64748B" fill="none"/>
           <path class="draw" pathLength="1" d="M280,56 L400,130" stroke="#64748B" fill="none"/>
-          <rect x="0" y="136" width="150" height="56" rx="10" fill="#121C30" stroke="#FBBF24"/>
+          <rect data-n="nav" x="0" y="136" width="150" height="56" rx="10" fill="#121C30" stroke="#FBBF24"/>
           <text x="75" y="160" text-anchor="middle" class="lbl b">Navbar</text>
           <text x="75" y="179" text-anchor="middle" class="lbl s">reads user</text>
-          <rect x="165" y="136" width="150" height="56" rx="10" fill="#121C30" stroke="#FBBF24"/>
+          <rect data-n="prof" x="165" y="136" width="150" height="56" rx="10" fill="#121C30" stroke="#FBBF24"/>
           <text x="240" y="160" text-anchor="middle" class="lbl b">ProfileMenu</text>
           <text x="240" y="179" text-anchor="middle" class="lbl s">reads user</text>
-          <rect x="330" y="136" width="150" height="56" rx="10" fill="#121C30" stroke="#FBBF24"/>
+          <rect data-n="cards" x="330" y="136" width="150" height="56" rx="10" fill="#121C30" stroke="#FBBF24"/>
           <text x="405" y="160" text-anchor="middle" class="lbl b">ListingCard × 200</text>
           <text x="405" y="179" text-anchor="middle" class="lbl s">reads saved</text>
           <text x="240" y="230" text-anchor="middle" class="lbl" style="fill:#FBBF24">save one job → all three re-render</text>
         </svg>
       </div>
     </div>
-    <div class="key w">Context has no selectors. When <code>value</code> changes by <code>Object.is</code>, every component that reads the context re-renders, whichever field it uses. Saving a job re-renders the navbar.</div>
+    <div class="demo" id="demo-ctx"><div class="row"><span class="demo-tag">try it</span><button type="button" class="dbtn" data-act="saved">save a job</button><button type="button" class="dbtn" data-act="user">rename the user</button><button type="button" class="dbtn" data-act="split">split contexts: off</button><span class="demo-hint" data-k="out"></span></div></div>
+    <div class="key w">Context has no selectors: a new <code>value</code> re-renders every reader.</div>
 </section>
 
 <!-- L8b · COMPOSITION -->
@@ -1128,7 +1440,7 @@ h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <
 }</code></pre>
       </div>
     </div>
-    <div class="key">Layout no longer knows what a <code>User</code> is. Use composition when one value just needs to get past a few layers; use context when many distant components read the same value.</div>
+    <div class="key">Composition gets a value past a few layers. Context serves many distant readers.</div>
 </section>
 
 <!-- L8c · THE BOUNDARY ITSELF -->
@@ -1155,15 +1467,15 @@ h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <
       <div>
         <table class="grid" style="margin-top:14px">
           <tr><th>Thrown while…</th><th>Caught?</th></tr>
-          <tr><td><b>rendering</b> a component below it</td><td><b class="g">yes</b></td></tr>
-          <tr><td><b>running an effect</b> below it</td><td><b class="g">yes</b></td></tr>
-          <tr><td><b>handling an event</b> (<code>onClick</code>)</td><td><b class="r">no</b>: try/catch, then set error state</td></tr>
-          <tr><td><b>running later</b> (a timer, a <code>.then</code>)</td><td><b class="r">no</b>: that's outside rendering</td></tr>
-          <tr><td><b>rendering the boundary</b> itself</td><td><b class="r">no</b>: the next one up gets it</td></tr>
+          <tr><td><b>Rendering</b> below it</td><td><b class="g">yes</b></td></tr>
+          <tr><td><b>An effect</b> below it</td><td><b class="g">yes</b></td></tr>
+          <tr><td><b>An event handler</b></td><td><b class="r">no</b>: try/catch + error state</td></tr>
+          <tr><td><b>A timer or <code>.then</code></b></td><td><b class="r">no</b></td></tr>
+          <tr><td><b>The boundary itself</b></td><td><b class="r">no</b>: the next one up</td></tr>
         </table>
       </div>
     </div>
-    <div class="key w">React 19 still has no hook for this. Write the class once and reuse it everywhere, with a different <code>fallback</code> per place.</div>
+    <div class="key w">Still no hook in React 19. Write the class once, reuse it with a different <code>fallback</code>.</div>
 </section>
 
 <!-- L8d · PORTALS -->
@@ -1185,38 +1497,45 @@ h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <
   );
 }</code></pre>
       </div>
-      <div class="fig" style="margin:0">
+      <div class="fig anim" id="fx-portal" data-at="300,1100,2000,3000" style="margin:0">
         <svg viewBox="0 0 520 260" role="img" aria-label="React tree: ListingCard, ApplyDialog, ApplicationForm. DOM tree: body holds the root and, separately, the dialog">
-          <text x="100" y="16" text-anchor="middle" class="lbl s">React tree</text>
-          <line x1="100" y1="72" x2="100" y2="112" stroke="#243349" stroke-width="2"/>
-          <line x1="100" y1="152" x2="100" y2="192" stroke="#243349" stroke-width="2"/>
-          <rect x="0" y="32" width="200" height="40" rx="9" fill="#121C30" stroke="#243349"/>
-          <text x="100" y="57" text-anchor="middle" class="lbl b">ListingCard</text>
-          <rect x="0" y="112" width="200" height="40" rx="9" fill="rgba(34,211,238,.14)" stroke="#22D3EE"/>
-          <text x="100" y="137" text-anchor="middle" class="lbl b">ApplyDialog</text>
-          <rect x="0" y="192" width="200" height="40" rx="9" fill="rgba(34,211,238,.14)" stroke="#22D3EE"/>
-          <text x="100" y="217" text-anchor="middle" class="lbl b">ApplicationForm</text>
-          <path class="draw" pathLength="1" d="M222,226 L222,44" stroke="#34D399" fill="none"/>
-          <text x="238" y="135" text-anchor="middle" class="lbl s" style="fill:#34D399" transform="rotate(-90 238 135)">events bubble up here</text>
-          <text x="410" y="16" text-anchor="middle" class="lbl s">DOM tree</text>
-          <line x1="410" y1="72" x2="350" y2="112" stroke="#243349" stroke-width="2"/>
-          <line x1="410" y1="72" x2="470" y2="112" stroke="#243349" stroke-width="2"/>
-          <line x1="350" y1="152" x2="350" y2="192" stroke="#243349" stroke-width="2"/>
-          <line x1="470" y1="152" x2="470" y2="192" stroke="#243349" stroke-width="2"/>
-          <rect x="330" y="32" width="160" height="40" rx="9" fill="#121C30" stroke="#243349"/>
-          <text x="410" y="57" text-anchor="middle" class="lbl b">body</text>
-          <rect x="300" y="112" width="100" height="40" rx="9" fill="#121C30" stroke="#243349"/>
-          <text x="350" y="137" text-anchor="middle" class="lbl b">#root</text>
-          <rect x="420" y="112" width="100" height="40" rx="9" fill="rgba(34,211,238,.14)" stroke="#22D3EE"/>
-          <text x="470" y="137" text-anchor="middle" class="lbl b">dialog</text>
-          <rect x="300" y="192" width="100" height="40" rx="9" fill="#121C30" stroke="#243349"/>
-          <text x="350" y="217" text-anchor="middle" class="lbl b">… card</text>
-          <rect x="420" y="192" width="100" height="40" rx="9" fill="rgba(34,211,238,.14)" stroke="#22D3EE"/>
-          <text x="470" y="217" text-anchor="middle" class="lbl b">form</text>
+          <g data-in="3"><path d="M200,132 C270,92 350,92 420,128" stroke="#22D3EE" stroke-dasharray="4 4" fill="none"/><text x="310" y="88" text-anchor="middle" class="lbl s" style="fill:#22D3EE">createPortal</text></g>
+          <text data-in="1" x="100" y="16" text-anchor="middle" class="lbl s">React tree</text>
+          <line data-in="1" x1="100" y1="72" x2="100" y2="112" stroke="#243349" stroke-width="2"/>
+          <line data-in="1" x1="100" y1="152" x2="100" y2="192" stroke="#243349" stroke-width="2"/>
+          <rect data-in="1" x="0" y="32" width="200" height="40" rx="9" fill="#121C30" stroke="#243349"/>
+          <text data-in="1" x="100" y="57" text-anchor="middle" class="lbl b">ListingCard</text>
+          <rect data-in="1" x="0" y="112" width="200" height="40" rx="9" fill="rgba(34,211,238,.14)" stroke="#22D3EE"/>
+          <text data-in="1" x="100" y="137" text-anchor="middle" class="lbl b">ApplyDialog</text>
+          <rect data-in="1" x="0" y="192" width="200" height="40" rx="9" fill="rgba(34,211,238,.14)" stroke="#22D3EE"/>
+          <text data-in="1" x="100" y="217" text-anchor="middle" class="lbl b">ApplicationForm</text>
+          <path data-in="4" class="draw" pathLength="1" d="M222,226 L222,44" stroke="#34D399" fill="none"/>
+          <text data-in="4" x="238" y="135" text-anchor="middle" class="lbl s" style="fill:#34D399" transform="rotate(-90 238 135)">events bubble up here</text>
+          <text data-in="2" x="410" y="16" text-anchor="middle" class="lbl s">DOM tree</text>
+          <line data-in="2" x1="410" y1="72" x2="350" y2="112" stroke="#243349" stroke-width="2"/>
+          <line data-in="3" x1="410" y1="72" x2="470" y2="112" stroke="#243349" stroke-width="2"/>
+          <line data-in="2" x1="350" y1="152" x2="350" y2="192" stroke="#243349" stroke-width="2"/>
+          <line data-in="3" x1="470" y1="152" x2="470" y2="192" stroke="#243349" stroke-width="2"/>
+          <rect data-in="2" x="330" y="32" width="160" height="40" rx="9" fill="#121C30" stroke="#243349"/>
+          <text data-in="2" x="410" y="57" text-anchor="middle" class="lbl b">body</text>
+          <rect data-in="2" x="300" y="112" width="100" height="40" rx="9" fill="#121C30" stroke="#243349"/>
+          <text data-in="2" x="350" y="137" text-anchor="middle" class="lbl b">#root</text>
+          <rect data-in="3" x="420" y="112" width="100" height="40" rx="9" fill="rgba(34,211,238,.14)" stroke="#22D3EE"/>
+          <text data-in="3" x="470" y="137" text-anchor="middle" class="lbl b">dialog</text>
+          <rect data-in="2" x="300" y="192" width="100" height="40" rx="9" fill="#121C30" stroke="#243349"/>
+          <text data-in="2" x="350" y="217" text-anchor="middle" class="lbl b">… card</text>
+          <rect data-in="3" x="420" y="192" width="100" height="40" rx="9" fill="rgba(34,211,238,.14)" stroke="#22D3EE"/>
+          <text data-in="3" x="470" y="217" text-anchor="middle" class="lbl b">form</text>
         </svg>
+        <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>React tree: ApplyDialog sits under ListingCard.</i><i>DOM tree: the card lives inside #root.</i><i>createPortal puts the dialog in body, clear of overflow: hidden.</i><i>Events still bubble up the React tree, to ListingCard.</i></span>
+    </div>
       </div>
     </div>
-    <div class="key">Only the DOM position moves, out from under <code>overflow: hidden</code> and z-index traps. Context still flows in, and events bubble through the React tree: a click inside the dialog reaches <code>ListingCard</code>'s handlers.</div>
+    <div class="key">Only the DOM position moves. Context and events still follow the React tree.</div>
 </section>
 
 <!-- L8e · SUSPENSE -->
@@ -1238,29 +1557,30 @@ h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <
   &lt;/<span class="ty">Suspense</span>&gt;
 &lt;/<span class="ty">ErrorBoundary</span>&gt;</code></pre>
       </div>
-      <div class="fig" style="margin:0">
+      <div class="fig" id="fx-sus" style="margin:0">
         <svg viewBox="0 0 480 250" role="img" aria-label="companyPromise has three outcomes: pending shows the Suspense fallback, fulfilled renders the panel, rejected shows the error boundary fallback">
           <rect x="140" y="0" width="200" height="44" rx="10" fill="#121C30" stroke="#A78BFA"/>
           <text x="240" y="27" text-anchor="middle" class="lbl b">companyPromise</text>
-          <path class="draw" pathLength="1" d="M210,44 L80,132" stroke="#FBBF24" fill="none"/>
-          <path class="draw" pathLength="1" d="M240,44 L240,132" stroke="#34D399" fill="none"/>
-          <path class="draw" pathLength="1" d="M270,44 L400,132" stroke="#F8717A" fill="none"/>
-          <text x="118" y="84" text-anchor="end" class="lbl s" style="fill:#FBBF24">pending</text>
-          <text x="248" y="96" class="lbl s" style="fill:#34D399">fulfilled</text>
-          <text x="362" y="84" class="lbl s" style="fill:#F8717A">rejected</text>
-          <rect x="0" y="138" width="150" height="56" rx="10" fill="#121C30" stroke="#FBBF24"/>
-          <text x="75" y="171" text-anchor="middle" class="lbl b">PanelSkeleton</text>
-          <rect x="165" y="138" width="150" height="56" rx="10" fill="#121C30" stroke="#34D399"/>
-          <text x="240" y="171" text-anchor="middle" class="lbl b">CompanyPanel</text>
-          <rect x="330" y="138" width="150" height="56" rx="10" fill="#121C30" stroke="#F8717A"/>
-          <text x="405" y="171" text-anchor="middle" class="lbl b">PanelError</text>
-          <text x="75" y="218" text-anchor="middle" class="lbl s">Suspense fallback</text>
-          <text x="240" y="218" text-anchor="middle" class="lbl s">the real panel</text>
-          <text x="405" y="218" text-anchor="middle" class="lbl s">error boundary</text>
+          <path data-b="pending" class="draw" pathLength="1" d="M210,44 L80,132" stroke="#FBBF24" fill="none"/>
+          <path data-b="fulfilled" class="draw" pathLength="1" d="M240,44 L240,132" stroke="#34D399" fill="none"/>
+          <path data-b="rejected" class="draw" pathLength="1" d="M270,44 L400,132" stroke="#F8717A" fill="none"/>
+          <text data-b="pending" x="118" y="84" text-anchor="end" class="lbl s" style="fill:#FBBF24">pending</text>
+          <text data-b="fulfilled" x="248" y="96" class="lbl s" style="fill:#34D399">fulfilled</text>
+          <text data-b="rejected" x="362" y="84" class="lbl s" style="fill:#F8717A">rejected</text>
+          <rect data-b="pending" x="0" y="138" width="150" height="56" rx="10" fill="#121C30" stroke="#FBBF24"/>
+          <text data-b="pending" x="75" y="171" text-anchor="middle" class="lbl b">PanelSkeleton</text>
+          <rect data-b="fulfilled" x="165" y="138" width="150" height="56" rx="10" fill="#121C30" stroke="#34D399"/>
+          <text data-b="fulfilled" x="240" y="171" text-anchor="middle" class="lbl b">CompanyPanel</text>
+          <rect data-b="rejected" x="330" y="138" width="150" height="56" rx="10" fill="#121C30" stroke="#F8717A"/>
+          <text data-b="rejected" x="405" y="171" text-anchor="middle" class="lbl b">PanelError</text>
+          <text data-b="pending" x="75" y="218" text-anchor="middle" class="lbl s">Suspense fallback</text>
+          <text data-b="fulfilled" x="240" y="218" text-anchor="middle" class="lbl s">the real panel</text>
+          <text data-b="rejected" x="405" y="218" text-anchor="middle" class="lbl s">error boundary</text>
         </svg>
       </div>
     </div>
-    <div class="key w">Create the promise outside render: in a route loader, a cache, or a server component. Create it inside the component and every render starts a new one.</div>
+    <div class="demo" id="demo-sus"><div class="row"><span class="demo-tag">try it</span><button type="button" class="dbtn" data-act="load">load company</button><button type="button" class="dbtn" data-act="fail">the request fails: off</button><div class="panel">press load</div></div></div>
+    <div class="key w">Create the promise outside render (a loader, a cache, a server component), or every render starts a new one.</div>
 </section>
 
 <!-- L8z · READ NEXT -->
@@ -1293,81 +1613,81 @@ h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <
     <div class="two">
       <div>
         <ul class="plist" style="margin-top:0">
-          <li>Search by title or company<small>results narrow as you type</small></li>
-          <li>Filter by remote, seniority and company<small>filters combine with the search</small></li>
-          <li>Save a listing<small>the saved count in the header updates</small></li>
-          <li>A few hundred listings<small>enough for waste to show up in the profiler</small></li>
+          <li>Search by title or company</li>
+          <li>Filter by remote, seniority, company</li>
+          <li>Save a listing<small>the header count updates</small></li>
+          <li>A few hundred listings</li>
         </ul>
       </div>
-      <div class="fig" style="margin:0">
+      <div class="fig anim" id="fx-feed" data-at="200,420,640,860,1080,1300,1550" style="margin:0">
         <svg viewBox="0 0 480 280" role="img" aria-label="Component tree: FeedPage holds query, filters and saved ids; it renders FeedHeader, CompanySidebar, SearchBox, FilterBar and ListingResults, which renders the cards">
-          <line x1="15" y1="32" x2="15" y2="216" stroke="#243349" stroke-width="2"/>
-          <line x1="15" y1="56" x2="30" y2="56" stroke="#243349" stroke-width="2"/>
-          <line x1="15" y1="96" x2="30" y2="96" stroke="#243349" stroke-width="2"/>
-          <line x1="15" y1="136" x2="30" y2="136" stroke="#243349" stroke-width="2"/>
-          <line x1="15" y1="176" x2="30" y2="176" stroke="#243349" stroke-width="2"/>
-          <line x1="15" y1="216" x2="30" y2="216" stroke="#243349" stroke-width="2"/>
-          <line x1="45" y1="232" x2="45" y2="256" stroke="#243349" stroke-width="2"/>
-          <line x1="45" y1="256" x2="60" y2="256" stroke="#243349" stroke-width="2"/>
-          <rect x="0" y="0" width="200" height="32" rx="7" fill="rgba(34,211,238,.14)" stroke="#22D3EE"/>
-          <text x="14" y="21" class="lbl b">FeedPage</text>
-          <text x="214" y="21" class="lbl s" style="fill:#22D3EE">query · filters · savedIds</text>
-          <rect x="30" y="40" width="200" height="32" rx="7" fill="#121C30" stroke="#243349"/>
-          <text x="44" y="61" class="lbl b">FeedHeader</text>
-          <text x="244" y="61" class="lbl s">shows the saved count</text>
-          <rect x="30" y="80" width="200" height="32" rx="7" fill="#121C30" stroke="#243349"/>
-          <text x="44" y="101" class="lbl b">CompanySidebar</text>
-          <rect x="30" y="120" width="200" height="32" rx="7" fill="#121C30" stroke="#243349"/>
-          <text x="44" y="141" class="lbl b">SearchBox</text>
-          <rect x="30" y="160" width="200" height="32" rx="7" fill="#121C30" stroke="#243349"/>
-          <text x="44" y="181" class="lbl b">FilterBar</text>
-          <rect x="30" y="200" width="200" height="32" rx="7" fill="#121C30" stroke="#243349"/>
-          <text x="44" y="221" class="lbl b">ListingResults</text>
-          <rect x="60" y="240" width="200" height="32" rx="7" fill="#121C30" stroke="#243349"/>
-          <text x="74" y="261" class="lbl b">ListingCard × 300</text>
+          <line data-in="1" x1="15" y1="32" x2="15" y2="216" stroke="#243349" stroke-width="2"/>
+          <line data-in="2" x1="15" y1="56" x2="30" y2="56" stroke="#243349" stroke-width="2"/>
+          <line data-in="3" x1="15" y1="96" x2="30" y2="96" stroke="#243349" stroke-width="2"/>
+          <line data-in="4" x1="15" y1="136" x2="30" y2="136" stroke="#243349" stroke-width="2"/>
+          <line data-in="5" x1="15" y1="176" x2="30" y2="176" stroke="#243349" stroke-width="2"/>
+          <line data-in="6" x1="15" y1="216" x2="30" y2="216" stroke="#243349" stroke-width="2"/>
+          <line data-in="7" x1="45" y1="232" x2="45" y2="256" stroke="#243349" stroke-width="2"/>
+          <line data-in="7" x1="45" y1="256" x2="60" y2="256" stroke="#243349" stroke-width="2"/>
+          <rect data-in="1" x="0" y="0" width="200" height="32" rx="7" fill="rgba(34,211,238,.14)" stroke="#22D3EE"/>
+          <text data-in="1" x="14" y="21" class="lbl b">FeedPage</text>
+          <text data-in="1" x="214" y="21" class="lbl s" style="fill:#22D3EE">query · filters · savedIds</text>
+          <rect data-in="2" x="30" y="40" width="200" height="32" rx="7" fill="#121C30" stroke="#243349"/>
+          <text data-in="2" x="44" y="61" class="lbl b">FeedHeader</text>
+          <text data-in="2" x="244" y="61" class="lbl s">shows the saved count</text>
+          <rect data-in="3" x="30" y="80" width="200" height="32" rx="7" fill="#121C30" stroke="#243349"/>
+          <text data-in="3" x="44" y="101" class="lbl b">CompanySidebar</text>
+          <rect data-in="4" x="30" y="120" width="200" height="32" rx="7" fill="#121C30" stroke="#243349"/>
+          <text data-in="4" x="44" y="141" class="lbl b">SearchBox</text>
+          <rect data-in="5" x="30" y="160" width="200" height="32" rx="7" fill="#121C30" stroke="#243349"/>
+          <text data-in="5" x="44" y="181" class="lbl b">FilterBar</text>
+          <rect data-in="6" x="30" y="200" width="200" height="32" rx="7" fill="#121C30" stroke="#243349"/>
+          <text data-in="6" x="44" y="221" class="lbl b">ListingResults</text>
+          <rect data-in="7" x="60" y="240" width="200" height="32" rx="7" fill="#121C30" stroke="#243349"/>
+          <text data-in="7" x="74" y="261" class="lbl b">ListingCard × 300</text>
         </svg>
       </div>
     </div>
     <div class="ex"><b>Stage</b><span class="br">module-5/feed-ui</span><i>in the job board repo</i></div>
-    <div class="key">Put all the state in <code>FeedPage</code> first. That's the version most real codebases have, and it gives the profiler something to find.</div>
+    <div class="key">Start with all the state in <code>FeedPage</code>: it's realistic, and it gives the profiler something to find.</div>
 </section>
 
 <!-- L9b · PROFILE IT -->
 <section class="slide" data-chip="MODULE 05 · VIDEO 9"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 05 · VIDEO 9</div><div class="cx-page"><b>39</b> / 42</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 9 · Profile it</div>
     <h2>Record, type, stop, read</h2>
-    <div class="fig" style="max-width:1000px">
+    <div class="fig anim" id="fx-flame" data-at="300,900,1500,2300" style="max-width:1000px">
       <svg viewBox="0 0 1000 150" role="img" aria-label="Mock flamegraph for one keystroke: FeedPage, FeedHeader, CompanySidebar, SearchBox, FilterBar and ListingResults all rendered; FeedHeader and CompanySidebar rendered for no reason">
-        <rect x="0" y="0" width="1000" height="30" rx="4" fill="rgba(34,211,238,.22)" stroke="#22D3EE"/>
-        <text x="10" y="20" class="lbl b">FeedPage · its state changed</text>
-        <rect x="0" y="36" width="130" height="30" rx="4" fill="rgba(34,211,238,.22)" stroke="#F8717A" stroke-width="2"/>
-        <text x="10" y="56" class="lbl b">FeedHeader</text>
-        <rect x="136" y="36" width="170" height="30" rx="4" fill="rgba(34,211,238,.22)" stroke="#F8717A" stroke-width="2"/>
-        <text x="146" y="56" class="lbl b">CompanySidebar</text>
-        <rect x="312" y="36" width="110" height="30" rx="4" fill="rgba(34,211,238,.22)" stroke="#22D3EE"/>
-        <text x="322" y="56" class="lbl b">SearchBox</text>
-        <rect x="428" y="36" width="110" height="30" rx="4" fill="rgba(34,211,238,.22)" stroke="#22D3EE"/>
-        <text x="438" y="56" class="lbl b">FilterBar</text>
-        <rect x="544" y="36" width="456" height="30" rx="4" fill="rgba(251,191,36,.30)" stroke="#FBBF24"/>
-        <text x="554" y="56" class="lbl b">ListingResults (slowest)</text>
-        <rect x="0" y="72" width="130" height="30" rx="4" fill="rgba(34,211,238,.22)" stroke="#22D3EE"/>
-        <text x="10" y="92" class="lbl b">SavedCount</text>
-        <rect x="544" y="72" width="70" height="30" rx="4" fill="rgba(251,191,36,.30)" stroke="#FBBF24"/>
-        <rect x="620" y="72" width="70" height="30" rx="4" fill="rgba(251,191,36,.30)" stroke="#FBBF24"/>
-        <rect x="696" y="72" width="70" height="30" rx="4" fill="rgba(251,191,36,.30)" stroke="#FBBF24"/>
-        <rect x="772" y="72" width="70" height="30" rx="4" fill="rgba(251,191,36,.30)" stroke="#FBBF24"/>
-        <rect x="848" y="72" width="70" height="30" rx="4" fill="rgba(251,191,36,.30)" stroke="#FBBF24"/>
-        <rect x="924" y="72" width="76" height="30" rx="4" fill="rgba(251,191,36,.30)" stroke="#FBBF24"/>
-        <text x="772" y="122" text-anchor="middle" class="lbl s">ListingCard × 300</text>
-        <text x="0" y="140" class="lbl s" style="fill:#F8717A">red outline: "Why did this render? The parent component rendered." Output unchanged.</text>
+        <rect data-in="1" x="0" y="0" width="1000" height="30" rx="4" fill="rgba(34,211,238,.22)" stroke="#22D3EE"/>
+        <text data-in="1" x="10" y="20" class="lbl b">FeedPage · its state changed</text>
+        <rect data-in="2" x="0" y="36" width="130" height="30" rx="4" fill="rgba(34,211,238,.22)" stroke="#F8717A" stroke-width="2" class="why"/>
+        <text data-in="2" x="10" y="56" class="lbl b">FeedHeader</text>
+        <rect data-in="2" x="136" y="36" width="170" height="30" rx="4" fill="rgba(34,211,238,.22)" stroke="#F8717A" stroke-width="2" class="why"/>
+        <text data-in="2" x="146" y="56" class="lbl b">CompanySidebar</text>
+        <rect data-in="2" x="312" y="36" width="110" height="30" rx="4" fill="rgba(34,211,238,.22)" stroke="#22D3EE"/>
+        <text data-in="2" x="322" y="56" class="lbl b">SearchBox</text>
+        <rect data-in="2" x="428" y="36" width="110" height="30" rx="4" fill="rgba(34,211,238,.22)" stroke="#22D3EE"/>
+        <text data-in="2" x="438" y="56" class="lbl b">FilterBar</text>
+        <rect data-in="2" x="544" y="36" width="456" height="30" rx="4" fill="rgba(251,191,36,.30)" stroke="#FBBF24"/>
+        <text data-in="2" x="554" y="56" class="lbl b">ListingResults (slowest)</text>
+        <rect data-in="3" x="0" y="72" width="130" height="30" rx="4" fill="rgba(34,211,238,.22)" stroke="#22D3EE"/>
+        <text data-in="3" x="10" y="92" class="lbl b">SavedCount</text>
+        <rect data-in="3" x="544" y="72" width="70" height="30" rx="4" fill="rgba(251,191,36,.30)" stroke="#FBBF24"/>
+        <rect data-in="3" x="620" y="72" width="70" height="30" rx="4" fill="rgba(251,191,36,.30)" stroke="#FBBF24"/>
+        <rect data-in="3" x="696" y="72" width="70" height="30" rx="4" fill="rgba(251,191,36,.30)" stroke="#FBBF24"/>
+        <rect data-in="3" x="772" y="72" width="70" height="30" rx="4" fill="rgba(251,191,36,.30)" stroke="#FBBF24"/>
+        <rect data-in="3" x="848" y="72" width="70" height="30" rx="4" fill="rgba(251,191,36,.30)" stroke="#FBBF24"/>
+        <rect data-in="3" x="924" y="72" width="76" height="30" rx="4" fill="rgba(251,191,36,.30)" stroke="#FBBF24"/>
+        <text data-in="3" x="772" y="122" text-anchor="middle" class="lbl s">ListingCard × 300</text>
+        <text data-in="4" x="0" y="140" class="lbl s" style="fill:#F8717A">red outline: "Why did this render? The parent component rendered." Output unchanged.</text>
       </svg>
     </div>
     <table class="grid">
       <tr><th>Step</th><th>Where</th></tr>
-      <tr><td><b>Highlight updates when components render</b></td><td>DevTools settings → General: watch the page flash as you type</td></tr>
-      <tr><td><b>Record why each component rendered while profiling</b></td><td>DevTools settings → Profiler: fills in "why did this render?"</td></tr>
-      <tr><td><b>Record, type five letters, stop</b></td><td>Profiler tab: each commit is a bar at the top right; step through them</td></tr>
-      <tr><td><b>Read the flamegraph</b></td><td>Grey didn't render; yellow took longer than blue; click a bar for its reason</td></tr>
+      <tr><td><b>Highlight updates</b></td><td>DevTools settings → General</td></tr>
+      <tr><td><b>Record why each rendered</b></td><td>DevTools settings → Profiler</td></tr>
+      <tr><td><b>Record, type five letters, stop</b></td><td>Profiler tab</td></tr>
+      <tr><td><b>Read the flamegraph</b></td><td>Grey skipped · yellow slow · click a bar for why</td></tr>
     </table>
 </section>
 
@@ -1405,7 +1725,8 @@ h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <
 <span class="ok">// header and sidebar go grey in the profiler</span></code></pre>
       </div>
     </div>
-    <div class="key g">Order of fixes: <b>derive</b> instead of storing → <b>move state down</b> to where it's used → <b>pass content in</b> as children → <b>split the context</b> → then <code>memo</code>, for whatever is still slow.</div>
+    <div class="demo" id="demo-move"><div class="row"><span class="demo-tag">try it · type</span><input class="dinput" style="width:170px" placeholder="search…" aria-label="Search listings"><button type="button" class="dbtn" data-act="mode">before: state in FeedPage</button><div class="rc"><span data-c="header">FeedHeader<b>0</b></span><span data-c="sidebar">CompanySidebar<b>0</b></span><span data-c="search">SearchBox<b>0</b></span><span data-c="results">ListingResults<b>0</b></span></div></div></div>
+    <div class="key g">Fix order: <b>derive</b> → <b>move state down</b> → <b>pass children</b> → <b>split context</b> → <code>memo</code> last.</div>
 </section>
 
 <!-- L9z · READ NEXT -->
@@ -1438,16 +1759,16 @@ h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <
       <div class="card a">
         <h3 class="cy">What you can now do</h3>
         <ul class="plist" style="margin-top:4px">
-          <li>Trace an update, and name why it rendered<small>render vs commit, the four reasons, keys on the right row</small></li>
-          <li>Spot a stale closure and an effect you don't need<small>refs for the latest value; derive instead of syncing</small></li>
-          <li>Build the components an interviewer asks for<small>slots, both state modes, combobox, overlays, forms</small></li>
-          <li>Keep updates local, contain failures<small>split context, pass elements, boundaries, Suspense</small></li>
-          <li>Profile a feed and fix it without memo first<small>move state, then measure again</small></li>
+          <li>Trace an update and say why it rendered</li>
+          <li>Spot stale closures and needless effects</li>
+          <li>Build interview components live</li>
+          <li>Keep updates local, contain failures</li>
+          <li>Profile first, then fix without memo</li>
         </ul>
       </div>
       <div class="card b">
         <h3 class="b">Next · Module 06 — Data, State &amp; Routing</h3>
-        <p>The data that fills these components: what belongs on the server, what belongs in the client, and the URL as state.</p>
+        <p>Where the data lives: the server, the client, and the URL.</p>
         <div class="key g" style="margin-top:auto">Before you move on: autocomplete and overlays green, and <code>module-5/feed-ui</code> profiled and fixed.</div>
       </div>
     </div>
@@ -1513,6 +1834,633 @@ h1 { font-size: <span class="fn">clamp</span>(<span class="st">1.75rem</span>, <
 <script>
 /* A link on a Read-next slide opens in a new tab; it must not also turn the slide. */
 document.getElementById('stage').addEventListener('click',e=>{ if(e.target.closest('a[href]')) e.stopPropagation(); },true);
+</script>
+<script>
+/* Step player — see the .anim block in the stylesheet for the vocabulary. Each player
+   restarts whenever its slide opens; R replays every player on the current slide. With
+   reduced motion, or for print, it jumps straight to the settled frame. */
+(function(){
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var players = [];
+  document.querySelectorAll('.anim[data-at]').forEach(function(root){
+    var at = root.dataset.at.split(',').map(Number), n = at.length, timers = [];
+    var ins  = [].slice.call(root.querySelectorAll('[data-in]'));
+    var outs = [].slice.call(root.querySelectorAll('[data-out]'));
+    var hls  = [].slice.call(root.querySelectorAll('[data-hl]')).map(function(el){
+      return { el:el, at:el.dataset.hl.split(/\s+/).map(Number) };
+    });
+    var says = [].slice.call(root.querySelectorAll('.anim-say i'));
+    var steps = [].slice.call(root.querySelectorAll('.anim-step')), cur = n;
+
+    function set(k){
+      cur = k;
+      for (var j = 1; j <= n; j++) root.classList.toggle('s' + j, j <= k);
+      root.dataset.step = k;
+      ins.forEach(function(el){ el.classList.toggle('in', k >= +el.dataset.in); });
+      outs.forEach(function(el){ el.classList.toggle('out', k >= +el.dataset.out); });
+      hls.forEach(function(h){ h.el.classList.toggle('lit', h.at.indexOf(k) >= 0); });
+      says.forEach(function(el, j){ el.classList.toggle('on', j === k - 1); });
+      steps.forEach(function(b){
+        var d = +b.dataset.d;
+        b.setAttribute('aria-disabled', String(d < 0 ? k <= 0 : k >= n));
+      });
+    }
+    function go(d){
+      timers.forEach(clearTimeout); timers = [];
+      set(Math.max(0, Math.min(n, cur + d)));
+    }
+    function settle(){ timers.forEach(clearTimeout); timers = []; set(n); }
+    function play(){
+      if (still.matches) return settle();
+      timers.forEach(clearTimeout); timers = [];
+      root.classList.add('rs'); set(0); void root.offsetWidth; root.classList.remove('rs');
+      at.forEach(function(ms, j){ timers.push(setTimeout(function(){ set(j + 1); }, ms)); });
+    }
+    set(n);
+    root.classList.add('live');
+
+    var btn = root.querySelector('.anim-replay');
+    if (btn) btn.addEventListener('click', play);
+    steps.forEach(function(b){ b.addEventListener('click', function(){ go(+b.dataset.d); }); });
+    // A press on a player button must not also turn the slide.
+    (btn ? [btn] : []).concat(steps).forEach(function(b){
+      ['click','pointerdown'].forEach(function(t){
+        b.addEventListener(t, function(e){ e.stopPropagation(); });
+      });
+    });
+
+    var slide = root.closest('.slide'), wasOn = slide.classList.contains('on');
+    if (wasOn) play();
+    new MutationObserver(function(){
+      var isOn = slide.classList.contains('on');
+      if (isOn && !wasOn) play();
+      if (!isOn && wasOn) settle();
+      wasOn = isOn;
+    }).observe(slide, { attributes:true, attributeFilter:['class'] });
+    players.push({ slide:slide, play:play, settle:settle });
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key.toLowerCase() !== 'r' || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+    players.forEach(function(p){ if (p.slide.classList.contains('on')) p.play(); });
+  });
+  window.addEventListener('beforeprint', function(){ players.forEach(function(p){ p.settle(); }); });
+})();
+</script>
+<script>
+/* Live demos — see the .demo block in the stylesheet. The deck turns slides on any click
+   and on Space or the arrow keys, so a demo keeps its own clicks, and keeps the keys that
+   belong to it: anything typed into an input, plus Space, Enter, Tab and Escape on its
+   controls. Arrow keys on a demo button still turn the slide. */
+(function(){
+  document.querySelectorAll('.demo').forEach(function(el){
+    ['click','pointerdown'].forEach(function(t){ el.addEventListener(t, function(e){ e.stopPropagation(); }); });
+    el.addEventListener('keydown', function(e){
+      var typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable;
+      if (typing || e.key === ' ' || e.key === 'Enter' || e.key === 'Tab' || e.key === 'Escape') e.stopPropagation();
+    });
+  });
+
+  // Runs open() each time the demo's slide opens and close() each time it leaves.
+  function watch(el, open, close){
+    var s = el.closest('.slide'), was = s.classList.contains('on');
+    if (was) open();
+    new MutationObserver(function(){
+      var is = s.classList.contains('on');
+      if (is && !was) open();
+      if (!is && was && close) close();
+      was = is;
+    }).observe(s, { attributes:true, attributeFilter:['class'] });
+  }
+  function again(el, cls){ el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]; }); }
+  function k(root, name){ return root.querySelector('[data-k="' + name + '"]'); }
+  window.cxDemo = { watch:watch, again:again, esc:esc, k:k };
+
+  // A deterministic job feed for the demos: role · company · city.
+  var ROLES = ['Frontend Engineer','React Developer','UI Engineer','Data Analyst','Product Designer','QA Engineer',
+               'Backend Engineer','Mobile Developer','DevOps Engineer','Design Systems Lead','Full-stack Engineer'];
+  var COS = ['Qafla','Nilo Labs','Tamr','Bayt Labs','Sanad','Rawaj','Mersal','Darb','Waha','Fanar','Najm','Zad','Sahm'];
+  var CITIES = ['Cairo','Riyadh','Dubai','Amman','Remote','Jeddah','Alexandria','Doha'];
+  var FEED = [];
+  for (var f = 0; f < 5000; f++) FEED.push(ROLES[f % 11] + ' · ' + COS[(f * 7) % 13] + ' · ' + CITIES[(f * 3) % 8]);
+  function match(q){ q = q.trim().toLowerCase(); return q ? FEED.filter(function(d){ return d.toLowerCase().indexOf(q) >= 0; }) : FEED; }
+
+  /* L1a · a re-render with the same output commits nothing */
+  (function(){
+    var root = document.getElementById('demo-render'), fig = document.getElementById('fx-render');
+    if (!root || !fig) return;
+    var st;
+    function show(){ k(root,'calls').textContent = st.calls; k(root,'writes').textContent = st.writes; k(root,'out').textContent = st.n + ' open roles'; }
+    function pulse(seq){
+      seq.forEach(function(p, j){
+        setTimeout(function(){
+          var el = fig.querySelector('[data-stage="' + p[0] + '"]');
+          el.classList.remove('hot', 'skip'); el.classList.add(p[1]);
+          setTimeout(function(){ el.classList.remove(p[1]); }, 650);
+        }, j * 230);
+      });
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-act]'); if (!b) return;
+      st.calls++; again(k(root,'calls'), 'bump');
+      if (b.dataset.act === 'add'){
+        st.n++; st.writes++;
+        setTimeout(function(){ show(); again(k(root,'writes'), 'bump'); again(k(root,'out').parentNode, 'flash-g'); }, 470);
+        pulse([['t','hot'],['r','hot'],['c','hot'],['p','hot']]);
+        k(root,'diff').textContent = 'diff: the text changed, so commit writes one text node';
+      } else {
+        pulse([['t','hot'],['r','hot'],['c','skip'],['p','skip']]);
+        k(root,'diff').textContent = 'diff: same JSX, so commit has nothing to write';
+      }
+      show();
+    });
+    watch(root, function(){ st = { calls:1, writes:1, n:3 }; show(); k(root,'diff').textContent = ''; });
+  })();
+
+  /* L1d · blocking render vs a transition you can interrupt */
+  (function(){
+    var root = document.getElementById('demo-transition'); if (!root) return;
+    var input = root.querySelector('input'), tg = root.querySelector('[data-act="tg"]'), pend = root.querySelector('.pend'),
+        list = root.querySelector('.tlist');
+    var COST = 0.035;           // ms of component work per listing: ~175 ms for the full feed
+    var on = false, gen = 0, running = false, dropped = 0;
+    function spin(ms){ var end = performance.now() + ms; while (performance.now() < end) {} }
+    function paint(rows){
+      k(root,'count').textContent = rows.length.toLocaleString('en');
+      list.innerHTML = rows.slice(0, 3).map(function(r){ return '<span>' + esc(r) + '</span>'; }).join('') +
+        (rows.length > 3 ? '<span class="more">+' + (rows.length - 3).toLocaleString('en') + ' more</span>' : '');
+    }
+    function measure(t0){
+      requestAnimationFrame(function(){ setTimeout(function(){
+        var ms = Math.max(0, Math.round(performance.now() - t0)), el = k(root,'lag');
+        el.textContent = ms + ' ms'; el.className = ms > 50 ? 'bad' : 'good';
+      }, 0); });
+    }
+    input.addEventListener('input', function(e){
+      var q = input.value;
+      if (!on){ spin(FEED.length * COST); paint(match(q)); measure(e.timeStamp); return; }
+      measure(e.timeStamp);
+      if (running){ dropped++; k(root,'drop').textContent = dropped; again(k(root,'drop'), 'bump'); }
+      var my = ++gen, i = 0; running = true; pend.classList.add('on');
+      function slice(){
+        if (my !== gen) return;             // a newer keystroke took over: this render is dropped
+        var end = Math.min(FEED.length, i + 400); spin((end - i) * COST); i = end;
+        if (i < FEED.length) return setTimeout(slice, 0);
+        running = false; pend.classList.remove('on'); paint(match(q));
+      }
+      setTimeout(slice, 0);                 // yield first, so the keystroke paints before any list work
+    });
+    tg.addEventListener('click', function(){
+      on = !on; tg.classList.toggle('on', on); tg.classList.toggle('g', on);
+      tg.textContent = on ? 'startTransition: on' : 'startTransition: off';
+      input.focus();
+    });
+    watch(root, function(){
+      gen++; running = false; dropped = 0; input.value = ''; pend.classList.remove('on');
+      k(root,'drop').textContent = '0'; k(root,'lag').textContent = '–'; k(root,'lag').className = ''; paint(FEED);
+    }, function(){ gen++; running = false; });
+  })();
+
+  /* L2b · rendering flows down from wherever state is set */
+  (function(){
+    var root = document.getElementById('demo-tree'); if (!root) return;
+    var nodes = {}, kids = {}, memo = false, timers = [];
+    root.querySelectorAll('.node').forEach(function(g){
+      nodes[g.dataset.id] = g;
+      if (g.dataset.parent) (kids[g.dataset.parent] = kids[g.dataset.parent] || []).push(g.dataset.id);
+      g.setAttribute('tabindex', '0'); g.setAttribute('role', 'button');
+    });
+    var memoBtn = root.querySelector('[data-act="memo"]'), out = k(root,'out');
+    function label(id, text){ nodes[id].querySelector('text').textContent = text; }
+    function setState(id){
+      timers.forEach(clearTimeout); timers = [];
+      Object.keys(nodes).forEach(function(n){ nodes[n].setAttribute('class', 'node idle'); label(n, nodes[n].dataset.name); });
+      nodes[id].setAttribute('class', 'node src'); label(id, nodes[id].dataset.name + ' · setState()');
+      var q = [[id, 0]], count = 1, skipped = [];
+      while (q.length){
+        var cur = q.shift();
+        (kids[cur[0]] || []).forEach(function(c){
+          var d = cur[1] + 1;
+          if (memo && c === 'filter'){ skipped.push(c); later(c, 'skip', d); return; }
+          later(c, 'ren', d); count += c === 'cards' ? 200 : 1; q.push([c, d]);
+        });
+      }
+      out.innerHTML = 'setState in <b>' + nodes[id].dataset.name + '</b> → <b>' + count + '</b> component' + (count > 1 ? 's' : '') +
+        ' rendered' + (skipped.length ? ' · memo skipped FilterBar' : '');
+    }
+    function later(id, cls, d){ timers.push(setTimeout(function(){ nodes[id].setAttribute('class', 'node ' + cls); }, d * 170)); }
+    function reset(){
+      timers.forEach(clearTimeout); timers = [];
+      Object.keys(nodes).forEach(function(n){ nodes[n].setAttribute('class', 'node'); label(n, nodes[n].dataset.label || nodes[n].dataset.name); });
+      out.innerHTML = 'Click any component to call setState inside it.';
+    }
+    root.addEventListener('click', function(e){
+      var g = e.target.closest('.node'); if (g) return setState(g.dataset.id);
+      var b = e.target.closest('[data-act]'); if (!b) return;
+      if (b.dataset.act === 'reset') return reset();
+      memo = !memo; memoBtn.classList.toggle('on', memo); memoBtn.classList.toggle('g', memo);
+      memoBtn.textContent = memo ? 'memo(FilterBar): on' : 'memo(FilterBar): off';
+    });
+    root.addEventListener('keydown', function(e){
+      var g = e.target.closest('.node'); if (g && (e.key === 'Enter' || e.key === ' ')){ e.preventDefault(); setState(g.dataset.id); }
+    });
+    watch(root, function(){ memo = false; memoBtn.classList.remove('on', 'g'); memoBtn.textContent = 'memo(FilterBar): off'; reset(); });
+  })();
+
+  /* L2c · keyed reconciliation, done for real on two lists */
+  (function(){
+    var root = document.getElementById('demo-keys'); if (!root) return;
+    var START = [{ id:17, t:'Frontend Engineer · Qafla' }, { id:22, t:'Data Analyst · Nilo Labs' }];
+    var MORE = [{ id:31, t:'Product Designer · Tamr' }, { id:40, t:'QA Engineer · Bayt Labs' }, { id:48, t:'UI Engineer · Sanad' }];
+    var items, added, timers = [];
+    var cols = [].slice.call(root.querySelectorAll('ol')).map(function(ol){
+      return { ol:ol, keyOf: ol.dataset.mode === 'index' ? function(it, i){ return i; } : function(it){ return it.id; } };
+    });
+    function row(){
+      var li = document.createElement('li');
+      li.innerHTML = '<button type="button" class="krow"><span></span><i></i></button>' +
+        '<div class="kx">expanded · <input class="dinput" placeholder="a note on this job…" aria-label="Note"></div>';
+      li.querySelector('.krow').addEventListener('click', function(){ li.classList.toggle('open'); markWrong(); });
+      return li;
+    }
+    // React's rule, in miniature: same key → same instance (and its state); new key → new instance.
+    function reconcile(col){
+      var old = {};
+      [].forEach.call(col.ol.children, function(li){ old[li.dataset.key] = li; });
+      var prev = null;
+      items.forEach(function(it, i){
+        var key = String(col.keyOf(it, i)), li = old[key];
+        if (li) delete old[key]; else { li = row(); li.dataset.key = key; again(li, 'flash-g'); }
+        li.dataset.job = it.id;
+        li.querySelector('.krow span').textContent = it.t;
+        li.querySelector('.krow i').textContent = 'key ' + key;
+        col.ol.insertBefore(li, prev ? prev.nextSibling : col.ol.firstChild); prev = li;
+      });
+      Object.keys(old).forEach(function(key){ old[key].remove(); });
+    }
+    function render(){ cols.forEach(reconcile); markWrong(); }
+    // The open row should be the job the user opened: Qafla, id 17.
+    function markWrong(){
+      cols.forEach(function(c){ [].forEach.call(c.ol.children, function(li){
+        li.classList.toggle('wrong', li.classList.contains('open') && li.dataset.opened !== li.dataset.job);
+      }); });
+    }
+    function open(li){ li.classList.add('open'); li.dataset.opened = li.dataset.job; }
+    function prepend(){ if (added >= MORE.length) return; items = [MORE[added++]].concat(items); render(); }
+    function reset(){
+      timers.forEach(clearTimeout); timers = [];
+      cols.forEach(function(c){ c.ol.innerHTML = ''; });
+      items = START.slice(); added = 0; render();
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-act]'); if (!b) return;
+      if (b.dataset.act === 'prepend') prepend(); else reset();
+    });
+    // Clicking a row records which job the user meant, so the wrong-row outline is honest.
+    root.addEventListener('click', function(e){
+      var r = e.target.closest('.krow'); if (!r) return;
+      var li = r.parentNode; if (li.classList.contains('open')) li.dataset.opened = li.dataset.job; markWrong();
+    });
+    watch(root, function(){
+      reset();
+      timers.push(setTimeout(function(){ cols.forEach(function(c){ open(c.ol.firstChild); }); markWrong(); }, 700));
+      timers.push(setTimeout(prepend, 1900));
+    }, function(){ timers.forEach(clearTimeout); timers = []; });
+  })();
+
+  /* L3a · saveTwo(), reading the snapshot vs queueing updaters */
+  document.querySelectorAll('.snap:not(.ctl)').forEach(function(box){
+    var mode = box.dataset.mode, v = 0, out = k(box,'v'), log = k(box,'log');
+    box.querySelector('button').addEventListener('click', function(){
+      var saved = v;                         // this render's constant
+      if (mode === 'read'){ v = saved + 1; log.textContent = 'logged ' + saved + ' · set ' + (saved + 1) + ', then ' + (saved + 1) + ' again'; }
+      else { var s = v; s = s + 1; s = s + 1; v = s; log.textContent = 'queued s => s + 1 twice: ' + saved + ' → ' + (saved + 1) + ' → ' + v; }
+      out.textContent = v; again(out, 'bump');
+    });
+    watch(box, function(){ v = 0; out.textContent = '0'; log.textContent = ''; });
+  });
+
+  /* L3b · the auto-save that remembers the first render */
+  (function(){
+    var root = document.getElementById('demo-stale'); if (!root) return;
+    var input = root.querySelector('input'), bar = root.querySelector('.tick i'), timer = null;
+    var staleSave, latest;
+    function show(el, text){ el.innerHTML = '<q>' + esc(text) + '</q>'; again(el.parentNode, 'flash'); }
+    function cycle(){ bar.classList.remove('run'); void bar.offsetWidth; bar.classList.add('run'); }
+    function tick(){ show(k(root,'stale'), staleSave()); show(k(root,'fresh'), latest.current); cycle(); }
+    input.addEventListener('input', function(){ latest.current = input.value; });   // useEffect(() => { latest.current = letter })
+    watch(root, function(){
+      input.value = '';
+      var letter = input.value;                         // the first render's letter: ''
+      staleSave = function(){ return letter; };          // the interval callback closed over it
+      latest = { current: letter };                      // useRef(letter)
+      k(root,'stale').innerHTML = '<q></q>'; k(root,'fresh').innerHTML = '<q></q>';
+      clearInterval(timer); timer = setInterval(tick, 3000); cycle();
+    }, function(){ clearInterval(timer); bar.classList.remove('run'); });
+  })();
+
+  /* L3c · one keystroke: two renders when synchronised, one when derived */
+  (function(){
+    var root = document.getElementById('demo-derive'); if (!root) return;
+    var input = root.querySelector('input'), rs = 0, rd = 0, gen = 0;
+    function count(q){ return match(q).length.toLocaleString('en') + ' listings'; }
+    input.addEventListener('input', function(){
+      var q = input.value;
+      rd += 1; k(root,'rd').textContent = rd; again(k(root,'rd'), 'bump');
+      k(root,'ld').textContent = count(q);
+      rs += 1; k(root,'rs').textContent = rs;                              // render 1: the old list
+      var ls = k(root,'ls'), my = ++gen; ls.classList.add('stale'); again(ls, 'flash-r');
+      setTimeout(function(){                                               // the effect sets state: render 2
+        rs += 1; k(root,'rs').textContent = rs; again(k(root,'rs'), 'bump');
+        if (my === gen){ ls.classList.remove('stale'); ls.textContent = count(q); }
+      }, 260);
+    });
+    watch(root, function(){
+      rs = rd = 0; input.value = ''; gen++;
+      ['rs','rd'].forEach(function(n){ k(root,n).textContent = '0'; });
+      k(root,'ls').textContent = k(root,'ld').textContent = count(''); k(root,'ls').classList.remove('stale');
+    });
+  })();
+})();
+</script>
+<script>
+/* Live demos, lessons 4 to 9 — same rules as the block above. */
+(function(){
+  var D = window.cxDemo, watch = D.watch, again = D.again, esc = D.esc, k = D.k;
+
+  /* L4c · controlled vs uncontrolled */
+  document.querySelectorAll('.ctl').forEach(function(box){
+    var input = box.querySelector('input'), mode = box.dataset.mode, renders = 0;
+    input.addEventListener('input', function(){
+      if (mode === 'ctl'){                       // the parent owns it: every key goes up, and comes back formatted
+        var v = input.value.toLowerCase(); input.value = v;
+        k(box,'seen').textContent = JSON.stringify(v);
+        renders++; k(box,'renders').textContent = renders; again(k(box,'renders'), 'bump');
+      }
+    });
+    box.addEventListener('click', function(e){
+      var b = e.target.closest('[data-act]'); if (!b) return;
+      if (b.dataset.act === 'read'){ k(box,'seen').textContent = JSON.stringify(input.value); again(k(box,'seen'), 'bump'); }
+      if (b.dataset.act === 'clear'){
+        if (mode === 'ctl'){ input.value = ''; k(box,'seen').textContent = '""'; renders++; k(box,'renders').textContent = renders; }
+        else { again(b, 'flash-r'); k(box,'seen').textContent = 'can’t: not its value'; }
+      }
+    });
+    watch(box, function(){ renders = 0; input.value = mode === 'unc' ? 'react' : ''; k(box,'seen').textContent = mode === 'unc' ? '—' : '""'; k(box,'renders').textContent = '0'; });
+  });
+
+  /* L4d · swap a primitive, flip the theme */
+  (function(){
+    var root = document.getElementById('demo-tokens'); if (!root) return;
+    var prev = root.querySelector('.tk-prev'), fig = document.getElementById('fx-tokens');
+    var P = { blue:['--blue-500','#2196F3'], green:['--green-500','#34D399'], red:['--red-500','#E5484D'] };
+    var accent = 'blue', theme = 'light';
+    function apply(){
+      prev.style.setProperty('--color-accent', P[accent][1]);
+      prev.style.setProperty('--color-surface', theme === 'dark' ? '#0E1525' : '#FFFFFF');
+      prev.style.setProperty('--color-text', theme === 'dark' ? '#FFFFFF' : '#0E1525');
+      fig.querySelector('[data-t="prim"]').textContent = P[accent][0] + ': ' + P[accent][1];
+      fig.querySelector('[data-t="sem"]').textContent = '--color-accent → var(' + P[accent][0] + ')';
+      root.querySelectorAll('[data-accent]').forEach(function(b){ b.classList.toggle('on', b.dataset.accent === accent); });
+      root.querySelectorAll('[data-th]').forEach(function(b){ b.classList.toggle('on', b.dataset.th === theme); });
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('button'); if (!b) return;
+      if (b.dataset.accent) accent = b.dataset.accent;
+      if (b.dataset.th) theme = b.dataset.th;
+      apply(); again(prev, 'flash');
+    });
+    watch(root, function(){ accent = 'blue'; theme = 'light'; apply(); });
+  })();
+
+  /* L4e · a container query you can drag */
+  (function(){
+    var root = document.getElementById('demo-cq'); if (!root) return;
+    var box = root.querySelector('.cq-box'), timers = [];
+    new ResizeObserver(function(){
+      var w = box.clientWidth, rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+      k(root,'w').textContent = Math.round(w) + 'px';
+      k(root,'lay').textContent = w >= 36 * rem ? 'wide: logo · details · save' : 'narrow: stacked';
+    }).observe(box);
+    box.addEventListener('pointerdown', function(){ box.classList.add('dragging'); timers.forEach(clearTimeout); });
+    document.addEventListener('pointerup', function(){ box.classList.remove('dragging'); });
+    watch(root, function(){
+      timers.forEach(clearTimeout); timers = [];
+      box.style.width = '300px';
+      timers.push(setTimeout(function(){ box.style.width = Math.min(700, root.clientWidth - 30) + 'px'; }, 900));
+      timers.push(setTimeout(function(){ box.style.width = '300px'; }, 2600));
+    }, function(){ timers.forEach(clearTimeout); });
+  })();
+
+  /* L5a · the combobox contract, working */
+  (function(){
+    var root = document.getElementById('demo-combo'); if (!root) return;
+    var input = root.querySelector('input'), list = root.querySelector('ul');
+    var JOBS = ['Frontend Engineer','React Developer','Product Designer','QA Engineer','Data Analyst',
+                'Design Systems Lead','Full-stack Engineer','UI Engineer','Mobile Developer','DevOps Engineer'];
+    var items = [], active = -1, open = false;
+    function sync(){
+      list.hidden = !open;
+      input.setAttribute('aria-expanded', String(open));
+      var id = open && active >= 0 ? 'cb-opt-' + active : undefined;
+      if (id) input.setAttribute('aria-activedescendant', id); else input.removeAttribute('aria-activedescendant');
+      [].forEach.call(list.children, function(li, i){ li.setAttribute('aria-selected', String(i === active)); });
+      k(root,'aria').innerHTML = 'aria-expanded=<b>' + open + '</b> · aria-activedescendant=<b>' + (id || 'undefined') + '</b>';
+    }
+    function fill(){
+      var q = input.value.trim().toLowerCase();
+      items = q ? JOBS.filter(function(j){ return j.toLowerCase().indexOf(q) >= 0; }) : JOBS.slice();
+      list.innerHTML = items.map(function(j, i){ return '<li id="cb-opt-' + i + '" role="option" aria-selected="false">' + esc(j) + '</li>'; }).join('');
+      active = -1;
+    }
+    function choose(i){ input.value = items[i]; open = false; active = -1; k(root,'picked').textContent = items[i]; again(k(root,'picked'), 'bump'); sync(); }
+    input.addEventListener('input', function(){ fill(); open = items.length > 0; sync(); });
+    input.addEventListener('keydown', function(e){
+      if (e.key === 'ArrowDown'){ e.preventDefault(); if (!open){ fill(); open = items.length > 0; } else active = Math.min(items.length - 1, active + 1); sync(); }
+      else if (e.key === 'ArrowUp'){ e.preventDefault(); if (open) active = Math.max(0, active - 1); sync(); }
+      else if (e.key === 'Enter'){ if (open && active >= 0){ e.preventDefault(); choose(active); } }
+      else if (e.key === 'Escape'){ if (open){ open = false; active = -1; } else input.value = ''; sync(); }
+    });
+    input.addEventListener('blur', function(){ open = false; sync(); });
+    list.addEventListener('mousedown', function(e){ e.preventDefault(); });   // keep focus in the input
+    list.addEventListener('click', function(e){ var li = e.target.closest('li'); if (li) choose([].indexOf.call(list.children, li)); });
+    watch(root, function(){ input.value = ''; open = false; active = -1; list.innerHTML = ''; k(root,'picked').textContent = '—'; sync(); });
+  })();
+
+  /* L5b · the race, with and without the cleanup */
+  (function(){
+    var root = document.getElementById('fx-race'); if (!root) return;
+    var tg = root.querySelector('[data-act="fix"]'), replay = root.querySelector('.anim-replay');
+    tg.addEventListener('click', function(){
+      var on = !root.classList.contains('fixed');
+      root.classList.toggle('fixed', on); tg.classList.toggle('on', on); tg.classList.toggle('g', on);
+      tg.textContent = on ? 'cleanup aborts the stale request: on' : 'cleanup aborts the stale request: off';
+      replay.click();
+    });
+    watch(root, function(){ root.classList.remove('fixed'); tg.classList.remove('on', 'g'); tg.textContent = 'cleanup aborts the stale request: off'; });
+  })();
+
+  /* L6a · a modal with a focus trap, and focus given back */
+  (function(){
+    var root = document.getElementById('demo-modal'); if (!root) return;
+    var dlg = root.querySelector('.mdl'), opener = root.querySelector('[data-act="open"]'), returnTo = null;
+    var FOCUSABLE = 'button, input, [tabindex]:not([tabindex="-1"])';
+    function name(el){ return el.getAttribute('aria-label') || el.textContent.trim() || el.tagName.toLowerCase(); }
+    function log(text){ k(root,'log').textContent = text; again(k(root,'log'), 'flash'); }
+    function openIt(){ returnTo = document.activeElement; dlg.hidden = false; dlg.querySelector('input').focus(); }
+    function closeIt(){ dlg.hidden = true; if (returnTo) returnTo.focus(); log('closed · focus back on: ' + name(returnTo || opener)); }
+    opener.addEventListener('click', openIt);
+    dlg.addEventListener('click', function(e){ if (e.target.closest('[data-act="close"]')) closeIt(); });
+    dlg.addEventListener('focusin', function(e){ log('focus: ' + name(e.target)); });
+    dlg.addEventListener('keydown', function(e){
+      if (e.key === 'Escape'){ e.preventDefault(); return closeIt(); }
+      if (e.key !== 'Tab') return;
+      var items = [].slice.call(dlg.querySelectorAll(FOCUSABLE)), first = items[0], last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); log('wrapped to: ' + name(last)); }
+      else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); log('wrapped to: ' + name(first)); }
+    });
+    watch(root, function(){ dlg.hidden = true; k(root,'log').textContent = 'focus: —'; }, function(){ dlg.hidden = true; });
+  })();
+
+  /* L6c · a toast, and what the screen reader hears */
+  (function(){
+    var root = document.getElementById('demo-toast'); if (!root) return;
+    var stack = root.querySelector('.toasts');
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-act]'); if (!b) return;
+      var alert = b.dataset.act === 'assertive', msg = alert ? 'Session expired' : 'Job saved';
+      var t = document.createElement('div'); t.className = 'toast' + (alert ? ' alert' : ''); t.textContent = msg; stack.appendChild(t);
+      setTimeout(function(){ t.classList.add('bye'); setTimeout(function(){ t.remove(); }, 400); }, 2600);
+      var region = k(root, alert ? 'alert' : 'status');
+      region.textContent = ''; setTimeout(function(){ region.textContent = msg; }, 50);   // clear first: the same text twice is still read
+      k(root,'sr').innerHTML = (alert ? '<b style="color:var(--bad)">interrupts:</b> ' : '<b style="color:var(--good)">after what it’s reading:</b> ') + esc(msg);
+      again(k(root,'sr').parentNode, alert ? 'flash-r' : 'flash-g');
+    });
+    watch(root, function(){ stack.innerHTML = ''; k(root,'sr').textContent = '—'; });
+  })();
+
+  /* L7a · the rules the browser already ran */
+  (function(){
+    var root = document.getElementById('demo-validity'); if (!root) return;
+    var input = root.querySelector('input');
+    function message(v){
+      if (v.valueMissing) return 'This field is required';
+      if (v.typeMismatch) return 'Check the format, like name@company.com';
+      if (v.tooShort) return 'Use at least ' + input.minLength + ' characters';
+      return '';
+    }
+    function show(){
+      var v = input.validity;
+      ['valueMissing','typeMismatch','tooShort'].forEach(function(f){ var el = root.querySelector('[data-f="' + f + '"]'); el.classList.toggle('on', v[f]); });
+      root.querySelector('[data-f="valid"]').classList.toggle('ok', v.valid);
+      k(root,'msg').textContent = message(v) || '✓ valid';
+    }
+    input.addEventListener('input', show);
+    watch(root, function(){ input.value = ''; show(); });
+  })();
+
+  /* L7b · submit checks all, blur checks one, typing only forgives */
+  (function(){
+    var form = document.getElementById('demo-form'); if (!form) return;
+    var fields = [].slice.call(form.querySelectorAll('input')), dirty = {}, done = k(form,'done');
+    function message(input){
+      var v = input.validity;
+      if (v.valueMissing) return 'This field is required';
+      if (v.typeMismatch) return 'Check the format, like name@company.com';
+      if (v.tooShort) return 'Use at least ' + input.minLength + ' characters';
+      return '';
+    }
+    function set(input, msg){
+      input.setAttribute('aria-invalid', String(Boolean(msg)));
+      form.querySelector('#' + input.getAttribute('aria-describedby')).textContent = msg;
+    }
+    fields.forEach(function(input){
+      input.addEventListener('input', function(){ dirty[input.name] = true; done.textContent = ''; if (input.getAttribute('aria-invalid') === 'true' && !message(input)) set(input, ''); });
+      input.addEventListener('blur', function(){ if (dirty[input.name]) set(input, message(input)); });
+    });
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var first = null;
+      fields.forEach(function(input){ var m = message(input); set(input, m); if (m && !first) first = input; });
+      if (first){ first.focus(); done.textContent = ''; return; }
+      done.textContent = '✓ sent: ' + new FormData(form).get('email');
+    });
+    watch(form, function(){ form.reset(); dirty = {}; done.textContent = ''; fields.forEach(function(i){ set(i, ''); }); });
+  })();
+
+  /* L8a · one context vs split contexts */
+  (function(){
+    var root = document.getElementById('demo-ctx'); if (!root) return;
+    var fig = document.getElementById('fx-ctx'), split = false, tg = root.querySelector('[data-act="split"]');
+    var READS = { user:['nav','prof'], saved:['cards'] };
+    function hit(which){
+      var lit = split ? READS[which] : ['nav','prof','cards'];
+      fig.querySelectorAll('[data-n]').forEach(function(el){
+        var on = lit.indexOf(el.dataset.n) >= 0;
+        el.classList.remove('hit'); el.classList.toggle('quiet', !on);
+        if (on){ void el.getBBox(); el.classList.add('hit'); }
+      });
+      var names = lit.map(function(n){ return { nav:'Navbar', prof:'ProfileMenu', cards:'200 × ListingCard' }[n]; });
+      k(root,'out').innerHTML = 're-rendered: <b>' + names.join(', ') + '</b>';
+      setTimeout(function(){ fig.querySelectorAll('[data-n]').forEach(function(el){ el.classList.remove('hit','quiet'); }); }, 1100);
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-act]'); if (!b) return;
+      if (b.dataset.act === 'split'){
+        split = !split; tg.classList.toggle('on', split); tg.classList.toggle('g', split);
+        tg.textContent = split ? 'split contexts: on' : 'split contexts: off';
+        fig.querySelector('[data-t="ctx"]').textContent = split ? 'UserContext · SavedIdsContext' : 'AppContext · value';
+        fig.querySelector('[data-t="val"]').textContent = split ? 'user | saved — separate values' : '{ user, saved, setSaved }';
+        return;
+      }
+      hit(b.dataset.act);
+    });
+    watch(root, function(){
+      split = false; tg.classList.remove('on','g'); tg.textContent = 'split contexts: off'; k(root,'out').textContent = '';
+      fig.querySelector('[data-t="ctx"]').textContent = 'AppContext · value'; fig.querySelector('[data-t="val"]').textContent = '{ user, saved, setSaved }';
+    });
+  })();
+
+  /* L8e · pending, fulfilled, rejected */
+  (function(){
+    var root = document.getElementById('demo-sus'); if (!root) return;
+    var fig = document.getElementById('fx-sus'), panel = root.querySelector('.panel'), fail = false, t = null;
+    var tg = root.querySelector('[data-act="fail"]');
+    function branch(b){ fig.classList.add('go'); fig.classList.remove('b-pending','b-fulfilled','b-rejected'); fig.classList.add('b-' + b); }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-act]'); if (!b) return;
+      if (b.dataset.act === 'fail'){ fail = !fail; tg.classList.toggle('on', fail); tg.textContent = fail ? 'the request fails: on' : 'the request fails: off'; return; }
+      clearTimeout(t); panel.className = 'panel skel'; panel.textContent = 'loading…'; branch('pending');
+      t = setTimeout(function(){
+        if (fail){ panel.className = 'panel err'; panel.textContent = 'PanelError · couldn’t load Qafla'; branch('rejected'); }
+        else { panel.className = 'panel'; panel.textContent = 'Qafla · 12 open roles'; branch('fulfilled'); }
+      }, 1400);
+    });
+    watch(root, function(){ clearTimeout(t); fail = false; tg.classList.remove('on'); tg.textContent = 'the request fails: off';
+      panel.className = 'panel'; panel.textContent = 'press load'; fig.classList.remove('go','b-pending','b-fulfilled','b-rejected'); });
+  })();
+
+  /* L9c · count the renders a keystroke costs, before and after moving the state */
+  (function(){
+    var root = document.getElementById('demo-move'); if (!root) return;
+    var input = root.querySelector('input'), after = false, n = {}, tg = root.querySelector('[data-act="mode"]');
+    var ALL = ['header','sidebar','search','results'], LOCAL = ['search','results'];
+    function show(){ ALL.forEach(function(c){ var el = root.querySelector('[data-c="' + c + '"]'); el.querySelector('b').textContent = n[c]; el.classList.toggle('waste', LOCAL.indexOf(c) < 0 && n[c] > 0); }); }
+    input.addEventListener('input', function(){
+      (after ? LOCAL : ALL).forEach(function(c){ n[c]++; again(root.querySelector('[data-c="' + c + '"] b'), 'bump'); });
+      show();
+    });
+    tg.addEventListener('click', function(){
+      after = !after; tg.classList.toggle('on', after); tg.classList.toggle('g', after);
+      tg.textContent = after ? 'after: state in SearchableListings' : 'before: state in FeedPage';
+      ALL.forEach(function(c){ n[c] = 0; }); input.value = ''; show(); input.focus();
+    });
+    watch(root, function(){ after = false; tg.classList.remove('on','g'); tg.textContent = 'before: state in FeedPage';
+      ALL.forEach(function(c){ n[c] = 0; }); input.value = ''; show(); });
+  })();
+})();
 </script>
 <!--catalyst-brand:copy-->
 <script>
