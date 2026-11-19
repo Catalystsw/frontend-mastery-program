@@ -153,6 +153,109 @@
     animation:cxBar .5s cubic-bezier(.22,.72,.28,1) .12s both}
   .slide .card{transition:border-color .25s, transform .25s}
 
+  /* ---- step player: a figure that plays itself when its slide opens ------------------
+     Same vocabulary as modules 4 to 7. .anim[data-at="0,900,…"] steps 1, 2, … at those times
+     (ms); R or the replay button plays it again; .anim-step[data-d="-1"|"1"] buttons
+     pause it and step by hand. The root carries s1..sN and data-step="N". On any
+     descendant: data-in="N" fades in at step N (an SVG path with pathLength=1 draws);
+     data-out="N" dims at step N; data-hl="N M" highlights while the step is N or M.
+     Until the script marks the root .live nothing is hidden, so the settled frame is
+     also what prints and what a reader without motion sees. */
+  .anim{width:100%}
+  .anim.live [data-in]{transition:opacity .45s, transform .55s cubic-bezier(.22,.72,.28,1), stroke-dashoffset .6s ease,
+    color .35s, border-color .35s, background-color .35s, fill .35s, stroke .35s}
+  .anim.live [data-in]:not(.in){opacity:0}
+  .anim.live path[data-in]{stroke-dasharray:1; stroke-dashoffset:1}
+  .anim.live path[data-in].in{stroke-dashoffset:0}
+  .anim.live [data-out].out{opacity:.3}
+  .anim [data-hl]{--hl:rgba(34,211,238,.17); border-radius:4px; -webkit-box-decoration-break:clone; box-decoration-break:clone;
+    transition:background-color .3s, box-shadow .3s}
+  .anim [data-hl].hl-g{--hl:rgba(52,211,153,.17)} .anim [data-hl].hl-r{--hl:rgba(248,113,122,.2)}
+  .anim [data-hl].hl-p{--hl:rgba(167,139,250,.22)} .anim [data-hl].hl-w{--hl:rgba(251,191,36,.17)}
+  .anim [data-hl].lit{background-color:var(--hl); box-shadow:0 0 0 3px var(--hl)}
+  .anim.rs,.anim.rs *{transition:none !important}
+  .anim-bar{display:flex; align-items:center; flex-wrap:wrap; gap:10px 14px; margin-top:10px; min-height:34px}
+  .anim-replay,.anim-step{cursor:pointer; background:var(--panel2); border:1px solid var(--line2); color:var(--ink2); border-radius:8px;
+    padding:7px 12px; font:700 11.5px/1 var(--mono); letter-spacing:1.2px; text-transform:uppercase;
+    transition:background .18s, color .18s, border-color .18s}
+  .anim-replay:hover,.anim-step:hover{background:var(--line2); color:#fff; border-color:var(--cy)}
+  .anim-step{padding:5px 10px; font:700 16px/1 var(--sans); letter-spacing:0}
+  .anim-step[aria-disabled="true"]{opacity:.35; cursor:default}
+  .anim-say{font:600 min(1.4vw,16px)/1.4 var(--sans); color:var(--ink2)}
+  .anim-say i{display:none; font-style:normal} .anim-say i.on{display:inline}
+
+  /* ---- live demos: small working pieces of UI on the slide ---------------------------
+     A .demo is self-contained. A click inside it never turns the slide, and neither do
+     Space, Enter, Tab or Escape on its controls, or any key typed into its inputs.
+     Each demo is wired by id in the demo script at the end of the deck and resets
+     whenever its slide opens. */
+  .demo{background:var(--panel); border:1px solid var(--line2); border-radius:12px; padding:11px 14px; margin-top:14px;
+    width:100%; max-width:1060px; font:min(1.45vw,15.5px)/1.4 var(--sans); color:var(--ink2)}
+  .demo.bare{background:none; border:0; padding:0; border-radius:0}
+  .demo .row{display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px}
+  .demo .row + .row{margin-top:9px}
+  .demo-tag{font:700 10.5px/1 var(--mono); letter-spacing:1.6px; text-transform:uppercase; color:var(--cy)}
+  .demo-hint{font-size:.9em; color:var(--grey3)}
+  .dbtn{cursor:pointer; background:var(--panel2); border:1px solid var(--line2); color:var(--ink); border-radius:8px;
+    padding:7px 12px; font:600 12.5px/1 var(--mono); transition:background .18s, border-color .18s, color .18s}
+  .dbtn:hover{border-color:var(--cy)}
+  .dbtn:focus-visible,.dinput:focus-visible{outline:2px solid var(--cy); outline-offset:2px}
+  .dbtn.on{background:rgba(34,211,238,.14); border-color:var(--cy); color:#fff}
+  .dbtn.on.g{background:rgba(52,211,153,.14); border-color:var(--good)}
+  .dinput{background:var(--code); border:1px solid var(--line2); color:#fff; border-radius:8px; padding:7px 11px;
+    font:14.5px/1.2 var(--mono); min-width:0}
+  .dinput:focus{outline:none; border-color:var(--cy); box-shadow:0 0 0 3px rgba(34,211,238,.18)}
+  .meter{font:600 12px/1 var(--mono); color:var(--muted); white-space:nowrap}
+  .meter b{display:inline-block; min-width:2ch; margin-left:5px; color:#fff; font-size:15px}
+  .meter b.good{color:var(--good)} .meter b.bad{color:var(--bad)}
+  .dom{font:13.5px/1 var(--mono); color:var(--grey3); padding:6px 9px; border-radius:7px; border:1px dashed var(--line2)}
+  .dom b{color:#fff; font-weight:600}
+  @keyframes cxFlash{15%{box-shadow:0 0 0 4px rgba(251,191,36,.5); background-color:rgba(251,191,36,.14)}}
+  @keyframes cxFlashG{15%{box-shadow:0 0 0 4px rgba(52,211,153,.5); background-color:rgba(52,211,153,.14)}}
+  @keyframes cxFlashR{15%{box-shadow:0 0 0 4px rgba(248,113,122,.55); background-color:rgba(248,113,122,.16)}}
+  @keyframes cxBump{40%{transform:scale(1.35); color:var(--ochre)}}
+  .flash{animation:cxFlash .7s ease} .flash-g{animation:cxFlashG .7s ease} .flash-r{animation:cxFlashR .8s ease}
+  .bump{animation:cxBump .35s ease}
+
+  /* L1b: a playhead walks the 45 minutes, one section per step. */
+  #fx-clock .head{transform:translateX(997px); transition:transform .6s cubic-bezier(.22,.72,.28,1)}
+  #fx-clock[data-step="0"] .head{transform:none}
+  #fx-clock[data-step="1"] .head{transform:translateX(177px)}
+  #fx-clock[data-step="2"] .head{transform:translateX(399px)}
+  #fx-clock[data-step="3"] .head{transform:translateX(532px)}
+  #fx-clock[data-step="4"] .head{transform:translateX(688px)}
+  #fx-clock[data-step="5"] .head{transform:translateX(932px)}
+
+  /* L2a: the lines on the requirements board that carry a number. */
+  #fx-reqs text{transition:fill .35s}
+  #fx-reqs text.lit{fill:#FBBF24}
+
+  /* L2c: two lists read the same feed, one by offset and one by cursor. */
+  #demo-page .lane{gap:5px}
+  #demo-page .lane-k{font:700 12.5px/1 var(--mono); min-width:96px}
+  #demo-page .chips{display:flex; align-items:center; flex-wrap:wrap; gap:5px}
+  #demo-page .chip{display:inline-block; min-width:26px; padding:5px 6px; border:1px solid var(--line2); border-radius:6px;
+    background:var(--panel2); text-align:center; font:700 12.5px/1 var(--mono); color:#fff}
+  #demo-page .chip.dup{border-color:var(--bad); color:var(--bad); background:rgba(248,113,122,.13)}
+  #demo-page .pg{display:inline-block; width:1px; height:20px; margin:0 4px; background:var(--grey3)}
+  #demo-page .verdict{margin-left:8px; font:600 12.5px/1 var(--mono)}
+
+  /* L4a: one minute of events on each transport, drawn in the table's last row. */
+  #demo-wire td{vertical-align:middle; padding-top:8px; padding-bottom:8px}
+  #demo-wire svg{display:block; width:100%; max-width:240px; height:auto; overflow:visible}
+  #demo-wire .base{stroke:var(--line2); stroke-width:1}
+  #demo-wire [data-t]{opacity:0; transition:opacity .2s}
+  #demo-wire [data-t].on{opacity:1}
+  #demo-wire .ev{fill:#FBBF24}
+  #demo-wire .got{stroke:#34D399; stroke-width:2}
+  #demo-wire .ask{stroke:#94A3B8; stroke-width:1.5}
+  #demo-wire .lag{stroke:#F8717A; stroke-width:1.5; stroke-dasharray:3 2}
+  #demo-wire .wn{display:block; margin-top:5px; font:600 12px/1.2 var(--mono); color:var(--grey3); white-space:nowrap}
+
+  /* L5: an optimistic cart beside a checkout that waits. */
+  #demo-cart .sep{display:inline-block; width:1px; height:24px; margin:0 6px; background:var(--line2)}
+
+
   @media (prefers-reduced-motion: reduce){
     .slide.on *{animation:none !important}
     .slide .draw{stroke-dashoffset:0 !important}
@@ -330,46 +433,55 @@
     <div class="kicker">Lesson 1 · The RADIO script</div>
     <h2>Five sections, one clock</h2>
     <p class="say"><b>R</b>equirements, <b>A</b>rchitecture, <b>D</b>ata model, <b>I</b>nterface, <b>O</b>ptimizations. Every section has a time limit and something it leaves on the board.</p>
+    <div class="anim" id="fx-clock" data-at="300,1100,1900,2600,3300,4100">
     <div class="fig">
       <svg viewBox="0 0 1000 180" role="img" aria-label="A 45-minute timeline: requirements 8 minutes, architecture 10, data model 6, interface 7, optimizations 11, wrap-up 3">
-        <text x="89" y="36" text-anchor="middle" class="lbl s">8 min</text>
-        <text x="289" y="36" text-anchor="middle" class="lbl s">10 min</text>
-        <text x="467" y="36" text-anchor="middle" class="lbl s">6 min</text>
-        <text x="611" y="36" text-anchor="middle" class="lbl s">7 min</text>
-        <text x="811" y="36" text-anchor="middle" class="lbl s">11 min</text>
-        <text x="967" y="36" text-anchor="middle" class="lbl s">3</text>
-        <rect x="1" y="46" width="176" height="50" rx="8" fill="#22D3EE" fill-opacity=".14" stroke="#22D3EE"/>
-        <text x="89" y="76" text-anchor="middle" class="lbl b">R · Requirements</text>
-        <rect x="179" y="46" width="220" height="50" rx="8" fill="#34D399" fill-opacity=".14" stroke="#34D399"/>
-        <text x="289" y="76" text-anchor="middle" class="lbl b">A · Architecture</text>
-        <rect x="401" y="46" width="131" height="50" rx="8" fill="#2196F3" fill-opacity=".16" stroke="#2196F3"/>
-        <text x="467" y="76" text-anchor="middle" class="lbl b">D · Data model</text>
-        <rect x="534" y="46" width="154" height="50" rx="8" fill="#FBBF24" fill-opacity=".14" stroke="#FBBF24"/>
-        <text x="611" y="76" text-anchor="middle" class="lbl b">I · Interface</text>
-        <rect x="690" y="46" width="242" height="50" rx="8" fill="#A78BFA" fill-opacity=".16" stroke="#A78BFA"/>
-        <text x="811" y="76" text-anchor="middle" class="lbl b">O · Optimizations</text>
-        <rect x="934" y="46" width="65" height="50" rx="8" fill="#121C30" stroke="#64748B" stroke-dasharray="4 4"/>
-        <text x="967" y="76" text-anchor="middle" class="lbl b">Wrap</text>
+        <text data-in="1" x="89" y="36" text-anchor="middle" class="lbl s">8 min</text>
+        <text data-in="2" x="289" y="36" text-anchor="middle" class="lbl s">10 min</text>
+        <text data-in="3" x="467" y="36" text-anchor="middle" class="lbl s">6 min</text>
+        <text data-in="4" x="611" y="36" text-anchor="middle" class="lbl s">7 min</text>
+        <text data-in="5" x="811" y="36" text-anchor="middle" class="lbl s">11 min</text>
+        <text data-in="6" x="967" y="36" text-anchor="middle" class="lbl s">3</text>
+        <rect data-in="1" x="1" y="46" width="176" height="50" rx="8" fill="#22D3EE" fill-opacity=".14" stroke="#22D3EE"/>
+        <text data-in="1" x="89" y="76" text-anchor="middle" class="lbl b">R · Requirements</text>
+        <rect data-in="2" x="179" y="46" width="220" height="50" rx="8" fill="#34D399" fill-opacity=".14" stroke="#34D399"/>
+        <text data-in="2" x="289" y="76" text-anchor="middle" class="lbl b">A · Architecture</text>
+        <rect data-in="3" x="401" y="46" width="131" height="50" rx="8" fill="#2196F3" fill-opacity=".16" stroke="#2196F3"/>
+        <text data-in="3" x="467" y="76" text-anchor="middle" class="lbl b">D · Data model</text>
+        <rect data-in="4" x="534" y="46" width="154" height="50" rx="8" fill="#FBBF24" fill-opacity=".14" stroke="#FBBF24"/>
+        <text data-in="4" x="611" y="76" text-anchor="middle" class="lbl b">I · Interface</text>
+        <rect data-in="5" x="690" y="46" width="242" height="50" rx="8" fill="#A78BFA" fill-opacity=".16" stroke="#A78BFA"/>
+        <text data-in="5" x="811" y="76" text-anchor="middle" class="lbl b">O · Optimizations</text>
+        <rect data-in="6" x="934" y="46" width="65" height="50" rx="8" fill="#121C30" stroke="#64748B" stroke-dasharray="4 4"/>
+        <text data-in="6" x="967" y="76" text-anchor="middle" class="lbl b">Wrap</text>
+        <path class="head" d="M1,40 L1,102" stroke="#FBBF24" stroke-width="2.5"/>
         <text x="1" y="116" class="lbl s">0</text>
-        <text x="178" y="116" text-anchor="middle" class="lbl s">8</text>
-        <text x="400" y="116" text-anchor="middle" class="lbl s">18</text>
-        <text x="533" y="116" text-anchor="middle" class="lbl s">24</text>
-        <text x="689" y="116" text-anchor="middle" class="lbl s">31</text>
-        <text x="933" y="116" text-anchor="middle" class="lbl s">42</text>
-        <text x="999" y="116" text-anchor="end" class="lbl s">45</text>
-        <text x="89" y="146" text-anchor="middle" class="lbl">scope in / out</text>
-        <text x="89" y="166" text-anchor="middle" class="lbl">the numbers</text>
-        <text x="289" y="146" text-anchor="middle" class="lbl">four to six boxes</text>
-        <text x="289" y="166" text-anchor="middle" class="lbl">arrows = data flow</text>
-        <text x="467" y="146" text-anchor="middle" class="lbl">entities, ids</text>
-        <text x="467" y="166" text-anchor="middle" class="lbl">where state lives</text>
-        <text x="611" y="146" text-anchor="middle" class="lbl">API calls</text>
-        <text x="611" y="166" text-anchor="middle" class="lbl">component props</text>
-        <text x="811" y="146" text-anchor="middle" class="lbl">performance, a11y, offline</text>
-        <text x="811" y="166" text-anchor="middle" class="lbl">errors, edge cases</text>
-        <text x="967" y="146" text-anchor="middle" class="lbl">recap</text>
-        <text x="967" y="166" text-anchor="middle" class="lbl">questions</text>
+        <text data-in="1" x="178" y="116" text-anchor="middle" class="lbl s">8</text>
+        <text data-in="2" x="400" y="116" text-anchor="middle" class="lbl s">18</text>
+        <text data-in="3" x="533" y="116" text-anchor="middle" class="lbl s">24</text>
+        <text data-in="4" x="689" y="116" text-anchor="middle" class="lbl s">31</text>
+        <text data-in="5" x="933" y="116" text-anchor="middle" class="lbl s">42</text>
+        <text data-in="6" x="999" y="116" text-anchor="end" class="lbl s">45</text>
+        <text data-in="1" x="89" y="146" text-anchor="middle" class="lbl">scope in / out</text>
+        <text data-in="1" x="89" y="166" text-anchor="middle" class="lbl">the numbers</text>
+        <text data-in="2" x="289" y="146" text-anchor="middle" class="lbl">four to six boxes</text>
+        <text data-in="2" x="289" y="166" text-anchor="middle" class="lbl">arrows = data flow</text>
+        <text data-in="3" x="467" y="146" text-anchor="middle" class="lbl">entities, ids</text>
+        <text data-in="3" x="467" y="166" text-anchor="middle" class="lbl">where state lives</text>
+        <text data-in="4" x="611" y="146" text-anchor="middle" class="lbl">API calls</text>
+        <text data-in="4" x="611" y="166" text-anchor="middle" class="lbl">component props</text>
+        <text data-in="5" x="811" y="146" text-anchor="middle" class="lbl">performance, a11y, offline</text>
+        <text data-in="5" x="811" y="166" text-anchor="middle" class="lbl">errors, edge cases</text>
+        <text data-in="6" x="967" y="146" text-anchor="middle" class="lbl">recap</text>
+        <text data-in="6" x="967" y="166" text-anchor="middle" class="lbl">questions</text>
       </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>Minutes 0 to 8: requirements. Scope in and out, and the numbers.</i><i>8 to 18: architecture. Four to six boxes; arrows are data.</i><i>18 to 24: the data model. Entities, ids, where state lives.</i><i>24 to 31: the interface. API calls and component props.</i><i>31 to 42: optimizations. The longest section, and where depth shows.</i><i>42 to 45: wrap up. Recap, then their questions.</i></span>
+    </div>
     </div>
     <div class="key w">A skipped section costs more than a thin one. When the clock says O and you're still on A, say so out loud, and move.</div>
 </section>
@@ -401,33 +513,47 @@
     <div class="kicker">Lesson 2 · Requirements</div>
     <h2>Eight minutes that decide the next thirty</h2>
     <p class="say">Prompt: <b>“Design the search page for a job board.”</b> The board after requirements: a number on every line that can take one.</p>
+    <div class="anim" id="fx-reqs" data-at="300,1300,2400,3500">
     <div class="fig">
       <svg viewBox="0 0 1000 236" role="img" aria-label="Requirements board with three columns: functional scope, non-functional numbers, and what is out of scope">
-        <rect x="0" y="0" width="320" height="234" rx="12" fill="#121C30" stroke="#22D3EE"/>
-        <text x="20" y="30" class="lbl b" style="fill:#22D3EE">Functional · what it does</text>
-        <line x1="20" y1="44" x2="300" y2="44" stroke="#243349"/>
-        <text x="20" y="72" class="lbl">–  Search by keyword and location</text>
-        <text x="20" y="104" class="lbl">–  Filter: remote, salary, job type</text>
-        <text x="20" y="136" class="lbl">–  More results load as you scroll</text>
-        <text x="20" y="168" class="lbl">–  Save a listing when signed in</text>
-        <text x="20" y="200" class="lbl">–  Every search has its own URL</text>
-        <rect x="340" y="0" width="320" height="234" rx="12" fill="#121C30" stroke="#FBBF24"/>
-        <text x="360" y="30" class="lbl b" style="fill:#FBBF24">Non-functional · how well</text>
-        <line x1="360" y1="44" x2="640" y2="44" stroke="#243349"/>
-        <text x="360" y="72" class="lbl">–  500k listings, 20 per page</text>
-        <text x="360" y="104" class="lbl">–  Results in under 300 ms at p75</text>
-        <text x="360" y="136" class="lbl">–  Mid-range Android on 4G</text>
-        <text x="360" y="168" class="lbl">–  Keyboard and screen reader (WCAG AA)</text>
-        <text x="360" y="200" class="lbl">–  Offline: not needed (said out loud)</text>
-        <rect x="680" y="0" width="320" height="234" rx="12" fill="#121C30" stroke="#F8717A" stroke-dasharray="6 5"/>
-        <text x="700" y="30" class="lbl b" style="fill:#F8717A">Out of scope · said, not built</text>
-        <line x1="700" y1="44" x2="980" y2="44" stroke="#243349"/>
-        <text x="700" y="72" class="lbl">–  Posting a listing</text>
-        <text x="700" y="104" class="lbl">–  Recommendations</text>
-        <text x="700" y="136" class="lbl">–  Employer dashboards</text>
-        <text x="700" y="168" class="lbl">–  Sign-up and login (assume a session)</text>
-        <text x="700" y="200" class="lbl">–  Admin moderation</text>
+        <g data-in="1">
+          <rect x="0" y="0" width="320" height="234" rx="12" fill="#121C30" stroke="#22D3EE"/>
+          <text x="20" y="30" class="lbl b" style="fill:#22D3EE">Functional · what it does</text>
+          <line x1="20" y1="44" x2="300" y2="44" stroke="#243349"/>
+          <text x="20" y="72" class="lbl">–  Search by keyword and location</text>
+          <text x="20" y="104" class="lbl">–  Filter: remote, salary, job type</text>
+          <text x="20" y="136" class="lbl">–  More results load as you scroll</text>
+          <text x="20" y="168" class="lbl">–  Save a listing when signed in</text>
+          <text x="20" y="200" class="lbl">–  Every search has its own URL</text>
+        </g>
+        <g data-in="2">
+          <rect x="340" y="0" width="320" height="234" rx="12" fill="#121C30" stroke="#FBBF24"/>
+          <text x="360" y="30" class="lbl b" style="fill:#FBBF24">Non-functional · how well</text>
+          <line x1="360" y1="44" x2="640" y2="44" stroke="#243349"/>
+          <text data-hl="3 4" x="360" y="72" class="lbl">–  500k listings, 20 per page</text>
+          <text data-hl="3 4" x="360" y="104" class="lbl">–  Results in under 300 ms at p75</text>
+          <text data-hl="3 4" x="360" y="136" class="lbl">–  Mid-range Android on 4G</text>
+          <text data-hl="3 4" x="360" y="168" class="lbl">–  Keyboard and screen reader (WCAG AA)</text>
+          <text x="360" y="200" class="lbl">–  Offline: not needed (said out loud)</text>
+        </g>
+        <g data-in="4">
+          <rect x="680" y="0" width="320" height="234" rx="12" fill="#121C30" stroke="#F8717A" stroke-dasharray="6 5"/>
+          <text x="700" y="30" class="lbl b" style="fill:#F8717A">Out of scope · said, not built</text>
+          <line x1="700" y1="44" x2="980" y2="44" stroke="#243349"/>
+          <text x="700" y="72" class="lbl">–  Posting a listing</text>
+          <text x="700" y="104" class="lbl">–  Recommendations</text>
+          <text x="700" y="136" class="lbl">–  Employer dashboards</text>
+          <text x="700" y="168" class="lbl">–  Sign-up and login (assume a session)</text>
+          <text x="700" y="200" class="lbl">–  Admin moderation</text>
+        </g>
       </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>Functional: what it does. Five lines, no more.</i><i>Non-functional: how well, for whom, on what.</i><i>A number or a named device on every line that can take one.</i><i>Out of scope, said out loud. That earns credit too.</i></span>
+    </div>
     </div>
     <div class="key">Functional says what it does. Non-functional says how well, for whom, on what, and that column is where most of the design comes from.</div>
 </section>
@@ -452,41 +578,67 @@
   <section class="slide" data-chip="MODULE 10 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 2</div><div class="cx-page"><b>07</b> / 21</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Components and data flow</div>
     <h2>Boxes are jobs, arrows are data</h2>
+    <div class="anim" id="fx-flow" data-at="300,1100,1900,2700,3700,4700">
     <div class="fig">
       <svg viewBox="0 0 1000 270" role="img" aria-label="Server API sends JSON to a normalized client store, which feeds a controller, which passes props to view components; user events flow back to the controller, which sends requests to the server">
         <defs>
           <marker id="m11a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/></marker>
         </defs>
-        <rect x="0" y="90" width="170" height="80" rx="10" fill="#121C30" stroke="#A78BFA"/>
-        <text x="85" y="125" text-anchor="middle" class="lbl b">Server / API</text>
-        <text x="85" y="148" text-anchor="middle" class="lbl s">search · listings · saves</text>
-        <rect x="245" y="90" width="210" height="80" rx="10" fill="#121C30" stroke="#2196F3"/>
-        <text x="350" y="125" text-anchor="middle" class="lbl b">Client store</text>
-        <text x="350" y="148" text-anchor="middle" class="lbl s">normalized cache, by id</text>
-        <rect x="530" y="90" width="200" height="80" rx="10" fill="#121C30" stroke="#34D399"/>
-        <text x="630" y="125" text-anchor="middle" class="lbl b">Controller</text>
-        <text x="630" y="148" text-anchor="middle" class="lbl s">fetch · paginate · optimistic writes</text>
-        <rect x="805" y="0" width="195" height="262" rx="12" fill="#121C30" stroke="#22D3EE"/>
-        <text x="902" y="28" text-anchor="middle" class="lbl b">View</text>
-        <rect x="820" y="44" width="165" height="40" rx="8" fill="#0B1220" stroke="#243349"/>
-        <text x="902" y="69" text-anchor="middle" class="lbl">SearchBar</text>
-        <rect x="820" y="96" width="165" height="40" rx="8" fill="#0B1220" stroke="#243349"/>
-        <text x="902" y="121" text-anchor="middle" class="lbl">FilterPanel</text>
-        <rect x="820" y="148" width="165" height="40" rx="8" fill="#0B1220" stroke="#243349"/>
-        <text x="902" y="173" text-anchor="middle" class="lbl">ResultList (virtual)</text>
-        <rect x="820" y="200" width="165" height="40" rx="8" fill="#0B1220" stroke="#243349"/>
-        <text x="902" y="225" text-anchor="middle" class="lbl">ListingCard × n</text>
-        <path class="draw" pathLength="1" d="M171,115 L243,115" stroke="#94A3B8" fill="none" marker-end="url(#m11a)"/>
-        <text x="207" y="106" text-anchor="middle" class="lbl s">JSON</text>
-        <path class="draw" pathLength="1" d="M456,115 L528,115" stroke="#94A3B8" fill="none" marker-end="url(#m11a)"/>
-        <text x="492" y="106" text-anchor="middle" class="lbl s">state</text>
-        <path class="draw" pathLength="1" d="M731,115 L803,115" stroke="#94A3B8" fill="none" marker-end="url(#m11a)"/>
-        <text x="767" y="106" text-anchor="middle" class="lbl s">props</text>
-        <path d="M804,148 L732,148" stroke="#22D3EE" stroke-dasharray="5 4" fill="none" marker-end="url(#m11a)"/>
-        <text x="767" y="166" text-anchor="middle" class="lbl s" style="fill:#22D3EE">events</text>
-        <path d="M630,171 L630,226 L85,226 L85,173" stroke="#34D399" stroke-dasharray="5 4" fill="none" marker-end="url(#m11a)"/>
-        <text x="357" y="250" text-anchor="middle" class="lbl s" style="fill:#34D399">requests: debounced query, next cursor</text>
+        <g data-in="1">
+          <rect x="0" y="90" width="170" height="80" rx="10" fill="#121C30" stroke="#A78BFA"/>
+          <text x="85" y="125" text-anchor="middle" class="lbl b">Server / API</text>
+          <text x="85" y="148" text-anchor="middle" class="lbl s">search · listings · saves</text>
+        </g>
+        <g data-in="2">
+          <rect x="245" y="90" width="210" height="80" rx="10" fill="#121C30" stroke="#2196F3"/>
+          <text x="350" y="125" text-anchor="middle" class="lbl b">Client store</text>
+          <text x="350" y="148" text-anchor="middle" class="lbl s">normalized cache, by id</text>
+        </g>
+        <g data-in="3">
+          <rect x="530" y="90" width="200" height="80" rx="10" fill="#121C30" stroke="#34D399"/>
+          <text x="630" y="125" text-anchor="middle" class="lbl b">Controller</text>
+          <text x="630" y="148" text-anchor="middle" class="lbl s">fetch · paginate · optimistic writes</text>
+        </g>
+        <g data-in="4">
+          <rect x="805" y="0" width="195" height="262" rx="12" fill="#121C30" stroke="#22D3EE"/>
+          <text x="902" y="28" text-anchor="middle" class="lbl b">View</text>
+          <rect x="820" y="44" width="165" height="40" rx="8" fill="#0B1220" stroke="#243349"/>
+          <text x="902" y="69" text-anchor="middle" class="lbl">SearchBar</text>
+          <rect x="820" y="96" width="165" height="40" rx="8" fill="#0B1220" stroke="#243349"/>
+          <text x="902" y="121" text-anchor="middle" class="lbl">FilterPanel</text>
+          <rect x="820" y="148" width="165" height="40" rx="8" fill="#0B1220" stroke="#243349"/>
+          <text x="902" y="173" text-anchor="middle" class="lbl">ResultList (virtual)</text>
+          <rect x="820" y="200" width="165" height="40" rx="8" fill="#0B1220" stroke="#243349"/>
+          <text x="902" y="225" text-anchor="middle" class="lbl">ListingCard × n</text>
+        </g>
+        <g data-in="2">
+          <path class="draw" pathLength="1" d="M171,115 L243,115" stroke="#94A3B8" fill="none" marker-end="url(#m11a)"/>
+          <text x="207" y="106" text-anchor="middle" class="lbl s">JSON</text>
+        </g>
+        <g data-in="3">
+          <path class="draw" pathLength="1" d="M456,115 L528,115" stroke="#94A3B8" fill="none" marker-end="url(#m11a)"/>
+          <text x="492" y="106" text-anchor="middle" class="lbl s">state</text>
+        </g>
+        <g data-in="4">
+          <path class="draw" pathLength="1" d="M731,115 L803,115" stroke="#94A3B8" fill="none" marker-end="url(#m11a)"/>
+          <text x="767" y="106" text-anchor="middle" class="lbl s">props</text>
+        </g>
+        <g data-in="5">
+          <path d="M804,148 L732,148" stroke="#22D3EE" stroke-dasharray="5 4" fill="none" marker-end="url(#m11a)"/>
+          <text x="767" y="166" text-anchor="middle" class="lbl s" style="fill:#22D3EE">events</text>
+        </g>
+        <g data-in="6">
+          <path d="M630,171 L630,226 L85,226 L85,173" stroke="#34D399" stroke-dasharray="5 4" fill="none" marker-end="url(#m11a)"/>
+          <text x="357" y="250" text-anchor="middle" class="lbl s" style="fill:#34D399">requests: debounced query, next cursor</text>
+        </g>
       </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>The server first: what the API offers.</i><i>JSON lands in a client store, normalized by id.</i><i>A controller fetches, paginates and makes the optimistic writes.</i><i>The view comes last. The component tree lives inside this one box.</i><i>A keystroke is an event, and it goes to the controller.</i><i>The controller sends a debounced request, and the loop closes.</i></span>
+    </div>
     </div>
     <div class="key">Draw these four boxes before any component tree. The round is grading where state lives and who is allowed to change it, not how many components you can name.</div>
 </section>
@@ -520,6 +672,17 @@
         <text x="0" y="140" class="lbl b" style="fill:#34D399">?after=C&amp;limit=3  →  D, E, F</text>
         <path d="M670,124 L670,135 L986,135 L986,124" stroke="#34D399" fill="none"/>
       </svg>
+    </div>
+    <div class="demo bare" id="demo-page">
+      <div class="row">
+        <span class="demo-tag">Page through it</span>
+        <button type="button" class="dbtn" data-act="new">+ a new job on top</button>
+        <button type="button" class="dbtn" data-act="close">✕ a job you read closes</button>
+        <button type="button" class="dbtn" data-act="next">load the next page</button>
+        <button type="button" class="dbtn" data-act="reset">reset</button>
+      </div>
+      <div class="row lane"><span class="lane-k r">?offset=</span><span class="chips" data-k="offset"></span><span data-k="offset-v"></span></div>
+      <div class="row lane"><span class="lane-k g">?after=</span><span class="chips" data-k="cursor"></span><span data-k="cursor-v"></span></div>
     </div>
     <table class="grid">
       <tr><th></th><th>Offset · <code>?page=7</code></th><th>Cursor · <code>?after=…</code></th></tr>
@@ -556,6 +719,7 @@
   <section class="slide" data-chip="MODULE 10 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 3</div><div class="cx-page"><b>10</b> / 21</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · The modular monolith</div>
     <h2>One deploy, hard walls inside it</h2>
+    <div class="anim" id="fx-walls" data-at="200,900,1600,2400,3200">
     <div class="fig">
       <svg viewBox="0 0 1000 250" role="img" aria-label="One app with four feature modules, each with a public index file and private internals; features import each other only through index files, deep imports are blocked by a lint rule; all features use a shared layer">
         <defs>
@@ -563,42 +727,53 @@
           <marker id="m11c" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#34D399"/></marker>
           <marker id="m11d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#F8717A"/></marker>
         </defs>
-        <rect x="0" y="0" width="1000" height="248" rx="14" fill="none" stroke="#64748B" stroke-dasharray="6 5"/>
-        <text x="18" y="26" class="lbl b">apps/web · one build, one deploy</text>
-        <rect x="20" y="44" width="220" height="96" rx="10" fill="#121C30" stroke="#FBBF24"/>
-        <text x="130" y="72" text-anchor="middle" class="lbl b">features/search</text>
-        <rect x="30" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#34D399"/>
-        <text x="75" y="119" text-anchor="middle" class="lbl s">index.ts</text>
-        <rect x="140" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#64748B" stroke-dasharray="3 3"/>
-        <text x="185" y="119" text-anchor="middle" class="lbl s">internal/</text>
-        <rect x="265" y="44" width="220" height="96" rx="10" fill="#121C30" stroke="#FBBF24"/>
-        <text x="375" y="72" text-anchor="middle" class="lbl b">features/listing</text>
-        <rect x="275" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#34D399"/>
-        <text x="320" y="119" text-anchor="middle" class="lbl s">index.ts</text>
-        <rect x="385" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#64748B" stroke-dasharray="3 3"/>
-        <text x="430" y="119" text-anchor="middle" class="lbl s">internal/</text>
-        <rect x="510" y="44" width="220" height="96" rx="10" fill="#121C30" stroke="#FBBF24"/>
-        <text x="620" y="72" text-anchor="middle" class="lbl b">features/apply</text>
-        <rect x="520" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#34D399"/>
-        <text x="565" y="119" text-anchor="middle" class="lbl s">index.ts</text>
-        <rect x="630" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#64748B" stroke-dasharray="3 3"/>
-        <text x="675" y="119" text-anchor="middle" class="lbl s">internal/</text>
-        <rect x="755" y="44" width="220" height="96" rx="10" fill="#121C30" stroke="#FBBF24"/>
-        <text x="865" y="72" text-anchor="middle" class="lbl b">features/account</text>
-        <rect x="765" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#34D399"/>
-        <text x="810" y="119" text-anchor="middle" class="lbl s">index.ts</text>
-        <rect x="875" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#64748B" stroke-dasharray="3 3"/>
-        <text x="920" y="119" text-anchor="middle" class="lbl s">internal/</text>
-        <path d="M241,114 L273,114" stroke="#34D399" fill="none" marker-end="url(#m11c)"/>
-        <path d="M600,44 C600,18 440,14 432,98" stroke="#F8717A" stroke-dasharray="5 4" fill="none" marker-end="url(#m11d)"/>
-        <text x="528" y="20" text-anchor="middle" class="lbl b" style="fill:#F8717A">✕ lint error</text>
-        <path d="M130,141 L130,188" stroke="#94A3B8" fill="none" marker-end="url(#m11b)"/>
-        <path d="M375,141 L375,188" stroke="#94A3B8" fill="none" marker-end="url(#m11b)"/>
-        <path d="M620,141 L620,188" stroke="#94A3B8" fill="none" marker-end="url(#m11b)"/>
-        <path d="M865,141 L865,188" stroke="#94A3B8" fill="none" marker-end="url(#m11b)"/>
-        <rect x="20" y="190" width="955" height="44" rx="10" fill="#121C30" stroke="#2196F3"/>
-        <text x="497" y="217" text-anchor="middle" class="lbl b">shared/ui · shared/lib · shared/api-client</text>
+        <g data-in="1">
+          <rect x="0" y="0" width="1000" height="248" rx="14" fill="none" stroke="#64748B" stroke-dasharray="6 5"/>
+          <text x="18" y="26" class="lbl b">apps/web · one build, one deploy</text>
+        </g>
+        <g data-in="2">
+          <rect x="20" y="44" width="220" height="96" rx="10" fill="#121C30" stroke="#FBBF24"/>
+          <text x="130" y="72" text-anchor="middle" class="lbl b">features/search</text>
+          <rect x="30" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#34D399"/>
+          <text x="75" y="119" text-anchor="middle" class="lbl s">index.ts</text>
+          <rect x="140" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#64748B" stroke-dasharray="3 3"/>
+          <text x="185" y="119" text-anchor="middle" class="lbl s">internal/</text>
+          <rect x="265" y="44" width="220" height="96" rx="10" fill="#121C30" stroke="#FBBF24"/>
+          <text x="375" y="72" text-anchor="middle" class="lbl b">features/listing</text>
+          <rect x="275" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#34D399"/>
+          <text x="320" y="119" text-anchor="middle" class="lbl s">index.ts</text>
+          <rect x="385" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#64748B" stroke-dasharray="3 3"/>
+          <text x="430" y="119" text-anchor="middle" class="lbl s">internal/</text>
+          <rect x="510" y="44" width="220" height="96" rx="10" fill="#121C30" stroke="#FBBF24"/>
+          <text x="620" y="72" text-anchor="middle" class="lbl b">features/apply</text>
+          <rect x="520" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#34D399"/>
+          <text x="565" y="119" text-anchor="middle" class="lbl s">index.ts</text>
+          <rect x="630" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#64748B" stroke-dasharray="3 3"/>
+          <text x="675" y="119" text-anchor="middle" class="lbl s">internal/</text>
+          <rect x="755" y="44" width="220" height="96" rx="10" fill="#121C30" stroke="#FBBF24"/>
+          <text x="865" y="72" text-anchor="middle" class="lbl b">features/account</text>
+          <rect x="765" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#34D399"/>
+          <text x="810" y="119" text-anchor="middle" class="lbl s">index.ts</text>
+          <rect x="875" y="100" width="90" height="28" rx="6" fill="#0B1220" stroke="#64748B" stroke-dasharray="3 3"/>
+          <text x="920" y="119" text-anchor="middle" class="lbl s">internal/</text>
+        </g>
+        <g data-in="4">
+          <path d="M241,114 L273,114" stroke="#34D399" fill="none" marker-end="url(#m11c)"/>
+        </g>
+        <g data-in="5">
+          <path d="M600,44 C600,18 440,14 432,98" stroke="#F8717A" stroke-dasharray="5 4" fill="none" marker-end="url(#m11d)"/>
+          <text x="528" y="20" text-anchor="middle" class="lbl b" style="fill:#F8717A">✕ lint error</text>
+        </g>
+        <g data-in="3">
+          <path d="M130,141 L130,188" stroke="#94A3B8" fill="none" marker-end="url(#m11b)"/>
+          <path d="M375,141 L375,188" stroke="#94A3B8" fill="none" marker-end="url(#m11b)"/>
+          <path d="M620,141 L620,188" stroke="#94A3B8" fill="none" marker-end="url(#m11b)"/>
+          <path d="M865,141 L865,188" stroke="#94A3B8" fill="none" marker-end="url(#m11b)"/>
+          <rect x="20" y="190" width="955" height="44" rx="10" fill="#121C30" stroke="#2196F3"/>
+          <text x="497" y="217" text-anchor="middle" class="lbl b">shared/ui · shared/lib · shared/api-client</text>
+        </g>
       </svg>
+    </div>
     </div>
     <pre><code><span class="cmt">// eslint: a feature is importable only through its index.ts</span>
 <span class="st">"no-restricted-imports"</span>: [<span class="st">"error"</span>, { patterns: [<span class="st">"@/features/*/*"</span>] }]</code></pre>
@@ -640,26 +815,46 @@
   <section class="slide" data-chip="MODULE 10 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 10 · VIDEO 3</div><div class="cx-page"><b>13</b> / 21</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Defending the choice</div>
     <h2>Climb only when the step below stops working</h2>
+    <div class="anim" id="fx-climb" data-at="300,1400,2500,3600">
     <div class="fig">
       <svg viewBox="0 0 1000 250" role="img" aria-label="Three ascending steps: modular monolith, then monorepo when a second app needs the same code, then micro-frontends when teams block each other's releases">
         <defs>
           <marker id="m11f" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#94A3B8"/></marker>
         </defs>
-        <text x="0" y="34" class="lbl b">Each step up adds cost and coordination.</text>
-        <text x="0" y="58" class="lbl">Climb when a named trigger fires,</text>
-        <text x="0" y="80" class="lbl">not because the step above sounds senior.</text>
-        <rect x="0" y="176" width="320" height="70" rx="10" fill="#34D399" fill-opacity=".12" stroke="#34D399"/>
-        <text x="160" y="205" text-anchor="middle" class="lbl b">1 · Modular monolith</text>
-        <text x="160" y="228" text-anchor="middle" class="lbl s">start here: one app, lint-enforced walls</text>
-        <rect x="340" y="98" width="320" height="70" rx="10" fill="#2196F3" fill-opacity=".14" stroke="#2196F3"/>
-        <text x="500" y="127" text-anchor="middle" class="lbl b">2 · Monorepo</text>
-        <text x="500" y="150" text-anchor="middle" class="lbl s">when a second app needs the same code</text>
-        <rect x="680" y="20" width="320" height="70" rx="10" fill="#A78BFA" fill-opacity=".14" stroke="#A78BFA"/>
-        <text x="840" y="49" text-anchor="middle" class="lbl b">3 · Micro-frontends</text>
-        <text x="840" y="72" text-anchor="middle" class="lbl s">when teams block each other's releases</text>
-        <path d="M260,174 L260,133 L336,133" stroke="#94A3B8" fill="none" marker-end="url(#m11f)"/>
-        <path d="M600,96 L600,55 L676,55" stroke="#94A3B8" fill="none" marker-end="url(#m11f)"/>
+        <g data-in="4">
+          <text x="0" y="34" class="lbl b">Each step up adds cost and coordination.</text>
+          <text x="0" y="58" class="lbl">Climb when a named trigger fires,</text>
+          <text x="0" y="80" class="lbl">not because the step above sounds senior.</text>
+        </g>
+        <g data-in="1">
+          <rect x="0" y="176" width="320" height="70" rx="10" fill="#34D399" fill-opacity=".12" stroke="#34D399"/>
+          <text x="160" y="205" text-anchor="middle" class="lbl b">1 · Modular monolith</text>
+          <text x="160" y="228" text-anchor="middle" class="lbl s">start here: one app, lint-enforced walls</text>
+        </g>
+        <g data-in="2">
+          <rect x="340" y="98" width="320" height="70" rx="10" fill="#2196F3" fill-opacity=".14" stroke="#2196F3"/>
+          <text x="500" y="127" text-anchor="middle" class="lbl b">2 · Monorepo</text>
+          <text x="500" y="150" text-anchor="middle" class="lbl s">when a second app needs the same code</text>
+        </g>
+        <g data-in="3">
+          <rect x="680" y="20" width="320" height="70" rx="10" fill="#A78BFA" fill-opacity=".14" stroke="#A78BFA"/>
+          <text x="840" y="49" text-anchor="middle" class="lbl b">3 · Micro-frontends</text>
+          <text x="840" y="72" text-anchor="middle" class="lbl s">when teams block each other's releases</text>
+        </g>
+        <g data-in="2">
+          <path d="M260,174 L260,133 L336,133" stroke="#94A3B8" fill="none" marker-end="url(#m11f)"/>
+        </g>
+        <g data-in="3">
+          <path d="M600,96 L600,55 L676,55" stroke="#94A3B8" fill="none" marker-end="url(#m11f)"/>
+        </g>
       </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>Start here: one app, walls a lint rule enforces.</i><i>Climb when a second app needs the same code.</i><i>Climb again only when teams block each other’s releases.</i><i>Every step up costs more. Name the trigger before you climb.</i></span>
+    </div>
     </div>
     <div class="key g">Say it as one sentence: <i>“We start as a modular monolith with enforced feature boundaries, move to a monorepo when the employer app arrives, and split deploys only if release coordination becomes the bottleneck.”</i></div>
 </section>
@@ -716,6 +911,10 @@
       <tr><td><b>Built on</b></td><td>Ordinary requests</td><td>One long HTTP response</td><td>An upgraded connection</td></tr>
       <tr><td><b>Reconnect</b></td><td>Nothing to reconnect</td><td>Automatic, resumes via <code>Last-Event-ID</code></td><td>Yours to write, with backoff</td></tr>
       <tr><td><b>Idle cost</b></td><td>A request every interval</td><td>One open connection</td><td>One connection + heartbeats</td></tr>
+      <tr class="demo bare" id="demo-wire"><td><button type="button" class="dbtn" data-act="run">▶ one minute</button></td>
+        <td><svg viewBox="-4 0 248 24" data-lane="poll" role="img" aria-label="Polling every 10 seconds"></svg><span class="wn" data-k="poll"></span></td>
+        <td><svg viewBox="-4 0 248 24" data-lane="sse" role="img" aria-label="Server-Sent Events"></svg><span class="wn" data-k="sse"></span></td>
+        <td><svg viewBox="-4 0 248 24" data-lane="ws" role="img" aria-label="WebSocket"></svg><span class="wn" data-k="ws"></span></td></tr>
       <tr><td><b>Fits</b></td><td>“12 new jobs” banner</td><td>Application status changes</td><td>Chat with a recruiter</td></tr>
     </table>
     <div class="key g"><b>Chat:</b> a WebSocket for push, optimistic sends with a client-made id, order by server sequence — and on reconnect, fetch everything after the last sequence you saw.</div>
@@ -762,6 +961,19 @@
           <li>The product photo is the LCP<small>sized, eager, high priority</small></li>
         </ul>
       </div>
+    </div>
+    <div class="demo bare" id="demo-cart">
+      <div class="row">
+        <span class="demo-tag">Try both writes</span>
+        <button type="button" class="dbtn" data-act="add">Add to cart</button>
+        <button type="button" class="dbtn" data-act="fail">out of stock</button>
+        <span class="meter">cart<b data-k="cart"></b></span>
+        <i class="sep"></i>
+        <button type="button" class="dbtn" data-act="order">Place order</button>
+        <button type="button" class="dbtn" data-act="key">idempotency key</button>
+        <span class="meter">charged<b data-k="charged"></b></span>
+      </div>
+      <div class="row"><span class="demo-hint" data-k="say"></span></div>
     </div>
 </section>
 
@@ -886,6 +1098,844 @@
   });
   document.getElementById('stage').addEventListener('click',e=>{ e.clientX>innerWidth/2?next():prev(); });
   render();
+</script>
+<!-- Sandbox starter for this deck (React mode): one tab group per idea, each its own little
+     app. The sandbox reads these on a fresh project or a reset; see brand/sandbox.html. -->
+<script type="text/plain" data-sbx-file="App.tsx" data-sbx-first>
+import './styles.css';
+
+// Module 10 lab. A design round is talk, but each of these ideas is a few dozen lines you
+// can run, so you can defend it from having seen it work. Every tab group is its own small
+// app: open a tab and the preview switches. Right-click a group's label to fold it or turn it off.
+
+const ideas: [group: string, what: string][] = [
+  ['pagination', 'offset vs cursor, against a feed that changes while you read it'],
+  ['autocomplete', 'debounce, abort the stale request, cache by query'],
+  ['feed', 'render only the rows in view, and count the DOM nodes'],
+  ['realtime', 'polling vs a stream, and catching up after a reconnect'],
+  ['cart', 'an optimistic cart that rolls back, a checkout that waits'],
+];
+
+export default function App() {
+  return (
+    <main>
+      <h1>Module 10 lab</h1>
+      <p className="muted">Open a tab in any group to try that idea.</p>
+      <ol>
+        {ideas.map(([group, what]) => (
+          <li key={group}>
+            <b>{group}</b> · {what}
+          </li>
+        ))}
+      </ol>
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="styles.css">
+body {
+  font-family: system-ui, sans-serif;
+  margin: 20px;
+  color: #0f172a;
+}
+
+main {
+  display: grid;
+  gap: 12px;
+  max-width: 680px;
+}
+
+h1 { font-size: 20px; margin: 0; }
+h2 { font-size: 16px; margin: 0 0 4px; }
+ul, ol { margin: 0; padding-left: 20px; }
+li { margin: 4px 0; }
+
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.card { border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 12px; display: grid; gap: 6px; align-content: start; }
+.muted { color: #64748b; margin: 0; }
+.bad { color: #dc2626; margin: 0; }
+.good { color: #059669; margin: 0; }
+.chip { display: inline-block; min-width: 22px; padding: 2px 6px; margin: 2px; border: 1px solid #cbd5e1; border-radius: 6px; text-align: center; font: 12.5px ui-monospace, monospace; }
+.chip.hot { border-color: #dc2626; color: #dc2626; background: #fef2f2; }
+
+input,
+button {
+  font: inherit;
+  padding: 6px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+button {
+  background: #0f172a;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:disabled { opacity: 0.45; cursor: default; }
+input[type='checkbox'] { padding: 0; }
+label { display: inline-flex; gap: 6px; align-items: center; }
+code, pre { font: 12.5px ui-monospace, monospace; }
+pre { background: #f1f5f9; padding: 8px 10px; border-radius: 8px; margin: 0; white-space: pre-wrap; word-break: break-all; }
+</script>
+<script type="text/plain" data-sbx-file="Pages.tsx" data-sbx-group="pagination" data-sbx-color="#22D3EE">
+import './styles.css';
+import { useState } from 'react';
+import { byCursor, byOffset, closeJob, liveIds, postJob, type Job } from './pagedApi';
+
+// Two lists read the same feed: one asks for ?offset=, the other for ?after=. Load page 1,
+// then post a job or close one you have read, and load the next page in both. The offset
+// list repeats or skips a job; the cursor list never does.
+export default function Pages() {
+  const [offset, setOffset] = useState<Job[]>([]);
+  const [cursor, setCursor] = useState<Job[]>([]);
+  const [busy, setBusy] = useState(false);
+  const [, redraw] = useState(0);
+
+  async function more() {
+    setBusy(true);
+    const last = cursor.length ? cursor[cursor.length - 1].id : null;
+    const [a, b] = await Promise.all([byOffset(offset.length), byCursor(last)]);
+    setOffset((l) => [...l, ...a]);
+    setCursor((l) => [...l, ...b]);
+    setBusy(false);
+  }
+
+  function closeRead() {
+    const read = cursor.find((j) => liveIds().includes(j.id));
+    if (read) closeJob(read.id);
+    redraw((n) => n + 1);
+  }
+
+  return (
+    <main>
+      <h1>pagination · offset vs cursor</h1>
+      <div className="row">
+        <button onClick={more} disabled={busy}>{offset.length ? 'Load the next page' : 'Load page 1'}</button>
+        <button onClick={() => { postJob(); redraw((n) => n + 1); }}>Post a new job</button>
+        <button onClick={closeRead} disabled={!cursor.length}>Close a job you read</button>
+      </div>
+      <p className="muted">the feed now: {liveIds().join(' ')}</p>
+      <div className="two">
+        <List name="?offset=" jobs={offset} />
+        <List name="?after=" jobs={cursor} />
+      </div>
+    </main>
+  );
+}
+
+function List({ name, jobs }: { name: string; jobs: Job[] }) {
+  const ids = jobs.map((j) => j.id);
+  const again = ids.filter((id, i) => ids.indexOf(id) !== i);
+  // still in the feed, between the newest and the deepest job this list has, never shown
+  const skipped = ids.length ? liveIds().filter((id) => id < Math.max(...ids) && id > Math.min(...ids) && !ids.includes(id)) : [];
+  const verdict = [again.length ? `${again.join(', ')} again` : '', skipped.length ? `skipped ${skipped.join(', ')}` : '']
+    .filter(Boolean).join(' · ');
+  return (
+    <section className="card">
+      <h2>{name}</h2>
+      <div>{ids.map((id, i) => <span key={i} className={ids.indexOf(id) !== i ? 'chip hot' : 'chip'}>{id}</span>)}</div>
+      {ids.length > 0 && <p className={verdict ? 'bad' : 'good'}>{verdict || 'no repeats, no gaps'}</p>}
+    </section>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="pagedApi.ts" data-sbx-group="pagination">
+// A fake jobs API over a feed that changes while you read it. Newest first: a bigger id is a
+// newer job, and the id is also the sort key a cursor remembers.
+export type Job = { id: number; title: string };
+
+let nextId = 13;
+let jobs: Job[] = Array.from({ length: 12 }, (_, i) => ({ id: 12 - i, title: `Job ${12 - i}` }));
+
+function answer<T>(value: T): Promise<T> {
+  return new Promise((resolve) => setTimeout(() => resolve(value), 200));
+}
+
+export const liveIds = () => jobs.map((j) => j.id);
+
+export function postJob() {
+  jobs = [{ id: nextId, title: `Job ${nextId}` }, ...jobs];
+  nextId++;
+}
+
+export function closeJob(id: number) {
+  jobs = jobs.filter((j) => j.id !== id);
+}
+
+// GET /jobs?offset=6&limit=3: a position in the feed as it is now.
+export function byOffset(offset: number, limit = 3) {
+  return answer(jobs.slice(offset, offset + limit));
+}
+
+// GET /jobs?after=7&limit=3: the jobs older than the last one you have. Inserts above it
+// and deletes anywhere don't move it.
+export function byCursor(after: number | null, limit = 3) {
+  return answer((after === null ? jobs : jobs.filter((j) => j.id < after)).slice(0, limit));
+}
+</script>
+<script type="text/plain" data-sbx-file="Autocomplete.tsx" data-sbx-group="autocomplete" data-sbx-color="#FBBF24" data-sbx-shut>
+import './styles.css';
+import { useEffect, useRef, useState } from 'react';
+import { search } from './searchApi';
+
+// Type fast with everything off: five requests race, and the slowest, for "r", lands last and
+// wins. Debounce sends one request when typing pauses; abort cancels the one the next
+// keystroke made stale; the cache answers a query you already asked without the network.
+export default function Autocomplete() {
+  const [q, setQ] = useState('');
+  const [debounce, setDebounce] = useState(true);
+  const [abort, setAbort] = useState(true);
+  const [cache, setCache] = useState(true);
+  const [shown, setShown] = useState<{ q: string; hits: string[] } | null>(null);
+  const [log, setLog] = useState<string[]>([]);
+  const [sent, setSent] = useState(0);
+  const memo = useRef(new Map<string, string[]>());
+  const note = (line: string) => setLog((l) => [...l.slice(-7), line]);
+
+  useEffect(() => {
+    if (!q) return;
+    const ctl = new AbortController();
+    const timer = setTimeout(async () => {
+      const kept = cache ? memo.current.get(q) : undefined;
+      if (kept) {
+        note(`cache  "${q}"`);
+        setShown({ q, hits: kept });
+        return;
+      }
+      note(`→ GET ?q=${q}`);
+      setSent((n) => n + 1);
+      try {
+        const hits = await search(q, abort ? ctl.signal : undefined);
+        memo.current.set(q, hits);
+        note(`← "${q}" · ${hits.length} hits`);
+        setShown({ q, hits });
+      } catch {
+        note(`✕ "${q}" aborted`);
+      }
+    }, debounce ? 250 : 0);
+    return () => {
+      clearTimeout(timer);
+      ctl.abort();
+    };
+  }, [q, debounce, abort, cache]);
+
+  function typeFast() {
+    setLog([]);
+    setSent(0);
+    setShown(null);
+    memo.current.clear();
+    [...'react'].forEach((_, i) => setTimeout(() => setQ('react'.slice(0, i + 1)), i * 70));
+  }
+
+  const stale = shown !== null && shown.q !== q;
+  return (
+    <main>
+      <h1>autocomplete · one request per pause</h1>
+      <div className="row">
+        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search jobs" />
+        <button onClick={typeFast}>Type “react” fast</button>
+      </div>
+      <div className="row">
+        <label><input type="checkbox" checked={debounce} onChange={(e) => setDebounce(e.target.checked)} /> debounce 250 ms</label>
+        <label><input type="checkbox" checked={abort} onChange={(e) => setAbort(e.target.checked)} /> abort stale</label>
+        <label><input type="checkbox" checked={cache} onChange={(e) => setCache(e.target.checked)} /> cache by query</label>
+      </div>
+      <p className={stale ? 'bad' : 'muted'}>
+        {!shown ? '—' : stale ? `stale: showing results for "${shown.q}" while the box says "${q}"` : `${shown.hits.length} results for "${shown.q}"`}
+      </p>
+      <ul>{shown?.hits.map((h) => <li key={h}>{h}</li>)}</ul>
+      <p className="muted">{sent} request{sent === 1 ? '' : 's'} sent</p>
+      <pre>{log.join('\n') || 'no requests yet'}</pre>
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="searchApi.ts" data-sbx-group="autocomplete">
+// A fake search endpoint. A short query matches more and answers slower, so an early
+// keystroke's answer can land after a later one's.
+const JOBS = [
+  'React Developer', 'React Native Engineer', 'Frontend Engineer', 'Frontend Architect',
+  'UI Engineer', 'Design Engineer', 'Design Systems Lead', 'Web Performance Engineer',
+  'Accessibility Specialist', 'Full-stack Developer', 'Next.js Developer', 'TypeScript Engineer',
+];
+
+export function search(q: string, signal?: AbortSignal): Promise<string[]> {
+  const ms = Math.max(150, 900 - q.length * 180);
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => resolve(JOBS.filter((j) => j.toLowerCase().includes(q.toLowerCase()))), ms);
+    signal?.addEventListener('abort', () => {
+      clearTimeout(timer);
+      reject(new DOMException('The request was aborted', 'AbortError'));
+    });
+  });
+}
+</script>
+<script type="text/plain" data-sbx-file="VirtualFeed.tsx" data-sbx-group="feed" data-sbx-color="#34D399" data-sbx-shut>
+import './styles.css';
+import { useLayoutEffect, useRef, useState } from 'react';
+import { useWindow } from './useWindow';
+
+const COUNT = 10_000;
+const ROW = 36;
+const HEIGHT = 288;
+const job = (i: number) => `#${i + 1} · ${['Frontend', 'UI', 'React', 'Design'][i % 4]} Engineer · ${['Cairo', 'Remote', 'Riyadh', 'Dubai'][i % 4]}`;
+
+// Ten thousand rows. Rendered whole, the list puts every one in the DOM; virtualised, only
+// the rows in view plus a few either side exist, and they move as you scroll.
+export default function VirtualFeed() {
+  const [virtual, setVirtual] = useState(true);
+  const [nodes, setNodes] = useState(0);
+  const [took, setTook] = useState<number | null>(null);
+  const box = useRef<HTMLDivElement>(null);
+  const started = useRef(0);
+  const { first, last, onScroll } = useWindow(COUNT, ROW, HEIGHT);
+
+  useLayoutEffect(() => {
+    setNodes(box.current ? box.current.querySelectorAll('*').length : 0);
+    if (started.current) {
+      setTook(Math.round(performance.now() - started.current));
+      started.current = 0;
+    }
+  }, [virtual, first, last]);
+
+  function toggle(on: boolean) {
+    started.current = performance.now();
+    setVirtual(on);
+  }
+
+  const rows = virtual ? Array.from({ length: last - first }, (_, k) => first + k) : Array.from({ length: COUNT }, (_, i) => i);
+  return (
+    <main>
+      <h1>feed · render only what's in view</h1>
+      <div className="row">
+        <label><input type="checkbox" checked={virtual} onChange={(e) => toggle(e.target.checked)} /> virtualise</label>
+        <b>{nodes.toLocaleString()} DOM nodes</b>
+        <span className="muted">rows {virtual ? `${first}–${last}` : `all ${COUNT.toLocaleString()}`}{took !== null ? ` · last switch rendered in ${took} ms` : ''}</span>
+      </div>
+      <div ref={box} onScroll={onScroll} style={{ height: HEIGHT, overflow: 'auto', border: '1px solid #cbd5e1', borderRadius: 10 }}>
+        <div style={{ height: COUNT * ROW, position: 'relative' }}>
+          {rows.map((i) => (
+            <div key={i} style={{ position: 'absolute', top: i * ROW, height: ROW, left: 0, right: 0, padding: '8px 12px', boxSizing: 'border-box', borderBottom: '1px solid #f1f5f9' }}>
+              {job(i)}
+            </div>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="useWindow.ts" data-sbx-group="feed">
+import { useState, type UIEvent } from 'react';
+
+// The rows a scroll box of a fixed height can show at its scroll position, plus a few
+// either side so a fast scroll doesn't flash blank.
+export function useWindow(count: number, rowHeight: number, height: number, overscan = 4) {
+  const [top, setTop] = useState(0);
+  const first = Math.max(0, Math.floor(top / rowHeight) - overscan);
+  const last = Math.min(count, Math.ceil((top + height) / rowHeight) + overscan);
+  return { first, last, onScroll: (e: UIEvent<HTMLElement>) => setTop(e.currentTarget.scrollTop) };
+}
+</script>
+<script type="text/plain" data-sbx-file="Realtime.tsx" data-sbx-group="realtime" data-sbx-color="#A78BFA" data-sbx-shut>
+import './styles.css';
+import { useEffect, useRef, useState } from 'react';
+import { poll, start, subscribe, type Change } from './pushServer';
+
+type Got = Change & { late: number };
+const avg = (xs: Got[]) => (xs.length ? (xs.reduce((a, x) => a + x.late, 0) / xs.length / 1000).toFixed(2) : '—');
+
+// The server changes an application's status every second or two. The left client polls
+// every 2 s; the right one holds a stream open. Drop the stream: it reconnects with the last
+// id it saw and the server sends what it missed. Turn that off and the gap stays a gap.
+export default function Realtime() {
+  const [polled, setPolled] = useState<Got[]>([]);
+  const [requests, setRequests] = useState(0);
+  const [streamed, setStreamed] = useState<Got[]>([]);
+  const [connected, setConnected] = useState(true);
+  const [resume, setResume] = useState(true);
+  const lastPolled = useRef(0);
+  const lastSeen = useRef(0);
+
+  useEffect(() => start(), []);
+
+  useEffect(() => {
+    const timer = setInterval(async () => {
+      setRequests((n) => n + 1);
+      const fresh = await poll(lastPolled.current);
+      if (!fresh.length) return;
+      lastPolled.current = fresh[fresh.length - 1].seq;
+      const now = Date.now();
+      setPolled((l) => [...l, ...fresh.map((c) => ({ ...c, late: now - c.at }))]);
+    }, 2000);
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!connected) return;
+    // Like EventSource: the reconnect sends Last-Event-ID, and the server replays after it.
+    return subscribe(resume ? lastSeen.current : null, (c) => {
+      lastSeen.current = c.seq;
+      setStreamed((l) => [...l, { ...c, late: Date.now() - c.at }]);
+    });
+  }, [connected, resume]);
+
+  function drop() {
+    setConnected(false);
+    setTimeout(() => setConnected(true), 3000);
+  }
+
+  const seqs = streamed.map((c) => c.seq);
+  const gaps = seqs.filter((s, i) => i > 0 && s !== seqs[i - 1] + 1).length;
+  return (
+    <main>
+      <h1>realtime · polling vs a stream</h1>
+      <div className="row">
+        <button onClick={drop} disabled={!connected}>{connected ? 'Drop the stream for 3 s' : 'reconnecting…'}</button>
+        <label><input type="checkbox" checked={resume} onChange={(e) => setResume(e.target.checked)} /> resume from Last-Event-ID</label>
+      </div>
+      <div className="two">
+        <section className="card">
+          <h2>polling every 2 s</h2>
+          <p>{requests} requests · {polled.length} changes · avg {avg(polled)} s late</p>
+          <pre>{polled.slice(-5).map((c) => `#${c.seq} ${c.text}`).join('\n') || 'waiting…'}</pre>
+        </section>
+        <section className="card">
+          <h2>stream</h2>
+          <p>1 connection · {streamed.length} changes · avg {avg(streamed)} s late</p>
+          {gaps > 0 && <p className="bad">{gaps} gap{gaps > 1 ? 's' : ''}: changes lost while it was down</p>}
+          <pre>{streamed.slice(-5).map((c) => `#${c.seq} ${c.text}`).join('\n') || 'waiting…'}</pre>
+        </section>
+      </div>
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="pushServer.ts" data-sbx-group="realtime">
+// A fake server that changes an application's status every 0.6 to 1.8 s. poll() is an
+// ordinary request; subscribe() is one open connection that pushes each change.
+export type Change = { seq: number; at: number; text: string };
+
+const STATUS = ['viewed', 'shortlisted', 'interview booked', 'offer sent', 'withdrawn', 'hired'];
+const changes: Change[] = [];
+const listeners = new Set<(c: Change) => void>();
+let seq = 0;
+let running = 0;
+
+function tick() {
+  if (!running) return;
+  const c = { seq: ++seq, at: Date.now(), text: STATUS[seq % STATUS.length] };
+  changes.push(c);
+  listeners.forEach((fn) => setTimeout(() => fn(c), 40));
+  setTimeout(tick, 600 + Math.random() * 1200);
+}
+
+// Runs while anything uses it; the returned function stops it.
+export function start() {
+  if (running++ === 0) setTimeout(tick, 600);
+  return () => {
+    running--;
+  };
+}
+
+// GET /changes?since=7
+export function poll(since: number): Promise<Change[]> {
+  return new Promise((resolve) => setTimeout(() => resolve(changes.filter((c) => c.seq > since)), 80));
+}
+
+// EventSource('/changes'), with the last id seen when it reconnects (null: start from now).
+export function subscribe(lastId: number | null, fn: (c: Change) => void) {
+  if (lastId !== null) changes.filter((c) => c.seq > lastId).forEach((c) => setTimeout(() => fn(c), 40));
+  listeners.add(fn);
+  return () => {
+    listeners.delete(fn);
+  };
+}
+</script>
+<script type="text/plain" data-sbx-file="Cart.tsx" data-sbx-group="cart" data-sbx-color="#F8717A" data-sbx-shut>
+import './styles.css';
+import { useRef, useState } from 'react';
+import { addToCart, charges, placeOrder } from './shopApi';
+
+// Adding to the cart can be optimistic: the count moves at once and rolls back if the server
+// says no. Placing the order can't: the UI waits for the server's answer, and one idempotency
+// key per attempt means a double click or a retry charges once.
+export default function Cart() {
+  const [items, setItems] = useState(0);
+  const [toast, setToast] = useState('');
+  const [useKey, setUseKey] = useState(true);
+  const [placing, setPlacing] = useState(0);
+  const [receipt, setReceipt] = useState('');
+  const attempt = useRef('');
+  const flying = useRef(0);
+
+  async function add() {
+    setItems((n) => n + 1);
+    setToast('');
+    try {
+      await addToCart();
+    } catch (e) {
+      setItems((n) => n - 1);
+      setToast(`${(e as Error).message}: rolled back`);
+    }
+  }
+
+  async function order() {
+    // one id per attempt: every click until the answer comes back belongs to it
+    if (!flying.current) attempt.current = Math.random().toString(36).slice(2, 8);
+    flying.current++;
+    setPlacing(flying.current);
+    setReceipt('');
+    const r = await placeOrder(attempt.current, useKey, items);
+    flying.current--;
+    setPlacing(flying.current);
+    setReceipt(`order ${r.id} · ${r.items} items`);
+  }
+
+  const charged = charges();
+  return (
+    <main>
+      <h1>cart · optimistic, then pessimistic</h1>
+      <div className="two">
+        <section className="card">
+          <h2>cart: {items}</h2>
+          <button onClick={add}>Add a keyboard</button>
+          <p className="muted">the server has 3 in stock</p>
+          {toast && <p className="bad">{toast}</p>}
+        </section>
+        <section className="card">
+          <h2>checkout</h2>
+          <button onClick={order} disabled={!items}>{placing ? 'Placing…' : 'Place order'}</button>
+          <label><input type="checkbox" checked={useKey} onChange={(e) => setUseKey(e.target.checked)} /> idempotency key</label>
+          <p className={charged.length > new Set(charged).size ? 'bad' : 'muted'}>charged {charged.length} time{charged.length === 1 ? '' : 's'}</p>
+          {receipt && <p className="good">{receipt}</p>}
+        </section>
+      </div>
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="shopApi.ts" data-sbx-group="cart">
+// A fake shop. The server keeps its own cart and checks stock; a charge with an idempotency
+// key it has seen returns the first receipt instead of charging again.
+export type Receipt = { id: string; items: number };
+
+const STOCK = 3;
+let inCart = 0;
+const charged: string[] = [];
+const byKey = new Map<string, Promise<Receipt>>();
+
+const later = <T>(ms: number, fn: () => T) => new Promise<T>((resolve, reject) => setTimeout(() => {
+  try { resolve(fn()); } catch (e) { reject(e); }
+}, ms));
+
+export function addToCart(): Promise<number> {
+  return later(700, () => {
+    if (inCart >= STOCK) throw new Error('Out of stock');
+    return ++inCart;
+  });
+}
+
+// Every charge's attempt id, so a double charge shows up as the same attempt twice.
+export const charges = () => [...charged];
+
+// POST /orders with an Idempotency-Key header (or without one: the server can't tell a
+// retry from a new order).
+export function placeOrder(attempt: string, sendKey: boolean, items: number): Promise<Receipt> {
+  const kept = sendKey ? byKey.get(attempt) : undefined;
+  if (kept) return kept;
+  const p = later(1200, () => {
+    charged.push(attempt);
+    return { id: attempt, items };
+  });
+  if (sendKey) byKey.set(attempt, p);
+  return p;
+}
+</script>
+<script>
+/* Step player — see the .anim block in the stylesheet for the vocabulary. Each player
+   restarts whenever its slide opens; R replays every player on the current slide. With
+   reduced motion, or for print, it jumps straight to the settled frame. */
+(function(){
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var players = [];
+  document.querySelectorAll('.anim[data-at]').forEach(function(root){
+    var at = root.dataset.at.split(',').map(Number), n = at.length, timers = [];
+    var ins  = [].slice.call(root.querySelectorAll('[data-in]'));
+    var outs = [].slice.call(root.querySelectorAll('[data-out]'));
+    var hls  = [].slice.call(root.querySelectorAll('[data-hl]')).map(function(el){
+      return { el:el, at:el.dataset.hl.split(/\s+/).map(Number) };
+    });
+    var says = [].slice.call(root.querySelectorAll('.anim-say i'));
+    var steps = [].slice.call(root.querySelectorAll('.anim-step')), cur = n;
+
+    function set(k){
+      cur = k;
+      for (var j = 1; j <= n; j++) root.classList.toggle('s' + j, j <= k);
+      root.dataset.step = k;
+      ins.forEach(function(el){ el.classList.toggle('in', k >= +el.dataset.in); });
+      outs.forEach(function(el){ el.classList.toggle('out', k >= +el.dataset.out); });
+      hls.forEach(function(h){ h.el.classList.toggle('lit', h.at.indexOf(k) >= 0); });
+      says.forEach(function(el, j){ el.classList.toggle('on', j === k - 1); });
+      steps.forEach(function(b){
+        var d = +b.dataset.d;
+        b.setAttribute('aria-disabled', String(d < 0 ? k <= 0 : k >= n));
+      });
+    }
+    function go(d){
+      timers.forEach(clearTimeout); timers = [];
+      set(Math.max(0, Math.min(n, cur + d)));
+    }
+    function settle(){ timers.forEach(clearTimeout); timers = []; set(n); }
+    function play(){
+      if (still.matches) return settle();
+      timers.forEach(clearTimeout); timers = [];
+      root.classList.add('rs'); set(0); void root.offsetWidth; root.classList.remove('rs');
+      at.forEach(function(ms, j){ timers.push(setTimeout(function(){ set(j + 1); }, ms)); });
+    }
+    set(n);
+    root.classList.add('live');
+
+    var btn = root.querySelector('.anim-replay');
+    if (btn) btn.addEventListener('click', play);
+    steps.forEach(function(b){ b.addEventListener('click', function(){ go(+b.dataset.d); }); });
+    // A press on a player button must not also turn the slide.
+    (btn ? [btn] : []).concat(steps).forEach(function(b){
+      ['click','pointerdown'].forEach(function(t){
+        b.addEventListener(t, function(e){ e.stopPropagation(); });
+      });
+    });
+
+    var slide = root.closest('.slide'), wasOn = slide.classList.contains('on');
+    if (wasOn) play();
+    new MutationObserver(function(){
+      var isOn = slide.classList.contains('on');
+      if (isOn && !wasOn) play();
+      if (!isOn && wasOn) settle();
+      wasOn = isOn;
+    }).observe(slide, { attributes:true, attributeFilter:['class'] });
+    players.push({ slide:slide, play:play, settle:settle });
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key.toLowerCase() !== 'r' || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+    players.forEach(function(p){ if (p.slide.classList.contains('on')) p.play(); });
+  });
+  window.addEventListener('beforeprint', function(){ players.forEach(function(p){ p.settle(); }); });
+})();
+</script>
+<script>
+/* Live demos — see the .demo block in the stylesheet. The deck turns slides on any click
+   and on Space or the arrow keys, so a demo keeps its own clicks, and keeps the keys that
+   belong to it: anything typed into an input, plus Space, Enter, Tab and Escape on its
+   controls. Arrow keys on a demo button still turn the slide. */
+(function(){
+  document.querySelectorAll('.demo').forEach(function(el){
+    ['click','pointerdown'].forEach(function(t){ el.addEventListener(t, function(e){ e.stopPropagation(); }); });
+    el.addEventListener('keydown', function(e){
+      var typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable;
+      if (typing || e.key === ' ' || e.key === 'Enter' || e.key === 'Tab' || e.key === 'Escape') e.stopPropagation();
+    });
+  });
+
+  // Runs open() each time the demo's slide opens and close() each time it leaves.
+  function watch(el, open, close){
+    var s = el.closest('.slide'), was = s.classList.contains('on');
+    if (was) open();
+    new MutationObserver(function(){
+      var is = s.classList.contains('on');
+      if (is && !was) open();
+      if (!is && was && close) close();
+      was = is;
+    }).observe(s, { attributes:true, attributeFilter:['class'] });
+  }
+  function again(el, cls){ el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]; }); }
+  function k(root, name){ return root.querySelector('[data-k="' + name + '"]'); }
+  window.cxDemo = { watch:watch, again:again, esc:esc, k:k };
+
+
+
+  /* L2c · offset pages drift; cursors don't */
+  (function(){
+    var root = document.getElementById('demo-page');
+    if (!root) return;
+    // The feed, newest first. t is when a job was posted: the sort key a cursor remembers.
+    var server, posted, lanes, top;
+    function fresh(){
+      server = 'ABCDEFGHIJKL'.split('').map(function(id, j){ return { id: id, t: 100 - j }; });
+      posted = 0;
+      lanes = { offset: [server.slice(0, 3)], cursor: [server.slice(0, 3)] };
+      top = server[0].t;
+    }
+    function have(l){ return [].concat.apply([], lanes[l]); }
+    function next(){
+      var off = have('offset'), cur = have('cursor'), last = cur[cur.length - 1];
+      lanes.offset.push(server.slice(off.length, off.length + 3));
+      lanes.cursor.push(server.filter(function(j){ return j.t < last.t; }).slice(0, 3));
+    }
+    function verdict(l){
+      var got = have(l), ids = got.map(function(j){ return j.id; });
+      var low = Math.min.apply(null, got.map(function(j){ return j.t; }));
+      return {
+        again: ids.filter(function(id, x){ return ids.indexOf(id) !== x; }),
+        // still in the feed, above the deepest job this list has, and never shown
+        skipped: server.filter(function(j){ return j.t > low && j.t <= top && ids.indexOf(j.id) < 0; }).map(function(j){ return j.id; })
+      };
+    }
+    function paint(){
+      ['offset', 'cursor'].forEach(function(l){
+        var seen = {}, html = '';
+        lanes[l].forEach(function(pg, x){
+          if (x) html += '<i class="pg"></i>';
+          pg.forEach(function(j){ html += '<span class="chip' + (seen[j.id] ? ' dup' : '') + '">' + j.id + '</span>'; seen[j.id] = 1; });
+          if (!pg.length) html += '<span class="demo-hint">end of the feed</span>';
+        });
+        k(root, l).innerHTML = html;
+        var v = verdict(l), out = [];
+        if (v.again.length) out.push(v.again.join(', ') + ' again');
+        if (v.skipped.length) out.push('skipped ' + v.skipped.join(', '));
+        var say = k(root, l + '-v');
+        say.textContent = out.length ? out.join(' · ') : 'no repeats, no gaps';
+        say.className = 'verdict ' + (out.length ? 'r' : 'g');
+      });
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-act]'); if (!b) return;
+      var a = b.dataset.act;
+      if (a === 'new') {
+        posted++;
+        server.unshift({ id: posted > 1 ? 'N' + posted : 'N', t: 100 + posted });
+        again(b, 'flash');
+      }
+      if (a === 'close') {
+        // the newest job both lists already show leaves the feed
+        var read = have('cursor').map(function(j){ return j.id; });
+        var gone = server.filter(function(j){ return read.indexOf(j.id) >= 0; })[0];
+        if (gone) { server.splice(server.indexOf(gone), 1); again(b, 'flash-r'); }
+      }
+      if (a === 'next') next();
+      if (a === 'reset') fresh();
+      paint();
+    });
+    watch(root, function(){ fresh(); paint(); });
+  })();
+
+  /* L4a · one minute on each transport */
+  (function(){
+    var root = document.getElementById('demo-wire');
+    if (!root) return;
+    // Six status changes in one minute (seconds), polling every 10 s, a heartbeat every 25 s.
+    var EV = [4, 11, 23, 24, 38, 51], POLL = 10, PING = 25, X = 4, timer = null;
+    var btn = root.querySelector('[data-act="run"]');
+    function line(cls, t, x1, y1, x2, y2){
+      return '<line class="' + cls + '" data-t="' + t + '" x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '"/>';
+    }
+    function arrive(name, t){ return name === 'poll' ? Math.ceil(t / POLL) * POLL : t + 0.1; }
+    function draw(name){
+      var h = '<line class="base" x1="0" y1="14" x2="240" y2="14"/>', s;
+      if (name === 'poll') for (s = POLL; s <= 60; s += POLL) h += line('ask', s, s * X, 9, s * X, 19);
+      else h += line('ask', 0, 0, 9, 0, 19);
+      if (name === 'ws') for (s = PING; s < 60; s += PING) h += line('ask', s, s * X, 11, s * X, 17);
+      EV.forEach(function(t){
+        var at = arrive(name, t);
+        h += '<circle class="ev" data-t="' + t + '" cx="' + t * X + '" cy="4" r="3"/>';
+        if (at - t > 1) h += line('lag', at, t * X, 4, at * X, 4);
+        h += line('got', at, at * X, 2, at * X, 22);
+      });
+      root.querySelector('[data-lane="' + name + '"]').innerHTML = h;
+    }
+    function count(name, now){
+      var got = EV.filter(function(t){ return arrive(name, t) <= now; });
+      var late = got.length ? got.reduce(function(a, t){ return a + arrive(name, t) - t; }, 0) / got.length : 0;
+      var lag = got.length ? ' · ' + late.toFixed(1) + ' s late' : '';
+      if (name === 'poll') return Math.floor(now / POLL) + ' requests' + lag;
+      if (name === 'sse') return '1 connection' + lag;
+      return '1 connection + ' + Math.floor(Math.min(now, 59) / PING) + ' pings' + lag;
+    }
+    function at(now){
+      root.querySelectorAll('[data-t]').forEach(function(el){ el.classList.toggle('on', +el.dataset.t <= now); });
+      ['poll', 'sse', 'ws'].forEach(function(n){ k(root, n).textContent = now < 0 ? '' : count(n, now); });
+    }
+    function stop(){ clearInterval(timer); timer = null; }
+    function run(){
+      stop();
+      var now = 0;
+      at(0);
+      timer = setInterval(function(){
+        now = Math.min(60, now + 0.5);
+        at(now);
+        btn.textContent = now < 60 ? 'second ' + Math.floor(now) : '▶ again';
+        if (now >= 60) stop();
+      }, 50);
+    }
+    ['poll', 'sse', 'ws'].forEach(draw);
+    btn.addEventListener('click', run);
+    watch(root, function(){ stop(); at(-1); btn.textContent = '▶ one minute'; }, stop);
+  })();
+
+  /* L5 · the cart can be optimistic, checkout can't */
+  (function(){
+    var root = document.getElementById('demo-cart');
+    if (!root) return;
+    var st, timers = [];
+    function later(ms, fn){ timers.push(setTimeout(fn, ms)); }
+    function say(t){ k(root, 'say').textContent = t; }
+    function paint(){
+      k(root, 'cart').textContent = st.cart;
+      var c = k(root, 'charged');
+      c.textContent = st.charges;
+      c.className = st.charges > st.orders ? 'bad' : st.charges ? 'good' : '';
+      root.querySelector('[data-act="fail"]').classList.toggle('on', st.fail);
+      root.querySelector('[data-act="key"]').classList.toggle('on', st.key);
+      root.querySelector('[data-act="key"]').classList.toggle('g', st.key);
+      root.querySelector('[data-act="order"]').textContent = st.flying ? 'Placing…' : 'Place order';
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-act]'); if (!b) return;
+      var a = b.dataset.act;
+      if (a === 'add') {
+        var fail = st.fail;
+        st.cart++; paint(); again(k(root, 'cart'), 'bump');
+        say('Added at once. The server confirms in the background.');
+        later(900, function(){
+          if (fail) { st.cart--; paint(); again(k(root, 'cart'), 'flash-r'); say('Out of stock: the server said no, so the cart rolls back and a toast says why.'); }
+          else say('Confirmed. Nothing on screen moved: it was already right.');
+        });
+      }
+      if (a === 'fail') { st.fail = !st.fail; paint(); }
+      if (a === 'key') { st.key = !st.key; paint(); }
+      if (a === 'order') {
+        if (!st.flying) { st.orders++; st.clicks = 0; }
+        st.clicks++;
+        var first = st.clicks === 1;
+        if (first || !st.key) {
+          // each request the server treats as new is a charge
+          st.flying++;
+          later(1400, function(){
+            st.charges++; st.flying--; paint();
+            if (st.flying) return;
+            say(st.charges > st.orders
+              ? 'Charged ' + st.charges + ' times for one order. No key, so every click was a new order.'
+              : 'Order placed after the server re-checked price and stock. Charged once for ' + st.clicks + (st.clicks > 1 ? ' clicks.' : ' click.'));
+          });
+        }
+        say(first ? 'Placing: the server re-checks price and stock, and the UI waits for its answer.'
+          : st.key ? 'Another click, same idempotency key: the server answers with the first result.'
+          : 'Another click, no key: the server sees a brand-new order.');
+        paint();
+      }
+    });
+    watch(root, function(){
+      timers.forEach(clearTimeout); timers = [];
+      st = { cart: 0, charges: 0, orders: 0, clicks: 0, flying: 0, fail: false, key: true };
+      paint(); say('Add to cart a few times, then place the order.');
+    }, function(){ timers.forEach(clearTimeout); timers = []; });
+  })();
+})();
 </script>
 <!--catalyst-brand:copy-->
 <script>

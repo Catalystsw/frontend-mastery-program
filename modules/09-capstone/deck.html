@@ -154,6 +154,116 @@
     animation:cxBar .5s cubic-bezier(.22,.72,.28,1) .12s both}
   .slide .card{transition:border-color .25s, transform .25s}
 
+  /* Title: the five lessons deal in once the heading has landed. */
+  @keyframes cxPop{from{opacity:0; transform:translateY(10px) scale(.92)}}
+  .pop{transform-box:fill-box; transform-origin:center}
+  .slide.on .pop{animation:cxPop .5s cubic-bezier(.2,1.3,.4,1) both; animation-delay:calc(.45s + var(--i,0) * .07s)}
+
+  /* ---- step player: a figure that plays itself when its slide opens ------------------
+     Same vocabulary as modules 4 to 6. .anim[data-at="0,900,…"] steps 1, 2, … at those times
+     (ms); R or the replay button plays it again; .anim-step[data-d="-1"|"1"] buttons
+     pause it and step by hand. The root carries s1..sN and data-step="N". On any
+     descendant: data-in="N" fades in at step N (an SVG path with pathLength=1 draws);
+     data-out="N" dims at step N; data-hl="N M" highlights while the step is N or M.
+     Until the script marks the root .live nothing is hidden, so the settled frame is
+     also what prints and what a reader without motion sees. */
+  .anim{width:100%}
+  .anim.live [data-in]{transition:opacity .45s, transform .55s cubic-bezier(.22,.72,.28,1), stroke-dashoffset .6s ease,
+    color .35s, border-color .35s, background-color .35s, fill .35s, stroke .35s}
+  .anim.live [data-in]:not(.in){opacity:0}
+  .anim.live path[data-in]{stroke-dasharray:1; stroke-dashoffset:1}
+  .anim.live path[data-in].in{stroke-dashoffset:0}
+  .anim.live [data-out].out{opacity:.3}
+  .anim [data-hl]{--hl:rgba(34,211,238,.17); border-radius:4px; -webkit-box-decoration-break:clone; box-decoration-break:clone;
+    transition:background-color .3s, box-shadow .3s}
+  .anim [data-hl].hl-g{--hl:rgba(52,211,153,.17)} .anim [data-hl].hl-r{--hl:rgba(248,113,122,.2)}
+  .anim [data-hl].hl-p{--hl:rgba(167,139,250,.22)} .anim [data-hl].hl-w{--hl:rgba(251,191,36,.17)}
+  .anim [data-hl].lit{background-color:var(--hl); box-shadow:0 0 0 3px var(--hl)}
+  .anim.rs,.anim.rs *{transition:none !important}
+  .anim-bar{display:flex; align-items:center; flex-wrap:wrap; gap:10px 14px; margin-top:10px; min-height:34px}
+  .anim-replay,.anim-step{cursor:pointer; background:var(--panel2); border:1px solid var(--line2); color:var(--ink2); border-radius:8px;
+    padding:7px 12px; font:700 11.5px/1 var(--mono); letter-spacing:1.2px; text-transform:uppercase;
+    transition:background .18s, color .18s, border-color .18s}
+  .anim-replay:hover,.anim-step:hover{background:var(--line2); color:#fff; border-color:var(--cy)}
+  .anim-step{padding:5px 10px; font:700 16px/1 var(--sans); letter-spacing:0}
+  .anim-step[aria-disabled="true"]{opacity:.35; cursor:default}
+  .anim-say{font:600 min(1.4vw,16px)/1.4 var(--sans); color:var(--ink2)}
+  .anim-say i{display:none; font-style:normal} .anim-say i.on{display:inline}
+
+  /* ---- live demos: small working pieces of UI on the slide ---------------------------
+     A .demo is self-contained. A click inside it never turns the slide, and neither do
+     Space, Enter, Tab or Escape on its controls, or any key typed into its inputs.
+     Each demo is wired by id in the demo script at the end of the deck and resets
+     whenever its slide opens. */
+  .demo{background:var(--panel); border:1px solid var(--line2); border-radius:12px; padding:11px 14px; margin-top:14px;
+    width:100%; max-width:1060px; font:min(1.45vw,15.5px)/1.4 var(--sans); color:var(--ink2)}
+  .demo.bare{background:none; border:0; padding:0; border-radius:0}
+  .demo .row{display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px}
+  .demo .row + .row{margin-top:9px}
+  .demo-tag{font:700 10.5px/1 var(--mono); letter-spacing:1.6px; text-transform:uppercase; color:var(--cy)}
+  .demo-hint{font-size:.9em; color:var(--grey3)}
+  .dbtn{cursor:pointer; background:var(--panel2); border:1px solid var(--line2); color:var(--ink); border-radius:8px;
+    padding:7px 12px; font:600 12.5px/1 var(--mono); transition:background .18s, border-color .18s, color .18s}
+  .dbtn:hover{border-color:var(--cy)}
+  .dbtn:focus-visible,.dinput:focus-visible{outline:2px solid var(--cy); outline-offset:2px}
+  .dbtn.on{background:rgba(34,211,238,.14); border-color:var(--cy); color:#fff}
+  .dbtn.on.g{background:rgba(52,211,153,.14); border-color:var(--good)}
+  .dinput{background:var(--code); border:1px solid var(--line2); color:#fff; border-radius:8px; padding:7px 11px;
+    font:14.5px/1.2 var(--mono); min-width:0}
+  .dinput:focus{outline:none; border-color:var(--cy); box-shadow:0 0 0 3px rgba(34,211,238,.18)}
+  .meter{font:600 12px/1 var(--mono); color:var(--muted); white-space:nowrap}
+  .meter b{display:inline-block; min-width:2ch; margin-left:5px; color:#fff; font-size:15px}
+  .meter b.good{color:var(--good)} .meter b.bad{color:var(--bad)}
+  .dom{font:13.5px/1 var(--mono); color:var(--grey3); padding:6px 9px; border-radius:7px; border:1px dashed var(--line2)}
+  .dom b{color:#fff; font-weight:600}
+  @keyframes cxFlash{15%{box-shadow:0 0 0 4px rgba(251,191,36,.5); background-color:rgba(251,191,36,.14)}}
+  @keyframes cxFlashG{15%{box-shadow:0 0 0 4px rgba(52,211,153,.5); background-color:rgba(52,211,153,.14)}}
+  @keyframes cxFlashR{15%{box-shadow:0 0 0 4px rgba(248,113,122,.55); background-color:rgba(248,113,122,.16)}}
+  @keyframes cxBump{40%{transform:scale(1.35); color:var(--ochre)}}
+  .flash{animation:cxFlash .7s ease} .flash-g{animation:cxFlashG .7s ease} .flash-r{animation:cxFlashR .8s ease}
+  .bump{animation:cxBump .35s ease}
+
+  /* L1b: merge the layers into the capstone stage, in order or not. */
+  #demo-merge .dbtn.no{border-color:var(--bad); color:var(--bad)}
+  #demo-merge .trail{font:600 13px/1 var(--mono); color:var(--grey3)}
+  #demo-merge .trail b{color:var(--good)} #demo-merge .trail s{color:var(--bad); text-decoration:none}
+
+  /* L2a: a request walks the three checks; the one that says no lights green, a leak red. */
+  #fx-auth [data-c],#fx-auth [data-hop]{transition:opacity .25s}
+  #fx-auth.run [data-c]:not(.lit),#fx-auth.run [data-hop]:not(.lit){opacity:.28}
+  #fx-auth [data-c] rect{transition:fill .25s, stroke .25s, stroke-width .25s}
+  #fx-auth .lit rect,#fx-auth path.lit{stroke-width:2.5}
+  #fx-auth .pass rect{fill:rgba(34,211,238,.1)}
+  #fx-auth .stop rect{fill:rgba(52,211,153,.2); stroke:#34D399; stroke-width:3}
+  #fx-auth .leak rect{fill:rgba(248,113,122,.22); stroke:#F8717A; stroke-width:3}
+  #fx-auth .skip rect,#fx-auth .gone rect{stroke-dasharray:5 4}
+  #fx-auth .gone{opacity:.25}
+
+  /* L2b: the six auth paths run as a suite; a planted bug fails the row that catches it. */
+  #tbl-auth td{transition:background-color .3s}
+  #tbl-auth tr.now td{background:rgba(34,211,238,.1)}
+  #tbl-auth tr.ok td{background:rgba(52,211,153,.07)}
+  #tbl-auth tr.no td{background:rgba(248,113,122,.13)}
+  #tbl-auth .tm{font-weight:800; margin-right:6px}
+  #tbl-auth tr.ok .tm{color:var(--good)} #tbl-auth tr.no .tm{color:var(--bad)}
+  #demo-tests .dbtn.on{background:rgba(248,113,122,.14); border-color:var(--bad)}
+
+  /* L3a: the reviewer's clock fills under the README's five parts. */
+  #fx-readme .clock{transform-box:fill-box; transform-origin:left center; transition:transform .8s cubic-bezier(.22,.72,.28,1)}
+  #fx-readme.live .clock{transform:scaleX(0)}
+  #fx-readme.live.s1 .clock{transform:scaleX(.184)} #fx-readme.live.s2 .clock{transform:scaleX(.388)}
+  #fx-readme.live.s3 .clock{transform:scaleX(.592)} #fx-readme.live.s4 .clock{transform:scaleX(.796)}
+  #fx-readme.live.s5 .clock{transform:scaleX(1)}
+
+  /* L3b: a push runs the gate; the first red step stops it and nothing after deploys. */
+  #fx-gate [data-s],#fx-gate [data-hop]{transition:opacity .25s}
+  #fx-gate.run [data-s]:not(.lit),#fx-gate.run [data-hop]:not(.lit){opacity:.28}
+  #fx-gate [data-s] rect{transition:fill .25s, stroke .25s, stroke-width .25s}
+  #fx-gate .lit rect,#fx-gate path.lit{stroke-width:2.5}
+  #fx-gate .now rect{fill:rgba(34,211,238,.14)}
+  #fx-gate .ok rect{fill:rgba(52,211,153,.16); stroke:#34D399}
+  #fx-gate .no rect{fill:rgba(248,113,122,.22); stroke:#F8717A; stroke-width:3}
+
   @media (prefers-reduced-motion: reduce){
     .slide.on *{animation:none !important}
     .slide .draw{stroke-dashoffset:0 !important}
@@ -290,15 +400,21 @@
     <div class="sub">Ship one deployed job board you can defend line by line.</div>
     <div class="fig" style="max-width:980px">
       <svg viewBox="0 0 980 70" role="img" aria-label="Four lessons: assemble, auth and routes, ship it with the why and the gate, senior review">
-        <g>
-          <rect x="0" y="16" width="230" height="38" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="115" y="40" text-anchor="middle" class="lbl b">1 · Assemble</text>
-          <rect x="250" y="16" width="230" height="38" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="365" y="40" text-anchor="middle" class="lbl b">2 · Auth &amp; routes</text>
-          <rect x="500" y="16" width="230" height="38" rx="9" fill="#121C30" stroke="#FBBF24"/>
-          <text x="615" y="40" text-anchor="middle" class="lbl b">3 · Ship it: why &amp; the gate</text>
-          <rect x="750" y="16" width="230" height="38" rx="9" fill="#121C30" stroke="#A78BFA"/>
-          <text x="865" y="40" text-anchor="middle" class="lbl b">4 · Senior review</text>
+        <g class="pop" style="--i:0">
+            <rect x="0" y="16" width="230" height="38" rx="9" fill="#121C30" stroke="#22D3EE"/>
+            <text x="115" y="40" text-anchor="middle" class="lbl b">1 · Assemble</text>
+        </g>
+        <g class="pop" style="--i:1">
+            <rect x="250" y="16" width="230" height="38" rx="9" fill="#121C30" stroke="#34D399"/>
+            <text x="365" y="40" text-anchor="middle" class="lbl b">2 · Auth &amp; routes</text>
+        </g>
+        <g class="pop" style="--i:2">
+            <rect x="500" y="16" width="230" height="38" rx="9" fill="#121C30" stroke="#FBBF24"/>
+            <text x="615" y="40" text-anchor="middle" class="lbl b">3 · Ship it: why &amp; the gate</text>
+        </g>
+        <g class="pop" style="--i:3">
+            <rect x="750" y="16" width="230" height="38" rx="9" fill="#121C30" stroke="#A78BFA"/>
+            <text x="865" y="40" text-anchor="middle" class="lbl b">4 · Senior review</text>
         </g>
       </svg>
     </div>
@@ -309,54 +425,62 @@
   <section class="slide" data-chip="MODULE 09 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 1</div><div class="cx-page"><b>02</b> / 18</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · What you already have</div>
     <h2>Most of Rasmi is already on your branches</h2>
+    <div class="anim" id="fx-layers" data-at="400,1100,1800,2500,3300,4300">
     <div class="fig" style="max-width:1020px">
       <svg viewBox="0 0 980 300" role="img" aria-label="The app's layers, from app down to utils, each filled by stage branches from modules 3 to 6, with the Next.js port and the tests wrapping all of it, and only the capstone stage new this week">
         <g>
           <rect x="0" y="0" width="320" height="40" rx="9" fill="#121C30" stroke="#243349"/>
           <text x="18" y="25" class="lbl b">app</text>
           <text x="96" y="25" class="lbl">shell · routes · auth</text>
-          <rect x="336" y="0" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="439" y="25" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-6/data-layer</text>
-          <rect x="552" y="0" width="206" height="40" rx="9" fill="#121C30" stroke="#22D3EE" stroke-dasharray="5 4"/>
-          <text x="655" y="25" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px;fill:#22D3EE">module-10/capstone</text>
-          <text x="772" y="25" class="lbl s" style="fill:#22D3EE">← the only new stage</text>
+          <rect data-in="4" x="336" y="0" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text data-in="4" x="439" y="25" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-6/data-layer</text>
+          <rect data-in="6" x="552" y="0" width="206" height="40" rx="9" fill="#121C30" stroke="#22D3EE" stroke-dasharray="5 4"/>
+          <text data-in="6" x="655" y="25" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px;fill:#22D3EE">module-10/capstone</text>
+          <text data-in="6" x="772" y="25" class="lbl s" style="fill:#22D3EE">← the only new stage</text>
 
           <rect x="0" y="50" width="320" height="40" rx="9" fill="#121C30" stroke="#243349"/>
           <text x="18" y="75" class="lbl b">features</text>
           <text x="96" y="75" class="lbl">jobs · search · applications</text>
-          <rect x="336" y="50" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="439" y="75" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-5/feed-ui</text>
-          <rect x="552" y="50" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="655" y="75" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-5/autocomplete</text>
-          <rect x="768" y="50" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="871" y="75" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-6/data-layer</text>
+          <rect data-in="4" x="336" y="50" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text data-in="4" x="439" y="75" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-5/feed-ui</text>
+          <rect data-in="4" x="552" y="50" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text data-in="4" x="655" y="75" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-5/autocomplete</text>
+          <rect data-in="4" x="768" y="50" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text data-in="4" x="871" y="75" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-6/data-layer</text>
 
           <rect x="0" y="100" width="320" height="40" rx="9" fill="#121C30" stroke="#243349"/>
           <text x="18" y="125" class="lbl b">ui</text>
           <text x="96" y="125" class="lbl">select · modal · dropdown · toast</text>
-          <rect x="336" y="100" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="439" y="125" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-5/patterns/compound</text>
-          <rect x="552" y="100" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="655" y="125" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-5/overlays</text>
+          <rect data-in="3" x="336" y="100" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text data-in="3" x="439" y="125" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-5/patterns/compound</text>
+          <rect data-in="3" x="552" y="100" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text data-in="3" x="655" y="125" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-5/overlays</text>
 
           <rect x="0" y="150" width="320" height="40" rx="9" fill="#121C30" stroke="#243349"/>
           <text x="18" y="175" class="lbl b">domain</text>
           <text x="96" y="175" class="lbl">Job · Employer · Application</text>
-          <rect x="336" y="150" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="439" y="175" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-4/domain-types</text>
+          <rect data-in="2" x="336" y="150" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text data-in="2" x="439" y="175" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-4/domain-types</text>
 
           <rect x="0" y="200" width="320" height="40" rx="9" fill="#121C30" stroke="#243349"/>
           <text x="18" y="225" class="lbl b">utils</text>
           <text x="96" y="225" class="lbl">debounce · throttle · deepClone</text>
-          <rect x="336" y="200" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="439" y="225" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-3/utils</text>
+          <rect data-in="1" x="336" y="200" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text data-in="1" x="439" y="225" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-3/utils</text>
 
-          <rect x="0" y="256" width="479" height="42" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="240" y="282" text-anchor="middle" class="lbl"><tspan class="lbl b" style="font-family:var(--mono);font-size:12px">module-7/next-rendering</tspan> · the Next.js shell around all of it</text>
-          <rect x="495" y="256" width="479" height="42" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="734" y="282" text-anchor="middle" class="lbl"><tspan class="lbl b" style="font-family:var(--mono);font-size:12px">module-8/perf-and-tests</tspan> · tests and budget around it</text>
+          <rect data-in="5" x="0" y="256" width="479" height="42" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text data-in="5" x="240" y="282" text-anchor="middle" class="lbl"><tspan class="lbl b" style="font-family:var(--mono);font-size:12px">module-7/next-rendering</tspan> · the Next.js shell around all of it</text>
+          <rect data-in="5" x="495" y="256" width="479" height="42" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text data-in="5" x="734" y="282" text-anchor="middle" class="lbl"><tspan class="lbl b" style="font-family:var(--mono);font-size:12px">module-8/perf-and-tests</tspan> · tests and budget around it</text>
         </g>
       </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>Module 3 filled utils: debounce, throttle, deepClone.</i><i>Module 4 typed the domain.</i><i>Module 5 built the UI kit and the overlays.</i><i>Modules 5 and 6 built the features and the data layer.</i><i>Modules 7 and 8 wrapped it: the Next.js shell, the tests, the budget.</i><i>One new stage. It assembles, wires auth and deploys.</i></span>
+    </div>
     </div>
     <div class="key">Green is yours already, written in earlier modules. The dashed stage is the only new one: it owns no feature folder — it assembles the lot, wires auth, deploys, and merges into <code>main</code>.</div>
 </section>
@@ -383,6 +507,19 @@
           <li>Green after every merge<small>a red test points at the last merge and nothing else</small></li>
         </ul>
       </div>
+    </div>
+    <div class="demo bare" id="demo-merge">
+      <div class="row">
+        <span class="demo-tag">Merge into the stage</span>
+        <button type="button" class="dbtn" data-l="app">app</button>
+        <button type="button" class="dbtn" data-l="features">features</button>
+        <button type="button" class="dbtn" data-l="ui">ui</button>
+        <button type="button" class="dbtn" data-l="domain">domain</button>
+        <button type="button" class="dbtn" data-l="utils">utils</button>
+        <button type="button" class="dbtn" data-act="reset">reset</button>
+        <span class="trail" data-k="trail"></span>
+      </div>
+      <div class="row"><span class="demo-hint" data-k="say"></span></div>
     </div>
     <div class="key g">Before writing anything from scratch this week, ask which branch it already lives on. Usually the answer is one you wrote.</div>
 </section>
@@ -414,24 +551,32 @@
   <section class="slide" data-chip="MODULE 09 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 2</div><div class="cx-page"><b>05</b> / 18</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Three checkpoints</div>
     <h2>Auth is three checks. Only one is security.</h2>
-    <div class="fig" style="max-width:1000px">
+    <div class="fig" id="fx-auth" style="max-width:1000px">
       <svg viewBox="0 0 980 145" role="img" aria-label="A request to the dashboard passes middleware, then a server-side session check next to the data, then the client UI; only the server check is the real gate">
         <g>
-          <rect x="0" y="10" width="200" height="76" rx="10" fill="#121C30" stroke="#64748B"/>
-          <text x="100" y="43" text-anchor="middle" class="lbl b" style="font-family:var(--mono)">GET /dashboard</text>
-          <text x="100" y="66" text-anchor="middle" class="lbl">with or without a cookie</text>
-          <path class="draw" pathLength="1" d="M200,48 L254,48" stroke="#64748B" fill="none"/>
-          <rect x="260" y="10" width="200" height="76" rx="10" fill="#121C30" stroke="#FBBF24"/>
-          <text x="360" y="43" text-anchor="middle" class="lbl b">middleware</text>
-          <text x="360" y="66" text-anchor="middle" class="lbl">no cookie? → /login</text>
-          <path class="draw" pathLength="1" d="M460,48 L514,48" stroke="#64748B" fill="none"/>
-          <rect x="520" y="10" width="200" height="76" rx="10" fill="#121C30" stroke="#34D399"/>
-          <text x="620" y="43" text-anchor="middle" class="lbl b" style="font-family:var(--mono)">verifySession()</text>
-          <text x="620" y="66" text-anchor="middle" class="lbl">before every read and action</text>
-          <path class="draw" pathLength="1" d="M720,48 L774,48" stroke="#64748B" fill="none"/>
-          <rect x="780" y="10" width="200" height="76" rx="10" fill="#121C30" stroke="#2196F3"/>
-          <text x="880" y="43" text-anchor="middle" class="lbl b">client UI</text>
-          <text x="880" y="66" text-anchor="middle" class="lbl">hides the Apply button</text>
+          <g data-c="req">
+            <rect x="0" y="10" width="200" height="76" rx="10" fill="#121C30" stroke="#64748B"/>
+            <text x="100" y="43" text-anchor="middle" class="lbl b" style="font-family:var(--mono)">GET /dashboard</text>
+            <text x="100" y="66" text-anchor="middle" class="lbl">with or without a cookie</text>
+          </g>
+          <path data-hop="mw" class="draw" pathLength="1" d="M200,48 L254,48" stroke="#64748B" fill="none"/>
+          <g data-c="mw">
+            <rect x="260" y="10" width="200" height="76" rx="10" fill="#121C30" stroke="#FBBF24"/>
+            <text x="360" y="43" text-anchor="middle" class="lbl b">middleware</text>
+            <text x="360" y="66" text-anchor="middle" class="lbl">no cookie? → /login</text>
+          </g>
+          <path data-hop="srv" class="draw" pathLength="1" d="M460,48 L514,48" stroke="#64748B" fill="none"/>
+          <g data-c="srv">
+            <rect x="520" y="10" width="200" height="76" rx="10" fill="#121C30" stroke="#34D399"/>
+            <text x="620" y="43" text-anchor="middle" class="lbl b" style="font-family:var(--mono)">verifySession()</text>
+            <text x="620" y="66" text-anchor="middle" class="lbl">before every read and action</text>
+          </g>
+          <path data-hop="ui" class="draw" pathLength="1" d="M720,48 L774,48" stroke="#64748B" fill="none"/>
+          <g data-c="ui">
+            <rect x="780" y="10" width="200" height="76" rx="10" fill="#121C30" stroke="#2196F3"/>
+            <text x="880" y="43" text-anchor="middle" class="lbl b">client UI</text>
+            <text x="880" y="66" text-anchor="middle" class="lbl">hides the Apply button</text>
+          </g>
 
           <text x="100" y="114" text-anchor="middle" class="lbl">the browser</text>
           <text x="100" y="134" text-anchor="middle" class="lbl s">cookie: httpOnly, Secure</text>
@@ -443,6 +588,20 @@
           <text x="880" y="134" text-anchor="middle" class="lbl s">protects nothing</text>
         </g>
       </svg>
+    </div>
+    <div class="demo bare" id="demo-auth">
+      <div class="row">
+        <span class="demo-tag">Send a request</span>
+        <button type="button" class="dbtn" data-r="none">no cookie</button>
+        <button type="button" class="dbtn" data-r="expired">expired cookie</button>
+        <button type="button" class="dbtn" data-r="miss">a route the matcher misses</button>
+        <button type="button" class="dbtn" data-r="action">POST the action directly</button>
+        <button type="button" class="dbtn" data-r="valid">valid session</button>
+      </div>
+      <div class="row">
+        <button type="button" class="dbtn" data-act="drop">delete <code>verifySession()</code></button>
+        <span class="demo-hint" data-k="say"></span>
+      </div>
     </div>
     <p class="say">The session lives in an <b>httpOnly cookie</b>, so it survives a refresh and script on the page can't read it. Middleware turns a missing cookie into a fast redirect. The server decides.</p>
     <div class="key g">Middleware can only say “probably”. The server, at the moment it reads the data, is the one place that can say “no” — so that is where the check lives.</div>
@@ -475,15 +634,26 @@
   <section class="slide" data-chip="MODULE 09 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 2</div><div class="cx-page"><b>07</b> / 18</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · End to end means the unhappy paths</div>
     <h2>Six auth paths, each with a test</h2>
-    <table class="grid">
+    <table class="grid" id="tbl-auth">
       <tr><th>Path</th><th>Expected</th><th>Proved by</th></tr>
-      <tr><td><b>Signed out, open <code>/dashboard</code></b></td><td>Redirect to <code>/login?next=/dashboard</code></td><td>Playwright, no cookie</td></tr>
-      <tr><td><b>Sign in from that redirect</b></td><td>Back on <code>/dashboard</code> — and <code>next</code> must be a same-site path, or it's an open redirect</td><td>Playwright, plus a unit test that rejects <code>next=https://…</code></td></tr>
-      <tr><td><b>Refresh on <code>/dashboard</code></b></td><td>Still signed in; no token in <code>localStorage</code></td><td>Playwright reload</td></tr>
-      <tr><td><b>Session expires mid-task</b></td><td>The next action sends you to sign in; nothing half-saved</td><td>Playwright, cookie cleared mid-test</td></tr>
-      <tr><td><b>Sign out, press Back</b></td><td>Cookie gone; no private data from the cache</td><td>Playwright</td></tr>
-      <tr><td><b>Dashboard in a search engine</b></td><td><code>noindex</code> on every private route</td><td>An assertion on the response</td></tr>
+      <tr data-t="1"><td><b>Signed out, open <code>/dashboard</code></b></td><td>Redirect to <code>/login?next=/dashboard</code></td><td>Playwright, no cookie</td></tr>
+      <tr data-t="2"><td><b>Sign in from that redirect</b></td><td>Back on <code>/dashboard</code> — and <code>next</code> must be a same-site path, or it's an open redirect</td><td>Playwright, plus a unit test that rejects <code>next=https://…</code></td></tr>
+      <tr data-t="3"><td><b>Refresh on <code>/dashboard</code></b></td><td>Still signed in; no token in <code>localStorage</code></td><td>Playwright reload</td></tr>
+      <tr data-t="4"><td><b>Session expires mid-task</b></td><td>The next action sends you to sign in; nothing half-saved</td><td>Playwright, cookie cleared mid-test</td></tr>
+      <tr data-t="5"><td><b>Sign out, press Back</b></td><td>Cookie gone; no private data from the cache</td><td>Playwright</td></tr>
+      <tr data-t="6"><td><b>Dashboard in a search engine</b></td><td><code>noindex</code> on every private route</td><td>An assertion on the response</td></tr>
     </table>
+    <div class="demo bare" id="demo-tests">
+      <div class="row">
+        <button type="button" class="dbtn" data-act="run">Run the six</button>
+        <span class="demo-tag">Plant a bug</span>
+        <button type="button" class="dbtn" data-bug="next">open <code>?next=</code></button>
+        <button type="button" class="dbtn" data-bug="layout">check in the layout only</button>
+        <button type="button" class="dbtn" data-bug="token">token in localStorage</button>
+        <button type="button" class="dbtn" data-bug="index">no noindex</button>
+        <span class="meter">passing<b data-k="pass"></b></span>
+      </div>
+    </div>
 </section>
 
   <!-- L2 · READ NEXT -->
@@ -548,42 +718,61 @@
     <div class="kicker">Lesson 3 · The five-minute README</div>
     <h2>Five minutes, spent in order</h2>
     <p class="say">A reviewer opens the repo with five minutes to spare. The README decides what they see in each one.</p>
+    <div class="anim" id="fx-readme" data-at="300,1300,2300,3300,4300">
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 980 150" role="img" aria-label="A five-minute README in five parts: what it is, run it, the shape, the decisions, what's next">
         <g>
-          <rect x="0" y="0" width="180" height="120" rx="10" fill="#121C30" stroke="#22D3EE"/>
-          <text x="90" y="26" text-anchor="middle" class="lbl" style="font-family:var(--mono);fill:#22D3EE">0:00 – 0:30</text>
-          <text x="90" y="54" text-anchor="middle" class="lbl b">What it is</text>
-          <text x="90" y="80" text-anchor="middle" class="lbl">one sentence, the live</text>
-          <text x="90" y="99" text-anchor="middle" class="lbl">URL, a GIF of search</text>
+          <g data-in="1">
+            <rect x="0" y="0" width="180" height="120" rx="10" fill="#121C30" stroke="#22D3EE"/>
+            <text x="90" y="26" text-anchor="middle" class="lbl" style="font-family:var(--mono);fill:#22D3EE">0:00 – 0:30</text>
+            <text x="90" y="54" text-anchor="middle" class="lbl b">What it is</text>
+            <text x="90" y="80" text-anchor="middle" class="lbl">one sentence, the live</text>
+            <text x="90" y="99" text-anchor="middle" class="lbl">URL, a GIF of search</text>
+          </g>
 
-          <rect x="200" y="0" width="180" height="120" rx="10" fill="#121C30" stroke="#34D399"/>
-          <text x="290" y="26" text-anchor="middle" class="lbl" style="font-family:var(--mono);fill:#34D399">0:30 – 1:30</text>
-          <text x="290" y="54" text-anchor="middle" class="lbl b">Run it</text>
-          <text x="290" y="80" text-anchor="middle" class="lbl">three commands, from</text>
-          <text x="290" y="99" text-anchor="middle" class="lbl">clone to green tests</text>
+          <g data-in="2">
+            <rect x="200" y="0" width="180" height="120" rx="10" fill="#121C30" stroke="#34D399"/>
+            <text x="290" y="26" text-anchor="middle" class="lbl" style="font-family:var(--mono);fill:#34D399">0:30 – 1:30</text>
+            <text x="290" y="54" text-anchor="middle" class="lbl b">Run it</text>
+            <text x="290" y="80" text-anchor="middle" class="lbl">three commands, from</text>
+            <text x="290" y="99" text-anchor="middle" class="lbl">clone to green tests</text>
+          </g>
 
-          <rect x="400" y="0" width="180" height="120" rx="10" fill="#121C30" stroke="#2196F3"/>
-          <text x="490" y="26" text-anchor="middle" class="lbl" style="font-family:var(--mono);fill:#2196F3">1:30 – 3:00</text>
-          <text x="490" y="54" text-anchor="middle" class="lbl b">The shape</text>
-          <text x="490" y="80" text-anchor="middle" class="lbl">one layer diagram,</text>
-          <text x="490" y="99" text-anchor="middle" class="lbl">the two rules</text>
+          <g data-in="3">
+            <rect x="400" y="0" width="180" height="120" rx="10" fill="#121C30" stroke="#2196F3"/>
+            <text x="490" y="26" text-anchor="middle" class="lbl" style="font-family:var(--mono);fill:#2196F3">1:30 – 3:00</text>
+            <text x="490" y="54" text-anchor="middle" class="lbl b">The shape</text>
+            <text x="490" y="80" text-anchor="middle" class="lbl">one layer diagram,</text>
+            <text x="490" y="99" text-anchor="middle" class="lbl">the two rules</text>
+          </g>
 
-          <rect x="600" y="0" width="180" height="120" rx="10" fill="#121C30" stroke="#FBBF24"/>
-          <text x="690" y="26" text-anchor="middle" class="lbl" style="font-family:var(--mono);fill:#FBBF24">3:00 – 4:30</text>
-          <text x="690" y="54" text-anchor="middle" class="lbl b">The decisions</text>
-          <text x="690" y="80" text-anchor="middle" class="lbl">the ADRs, one line</text>
-          <text x="690" y="99" text-anchor="middle" class="lbl">each, linked</text>
+          <g data-in="4">
+            <rect x="600" y="0" width="180" height="120" rx="10" fill="#121C30" stroke="#FBBF24"/>
+            <text x="690" y="26" text-anchor="middle" class="lbl" style="font-family:var(--mono);fill:#FBBF24">3:00 – 4:30</text>
+            <text x="690" y="54" text-anchor="middle" class="lbl b">The decisions</text>
+            <text x="690" y="80" text-anchor="middle" class="lbl">the ADRs, one line</text>
+            <text x="690" y="99" text-anchor="middle" class="lbl">each, linked</text>
+          </g>
 
-          <rect x="800" y="0" width="180" height="120" rx="10" fill="#121C30" stroke="#A78BFA"/>
-          <text x="890" y="26" text-anchor="middle" class="lbl" style="font-family:var(--mono);fill:#A78BFA">4:30 – 5:00</text>
-          <text x="890" y="54" text-anchor="middle" class="lbl b">What's next</text>
-          <text x="890" y="80" text-anchor="middle" class="lbl">known gaps, and what</text>
-          <text x="890" y="99" text-anchor="middle" class="lbl">another week buys</text>
+          <g data-in="5">
+            <rect x="800" y="0" width="180" height="120" rx="10" fill="#121C30" stroke="#A78BFA"/>
+            <text x="890" y="26" text-anchor="middle" class="lbl" style="font-family:var(--mono);fill:#A78BFA">4:30 – 5:00</text>
+            <text x="890" y="54" text-anchor="middle" class="lbl b">What's next</text>
+            <text x="890" y="80" text-anchor="middle" class="lbl">known gaps, and what</text>
+            <text x="890" y="99" text-anchor="middle" class="lbl">another week buys</text>
+          </g>
 
           <path class="draw" pathLength="1" d="M0,138 L974,138" stroke="#243349" fill="none"/>
+          <rect class="clock" x="0" y="135" width="980" height="6" rx="3" fill="#22D3EE"/>
         </g>
       </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>0:30 · They know what it is, and they've clicked the live URL.</i><i>1:30 · It runs on their machine, tests green.</i><i>3:00 · They can find any file from the diagram.</i><i>4:30 · They've read why, including what you rejected.</i><i>5:00 · They know the gaps, because you told them.</i></span>
+    </div>
     </div>
     <div class="key g">Test it on someone who has never seen the repo: hand them the README, start a five-minute timer, then ask what they would push back on.</div>
 </section>
@@ -593,46 +782,90 @@
   <section class="slide" data-chip="MODULE 09 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 09 · VIDEO 3</div><div class="cx-page"><b>11</b> / 18</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Deploy, and the gate that keeps it green</div>
     <h2>Every push goes through the same gate</h2>
-    <div class="fig" style="max-width:1000px">
+    <div class="fig" id="fx-gate" style="max-width:1000px">
       <svg viewBox="0 0 980 120" role="img" aria-label="Pipeline: push, then typecheck, lint, unit, e2e and budget as required checks, then a preview deploy, then production from main only">
         <g>
           <path class="nohead" d="M122,32 L122,24 L714,24 L714,32" stroke="#FBBF24" fill="none"/>
           <text x="418" y="14" text-anchor="middle" class="lbl" style="fill:#FBBF24">required checks · any red blocks the merge</text>
 
-          <rect x="0" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#64748B"/>
-          <text x="52" y="68" text-anchor="middle" class="lbl b">push</text>
-          <path class="draw" pathLength="1" d="M104,63 L119,63" stroke="#64748B" fill="none"/>
-          <rect x="122" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="174" y="68" text-anchor="middle" class="lbl b">typecheck</text>
-          <path class="draw" pathLength="1" d="M226,63 L241,63" stroke="#64748B" fill="none"/>
-          <rect x="244" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="296" y="68" text-anchor="middle" class="lbl b">lint</text>
-          <path class="draw" pathLength="1" d="M348,63 L363,63" stroke="#64748B" fill="none"/>
-          <rect x="366" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="418" y="68" text-anchor="middle" class="lbl b">unit</text>
-          <path class="draw" pathLength="1" d="M470,63 L485,63" stroke="#64748B" fill="none"/>
-          <rect x="488" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="540" y="68" text-anchor="middle" class="lbl b">e2e</text>
-          <path class="draw" pathLength="1" d="M592,63 L607,63" stroke="#64748B" fill="none"/>
-          <rect x="610" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="662" y="68" text-anchor="middle" class="lbl b">budget</text>
-          <path class="draw" pathLength="1" d="M714,63 L729,63" stroke="#64748B" fill="none"/>
-          <rect x="732" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#2196F3"/>
-          <text x="784" y="68" text-anchor="middle" class="lbl b">preview</text>
-          <path class="draw" pathLength="1" d="M836,63 L851,63" stroke="#64748B" fill="none"/>
-          <rect x="854" y="40" width="126" height="46" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="917" y="68" text-anchor="middle" class="lbl b">production</text>
+          <g data-s="push">
+            <rect x="0" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#64748B"/>
+            <text x="52" y="68" text-anchor="middle" class="lbl b">push</text>
+          </g>
+          <path data-hop="type" class="draw" pathLength="1" d="M104,63 L119,63" stroke="#64748B" fill="none"/>
+          <g data-s="type">
+            <rect x="122" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#22D3EE"/>
+            <text x="174" y="68" text-anchor="middle" class="lbl b">typecheck</text>
+          </g>
+          <path data-hop="lint" class="draw" pathLength="1" d="M226,63 L241,63" stroke="#64748B" fill="none"/>
+          <g data-s="lint">
+            <rect x="244" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#22D3EE"/>
+            <text x="296" y="68" text-anchor="middle" class="lbl b">lint</text>
+          </g>
+          <path data-hop="unit" class="draw" pathLength="1" d="M348,63 L363,63" stroke="#64748B" fill="none"/>
+          <g data-s="unit">
+            <rect x="366" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#22D3EE"/>
+            <text x="418" y="68" text-anchor="middle" class="lbl b">unit</text>
+          </g>
+          <path data-hop="e2e" class="draw" pathLength="1" d="M470,63 L485,63" stroke="#64748B" fill="none"/>
+          <g data-s="e2e">
+            <rect x="488" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#22D3EE"/>
+            <text x="540" y="68" text-anchor="middle" class="lbl b">e2e</text>
+          </g>
+          <path data-hop="budget" class="draw" pathLength="1" d="M592,63 L607,63" stroke="#64748B" fill="none"/>
+          <g data-s="budget">
+            <rect x="610" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#22D3EE"/>
+            <text x="662" y="68" text-anchor="middle" class="lbl b">budget</text>
+          </g>
+          <path data-hop="preview" class="draw" pathLength="1" d="M714,63 L729,63" stroke="#64748B" fill="none"/>
+          <g data-s="preview">
+            <rect x="732" y="40" width="104" height="46" rx="9" fill="#121C30" stroke="#2196F3"/>
+            <text x="784" y="68" text-anchor="middle" class="lbl b">preview</text>
+          </g>
+          <path data-hop="prod" class="draw" pathLength="1" d="M836,63 L851,63" stroke="#64748B" fill="none"/>
+          <g data-s="prod">
+            <rect x="854" y="40" width="126" height="46" rx="9" fill="#121C30" stroke="#34D399"/>
+            <text x="917" y="68" text-anchor="middle" class="lbl b">production</text>
+          </g>
 
-          <text x="52" y="108" text-anchor="middle" class="lbl s">any branch</text>
-          <text x="174" y="108" text-anchor="middle" class="lbl s">tsc --noEmit</text>
-          <text x="296" y="108" text-anchor="middle" class="lbl s">import boundaries</text>
-          <text x="418" y="108" text-anchor="middle" class="lbl s">Vitest</text>
-          <text x="540" y="108" text-anchor="middle" class="lbl s">Playwright + MSW</text>
-          <text x="662" y="108" text-anchor="middle" class="lbl s">size · Web Vitals</text>
-          <text x="784" y="108" text-anchor="middle" class="lbl s">a URL per PR</text>
-          <text x="917" y="108" text-anchor="middle" class="lbl s">main only</text>
+          <g data-s="push">
+            <text x="52" y="108" text-anchor="middle" class="lbl s">any branch</text>
+          </g>
+          <g data-s="type">
+            <text x="174" y="108" text-anchor="middle" class="lbl s">tsc --noEmit</text>
+          </g>
+          <g data-s="lint">
+            <text x="296" y="108" text-anchor="middle" class="lbl s">import boundaries</text>
+          </g>
+          <g data-s="unit">
+            <text x="418" y="108" text-anchor="middle" class="lbl s">Vitest</text>
+          </g>
+          <g data-s="e2e">
+            <text x="540" y="108" text-anchor="middle" class="lbl s">Playwright + MSW</text>
+          </g>
+          <g data-s="budget">
+            <text x="662" y="108" text-anchor="middle" class="lbl s">size · Web Vitals</text>
+          </g>
+          <g data-s="preview">
+            <text x="784" y="108" text-anchor="middle" class="lbl s">a URL per PR</text>
+          </g>
+          <g data-s="prod">
+            <text x="917" y="108" text-anchor="middle" class="lbl s">main only</text>
+          </g>
         </g>
       </svg>
+    </div>
+    <div class="demo bare" id="demo-gate">
+      <div class="row">
+        <span class="demo-tag">Push a commit with</span>
+        <button type="button" class="dbtn" data-p="clean">nothing wrong</button>
+        <button type="button" class="dbtn" data-p="type">a type error</button>
+        <button type="button" class="dbtn" data-p="lint">a feature importing a feature</button>
+        <button type="button" class="dbtn" data-p="unit">a salary bug</button>
+        <button type="button" class="dbtn" data-p="e2e">no session check</button>
+        <button type="button" class="dbtn" data-p="budget">+57 KB on /jobs</button>
+      </div>
+      <div class="row"><span class="demo-hint" data-k="say"></span></div>
     </div>
     <div class="two">
       <div class="card g">
@@ -852,6 +1085,1083 @@
   });
   document.getElementById('stage').addEventListener('click',e=>{ e.clientX>innerWidth/2?next():prev(); });
   render();
+</script>
+<!-- Sandbox starter for this deck (React mode): one tab group per idea, each its own little
+     app. The sandbox reads these on a fresh project or a reset; see brand/sandbox.html. -->
+<script type="text/plain" data-sbx-file="App.tsx" data-sbx-first>
+import './styles.css';
+
+// Module 9 lab. The capstone is assembly, so each group is one piece you wire in and then
+// defend: where the auth check lives, the tests that prove it, the gate that keeps main
+// green, and a number you can stand behind. Every tab group is its own small app: open a
+// tab and the preview switches. Right-click a group's label to fold it or turn it off.
+
+const ideas: [group: string, what: string][] = [
+  ['auth', 'a data-access layer: the session is checked where the data is read'],
+  ['tests', 'the six auth paths as a suite, unhappy paths first; plant a bug'],
+  ['gate', 'push a commit: the first red check blocks the merge'],
+  ['budget', 'a number, how you measured it, and the commit it came from'],
+];
+
+export default function App() {
+  return (
+    <main>
+      <h1>Module 9 lab</h1>
+      <p className="muted">Open a tab in any group to try that idea.</p>
+      <ol>
+        {ideas.map(([group, what]) => (
+          <li key={group}>
+            <b>{group}</b> · {what}
+          </li>
+        ))}
+      </ol>
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="styles.css">
+body {
+  font-family: system-ui, sans-serif;
+  margin: 20px;
+  color: #0f172a;
+}
+
+main {
+  display: grid;
+  gap: 12px;
+  max-width: 680px;
+}
+
+h1 { font-size: 20px; margin: 0; }
+ul, ol { margin: 0; padding-left: 20px; }
+li { margin: 4px 0; }
+form { display: grid; gap: 8px; }
+form label { display: grid; gap: 4px; }
+
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.card { border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 12px; }
+.muted { color: #64748b; margin: 0; }
+.bad { color: #dc2626; margin: 0; }
+.good { color: #059669; margin: 0; }
+
+input,
+button {
+  font: inherit;
+  padding: 6px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+button {
+  background: #0f172a;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:disabled { opacity: 0.45; cursor: default; }
+input[type='checkbox'] { padding: 0; }
+code { font: 12.5px ui-monospace, monospace; }
+
+.log { list-style: none; padding: 0; display: grid; gap: 4px; }
+.log li { margin: 0; font: 12.5px/1.4 ui-monospace, monospace; }
+.chip { display: inline-flex; gap: 6px; align-items: center; }
+.steps { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; }
+.steps li { margin: 0; padding: 4px 10px; border: 1px solid #cbd5e1; border-radius: 999px; color: #64748b; }
+.steps li.ok { border-color: #059669; color: #059669; }
+.steps li.red { border-color: #dc2626; color: #dc2626; font-weight: 700; }
+.steps li.skipped { opacity: 0.5; }
+.list { max-height: 220px; overflow: auto; border: 1px solid #e2e8f0; border-radius: 8px; padding: 6px 10px 6px 28px; }
+table { border-collapse: collapse; font-size: 13.5px; }
+th, td { text-align: left; padding: 4px 10px; border-bottom: 1px solid #e2e8f0; }
+</script>
+<script type="text/plain" data-sbx-file="AuthDemo.tsx" data-sbx-group="auth" data-sbx-color="#22D3EE">
+import './styles.css';
+import { useState } from 'react';
+import { describe, expire, signIn, signOut, type Role } from './session';
+import { getMyApplications, postJob } from './dal';
+
+// Be someone, then ask for data. The UI hides “Post job” from a seeker, which is UX
+// only: “Call postJob() anyway” is what a script in the console can do, and the check
+// inside dal.ts is what stops it. Delete that check and try again.
+type Who = 'signed out' | Role;
+
+export default function AuthDemo() {
+  const [who, setWho] = useState<Who>('signed out');
+  const [log, setLog] = useState<string[]>([]);
+  const [title, setTitle] = useState('Frontend Engineer');
+  const [salary, setSalary] = useState('');
+  const [, redraw] = useState(0);
+
+  function be(next: Who) {
+    if (next === 'signed out') signOut();
+    else signIn(next === 'seeker' ? 'u1' : 'u2', next);
+    setWho(next);
+  }
+
+  function run(label: string, fn: () => unknown) {
+    let line: string;
+    try {
+      line = `✓ ${label} → ${JSON.stringify(fn())}`;
+    } catch (e) {
+      line = `✗ ${label} → ${(e as Error).message}`;
+    }
+    setLog((l) => [line, ...l].slice(0, 6));
+  }
+
+  return (
+    <main>
+      <h1>auth · the check sits next to the data</h1>
+      <div className="row">
+        <b>You are</b>
+        {(['signed out', 'seeker', 'employer'] as const).map((w) => (
+          <button key={w} disabled={who === w} onClick={() => be(w)}>
+            {w}
+          </button>
+        ))}
+        <button
+          onClick={() => {
+            expire();
+            redraw((n) => n + 1);
+          }}
+        >
+          Let the session expire
+        </button>
+      </div>
+      <p className="muted">cookie: {describe()}</p>
+      <div className="row">
+        <button onClick={() => run('getMyApplications()', getMyApplications)}>Read my applications</button>
+      </div>
+      <form
+        className="card"
+        onSubmit={(e) => {
+          e.preventDefault();
+          run('postJob()', () => postJob({ title, salary }));
+        }}
+      >
+        <label>
+          Title
+          <input value={title} onChange={(e) => setTitle(e.target.value)} />
+        </label>
+        <label>
+          Salary a month
+          <input name="salary" value={salary} onChange={(e) => setSalary(e.target.value)} />
+        </label>
+        <div className="row">
+          {who === 'employer' ? <button>Post job</button> : <span className="muted">The UI hides “Post job” from you.</span>}
+          <button type="button" onClick={() => run('postJob()', () => postJob({ title, salary }))}>
+            Call postJob() anyway
+          </button>
+        </div>
+      </form>
+      <ul className="log">
+        {log.map((l, i) => (
+          <li key={log.length - i} className={l.startsWith('✓') ? 'good' : 'bad'}>
+            {l}
+          </li>
+        ))}
+      </ul>
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="dal.ts" data-sbx-group="auth">
+import { z } from 'zod';
+import { decrypt, readCookie, type Session } from './session';
+
+// The data-access layer. Every read and every action starts with verifySession(), so
+// the check travels with the data: a page that forgets to check still gets nothing.
+export function verifySession(): Session {
+  const session = decrypt(readCookie());
+  if (!session) throw new Error('no valid session → redirect to /login');
+  return session;
+}
+
+const applications = [
+  { id: 'a1', userId: 'u1', job: 'Frontend Engineer · Qafla' },
+  { id: 'a2', userId: 'u1', job: 'UI Engineer · Souq' },
+  { id: 'a3', userId: 'u2', job: 'React Developer · Tamm' },
+];
+
+export function getMyApplications() {
+  const { userId } = verifySession(); // whose? the session says, never the request
+  return applications.filter((a) => a.userId === userId).map((a) => a.job);
+}
+
+const JobInput = z.object({
+  title: z.string().trim().min(3, 'Title: at least 3 characters'),
+  salary: z.coerce
+    .number({ error: 'Salary: a whole number above zero' })
+    .int('Salary: a whole number above zero')
+    .positive('Salary: a whole number above zero'),
+});
+
+export const posted: { title: string; salary: number; by: string }[] = [];
+
+// An action: who is calling, then may they, then what did they send. Only then write.
+export function postJob(input: unknown) {
+  const { userId, role } = verifySession();
+  if (role !== 'employer') throw new Error('only employers post jobs');
+  const parsed = JobInput.safeParse(input);
+  if (!parsed.success) throw new Error(parsed.error.issues.map((i) => i.message).join('; '));
+  posted.push({ ...parsed.data, by: userId });
+  return `posted “${parsed.data.title}”, ${parsed.data.salary.toLocaleString('en')} a month`;
+}
+</script>
+<script type="text/plain" data-sbx-file="session.ts" data-sbx-group="auth">
+// A pretend session cookie. In Rasmi it is encrypted and httpOnly; here it is plain JSON
+// with an expiry, which is enough to show where the check has to go.
+export type Role = 'seeker' | 'employer';
+export type Session = { userId: string; role: Role; expires: number };
+
+let cookie: string | undefined;
+
+export function signIn(userId: string, role: Role, ttlMs = 60_000) {
+  const s: Session = { userId, role, expires: Date.now() + ttlMs };
+  cookie = JSON.stringify(s);
+}
+
+export function signOut() {
+  cookie = undefined;
+}
+
+// Time passes: the cookie is still sent, but what it says no longer holds.
+export function expire() {
+  const s = decode(cookie);
+  if (s) cookie = JSON.stringify({ ...s, expires: Date.now() - 1 });
+}
+
+export function readCookie() {
+  return cookie;
+}
+
+function decode(raw: string | undefined): Session | null {
+  if (!raw) return null;
+  try {
+    return JSON.parse(raw) as Session;
+  } catch {
+    return null;
+  }
+}
+
+// What the server makes of the cookie: a session, or null if it's missing or expired.
+export function decrypt(raw: string | undefined): Session | null {
+  const s = decode(raw);
+  return s && s.expires > Date.now() ? s : null;
+}
+
+export function describe(): string {
+  const s = decode(cookie);
+  if (!s) return 'none';
+  const left = Math.round((s.expires - Date.now()) / 1000);
+  return `${s.userId} · ${s.role} · ` + (left > 0 ? `expires in ${left} s` : 'expired');
+}
+</script>
+<script type="text/plain" data-sbx-file="TestsDemo.tsx" data-sbx-group="tests" data-sbx-color="#34D399" data-sbx-shut>
+import './styles.css';
+import { useState } from 'react';
+import { run, type Result } from './runner';
+import { cases } from './auth.test';
+import { bugs } from './server';
+
+// The suite runs against server.ts, a pretend Rasmi. Plant one bug at a time: each one
+// fails the test that exists to catch it, and only that test.
+type Bug = keyof typeof bugs;
+
+const LABELS: Record<Bug, string> = {
+  trustNext: 'trust ?next=',
+  layoutOnly: 'check in the layout only',
+  tokenInStorage: 'token in localStorage',
+  cachePrivate: 'let Back cache private pages',
+  noNoindex: 'forget noindex',
+};
+
+export default function TestsDemo() {
+  const [results, setResults] = useState<Result[]>(() => run(cases));
+  const passed = results.filter((r) => r.ok).length;
+
+  function flip(b: Bug) {
+    bugs[b] = !bugs[b];
+    setResults(run(cases));
+  }
+
+  return (
+    <main>
+      <h1>tests · six auth paths, unhappy first</h1>
+      <div className="row">
+        <button onClick={() => setResults(run(cases))}>Run the suite</button>
+        <b className={passed === results.length ? 'good' : 'bad'}>
+          {passed} / {results.length} passing
+        </b>
+      </div>
+      <div className="row">
+        <span className="muted">Plant a bug:</span>
+        {(Object.keys(LABELS) as Bug[]).map((b) => (
+          <label key={b} className="chip">
+            <input type="checkbox" checked={bugs[b]} onChange={() => flip(b)} />
+            {LABELS[b]}
+          </label>
+        ))}
+      </div>
+      <ul className="log">
+        {results.map((r) => (
+          <li key={r.name} className={r.ok ? 'good' : 'bad'}>
+            {r.ok ? '✓' : '✗'} {r.name}
+            {r.error ? ` · ${r.error}` : ''}
+          </li>
+        ))}
+      </ul>
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="auth.test.ts" data-sbx-group="tests">
+import { expect, type Case } from './runner';
+import { Browser, clock, saved } from './server';
+
+function signedIn() {
+  const b = new Browser();
+  b.go('POST', '/login?next=/dashboard', { password: 'correct horse' });
+  return b;
+}
+
+// The six auth paths from the slide, unhappy paths first: they're the ones a demo never
+// shows. Path two is two tests, because its unhappy half is an open redirect.
+export const cases: Case[] = [
+  ['signed out, /dashboard sends you to /login?next=/dashboard', () => {
+    const res = new Browser().go('GET', '/dashboard');
+    expect(res.status).toBe(307);
+    expect(res.location).toBe('/login?next=/dashboard');
+  }],
+  ['sign in with next=https://evil.example: you stay on Rasmi', () => {
+    const res = new Browser().go('POST', '/login?next=https://evil.example', { password: 'correct horse' });
+    expect(res.location).toBe('/');
+  }],
+  ['the session expires mid-task: the action sends you to sign in, nothing saved', () => {
+    const b = signedIn();
+    const before = saved.length;
+    clock.now += 31 * 60_000;
+    const res = b.go('POST', '/dashboard/apply', { job: 'Frontend Engineer' });
+    expect(res.location).toBe('/login?next=/dashboard');
+    expect(saved.length).toBe(before);
+  }],
+  ['sign out, press Back: no private page from the cache', () => {
+    const b = signedIn();
+    b.go('GET', '/dashboard');
+    b.go('POST', '/logout');
+    b.go('GET', '/');
+    expect(b.back().body).not.toContain('Your applications');
+  }],
+  ['every private response says noindex', () => {
+    expect(signedIn().go('GET', '/dashboard').headers['x-robots-tag']).toBe('noindex');
+  }],
+  ['sign in from the redirect: back on /dashboard', () => {
+    const res = new Browser().go('POST', '/login?next=/dashboard', { password: 'correct horse' });
+    expect(res.location).toBe('/dashboard');
+  }],
+  ['refresh on /dashboard: still signed in, no token in localStorage', () => {
+    const b = signedIn();
+    expect(b.go('GET', '/dashboard').status).toBe(200);
+    expect(b.go('GET', '/dashboard').status).toBe(200);
+    expect(b.storage.has('token')).toBe(false);
+  }],
+];
+</script>
+<script type="text/plain" data-sbx-file="runner.ts" data-sbx-group="tests">
+// A test runner small enough to read: a case is a name and a function, and a case
+// passes when its function returns without throwing.
+export type Case = [name: string, fn: () => void];
+export type Result = { name: string; ok: boolean; error?: string };
+
+const show = (v: unknown) => (typeof v === 'string' ? `“${v}”` : String(v));
+const fail = (message: string): never => {
+  throw new Error(message);
+};
+
+export function expect<T>(actual: T) {
+  return {
+    toBe(expected: T) {
+      if (!Object.is(actual, expected)) fail(`expected ${show(expected)}, got ${show(actual)}`);
+    },
+    not: {
+      toContain(part: string) {
+        if (String(actual).includes(part)) fail(`expected no ${show(part)} in ${show(actual)}`);
+      },
+    },
+  };
+}
+
+export function run(cases: Case[]): Result[] {
+  return cases.map(([name, fn]) => {
+    try {
+      fn();
+      return { name, ok: true };
+    } catch (e) {
+      return { name, ok: false, error: (e as Error).message };
+    }
+  });
+}
+</script>
+<script type="text/plain" data-sbx-file="server.ts" data-sbx-group="tests">
+// A pretend Rasmi server, small enough to read at once: middleware, sign-in, the
+// dashboard, one action and sign-out. Each switch in `bugs` plants a mistake that one of
+// the auth tests exists to catch. Flip them in the preview, or break the code yourself.
+export const bugs = {
+  trustNext: false,
+  layoutOnly: false,
+  tokenInStorage: false,
+  cachePrivate: false,
+  noNoindex: false,
+};
+
+export type Res = {
+  status: number;
+  location?: string;
+  headers: Record<string, string>;
+  body: string;
+  setCookie?: string | null;
+};
+type Req = { method: 'GET' | 'POST'; url: URL; cookie?: string; form: Record<string, string> };
+
+export const clock = { now: 0 };
+export const saved: string[] = [];
+const sessions = new Map<string, { userId: string; expires: number }>();
+let ids = 0;
+
+function session(cookie?: string) {
+  const s = cookie ? sessions.get(cookie) : undefined;
+  return s && s.expires > clock.now ? s : null;
+}
+
+// Only a same-site path may follow a sign-in: “/dashboard”, never “https://…” or “//evil.example”.
+export function safeNext(next: string | null) {
+  if (bugs.trustNext) return next ?? '/';
+  return next && next.startsWith('/') && !next.startsWith('//') ? next : '/';
+}
+
+function privateHeaders() {
+  const h: Record<string, string> = { 'cache-control': bugs.cachePrivate ? 'private, max-age=300' : 'private, no-store' };
+  if (!bugs.noNoindex) h['x-robots-tag'] = 'noindex';
+  return h;
+}
+
+const toLogin = (path: string): Res => ({ status: 307, location: '/login?next=' + path, headers: {}, body: '' });
+
+function handle(req: Req): Res {
+  const path = req.url.pathname;
+  // Middleware: fast and optimistic. No cookie at all on a private route? Off to sign in.
+  if (path.startsWith('/dashboard') && !req.cookie) return toLogin('/dashboard');
+
+  if (req.method === 'POST' && path === '/login') {
+    if (req.form.password !== 'correct horse') return { status: 401, headers: {}, body: 'wrong password' };
+    const id = 's' + ++ids;
+    sessions.set(id, { userId: 'u1', expires: clock.now + 30 * 60_000 });
+    return { status: 303, location: safeNext(req.url.searchParams.get('next')), headers: {}, body: '', setCookie: id };
+  }
+  if (req.method === 'GET' && path === '/dashboard') {
+    // With bugs.layoutOnly this check lives in the layout, which still runs on a full page load.
+    if (!session(req.cookie)) return toLogin('/dashboard');
+    return { status: 200, headers: privateHeaders(), body: 'Your applications: 2' };
+  }
+  if (req.method === 'POST' && path === '/dashboard/apply') {
+    // A server action is a public POST, so the check has to live in here as well.
+    if (!bugs.layoutOnly && !session(req.cookie)) return toLogin('/dashboard');
+    saved.push(req.form.job ?? '');
+    return { status: 200, headers: privateHeaders(), body: 'applied' };
+  }
+  if (req.method === 'POST' && path === '/logout') {
+    if (req.cookie) sessions.delete(req.cookie);
+    return { status: 303, location: '/', headers: {}, body: '', setCookie: null };
+  }
+  if (req.method === 'GET' && (path === '/' || path === '/login')) return { status: 200, headers: {}, body: 'Rasmi · jobs' };
+  return { status: 404, headers: {}, body: 'not found' };
+}
+
+// One browser tab: a cookie jar, localStorage, and a history that Back returns to.
+export class Browser {
+  cookie: string | undefined;
+  storage = new Map<string, string>();
+  history: { url: string; res: Res }[] = [];
+
+  go(method: 'GET' | 'POST', url: string, form: Record<string, string> = {}): Res {
+    const res = handle({ method, url: new URL(url, 'https://rasmi.dev'), cookie: this.cookie, form });
+    if (res.setCookie !== undefined) this.cookie = res.setCookie ?? undefined;
+    if (res.setCookie && bugs.tokenInStorage) this.storage.set('token', res.setCookie); // the old client code
+    if (method === 'GET') this.history.push({ url, res });
+    return res;
+  }
+
+  // Back shows the last page from the cache if its response allowed storing it; otherwise it asks again.
+  back(): Res {
+    this.history.pop();
+    const prev = this.history.pop();
+    if (!prev) return this.go('GET', '/');
+    if (!/no-store/.test(prev.res.headers['cache-control'] ?? '')) {
+      this.history.push(prev);
+      return prev.res;
+    }
+    return this.go('GET', prev.url);
+  }
+}
+</script>
+<script type="text/plain" data-sbx-file="GateDemo.tsx" data-sbx-group="gate" data-sbx-color="#FBBF24" data-sbx-shut>
+import './styles.css';
+import { useEffect, useRef, useState } from 'react';
+import { repo, type Repo } from './repo';
+import { steps } from './pipeline';
+
+// Push a commit and watch the required checks run in order. The first red one stops the
+// run: the merge button stays grey and nothing after it deploys. Each button plants one
+// mistake in a copy of repo.ts; break repo.ts itself and “clean push” goes red too.
+const PLANTS: Record<string, (r: Repo) => void> = {
+  'clean push': () => {},
+  'a type error': (r) => {
+    r.typeErrors = ["JobCard.tsx(12,7): Type 'string' is not assignable to type 'number'."];
+  },
+  'a feature importing a feature': (r) => {
+    r.imports['features/jobs/JobList.tsx'] = [...r.imports['features/jobs/JobList.tsx'], 'features/search/Autocomplete.tsx'];
+  },
+  'a salary bug': (r) => {
+    r.formatSalary = (n) => String(n);
+  },
+  'no session check': (r) => {
+    r.dashboardChecksSession = false;
+  },
+  '+57 KB on /jobs': (r) => {
+    r.shipped['/jobs'] += 57;
+  },
+};
+
+export default function GateDemo() {
+  const [out, setOut] = useState<(string | null)[]>([]);
+  const [shown, setShown] = useState(0);
+  const timer = useRef(0);
+  useEffect(() => () => window.clearInterval(timer.current), []);
+
+  function push(plant: string) {
+    window.clearInterval(timer.current);
+    const r: Repo = { ...repo, imports: { ...repo.imports }, shipped: { ...repo.shipped }, typeErrors: [...repo.typeErrors] };
+    PLANTS[plant](r);
+    const res = steps.map(([, check]) => check(r));
+    setOut(res);
+    setShown(0);
+    let n = 0;
+    timer.current = window.setInterval(() => {
+      n++;
+      setShown(n);
+      if (n >= res.length || res[n - 1] !== null) window.clearInterval(timer.current);
+    }, 300);
+  }
+
+  const red = out.findIndex((x) => x !== null);
+  const done = out.length > 0 && (red >= 0 ? shown > red : shown >= out.length);
+  const shipped = done && red < 0;
+
+  return (
+    <main>
+      <h1>gate · the first red check blocks the merge</h1>
+      <div className="row">
+        {Object.keys(PLANTS).map((p) => (
+          <button key={p} onClick={() => push(p)}>
+            {p}
+          </button>
+        ))}
+      </div>
+      <ol className="steps">
+        {steps.map(([name], j) => {
+          const state = j < shown ? (out[j] === null ? 'ok' : 'red') : done ? 'skipped' : '';
+          return (
+            <li key={name} className={state}>
+              {name} {state === 'ok' ? '✓' : state === 'red' ? '✗' : ''}
+            </li>
+          );
+        })}
+        <li className={shipped ? 'ok' : ''}>preview {shipped ? '✓' : ''}</li>
+        <li className={shipped ? 'ok' : ''}>production {shipped ? '✓' : ''}</li>
+      </ol>
+      {done && (
+        <p className={shipped ? 'good' : 'bad'}>
+          {shipped
+            ? '✓ Five green checks, a preview URL, merged to main, production deploys.'
+            : `✗ ${steps[red][0]}: ${out[red]}. Merge blocked; nothing deploys.`}
+        </p>
+      )}
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="pipeline.ts" data-sbx-group="gate">
+import type { Repo } from './repo';
+
+const LAYERS = ['utils', 'domain', 'ui', 'features', 'app'];
+const layer = (file: string) => LAYERS.indexOf(file.split('/')[0]);
+const feature = (file: string) => (file.startsWith('features/') ? file.split('/')[1] : null);
+
+// The required checks, in the order CI runs them. Each returns null when green, or why it's red.
+export const steps: [name: string, check: (r: Repo) => string | null][] = [
+  ['typecheck', (r) => r.typeErrors[0] ?? null],
+  ['lint', (r) => {
+    for (const [file, deps] of Object.entries(r.imports)) {
+      for (const dep of deps) {
+        if (layer(dep) > layer(file)) return `${file} imports ${dep}: layers only point down`;
+        const a = feature(file), b = feature(dep);
+        if (a && b && a !== b) return `${file} imports ${dep}: no feature imports another`;
+      }
+    }
+    return null;
+  }],
+  ['unit', (r) => {
+    const got = r.formatSalary(9000);
+    return got === '9,000 a month' ? null : `formatSalary(9000) gave “${got}”, expected “9,000 a month”`;
+  }],
+  ['e2e', (r) => (r.dashboardChecksSession ? null : 'signed out, /dashboard rendered instead of redirecting to /login')],
+  ['budget', (r) => {
+    for (const [route, kb] of Object.entries(r.shipped)) {
+      if (kb > r.budget[route]) return `${route} ships ${kb} KB of JavaScript, its budget is ${r.budget[route]} KB`;
+    }
+    return null;
+  }],
+];
+</script>
+<script type="text/plain" data-sbx-file="repo.ts" data-sbx-group="gate">
+// A tiny Rasmi, described as data: which file imports which, what each route ships, and
+// the one function the unit step tests. The gate in the preview reads this file, so a
+// change here turns “clean push” red.
+export type Repo = {
+  imports: Record<string, string[]>;
+  shipped: Record<string, number>; // KB of JavaScript per route, from the production build
+  budget: Record<string, number>;
+  typeErrors: string[]; // what tsc --noEmit printed
+  dashboardChecksSession: boolean; // does the dashboard's data function call verifySession()?
+  formatSalary: (n: number) => string;
+};
+
+export const repo: Repo = {
+  imports: {
+    'utils/debounce.ts': [],
+    'domain/job.ts': [],
+    'ui/Combobox.tsx': ['utils/debounce.ts'],
+    'features/search/Autocomplete.tsx': ['ui/Combobox.tsx', 'domain/job.ts', 'utils/debounce.ts'],
+    'features/jobs/JobList.tsx': ['domain/job.ts'],
+    'app/jobs/page.tsx': ['features/jobs/JobList.tsx', 'features/search/Autocomplete.tsx'],
+  },
+  shipped: { '/': 84, '/jobs': 131, '/dashboard': 142 },
+  budget: { '/': 120, '/jobs': 150, '/dashboard': 170 },
+  typeErrors: [],
+  dashboardChecksSession: true,
+  formatSalary: (n) => n.toLocaleString('en') + ' a month',
+};
+</script>
+<script type="text/plain" data-sbx-file="Budget.tsx" data-sbx-group="budget" data-sbx-color="#A78BFA" data-sbx-shut>
+import './styles.css';
+import { useState } from 'react';
+import { flushSync } from 'react-dom';
+
+// “It's fast” loses the argument. A number, how you measured it and the commit it came
+// from wins it. Measure the listings filter as v1 ships it, then as v2, and keep both rows:
+// that table, with your real numbers, is what goes in the README.
+const COMPANIES = ['Qafla', 'Souq', 'Tamm', 'Noon', 'Rasmi'];
+const ROLES = ['Frontend', 'UI', 'React', 'Platform', 'Design Systems'];
+const JOBS = Array.from({ length: 4000 }, (_, i) => ({
+  id: i,
+  title: `${ROLES[i % 5]} Engineer ${i}`,
+  company: COMPANIES[(i * 7) % 5],
+}));
+
+type Version = 'v1' | 'v2';
+const COMMIT: Record<Version, string> = { v1: 'a41c9e2', v2: 'b7d03f5' };
+const HOW: Record<Version, string> = { v1: 'every match rendered', v2: 'first 50, then “and N more”' };
+const BUDGET_MS = 50;
+const KEYS = ['engineer 1', 'engineer 2', 'engineer 3', 'engineer 1', 'engineer 2'];
+
+function Results({ q, version }: { q: string; version: Version }) {
+  const hits = JOBS.filter((j) => j.title.toLowerCase().includes(q));
+  const rows = version === 'v1' ? hits : hits.slice(0, 50);
+  return (
+    <ul className="list">
+      {rows.map((j) => (
+        <li key={j.id}>
+          <b>{j.title}</b> · {j.company}
+        </li>
+      ))}
+      {rows.length < hits.length && <li className="muted">and {hits.length - rows.length} more</li>}
+    </ul>
+  );
+}
+
+type Row = { version: Version; ms: number };
+
+export default function Budget() {
+  const [version, setVersion] = useState<Version>('v2');
+  const [q, setQ] = useState('');
+  const [rows, setRows] = useState<Row[]>([]);
+
+  // The method: five keystrokes, each rendered synchronously and timed, and the median kept.
+  function measure(v: Version) {
+    flushSync(() => setVersion(v));
+    const times = KEYS.map((key) => {
+      const t0 = performance.now();
+      flushSync(() => setQ(key));
+      return performance.now() - t0;
+    }).sort((a, b) => a - b);
+    setRows((r) => [...r, { version: v, ms: times[2] }]);
+  }
+
+  return (
+    <main>
+      <h1>budget · a number, its method, its commit</h1>
+      <div className="row">
+        <button onClick={() => measure('v1')}>Measure v1 · {COMMIT.v1}</button>
+        <button onClick={() => measure('v2')}>Measure v2 · {COMMIT.v2}</button>
+        <span className="muted">budget: {BUDGET_MS} ms a keystroke</span>
+      </div>
+      {rows.length > 0 && (
+        <table>
+          <thead>
+            <tr>
+              <th>commit</th>
+              <th>version</th>
+              <th>median</th>
+              <th>budget</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r, i) => (
+              <tr key={i}>
+                <td>
+                  <code>{COMMIT[r.version]}</code>
+                </td>
+                <td>
+                  {r.version} · {HOW[r.version]}
+                </td>
+                <td>{r.ms.toFixed(1)} ms</td>
+                <td className={r.ms <= BUDGET_MS ? 'good' : 'bad'}>{r.ms <= BUDGET_MS ? '✓ within' : '✗ over'}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+      <p className="muted">Method: median of five keystrokes over 4,000 jobs, each rendered synchronously, on this machine.</p>
+      <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Filter jobs…" />
+      <Results q={q.toLowerCase()} version={version} />
+    </main>
+  );
+}
+</script>
+<script>
+/* Step player — see the .anim block in the stylesheet for the vocabulary. Each player
+   restarts whenever its slide opens; R replays every player on the current slide. With
+   reduced motion, or for print, it jumps straight to the settled frame. */
+(function(){
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var players = [];
+  document.querySelectorAll('.anim[data-at]').forEach(function(root){
+    var at = root.dataset.at.split(',').map(Number), n = at.length, timers = [];
+    var ins  = [].slice.call(root.querySelectorAll('[data-in]'));
+    var outs = [].slice.call(root.querySelectorAll('[data-out]'));
+    var hls  = [].slice.call(root.querySelectorAll('[data-hl]')).map(function(el){
+      return { el:el, at:el.dataset.hl.split(/\s+/).map(Number) };
+    });
+    var says = [].slice.call(root.querySelectorAll('.anim-say i'));
+    var steps = [].slice.call(root.querySelectorAll('.anim-step')), cur = n;
+
+    function set(k){
+      cur = k;
+      for (var j = 1; j <= n; j++) root.classList.toggle('s' + j, j <= k);
+      root.dataset.step = k;
+      ins.forEach(function(el){ el.classList.toggle('in', k >= +el.dataset.in); });
+      outs.forEach(function(el){ el.classList.toggle('out', k >= +el.dataset.out); });
+      hls.forEach(function(h){ h.el.classList.toggle('lit', h.at.indexOf(k) >= 0); });
+      says.forEach(function(el, j){ el.classList.toggle('on', j === k - 1); });
+      steps.forEach(function(b){
+        var d = +b.dataset.d;
+        b.setAttribute('aria-disabled', String(d < 0 ? k <= 0 : k >= n));
+      });
+    }
+    function go(d){
+      timers.forEach(clearTimeout); timers = [];
+      set(Math.max(0, Math.min(n, cur + d)));
+    }
+    function settle(){ timers.forEach(clearTimeout); timers = []; set(n); }
+    function play(){
+      if (still.matches) return settle();
+      timers.forEach(clearTimeout); timers = [];
+      root.classList.add('rs'); set(0); void root.offsetWidth; root.classList.remove('rs');
+      at.forEach(function(ms, j){ timers.push(setTimeout(function(){ set(j + 1); }, ms)); });
+    }
+    set(n);
+    root.classList.add('live');
+
+    var btn = root.querySelector('.anim-replay');
+    if (btn) btn.addEventListener('click', play);
+    steps.forEach(function(b){ b.addEventListener('click', function(){ go(+b.dataset.d); }); });
+    // A press on a player button must not also turn the slide.
+    (btn ? [btn] : []).concat(steps).forEach(function(b){
+      ['click','pointerdown'].forEach(function(t){
+        b.addEventListener(t, function(e){ e.stopPropagation(); });
+      });
+    });
+
+    var slide = root.closest('.slide'), wasOn = slide.classList.contains('on');
+    if (wasOn) play();
+    new MutationObserver(function(){
+      var isOn = slide.classList.contains('on');
+      if (isOn && !wasOn) play();
+      if (!isOn && wasOn) settle();
+      wasOn = isOn;
+    }).observe(slide, { attributes:true, attributeFilter:['class'] });
+    players.push({ slide:slide, play:play, settle:settle });
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key.toLowerCase() !== 'r' || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+    players.forEach(function(p){ if (p.slide.classList.contains('on')) p.play(); });
+  });
+  window.addEventListener('beforeprint', function(){ players.forEach(function(p){ p.settle(); }); });
+})();
+</script>
+<script>
+/* Live demos — see the .demo block in the stylesheet. The deck turns slides on any click
+   and on Space or the arrow keys, so a demo keeps its own clicks, and keeps the keys that
+   belong to it: anything typed into an input, plus Space, Enter, Tab and Escape on its
+   controls. Arrow keys on a demo button still turn the slide. */
+(function(){
+  document.querySelectorAll('.demo').forEach(function(el){
+    ['click','pointerdown'].forEach(function(t){ el.addEventListener(t, function(e){ e.stopPropagation(); }); });
+    el.addEventListener('keydown', function(e){
+      var typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable;
+      if (typing || e.key === ' ' || e.key === 'Enter' || e.key === 'Tab' || e.key === 'Escape') e.stopPropagation();
+    });
+  });
+
+  // Runs open() each time the demo's slide opens and close() each time it leaves.
+  function watch(el, open, close){
+    var s = el.closest('.slide'), was = s.classList.contains('on');
+    if (was) open();
+    new MutationObserver(function(){
+      var is = s.classList.contains('on');
+      if (is && !was) open();
+      if (!is && was && close) close();
+      was = is;
+    }).observe(s, { attributes:true, attributeFilter:['class'] });
+  }
+  function again(el, cls){ el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]; }); }
+  function k(root, name){ return root.querySelector('[data-k="' + name + '"]'); }
+  window.cxDemo = { watch:watch, again:again, esc:esc, k:k };
+
+
+  /* L1b · merge the layers into the capstone stage, in order or not */
+  (function(){
+    var root = document.getElementById('demo-merge');
+    if (!root) return;
+    // What each layer imports from the layers below it, and the file that would fail first.
+    var NEEDS = { utils: [], domain: [], ui: ['utils'], features: ['ui', 'domain', 'utils'], app: ['features', 'ui'] };
+    var FILE = { ui: 'ui/Combobox.tsx', features: 'features/search/Autocomplete.tsx', app: 'app/jobs/page.tsx' };
+    var LAYERS = ['utils', 'domain', 'ui', 'features', 'app'], done, trail;
+    function say(t){ k(root,'say').innerHTML = t; }
+    function paint(){
+      root.querySelectorAll('[data-l]').forEach(function(b){
+        b.classList.toggle('on', !!done[b.dataset.l]);
+        b.classList.toggle('g', !!done[b.dataset.l]);
+      });
+      k(root,'trail').innerHTML = trail.length ? trail.join(' → ') : '';
+    }
+    function reset(){
+      done = {}; trail = [];
+      root.querySelectorAll('[data-l]').forEach(function(b){ b.classList.remove('no'); });
+      paint();
+      say('Click the layers in the order you would merge them.');
+    }
+    root.addEventListener('click', function(e){
+      if (e.target.closest('[data-act="reset"]')) return reset();
+      var b = e.target.closest('[data-l]'); if (!b) return;
+      var l = b.dataset.l;
+      if (done[l]) return;
+      var miss = NEEDS[l].filter(function(x){ return !done[x]; })[0];
+      if (miss) {
+        trail.push('<s>' + l + ' ✗</s>');
+        b.classList.add('no');
+        again(b, 'flash-r');
+        say('✗ Red after merging <b>' + l + '</b>: ' + FILE[l] + " can't resolve <code>@/" + miss +
+            '</code>, which isn\'t merged yet. Revert it, merge ' + miss + ' first.');
+      } else {
+        done[l] = true;
+        trail.push('<b>' + l + ' ✓</b>');
+        b.classList.remove('no');
+        again(b, 'flash-g');
+        var left = LAYERS.filter(function(x){ return !done[x]; }).length;
+        say(left ? '✓ <b>' + l + '</b> merged, tests green. Had they gone red, the only suspect would be ' + l + '.'
+                 : '✓ All five merged, green after every one. Now wire auth and deploy.');
+      }
+      paint();
+    });
+    watch(root, reset);
+  })();
+
+  /* L2a · send a request through the three checks, with and without the server one */
+  (function(){
+    var root = document.getElementById('demo-auth'), fig = document.getElementById('fx-auth');
+    if (!root || !fig) return;
+    // mw: what middleware does with it. srv: whether verifySession() says no. ok: a request that should get the data.
+    var CASES = {
+      none:    { mw: 'stop',
+                 say: 'Middleware: no cookie, so a fast 302 to /login. Nothing else ran.' },
+      expired: { mw: 'pass', srv: 'stop',
+                 say: 'Middleware saw a cookie and let it through: it can only say “probably”. verifySession() couldn\'t decrypt it, so no data was read.',
+                 leak: '✗ Middleware let the expired cookie through and nothing else checked: the page read applications with no valid session.' },
+      miss:    { mw: 'skip', srv: 'stop',
+                 say: 'The matcher misses <code>/dashboard/export</code>, so no middleware ran. verifySession() still said no.',
+                 leak: '✗ No middleware on this route and no server check: the export went to anyone who asked.' },
+      action:  { mw: 'skip', srv: 'stop',
+                 say: 'A server action is a public POST: it skips the page, its middleware and the hidden button. verifySession() inside the action still said no.',
+                 leak: '✗ The action ran for a stranger. Hiding the button protected nothing.' },
+      valid:   { mw: 'pass', srv: 'pass', ok: true,
+                 say: '✓ Every check passed: your applications, read with the userId from the session.',
+                 drop: 'Same result: the happy path can\'t show that the check is missing. Only the unhappy paths do.' }
+    };
+    var timers = [], drop = false;
+    function clear(){
+      timers.forEach(clearTimeout); timers = [];
+      fig.classList.remove('run');
+      fig.querySelectorAll('.lit,.pass,.stop,.leak,.skip').forEach(function(el){ el.classList.remove('lit', 'pass', 'stop', 'leak', 'skip'); });
+      root.querySelectorAll('[data-r]').forEach(function(b){ b.classList.remove('on'); });
+    }
+    function plan(c){
+      var p = [['req', 'pass']];
+      p.push(['mw', c.mw]);
+      if (c.mw === 'stop') return p;
+      if (drop) p.push(['srv', 'gone']);
+      else { p.push(['srv', c.srv]); if (c.srv === 'stop') return p; }
+      p.push(['ui', c.ok ? 'pass' : 'leak']);
+      return p;
+    }
+    function send(name){
+      clear();
+      var c = CASES[name];
+      root.querySelector('[data-r="' + name + '"]').classList.add('on');
+      fig.classList.add('run');
+      k(root,'say').textContent = '…';
+      var p = plan(c);
+      p.forEach(function(st, i){
+        timers.push(setTimeout(function(){
+          var hop = fig.querySelector('[data-hop="' + st[0] + '"]'), box = fig.querySelector('[data-c="' + st[0] + '"]');
+          if (hop) hop.classList.add('lit');
+          if (st[1] !== 'skip' && st[1] !== 'gone') box.classList.add('lit');
+          if (st[1] !== 'gone') box.classList.add(st[1]);
+          if (i === p.length - 1)
+            k(root,'say').innerHTML = !drop ? c.say : c.ok ? c.drop : c.mw === 'stop' ? c.say : c.leak;
+        }, 120 + i * 380));
+      });
+    }
+    function setDrop(on){
+      drop = on;
+      root.querySelector('[data-act="drop"]').classList.toggle('on', on);
+      fig.querySelector('[data-c="srv"]').classList.toggle('gone', on);
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('button'); if (!b) return;
+      if (b.dataset.act === 'drop') {
+        setDrop(!drop); clear();
+        k(root,'say').textContent = drop ? 'verifySession() is gone. Send the same requests again.' : 'verifySession() is back.';
+      } else if (b.dataset.r) send(b.dataset.r);
+    });
+    watch(root, function(){
+      clear(); setDrop(false);
+      k(root,'say').textContent = 'Send a request and watch which check stops it.';
+    }, clear);
+  })();
+
+  /* L2b · run the six auth paths as a suite, then plant the bug each one catches */
+  (function(){
+    var root = document.getElementById('demo-tests'), tbl = document.getElementById('tbl-auth');
+    if (!root || !tbl) return;
+    var rows = [].slice.call(tbl.querySelectorAll('tr[data-t]'));
+    var proof = rows.map(function(r){ return r.cells[2].innerHTML; });
+    var BUG = { next: [2, 'landed on evil.example: an open redirect'], layout: [4, 'the action saved after the session expired'],
+                token: [3, 'found a token in localStorage'], index: [6, 'no <code>noindex</code> on /dashboard'] };
+    var bugs = {}, timers = [];
+    function clear(){
+      timers.forEach(clearTimeout); timers = [];
+      rows.forEach(function(r, i){ r.classList.remove('now', 'ok', 'no'); r.cells[2].innerHTML = proof[i]; });
+      k(root,'pass').textContent = ''; k(root,'pass').className = '';
+    }
+    function run(){
+      clear();
+      var fails = {};
+      Object.keys(bugs).forEach(function(b){ if (bugs[b]) fails[BUG[b][0]] = BUG[b][1]; });
+      var passed = 0;
+      rows.forEach(function(r, i){
+        timers.push(setTimeout(function(){
+          rows.forEach(function(x){ x.classList.remove('now'); });
+          var t = +r.dataset.t, bad = fails[t];
+          r.classList.add(bad ? 'no' : 'ok');
+          r.cells[2].innerHTML = '<span class="tm">' + (bad ? '✗' : '✓') + '</span>' + (bad || proof[i]);
+          if (!bad) passed++;
+          var m = k(root,'pass');
+          m.textContent = passed + ' / ' + (i + 1);
+          m.className = passed === i + 1 ? 'good' : 'bad';
+          if (i === rows.length - 1) again(m, 'bump');
+        }, 80 + i * 240));
+      });
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('button'); if (!b) return;
+      if (b.dataset.bug) { bugs[b.dataset.bug] = !bugs[b.dataset.bug]; b.classList.toggle('on', bugs[b.dataset.bug]); }
+      run();
+    });
+    watch(root, function(){
+      bugs = {};
+      root.querySelectorAll('[data-bug]').forEach(function(b){ b.classList.remove('on'); });
+      clear();
+    }, clear);
+  })();
+
+  /* L3b · push a commit through the gate */
+  (function(){
+    var root = document.getElementById('demo-gate'), fig = document.getElementById('fx-gate');
+    if (!root || !fig) return;
+    var STAGES = ['push', 'type', 'lint', 'unit', 'e2e', 'budget', 'preview', 'prod'];
+    var FAIL = {
+      type:   ['type', 'tsc: <code>Type \'string\' is not assignable to type \'number\'</code> in JobCard.tsx'],
+      lint:   ['lint', 'lint: <code>features/jobs</code> imports <code>features/search</code>, and no feature may import another'],
+      unit:   ['unit', 'unit: <code>formatSalary(9000)</code> gave “9000”, expected “9,000 a month”'],
+      e2e:    ['e2e', 'e2e: signed out, <code>/dashboard</code> rendered instead of redirecting to /login'],
+      budget: ['budget', 'budget: <code>/jobs</code> ships 188 KB of JS, its budget is 150 KB']
+    };
+    var timers = [];
+    function clear(){
+      timers.forEach(clearTimeout); timers = [];
+      fig.classList.remove('run');
+      fig.querySelectorAll('.lit,.now,.ok,.no').forEach(function(el){ el.classList.remove('lit', 'now', 'ok', 'no'); });
+      root.querySelectorAll('[data-p]').forEach(function(b){ b.classList.remove('on'); });
+    }
+    function all(s){ return fig.querySelectorAll('[data-s="' + s + '"]'); }
+    function push(name){
+      clear();
+      root.querySelector('[data-p="' + name + '"]').classList.add('on');
+      fig.classList.add('run');
+      k(root,'say').textContent = 'Running the gate…';
+      var f = FAIL[name], stop = f ? STAGES.indexOf(f[0]) : STAGES.length - 1;
+      for (var i = 0; i <= stop; i++) (function(i){
+        timers.push(setTimeout(function(){
+          var s = STAGES[i], hop = fig.querySelector('[data-hop="' + s + '"]'), bad = f && i === stop;
+          if (hop) hop.classList.add('lit');
+          if (i > 0) all(STAGES[i - 1]).forEach(function(el){ el.classList.remove('now'); });
+          all(s).forEach(function(el){ el.classList.add('lit', bad ? 'no' : i === stop ? 'ok' : 'now'); });
+          if (i > 0) all(STAGES[i - 1]).forEach(function(el){ el.classList.add('ok'); });
+          if (i === stop) k(root,'say').innerHTML = f
+            ? '✗ ' + f[1] + '. The merge button stays grey, and nothing deploys.'
+            : '✓ Five required checks green, a preview URL on the PR. Merged to main, production deploys.';
+        }, 100 + i * 330));
+      })(i);
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-p]'); if (b) push(b.dataset.p);
+    });
+    watch(root, function(){ clear(); k(root,'say').textContent = 'Push a commit and watch the gate run.'; }, clear);
+  })();
+})();
 </script>
 <!--catalyst-brand:copy-->
 <script>
