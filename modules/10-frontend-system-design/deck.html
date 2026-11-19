@@ -911,7 +911,7 @@
       <tr><td><b>Built on</b></td><td>Ordinary requests</td><td>One long HTTP response</td><td>An upgraded connection</td></tr>
       <tr><td><b>Reconnect</b></td><td>Nothing to reconnect</td><td>Automatic, resumes via <code>Last-Event-ID</code></td><td>Yours to write, with backoff</td></tr>
       <tr><td><b>Idle cost</b></td><td>A request every interval</td><td>One open connection</td><td>One connection + heartbeats</td></tr>
-      <tr class="demo bare" id="demo-wire"><td><button type="button" class="dbtn" data-act="run">▶ one minute</button></td>
+      <tr class="demo bare" id="demo-wire"><td><button type="button" class="dbtn" data-act="run">▶ simulate</button></td>
         <td><svg viewBox="-4 0 248 24" data-lane="poll" role="img" aria-label="Polling every 10 seconds"></svg><span class="wn" data-k="poll"></span></td>
         <td><svg viewBox="-4 0 248 24" data-lane="sse" role="img" aria-label="Server-Sent Events"></svg><span class="wn" data-k="sse"></span></td>
         <td><svg viewBox="-4 0 248 24" data-lane="ws" role="img" aria-label="WebSocket"></svg><span class="wn" data-k="ws"></span></td></tr>
@@ -1874,7 +1874,7 @@ export function placeOrder(attempt: string, sendKey: boolean, items: number): Pr
     }
     ['poll', 'sse', 'ws'].forEach(draw);
     btn.addEventListener('click', run);
-    watch(root, function(){ stop(); at(-1); btn.textContent = '▶ one minute'; }, stop);
+    watch(root, function(){ stop(); at(-1); btn.textContent = '▶ simulate'; }, stop);
   })();
 
   /* L5 · the cart can be optimistic, checkout can't */
