@@ -1,0 +1,14 @@
+{
+  "name": "frontend-mastery-program",
+  "private": true,
+  "description": "Frontend Mastery program material: module decks, program page and shared assets. No dependencies; the checks use Node's standard library and a local Chrome.",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "lint": "node scripts/lint.mjs",
+    "test": "node --test --test-reporter=spec tests/*.test.mjs",
+    "ci": "bash scripts/ci-local.sh"
+  }
+}
