@@ -199,6 +199,16 @@ a real key ever lands in history, rotate it — deleting the commit is not enoug
 
 ---
 
+## Checks
+
+`npm run ci` (Node 24, nothing to install) lints every page — inline scripts parse, local links
+and assets resolve — and runs the tests: the README and the curriculum page agree with the decks,
+and every deck plays from its first slide to its last in headless Chrome without an uncaught
+error. A pull request merges only when it passes, as the `continuous-integration/jenkins/pr-head`
+check.
+
+---
+
 ## Questions and corrections
 
 Open an issue on this repository for anything in the material — a slide that is wrong, a
