@@ -1769,9 +1769,18 @@ document.getElementById('stage').addEventListener('click',e=>{ if(e.target.close
     clearTimeout(ambT); ambT = setTimeout(ambient, 600);
     if (mode === 'react') { clearTimeout(liveT); liveT = setTimeout(preview, 650); }
   }
+  // Every model goes through here when it goes. Monaco's TypeScript inlay-hint provider maps a
+  // late worker answer through model.getPositionAt without checking the model still exists, and
+  // a disposed model throws "Model is disposed!". This answers that stray call instead; nothing
+  // reads the result, because the editor has already let go of the model.
+  function bury(m){
+    if (m.isDisposed()) return;
+    m.dispose();
+    m.getPositionAt = function(){ return new monaco.Position(1, 1); };
+  }
   function makeModel(p, text){
     var uri = uriOf(p), old = monaco.editor.getModel(uri);
-    if (old) old.dispose();
+    if (old) bury(old);
     var m = monaco.editor.createModel(text, langOf(p), uri);
     m.onDidChangeContent(changed);
     return m;
@@ -1784,28 +1793,17 @@ document.getElementById('stage').addEventListener('click',e=>{ if(e.target.close
   }
   function dropModel(p){
     order.splice(order.indexOf(p), 1);
-    models[p].dispose();
+    bury(models[p]);
     delete models[p]; delete views[p]; delete errs[p]; delete groupOf[p];
   }
   // After its group turns on or off, a file moves to a new model: same text, new place.
-  // The editor moves to the new model before the old one goes.
+  // The editor moves to the new model before the old one goes; the caller re-checks (regroup).
   function remodel(p){
     var old = models[p], shown = editor.getModel() === old;
     if (shown) views[p] = editor.saveViewState();
     models[p] = makeModel(p, old.getValue());
     if (shown) { editor.setModel(models[p]); if (views[p]) editor.restoreViewState(views[p]); }
-    retire(old);
-  }
-  // The old model goes a moment later: an inlay-hint or hover request still in flight on it
-  // would throw "Model is disposed!" if it went now. While it lingers at a live URI the
-  // checker still sees it, so everything is re-checked once it is gone.
-  function retire(m){
-    setTimeout(function(){
-      if (m.isDisposed()) return;
-      var live = m.getLanguageId() === 'typescript';
-      m.dispose();
-      if (live) recheck();
-    }, 1500);
+    bury(old);
   }
 
   function loadMode(m){
