@@ -3042,7 +3042,18 @@ export const useCompare = create<CompareState>()((set) => ({
     if (shown) views[p] = editor.saveViewState();
     models[p] = makeModel(p, old.getValue());
     if (shown) { editor.setModel(models[p]); if (views[p]) editor.restoreViewState(views[p]); }
-    old.dispose();
+    retire(old);
+  }
+  // The old model goes a moment later: an inlay-hint or hover request still in flight on it
+  // would throw "Model is disposed!" if it went now. While it lingers at a live URI the
+  // checker still sees it, so everything is re-checked once it is gone.
+  function retire(m){
+    setTimeout(function(){
+      if (m.isDisposed()) return;
+      var live = m.getLanguageId() === 'typescript';
+      m.dispose();
+      if (live) recheck();
+    }, 1500);
   }
 
   function loadMode(m){

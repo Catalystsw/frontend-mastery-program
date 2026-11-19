@@ -1439,12 +1439,13 @@ const getJob = () => new Promise<string>((r) => setTimeout(() => r(`Frontend Eng
 // job, then request: the old page keeps coming until the window passes, and the first
 // request after it is still served stale while the refresh runs. revalidateTag skips the wait.
 export default function Isr() {
-  const [page, setPage] = useState('');
+  // A new object per request, so two requests in the same second still both redraw.
+  const [page, setPage] = useState<{ title: string; at: string } | null>(null);
   const [, redraw] = useState(0);
 
   async function request() {
     const title = await cached('job:42', getJob, { revalidate: 5, tags: ['jobs'] });
-    setPage(`${title} · served ${new Date().toLocaleTimeString()}`);
+    setPage({ title, at: new Date().toLocaleTimeString() });
   }
 
   return (
@@ -1456,7 +1457,7 @@ export default function Isr() {
         <button onClick={() => { revalidateTag('jobs'); redraw((n) => n + 1); }}>revalidateTag('jobs')</button>
       </div>
       <p>
-        page: <b>{page || '—'}</b> <span className="muted">· database: v{version}</span>
+        page: <b>{page ? `${page.title} · served ${page.at}` : '—'}</b> <span className="muted">· database: v{version}</span>
       </p>
       <pre>{log.slice(-6).join('\n') || 'nothing cached yet'}</pre>
     </main>
@@ -2661,7 +2662,18 @@ export async function postJob(_prev: FormState, form: FormData): Promise<FormSta
     if (shown) views[p] = editor.saveViewState();
     models[p] = makeModel(p, old.getValue());
     if (shown) { editor.setModel(models[p]); if (views[p]) editor.restoreViewState(views[p]); }
-    old.dispose();
+    retire(old);
+  }
+  // The old model goes a moment later: an inlay-hint or hover request still in flight on it
+  // would throw "Model is disposed!" if it went now. While it lingers at a live URI the
+  // checker still sees it, so everything is re-checked once it is gone.
+  function retire(m){
+    setTimeout(function(){
+      if (m.isDisposed()) return;
+      var live = m.getLanguageId() === 'typescript';
+      m.dispose();
+      if (live) recheck();
+    }, 1500);
   }
 
   function loadMode(m){
