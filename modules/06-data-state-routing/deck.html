@@ -151,6 +151,114 @@
     animation:cxBar .5s cubic-bezier(.22,.72,.28,1) .12s both}
   .slide .card{transition:border-color .25s, transform .25s}
 
+  /* Title: the five lessons deal in once the heading has landed. */
+  @keyframes cxPop{from{opacity:0; transform:translateY(10px) scale(.92)}}
+  .pop{transform-box:fill-box; transform-origin:center}
+  .slide.on .pop{animation:cxPop .5s cubic-bezier(.2,1.3,.4,1) both; animation-delay:calc(.45s + var(--i,0) * .07s)}
+
+  /* ---- step player: a figure that plays itself when its slide opens ------------------
+     Same vocabulary as modules 4 and 5. .anim[data-at="0,900,…"] steps 1, 2, … at those times
+     (ms); R or the replay button plays it again; .anim-step[data-d="-1"|"1"] buttons
+     pause it and step by hand. The root carries s1..sN and data-step="N". On any
+     descendant: data-in="N" fades in at step N (an SVG path with pathLength=1 draws);
+     data-out="N" dims at step N; data-hl="N M" highlights while the step is N or M.
+     Until the script marks the root .live nothing is hidden, so the settled frame is
+     also what prints and what a reader without motion sees. */
+  .anim{width:100%}
+  .anim.live [data-in]{transition:opacity .45s, transform .55s cubic-bezier(.22,.72,.28,1), stroke-dashoffset .6s ease,
+    color .35s, border-color .35s, background-color .35s, fill .35s, stroke .35s}
+  .anim.live [data-in]:not(.in){opacity:0}
+  .anim.live path[data-in]{stroke-dasharray:1; stroke-dashoffset:1}
+  .anim.live path[data-in].in{stroke-dashoffset:0}
+  .anim.live [data-out].out{opacity:.3}
+  .anim [data-hl]{--hl:rgba(34,211,238,.17); border-radius:4px; -webkit-box-decoration-break:clone; box-decoration-break:clone;
+    transition:background-color .3s, box-shadow .3s}
+  .anim [data-hl].hl-g{--hl:rgba(52,211,153,.17)} .anim [data-hl].hl-r{--hl:rgba(248,113,122,.2)}
+  .anim [data-hl].hl-p{--hl:rgba(167,139,250,.22)} .anim [data-hl].hl-w{--hl:rgba(251,191,36,.17)}
+  .anim [data-hl].lit{background-color:var(--hl); box-shadow:0 0 0 3px var(--hl)}
+  .anim.rs,.anim.rs *{transition:none !important}
+  .anim-bar{display:flex; align-items:center; flex-wrap:wrap; gap:10px 14px; margin-top:10px; min-height:34px}
+  .anim-replay,.anim-step{cursor:pointer; background:var(--panel2); border:1px solid var(--line2); color:var(--ink2); border-radius:8px;
+    padding:7px 12px; font:700 11.5px/1 var(--mono); letter-spacing:1.2px; text-transform:uppercase;
+    transition:background .18s, color .18s, border-color .18s}
+  .anim-replay:hover,.anim-step:hover{background:var(--line2); color:#fff; border-color:var(--cy)}
+  .anim-step{padding:5px 10px; font:700 16px/1 var(--sans); letter-spacing:0}
+  .anim-step[aria-disabled="true"]{opacity:.35; cursor:default}
+  .anim-say{font:600 min(1.4vw,16px)/1.4 var(--sans); color:var(--ink2)}
+  .anim-say i{display:none; font-style:normal} .anim-say i.on{display:inline}
+
+  /* ---- live demos: small working pieces of UI on the slide ---------------------------
+     A .demo is self-contained. A click inside it never turns the slide, and neither do
+     Space, Enter, Tab or Escape on its controls, or any key typed into its inputs.
+     Each demo is wired by id in the demo script at the end of the deck and resets
+     whenever its slide opens. */
+  .demo{background:var(--panel); border:1px solid var(--line2); border-radius:12px; padding:11px 14px; margin-top:14px;
+    width:100%; max-width:1060px; font:min(1.45vw,15.5px)/1.4 var(--sans); color:var(--ink2)}
+  .demo.bare{background:none; border:0; padding:0; border-radius:0}
+  .demo .row{display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px}
+  .demo .row + .row{margin-top:9px}
+  .demo-tag{font:700 10.5px/1 var(--mono); letter-spacing:1.6px; text-transform:uppercase; color:var(--cy)}
+  .demo-hint{font-size:.9em; color:var(--grey3)}
+  .dbtn{cursor:pointer; background:var(--panel2); border:1px solid var(--line2); color:var(--ink); border-radius:8px;
+    padding:7px 12px; font:600 12.5px/1 var(--mono); transition:background .18s, border-color .18s, color .18s}
+  .dbtn:hover{border-color:var(--cy)}
+  .dbtn:focus-visible,.dinput:focus-visible{outline:2px solid var(--cy); outline-offset:2px}
+  .dbtn.on{background:rgba(34,211,238,.14); border-color:var(--cy); color:#fff}
+  .dbtn.on.g{background:rgba(52,211,153,.14); border-color:var(--good)}
+  .dinput{background:var(--code); border:1px solid var(--line2); color:#fff; border-radius:8px; padding:7px 11px;
+    font:14.5px/1.2 var(--mono); min-width:0}
+  .dinput:focus{outline:none; border-color:var(--cy); box-shadow:0 0 0 3px rgba(34,211,238,.18)}
+  .meter{font:600 12px/1 var(--mono); color:var(--muted); white-space:nowrap}
+  .meter b{display:inline-block; min-width:2ch; margin-left:5px; color:#fff; font-size:15px}
+  .meter b.good{color:var(--good)} .meter b.bad{color:var(--bad)}
+  .dom{font:13.5px/1 var(--mono); color:var(--grey3); padding:6px 9px; border-radius:7px; border:1px dashed var(--line2)}
+  .dom b{color:#fff; font-weight:600}
+  @keyframes cxFlash{15%{box-shadow:0 0 0 4px rgba(251,191,36,.5); background-color:rgba(251,191,36,.14)}}
+  @keyframes cxFlashG{15%{box-shadow:0 0 0 4px rgba(52,211,153,.5); background-color:rgba(52,211,153,.14)}}
+  @keyframes cxFlashR{15%{box-shadow:0 0 0 4px rgba(248,113,122,.55); background-color:rgba(248,113,122,.16)}}
+  @keyframes cxBump{40%{transform:scale(1.35); color:var(--ochre)}}
+  .flash{animation:cxFlash .7s ease} .flash-g{animation:cxFlashG .7s ease} .flash-r{animation:cxFlashR .8s ease}
+  .bump{animation:cxBump .35s ease}
+
+  /* A timeline bar in a player grows from its left edge over --d instead of fading in. */
+  .anim .grow{transform-box:fill-box; transform-origin:left center}
+  .anim.live .grow[data-in]{transition:opacity .15s, transform var(--d,.35s) linear}
+  .anim.live .grow[data-in]:not(.in){transform:scaleX(0)}
+  /* A demo can sit inside a player's bar, next to its buttons. */
+  .demo.inline{display:inline-flex; align-items:center; gap:8px; width:auto; margin:0}
+
+  /* L1c: the flow lights each question a piece of state passes, then its home. */
+  #fx-home [data-q],#fx-home [data-no],#fx-home [data-yes],#fx-home [data-home]{transition:opacity .3s}
+  #fx-home.walk [data-q]:not(.lit),#fx-home.walk [data-no]:not(.lit),
+  #fx-home.walk [data-yes]:not(.lit),#fx-home.walk [data-home]:not(.lit){opacity:.2}
+  #fx-home rect,#fx-home path{transition:stroke-width .3s, fill .3s}
+  #fx-home .lit rect,#fx-home .lit path{stroke-width:2.5}
+  #fx-home [data-home].lit rect{fill:rgba(34,211,238,.13)}
+
+  /* L2a: the strip lights the entry's state while the demo's clock runs. */
+  #fx-life [data-st]{transition:opacity .3s}
+  #fx-life.run [data-st]:not(.on){opacity:.28}
+  #fx-life [data-st] rect{transition:fill .3s, stroke-width .3s}
+  #fx-life [data-st].on rect{fill:rgba(34,211,238,.13); stroke-width:2.5}
+
+  /* L2c: the two lines the demo can switch off, and the star. */
+  .ln{border-radius:4px; transition:opacity .3s}
+  .ln.gone{opacity:.3; text-decoration:line-through}
+  .dbtn.star{min-width:150px}
+  .dbtn.star.on{color:var(--ochre); border-color:var(--ochre)}
+
+  /* L2d: the race shows one ending at a time. */
+  #fx-race:not(.bare) .only-bare,#fx-race.bare .only-key{display:none}
+
+  /* L3a: the address bar of the mini Rasmi. */
+  .dinput.url{flex:1; min-width:18ch; color:var(--ink2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+
+  /* L3b: what validateSearch returns; ochre is a .catch() fallback. */
+  .parsed{font:600 14px/1.3 var(--mono); color:var(--ink)}
+  .parsed b{color:var(--ochre); font-weight:700}
+  .parsed i{color:var(--grey3); font-style:normal; font-weight:400}
+
+
   @media (prefers-reduced-motion: reduce){
     .slide.on *{animation:none !important}
     .slide .draw{stroke-dashoffset:0 !important}
@@ -292,22 +400,30 @@
     <div class="sub">Which state is the server's, which is yours — and where each piece belongs.</div>
     <div class="fig" style="max-width:980px">
       <svg viewBox="0 0 980 64" role="img" aria-label="Five lessons: whose state, TanStack Query and the race it fixes, the URL as state, stores, build it">
-        <g>
-          <rect x="0" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="90" y="26" text-anchor="middle" class="lbl s">Lesson 1</text>
-          <text x="90" y="45" text-anchor="middle" class="lbl b">Whose state?</text>
-          <rect x="200" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="290" y="26" text-anchor="middle" class="lbl s">Lesson 2</text>
-          <text x="290" y="45" text-anchor="middle" class="lbl b">Query &amp; races</text>
-          <rect x="400" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#2196F3"/>
-          <text x="490" y="26" text-anchor="middle" class="lbl s">Lesson 3</text>
-          <text x="490" y="45" text-anchor="middle" class="lbl b">URL as state</text>
-          <rect x="600" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#A78BFA"/>
-          <text x="690" y="26" text-anchor="middle" class="lbl s">Lesson 4</text>
-          <text x="690" y="45" text-anchor="middle" class="lbl b">Stores</text>
-          <rect x="800" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#FBBF24"/>
-          <text x="890" y="26" text-anchor="middle" class="lbl s">Lesson 5</text>
-          <text x="890" y="45" text-anchor="middle" class="lbl b">Build it</text>
+        <g class="pop" style="--i:0">
+            <rect x="0" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
+            <text x="90" y="26" text-anchor="middle" class="lbl s">Lesson 1</text>
+            <text x="90" y="45" text-anchor="middle" class="lbl b">Whose state?</text>
+        </g>
+        <g class="pop" style="--i:1">
+            <rect x="200" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#34D399"/>
+            <text x="290" y="26" text-anchor="middle" class="lbl s">Lesson 2</text>
+            <text x="290" y="45" text-anchor="middle" class="lbl b">Query &amp; races</text>
+        </g>
+        <g class="pop" style="--i:2">
+            <rect x="400" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#2196F3"/>
+            <text x="490" y="26" text-anchor="middle" class="lbl s">Lesson 3</text>
+            <text x="490" y="45" text-anchor="middle" class="lbl b">URL as state</text>
+        </g>
+        <g class="pop" style="--i:3">
+            <rect x="600" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#A78BFA"/>
+            <text x="690" y="26" text-anchor="middle" class="lbl s">Lesson 4</text>
+            <text x="690" y="45" text-anchor="middle" class="lbl b">Stores</text>
+        </g>
+        <g class="pop" style="--i:4">
+            <rect x="800" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#FBBF24"/>
+            <text x="890" y="26" text-anchor="middle" class="lbl s">Lesson 5</text>
+            <text x="890" y="45" text-anchor="middle" class="lbl b">Build it</text>
         </g>
       </svg>
     </div>
@@ -330,47 +446,67 @@
   <section class="slide" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>03</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Sorting Rasmi's state</div>
     <h2>Every piece of state gets exactly one home</h2>
+    <div class="anim" id="fx-homes" data-at="300,1300,2400,3400,4300,5400">
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 262" role="img" aria-label="Rasmi's state sorted into four homes: server cache, the URL, the component, and a small store">
-        <rect x="0" y="0" width="235" height="56" rx="10" fill="#121C30" stroke="#34D399"/>
-        <text x="117.5" y="24" text-anchor="middle" class="lbl b">Server cache</text>
-        <text x="117.5" y="43" text-anchor="middle" class="lbl s">TanStack Query</text>
-        <rect x="255" y="0" width="235" height="56" rx="10" fill="#121C30" stroke="#2196F3"/>
-        <text x="372.5" y="24" text-anchor="middle" class="lbl b">The URL</text>
-        <text x="372.5" y="43" text-anchor="middle" class="lbl s">search params</text>
-        <rect x="510" y="0" width="235" height="56" rx="10" fill="#121C30" stroke="#22D3EE"/>
-        <text x="627.5" y="24" text-anchor="middle" class="lbl b">The component</text>
-        <text x="627.5" y="43" text-anchor="middle" class="lbl s">useState · useReducer</text>
-        <rect x="765" y="0" width="235" height="56" rx="10" fill="#121C30" stroke="#A78BFA"/>
-        <text x="882.5" y="24" text-anchor="middle" class="lbl b">A small store</text>
-        <text x="882.5" y="43" text-anchor="middle" class="lbl s">Zustand</text>
+        <g data-in="1">
+          <rect x="0" y="0" width="235" height="56" rx="10" fill="#121C30" stroke="#34D399"/>
+          <text x="117.5" y="24" text-anchor="middle" class="lbl b">Server cache</text>
+          <text x="117.5" y="43" text-anchor="middle" class="lbl s">TanStack Query</text>
+          <rect x="255" y="0" width="235" height="56" rx="10" fill="#121C30" stroke="#2196F3"/>
+          <text x="372.5" y="24" text-anchor="middle" class="lbl b">The URL</text>
+          <text x="372.5" y="43" text-anchor="middle" class="lbl s">search params</text>
+          <rect x="510" y="0" width="235" height="56" rx="10" fill="#121C30" stroke="#22D3EE"/>
+          <text x="627.5" y="24" text-anchor="middle" class="lbl b">The component</text>
+          <text x="627.5" y="43" text-anchor="middle" class="lbl s">useState · useReducer</text>
+          <rect x="765" y="0" width="235" height="56" rx="10" fill="#121C30" stroke="#A78BFA"/>
+          <text x="882.5" y="24" text-anchor="middle" class="lbl b">A small store</text>
+          <text x="882.5" y="43" text-anchor="middle" class="lbl s">Zustand</text>
+        </g>
 
-        <rect x="12" y="72" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
-        <text x="117.5" y="94" text-anchor="middle" class="lbl">Listings feed</text>
-        <rect x="12" y="116" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
-        <text x="117.5" y="138" text-anchor="middle" class="lbl">Job detail</text>
-        <rect x="12" y="160" width="211" height="34" rx="17" fill="#0E1525" stroke="#FBBF24"/>
-        <text x="117.5" y="182" text-anchor="middle" class="lbl" style="fill:#FBBF24">Saved jobs ★</text>
-        <rect x="12" y="204" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
-        <text x="117.5" y="226" text-anchor="middle" class="lbl">Application statuses</text>
+        <g data-in="2">
+          <rect x="12" y="72" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
+          <text x="117.5" y="94" text-anchor="middle" class="lbl">Listings feed</text>
+          <rect x="12" y="116" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
+          <text x="117.5" y="138" text-anchor="middle" class="lbl">Job detail</text>
+          <rect x="12" y="204" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
+          <text x="117.5" y="226" text-anchor="middle" class="lbl">Application statuses</text>
+        </g>
+        <g data-in="6">
+          <rect x="12" y="160" width="211" height="34" rx="17" fill="#0E1525" stroke="#FBBF24"/>
+          <text x="117.5" y="182" text-anchor="middle" class="lbl" style="fill:#FBBF24">Saved jobs ★</text>
+        </g>
 
-        <rect x="267" y="72" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
-        <text x="372.5" y="94" text-anchor="middle" class="lbl">Search text · q</text>
-        <rect x="267" y="116" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
-        <text x="372.5" y="138" text-anchor="middle" class="lbl">Remote only</text>
-        <rect x="267" y="160" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
-        <text x="372.5" y="182" text-anchor="middle" class="lbl">Page number</text>
+        <g data-in="3">
+          <rect x="267" y="72" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
+          <text x="372.5" y="94" text-anchor="middle" class="lbl">Search text · q</text>
+          <rect x="267" y="116" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
+          <text x="372.5" y="138" text-anchor="middle" class="lbl">Remote only</text>
+          <rect x="267" y="160" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
+          <text x="372.5" y="182" text-anchor="middle" class="lbl">Page number</text>
+        </g>
 
-        <rect x="522" y="72" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
-        <text x="627.5" y="94" text-anchor="middle" class="lbl">Filters drawer open</text>
-        <rect x="522" y="116" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
-        <text x="627.5" y="138" text-anchor="middle" class="lbl">Apply-form draft</text>
+        <g data-in="4">
+          <rect x="522" y="72" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
+          <text x="627.5" y="94" text-anchor="middle" class="lbl">Filters drawer open</text>
+          <rect x="522" y="116" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
+          <text x="627.5" y="138" text-anchor="middle" class="lbl">Apply-form draft</text>
+        </g>
 
-        <rect x="777" y="72" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
-        <text x="882.5" y="94" text-anchor="middle" class="lbl">Compare tray · 3 job ids</text>
+        <g data-in="5">
+          <rect x="777" y="72" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
+          <text x="882.5" y="94" text-anchor="middle" class="lbl">Compare tray · 3 job ids</text>
+        </g>
 
-        <text x="0" y="258" class="lbl s" style="fill:#FBBF24">★ the user clicks it, but it is stored per account and shows on their phone too</text>
+        <text data-in="6" x="0" y="258" class="lbl s" style="fill:#FBBF24">★ the user clicks it, but it is stored per account and shows on their phone too</text>
       </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>Four homes. Every piece of state goes in exactly one.</i><i>The server owns these. What the app holds is a cache.</i><i>A reload or a shared link should bring these back.</i><i>Only this component cares, and only for now.</i><i>One item needs a store: the compare tray.</i><i>The trap: saved jobs. The user clicks it, the server keeps it.</i></span>
+    </div>
     </div>
     <div class="key w">The trap is <b>Saved jobs</b>. The user decides it, so it feels like client state — but the server keeps it. The click isn't the state; it's a <i>request</i> to change the server's state.</div>
 </section>
@@ -378,45 +514,83 @@
   <section class="slide" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>04</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · The interview question</div>
     <h2>Three questions decide where state lives</h2>
-    <div class="fig" style="max-width:1000px">
+    <div class="fig" id="fx-home" style="max-width:1000px">
       <svg viewBox="0 0 1000 206" role="img" aria-label="Decision flow: does the server own it, then the query cache; should a reload restore it, then the URL; do distant parts need it, then a small store; otherwise useState">
-        <rect x="0" y="0" width="200" height="72" rx="10" fill="#121C30" stroke="#243349"/>
-        <text x="100" y="32" text-anchor="middle" class="lbl b">Does the server</text>
-        <text x="100" y="51" text-anchor="middle" class="lbl b">own the truth?</text>
-        <rect x="260" y="0" width="200" height="72" rx="10" fill="#121C30" stroke="#243349"/>
-        <text x="360" y="32" text-anchor="middle" class="lbl b">Should a reload or a</text>
-        <text x="360" y="51" text-anchor="middle" class="lbl b">shared link restore it?</text>
-        <rect x="520" y="0" width="200" height="72" rx="10" fill="#121C30" stroke="#243349"/>
-        <text x="620" y="32" text-anchor="middle" class="lbl b">Do distant parts of</text>
-        <text x="620" y="51" text-anchor="middle" class="lbl b">the tree need it?</text>
-        <rect x="780" y="8" width="220" height="56" rx="10" fill="#121C30" stroke="#22D3EE"/>
-        <text x="890" y="32" text-anchor="middle" class="lbl b">useState</text>
-        <text x="890" y="50" text-anchor="middle" class="lbl s">next to where it's used</text>
+        <g data-q="1">
+          <rect x="0" y="0" width="200" height="72" rx="10" fill="#121C30" stroke="#243349"/>
+          <text x="100" y="32" text-anchor="middle" class="lbl b">Does the server</text>
+          <text x="100" y="51" text-anchor="middle" class="lbl b">own the truth?</text>
+        </g>
+        <g data-q="2">
+          <rect x="260" y="0" width="200" height="72" rx="10" fill="#121C30" stroke="#243349"/>
+          <text x="360" y="32" text-anchor="middle" class="lbl b">Should a reload or a</text>
+          <text x="360" y="51" text-anchor="middle" class="lbl b">shared link restore it?</text>
+        </g>
+        <g data-q="3">
+          <rect x="520" y="0" width="200" height="72" rx="10" fill="#121C30" stroke="#243349"/>
+          <text x="620" y="32" text-anchor="middle" class="lbl b">Do distant parts of</text>
+          <text x="620" y="51" text-anchor="middle" class="lbl b">the tree need it?</text>
+        </g>
+        <g data-home="state">
+          <rect x="780" y="8" width="220" height="56" rx="10" fill="#121C30" stroke="#22D3EE"/>
+          <text x="890" y="32" text-anchor="middle" class="lbl b">useState</text>
+          <text x="890" y="50" text-anchor="middle" class="lbl s">next to where it's used</text>
+        </g>
 
-        <path class="draw" pathLength="1" d="M200,36 L255,36" stroke="#64748B" fill="none"/>
-        <text x="228" y="28" text-anchor="middle" class="lbl s">no</text>
-        <path class="draw" pathLength="1" d="M460,36 L515,36" stroke="#64748B" fill="none"/>
-        <text x="488" y="28" text-anchor="middle" class="lbl s">no</text>
-        <path class="draw" pathLength="1" d="M720,36 L775,36" stroke="#64748B" fill="none"/>
-        <text x="748" y="28" text-anchor="middle" class="lbl s">no</text>
+        <g data-no="1">
+          <path class="draw" pathLength="1" d="M200,36 L255,36" stroke="#64748B" fill="none"/>
+          <text x="228" y="28" text-anchor="middle" class="lbl s">no</text>
+        </g>
+        <g data-no="2">
+          <path class="draw" pathLength="1" d="M460,36 L515,36" stroke="#64748B" fill="none"/>
+          <text x="488" y="28" text-anchor="middle" class="lbl s">no</text>
+        </g>
+        <g data-no="3">
+          <path class="draw" pathLength="1" d="M720,36 L775,36" stroke="#64748B" fill="none"/>
+          <text x="748" y="28" text-anchor="middle" class="lbl s">no</text>
+        </g>
 
-        <path class="draw" pathLength="1" d="M100,72 L100,138" stroke="#34D399" fill="none"/>
-        <text x="110" y="110" class="lbl s" style="fill:#34D399">yes</text>
-        <path class="draw" pathLength="1" d="M360,72 L360,138" stroke="#2196F3" fill="none"/>
-        <text x="370" y="110" class="lbl s" style="fill:#2196F3">yes</text>
-        <path class="draw" pathLength="1" d="M620,72 L620,138" stroke="#A78BFA" fill="none"/>
-        <text x="630" y="110" class="lbl s" style="fill:#A78BFA">yes</text>
+        <g data-yes="1">
+          <path class="draw" pathLength="1" d="M100,72 L100,138" stroke="#34D399" fill="none"/>
+          <text x="110" y="110" class="lbl s" style="fill:#34D399">yes</text>
+        </g>
+        <g data-yes="2">
+          <path class="draw" pathLength="1" d="M360,72 L360,138" stroke="#2196F3" fill="none"/>
+          <text x="370" y="110" class="lbl s" style="fill:#2196F3">yes</text>
+        </g>
+        <g data-yes="3">
+          <path class="draw" pathLength="1" d="M620,72 L620,138" stroke="#A78BFA" fill="none"/>
+          <text x="630" y="110" class="lbl s" style="fill:#A78BFA">yes</text>
+        </g>
 
-        <rect x="0" y="144" width="200" height="60" rx="10" fill="#121C30" stroke="#34D399"/>
-        <text x="100" y="170" text-anchor="middle" class="lbl b">Query cache</text>
-        <text x="100" y="189" text-anchor="middle" class="lbl s">keyed, expiring, refetched</text>
-        <rect x="260" y="144" width="200" height="60" rx="10" fill="#121C30" stroke="#2196F3"/>
-        <text x="360" y="170" text-anchor="middle" class="lbl b">URL search params</text>
-        <text x="360" y="189" text-anchor="middle" class="lbl s">validated at the route</text>
-        <rect x="520" y="144" width="200" height="60" rx="10" fill="#121C30" stroke="#A78BFA"/>
-        <text x="620" y="170" text-anchor="middle" class="lbl b">Zustand or Context</text>
-        <text x="620" y="189" text-anchor="middle" class="lbl s">the smallest store that works</text>
+        <g data-home="query">
+          <rect x="0" y="144" width="200" height="60" rx="10" fill="#121C30" stroke="#34D399"/>
+          <text x="100" y="170" text-anchor="middle" class="lbl b">Query cache</text>
+          <text x="100" y="189" text-anchor="middle" class="lbl s">keyed, expiring, refetched</text>
+        </g>
+        <g data-home="url">
+          <rect x="260" y="144" width="200" height="60" rx="10" fill="#121C30" stroke="#2196F3"/>
+          <text x="360" y="170" text-anchor="middle" class="lbl b">URL search params</text>
+          <text x="360" y="189" text-anchor="middle" class="lbl s">validated at the route</text>
+        </g>
+        <g data-home="store">
+          <rect x="520" y="144" width="200" height="60" rx="10" fill="#121C30" stroke="#A78BFA"/>
+          <text x="620" y="170" text-anchor="middle" class="lbl b">Zustand or Context</text>
+          <text x="620" y="189" text-anchor="middle" class="lbl s">the smallest store that works</text>
+        </g>
       </svg>
+    </div>
+    <div class="demo bare" id="demo-home">
+      <div class="row">
+        <span class="demo-tag">Route it</span>
+        <button type="button" class="dbtn" data-s="feed">Listings feed</button>
+        <button type="button" class="dbtn" data-s="saved">Saved jobs</button>
+        <button type="button" class="dbtn" data-s="q">Search text</button>
+        <button type="button" class="dbtn" data-s="tray">Compare tray</button>
+        <button type="button" class="dbtn" data-s="drawer">Filters drawer open</button>
+        <button type="button" class="dbtn" data-s="draft">Apply-form draft</button>
+      </div>
+      <div class="row"><span class="demo-hint" data-k="why"></span></div>
     </div>
     <div class="key">Mid-level answer: “I'd put it in Redux.” Senior answer: ask these three questions out loud for each piece — and say what breaks if it lived anywhere else.</div>
 </section>
@@ -446,18 +620,28 @@
   <section class="slide" data-chip="MODULE 06 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 2</div><div class="cx-page"><b>06</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · The cache</div>
     <h2>One key, one entry, one lifecycle</h2>
-    <div class="fig" style="max-width:1000px">
+    <div class="fig" id="fx-life" style="max-width:1000px">
       <svg viewBox="0 0 1000 90" role="img" aria-label="Query entry lifecycle: fetching, fresh, stale, inactive, deleted">
-        <rect x="0" y="0" width="168" height="44" rx="9" fill="#121C30" stroke="#FBBF24"/>
-        <text x="84" y="27" text-anchor="middle" class="lbl b">fetching</text>
-        <rect x="208" y="0" width="168" height="44" rx="9" fill="#121C30" stroke="#34D399"/>
-        <text x="292" y="27" text-anchor="middle" class="lbl b">fresh</text>
-        <rect x="416" y="0" width="168" height="44" rx="9" fill="#121C30" stroke="#22D3EE"/>
-        <text x="500" y="27" text-anchor="middle" class="lbl b">stale</text>
-        <rect x="624" y="0" width="168" height="44" rx="9" fill="#121C30" stroke="#64748B"/>
-        <text x="708" y="27" text-anchor="middle" class="lbl b">inactive</text>
-        <rect x="832" y="0" width="168" height="44" rx="9" fill="#121C30" stroke="#F8717A"/>
-        <text x="916" y="27" text-anchor="middle" class="lbl b">deleted</text>
+        <g data-st="fetching">
+          <rect x="0" y="0" width="168" height="44" rx="9" fill="#121C30" stroke="#FBBF24"/>
+          <text x="84" y="27" text-anchor="middle" class="lbl b">fetching</text>
+        </g>
+        <g data-st="fresh">
+          <rect x="208" y="0" width="168" height="44" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="292" y="27" text-anchor="middle" class="lbl b">fresh</text>
+        </g>
+        <g data-st="stale">
+          <rect x="416" y="0" width="168" height="44" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="500" y="27" text-anchor="middle" class="lbl b">stale</text>
+        </g>
+        <g data-st="inactive">
+          <rect x="624" y="0" width="168" height="44" rx="9" fill="#121C30" stroke="#64748B"/>
+          <text x="708" y="27" text-anchor="middle" class="lbl b">inactive</text>
+        </g>
+        <g data-st="deleted">
+          <rect x="832" y="0" width="168" height="44" rx="9" fill="#121C30" stroke="#F8717A"/>
+          <text x="916" y="27" text-anchor="middle" class="lbl b">deleted</text>
+        </g>
         <path class="draw" pathLength="1" d="M168,22 L203,22" stroke="#64748B" fill="none"/>
         <path class="draw" pathLength="1" d="M376,22 L411,22" stroke="#64748B" fill="none"/>
         <path class="draw" pathLength="1" d="M584,22 L619,22" stroke="#64748B" fill="none"/>
@@ -474,6 +658,15 @@
         <text x="916" y="82" text-anchor="middle" class="lbl s">default: 5 minutes</text>
       </svg>
     </div>
+    <div class="demo bare" id="demo-life">
+      <div class="row">
+        <button type="button" class="dbtn" data-act="mount">Mount JobList</button>
+        <button type="button" class="dbtn" data-act="unmount">Unmount</button>
+        <button type="button" class="dbtn" data-act="focus">Focus window</button>
+        <span class="dom">JobList: <b data-k="list">unmounted</b></span>
+        <span class="demo-hint" data-k="clock"></span>
+      </div>
+    </div>
     <pre><code><span class="kw">export const</span> <span class="fn">jobsQuery</span> = (filters: <span class="ty">JobFilters</span>) =&gt;
   <span class="fn">queryOptions</span>({
     queryKey: [<span class="st">'jobs'</span>, <span class="st">'list'</span>, filters],                     <span class="cmt">// the entry's address</span>
@@ -482,7 +675,7 @@
   });
 
 <span class="fn">useQuery</span>(<span class="fn">jobsQuery</span>({ q: <span class="st">'react'</span>, remote: <span class="kw">true</span>, page: <span class="st">1</span> }));</code></pre>
-    <div class="key"><code>staleTime</code> decides when data is <b>refetched</b>; <code>gcTime</code> decides when it is <b>deleted</b>. Stale data still renders instantly — the refetch runs behind it.</div>
+    <div class="key"><code>staleTime</code> decides when data is <b>refetched</b>; <code>gcTime</code> decides when it is <b>deleted</b>.</div>
 </section>
 
   <section class="slide" data-chip="MODULE 06 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 2</div><div class="cx-page"><b>07</b> / 22</div><!--/catalyst-brand:chrome-->
@@ -524,40 +717,78 @@
     <pre><code><span class="kw">const</span> save = <span class="fn">useMutation</span>({
   mutationFn: (jobId: <span class="ty">string</span>) =&gt; api.<span class="fn">saveJob</span>(jobId),
   onMutate: <span class="kw">async</span> (jobId) =&gt; {
-    <span class="kw">await</span> queryClient.<span class="fn">cancelQueries</span>({ queryKey: [<span class="st">'saved'</span>] });                      <span class="cmt">// 1 · stop refetches in flight</span>
+    <span class="ln" data-line="cancel"><span class="kw">await</span> queryClient.<span class="fn">cancelQueries</span>({ queryKey: [<span class="st">'saved'</span>] });                      <span class="cmt">// 1 · stop refetches in flight</span></span>
     <span class="kw">const</span> previous = queryClient.<span class="fn">getQueryData</span>&lt;<span class="ty">string</span>[]&gt;([<span class="st">'saved'</span>]);                <span class="cmt">// 2 · snapshot</span>
     queryClient.<span class="fn">setQueryData</span>&lt;<span class="ty">string</span>[]&gt;([<span class="st">'saved'</span>], (old = []) =&gt; [...old, jobId]);  <span class="cmt">// 3 · write the guess</span>
     <span class="kw">return</span> { previous };                                                           <span class="cmt">// 4 · hand the snapshot on</span>
   },
   onError: (_err, _jobId, snapshot) =&gt; {
-    queryClient.<span class="fn">setQueryData</span>([<span class="st">'saved'</span>], snapshot?.previous);                       <span class="no">// the rollback</span>
+    <span class="ln" data-line="rollback">queryClient.<span class="fn">setQueryData</span>([<span class="st">'saved'</span>], snapshot?.previous);                       <span class="no">// the rollback</span></span>
   },
   onSettled: () =&gt; queryClient.<span class="fn">invalidateQueries</span>({ queryKey: [<span class="st">'saved'</span>] }),         <span class="cmt">// then the server's answer wins</span>
 });</code></pre>
-    <div class="key r">Most hand-written optimistic updates skip two lines: the <code>onError</code> restore, and the <code>cancelQueries</code> that stops a refetch already in flight from landing on top of your guess. Without them the star lies.</div>
+    <div class="demo bare" id="demo-opt">
+      <div class="row">
+        <button type="button" class="dbtn star" data-k="star">☆ Save job 42</button>
+        <span class="demo-hint">server</span>
+        <button type="button" class="dbtn" data-sw="fail">fails the save</button>
+        <button type="button" class="dbtn" data-sw="inflight">has a refetch in flight</button>
+        <span class="demo-hint">code</span>
+        <button type="button" class="dbtn" data-sw="cancel">cancelQueries</button>
+        <button type="button" class="dbtn" data-sw="rollback">onError restore</button>
+      </div>
+      <div class="row">
+        <span class="meter">cache<b data-k="cache"></b></span>
+        <span class="meter">server<b data-k="server"></b></span>
+        <span class="demo-hint" data-k="say"></span>
+      </div>
+    </div>
+    <div class="key r">Skip <code>cancelQueries</code> or the <code>onError</code> restore, and the star lies.</div>
 </section>
 
   <section class="slide" data-chip="MODULE 06 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 2</div><div class="cx-page"><b>09</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · The race it fixes</div>
     <h2>A late answer lands in its own key — not on screen</h2>
+    <div class="anim" id="fx-race" data-at="300,1200,2100,3100,4000">
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 140" role="img" aria-label="Late response for re fills the re entry; the component reads only the react entry">
-        <rect x="0" y="14" width="240" height="40" rx="9" fill="#121C30" stroke="#F8717A"/>
-        <text x="120" y="39" text-anchor="middle" class="lbl">response · q=re (late)</text>
-        <rect x="0" y="86" width="240" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
-        <text x="120" y="111" text-anchor="middle" class="lbl">response · q=react</text>
-        <rect x="300" y="2" width="400" height="136" rx="12" fill="none" stroke="#243349" stroke-dasharray="5 5"/>
-        <rect x="320" y="14" width="360" height="40" rx="9" fill="#121C30" stroke="#64748B"/>
-        <text x="500" y="39" text-anchor="middle" class="lbl" style="font-family:var(--mono)">['jobs','list',{ q:'re' }]</text>
-        <rect x="320" y="86" width="360" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
-        <text x="500" y="111" text-anchor="middle" class="lbl" style="font-family:var(--mono)">['jobs','list',{ q:'react' }]</text>
-        <rect x="780" y="86" width="220" height="40" rx="9" fill="#121C30" stroke="#22D3EE"/>
-        <text x="890" y="111" text-anchor="middle" class="lbl b">JobList · q = react</text>
-        <path class="draw" pathLength="1" d="M240,34 L315,34" stroke="#F8717A" fill="none"/>
-        <path class="draw" pathLength="1" d="M240,106 L315,106" stroke="#34D399" fill="none"/>
-        <path class="draw" pathLength="1" d="M680,106 L775,106" stroke="#22D3EE" fill="none"/>
-        <text x="716" y="39" class="lbl s">cached — nobody reads this key now</text>
+        <g data-in="1">
+          <rect x="780" y="86" width="220" height="40" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="890" y="111" text-anchor="middle" class="lbl b">JobList · q = react</text>
+        </g>
+        <rect class="only-key" data-in="1" x="300" y="2" width="400" height="136" rx="12" fill="none" stroke="#243349" stroke-dasharray="5 5"/>
+        <g data-in="2">
+          <rect x="0" y="86" width="240" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="120" y="111" text-anchor="middle" class="lbl">response · q=react</text>
+        </g>
+        <g class="only-key" data-in="2">
+          <rect x="320" y="86" width="360" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="500" y="111" text-anchor="middle" class="lbl" style="font-family:var(--mono)">['jobs','list',{ q:'react' }]</text>
+        </g>
+        <path class="draw only-key" data-in="2" pathLength="1" d="M240,106 L315,106" stroke="#34D399" fill="none"/>
+        <path class="draw only-key" data-in="3" pathLength="1" d="M680,106 L775,106" stroke="#22D3EE" fill="none"/>
+        <path class="draw only-bare" data-in="3" pathLength="1" d="M240,106 L775,106" stroke="#34D399" fill="none"/>
+        <g data-in="4">
+          <rect x="0" y="14" width="240" height="40" rx="9" fill="#121C30" stroke="#F8717A"/>
+          <text x="120" y="39" text-anchor="middle" class="lbl">response · q=re (late)</text>
+        </g>
+        <g class="only-key" data-in="4">
+          <rect x="320" y="14" width="360" height="40" rx="9" fill="#121C30" stroke="#64748B"/>
+          <text x="500" y="39" text-anchor="middle" class="lbl" style="font-family:var(--mono)">['jobs','list',{ q:'re' }]</text>
+        </g>
+        <path class="draw only-key" data-in="4" pathLength="1" d="M240,34 L315,34" stroke="#F8717A" fill="none"/>
+        <text class="lbl s only-key" data-in="5" x="716" y="39">cached — nobody reads this key now</text>
+        <path class="draw only-bare" data-in="4" pathLength="1" d="M240,34 L772,90" stroke="#F8717A" fill="none"/>
+        <text class="lbl s only-bare" data-in="5" x="780" y="62" style="fill:#F8717A">now showing “re” results ✗</text>
       </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="demo bare inline" id="demo-race"><button type="button" class="dbtn" data-mode="key">query key</button><button type="button" class="dbtn" data-mode="bare">bare useEffect</button></span>
+      <span class="anim-say"><i>You typed “re”, then “react”: two requests are in flight.</i><i><span class="only-key">“react” answers first, filed under its own key.</span><span class="only-bare">“react” answers first.</span></i><i><span class="only-key">JobList reads the key for what's in the box: react.</span><span class="only-bare">The effect sets state: the list shows react's jobs.</span></i><i><span class="only-key">“re” answers late, and lands in the “re” key…</span><span class="only-bare">“re” answers late, and its effect sets state too…</span></i><i><span class="only-key">…which nothing on screen reads. The race is designed out.</span><span class="only-bare">…so the list shows “re” results under “react”.</span></i></span>
+    </div>
     </div>
     <pre><code><span class="kw">const</span> { q } = Route.<span class="fn">useSearch</span>();
 <span class="kw">const</span> jobs = <span class="fn">useQuery</span>({
@@ -594,24 +825,50 @@
   <section class="slide" data-chip="MODULE 06 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 3</div><div class="cx-page"><b>11</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Search params as state</div>
     <h2>If it lives in useState, nobody can share it</h2>
+    <div class="anim" id="fx-url" data-at="200,650,1100,1550">
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 72" role="img" aria-label="The URL string is validated by the route into a typed object, which becomes the query key">
-        <rect x="0" y="6" width="300" height="60" rx="10" fill="#121C30" stroke="#2196F3"/>
-        <text x="150" y="31" text-anchor="middle" class="lbl b" style="font-family:var(--mono)">/jobs?q=react&amp;remote=true&amp;page=2</text>
-        <text x="150" y="52" text-anchor="middle" class="lbl s">a string anyone can paste</text>
-        <path class="draw" pathLength="1" d="M300,36 L333,36" stroke="#64748B" fill="none"/>
-        <rect x="338" y="6" width="160" height="60" rx="10" fill="#121C30" stroke="#FBBF24"/>
-        <text x="418" y="31" text-anchor="middle" class="lbl b">validateSearch</text>
-        <text x="418" y="52" text-anchor="middle" class="lbl s">parse · fall back</text>
-        <path class="draw" pathLength="1" d="M498,36 L531,36" stroke="#64748B" fill="none"/>
-        <rect x="536" y="6" width="280" height="60" rx="10" fill="#121C30" stroke="#34D399"/>
-        <text x="676" y="31" text-anchor="middle" class="lbl b" style="font-family:var(--mono); font-size:12px">{ q: 'react', remote: true, page: 2 }</text>
-        <text x="676" y="52" text-anchor="middle" class="lbl s">typed — bad values never get in</text>
-        <path class="draw" pathLength="1" d="M816,36 L849,36" stroke="#64748B" fill="none"/>
-        <rect x="854" y="6" width="146" height="60" rx="10" fill="#121C30" stroke="#22D3EE"/>
-        <text x="927" y="31" text-anchor="middle" class="lbl b" style="font-family:var(--mono); font-size:12px">jobsQuery(search)</text>
-        <text x="927" y="52" text-anchor="middle" class="lbl s">same URL, same entry</text>
+        <g data-in="1">
+          <rect x="0" y="6" width="300" height="60" rx="10" fill="#121C30" stroke="#2196F3"/>
+          <text x="150" y="31" text-anchor="middle" class="lbl b" style="font-family:var(--mono)">/jobs?q=react&amp;remote=true&amp;page=2</text>
+          <text x="150" y="52" text-anchor="middle" class="lbl s">a string anyone can paste</text>
+        </g>
+        <path class="draw" data-in="2" pathLength="1" d="M300,36 L333,36" stroke="#64748B" fill="none"/>
+        <g data-in="2">
+          <rect x="338" y="6" width="160" height="60" rx="10" fill="#121C30" stroke="#FBBF24"/>
+          <text x="418" y="31" text-anchor="middle" class="lbl b">validateSearch</text>
+          <text x="418" y="52" text-anchor="middle" class="lbl s">parse · fall back</text>
+        </g>
+        <path class="draw" data-in="3" pathLength="1" d="M498,36 L531,36" stroke="#64748B" fill="none"/>
+        <g data-in="3">
+          <rect x="536" y="6" width="280" height="60" rx="10" fill="#121C30" stroke="#34D399"/>
+          <text x="676" y="31" text-anchor="middle" class="lbl b" style="font-family:var(--mono); font-size:12px">{ q: 'react', remote: true, page: 2 }</text>
+          <text x="676" y="52" text-anchor="middle" class="lbl s">typed — bad values never get in</text>
+        </g>
+        <path class="draw" data-in="4" pathLength="1" d="M816,36 L849,36" stroke="#64748B" fill="none"/>
+        <g data-in="4">
+          <rect x="854" y="6" width="146" height="60" rx="10" fill="#121C30" stroke="#22D3EE"/>
+          <text x="927" y="31" text-anchor="middle" class="lbl b" style="font-family:var(--mono); font-size:12px">jobsQuery(search)</text>
+          <text x="927" y="52" text-anchor="middle" class="lbl s">same URL, same entry</text>
+        </g>
       </svg>
+    </div>
+    </div>
+    <div class="demo" id="demo-url">
+      <div class="row">
+        <button type="button" class="dbtn" data-act="back" aria-label="Back">←</button>
+        <button type="button" class="dbtn" data-act="reload" aria-label="Reload">⟳</button>
+        <span class="dinput url" data-k="url">/jobs</span>
+        <span class="demo-hint">filters live in</span>
+        <button type="button" class="dbtn" data-mode="state">useState</button>
+        <button type="button" class="dbtn" data-mode="url">the URL</button>
+      </div>
+      <div class="row">
+        <input class="dinput" data-k="q" placeholder="search jobs" size="12" spellcheck="false" aria-label="Search text">
+        <button type="button" class="dbtn" data-act="remote" data-k="remote">Remote only</button>
+        <button type="button" class="dbtn" data-act="page">Page <span data-k="page">1</span> →</button>
+        <span class="demo-hint" data-k="say"></span>
+      </div>
     </div>
     <div class="two">
       <div class="card g">
@@ -623,7 +880,7 @@
         <p>Hover and focus, the search box before its debounce, form drafts, anything secret — a token in a URL ends up in logs and history.</p>
       </div>
     </div>
-    <div class="key">Move the filters into the URL and you get three features for free: refresh keeps them, a link shares them, and Back undoes the last one.</div>
+    <div class="key">Filters in the URL survive a refresh, travel in a link, and undo with Back.</div>
 </section>
 
   <section class="slide" data-chip="MODULE 06 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 3</div><div class="cx-page"><b>12</b> / 22</div><!--/catalyst-brand:chrome-->
@@ -642,41 +899,55 @@
     queryClient.<span class="fn">ensureQueryData</span>(<span class="fn">jobsQuery</span>(deps)),                          <span class="cmt">// the fetch starts before render</span>
   component: JobsPage,
 });</code></pre>
-    <div class="key"><code>.catch()</code> turns a hand-edited URL into a valid default instead of an error page. <code>loaderDeps</code> names what the loader reads, so changing anything else in the URL doesn't refetch.</div>
+    <div class="demo bare" id="demo-parse">
+      <div class="row">
+        <span class="dom">/jobs</span><input class="dinput" data-k="in" size="30" spellcheck="false" aria-label="Search string">
+        <span class="meter">→</span><span class="parsed" data-k="out"></span>
+      </div>
+    </div>
+    <div class="key"><code>.catch()</code> turns a bad URL into a default, not a crash.</div>
 </section>
 
   <section class="slide" data-chip="MODULE 06 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 3</div><div class="cx-page"><b>13</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Loaders and typed links</div>
     <h2>Fetch on navigation, not on render</h2>
+    <div class="anim" id="fx-fall" data-at="200,700,1150,1700,2150,2550,3550,4000">
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 142" role="img" aria-label="Fetching in effects waits for each render before the next fetch; route loaders start both fetches in parallel at navigation">
         <text x="0" y="38" class="lbl b">fetch in useEffect</text>
         <text x="0" y="55" class="lbl s">fetch-on-render</text>
         <text x="0" y="110" class="lbl b">route loaders</text>
         <text x="0" y="127" class="lbl s">fetch-on-navigation</text>
-        <rect x="170" y="22" width="80" height="34" rx="7" fill="#121C30" stroke="#64748B"/>
-        <text x="210" y="44" text-anchor="middle" class="lbl">navigate</text>
-        <rect x="256" y="22" width="70" height="34" rx="7" fill="#121C30" stroke="#22D3EE"/>
-        <text x="291" y="44" text-anchor="middle" class="lbl">render</text>
-        <rect x="332" y="22" width="190" height="34" rx="7" fill="#121C30" stroke="#FBBF24"/>
-        <text x="427" y="44" text-anchor="middle" class="lbl">fetch list</text>
-        <rect x="528" y="22" width="70" height="34" rx="7" fill="#121C30" stroke="#22D3EE"/>
-        <text x="563" y="44" text-anchor="middle" class="lbl">render</text>
-        <rect x="604" y="22" width="190" height="34" rx="7" fill="#121C30" stroke="#FBBF24"/>
-        <text x="699" y="44" text-anchor="middle" class="lbl">fetch detail</text>
-        <rect x="800" y="22" width="70" height="34" rx="7" fill="#121C30" stroke="#22D3EE"/>
-        <text x="835" y="44" text-anchor="middle" class="lbl">render</text>
-        <text x="882" y="44" class="lbl s" style="fill:#F8717A">2 round trips</text>
-        <rect x="170" y="94" width="80" height="34" rx="7" fill="#121C30" stroke="#64748B"/>
-        <text x="210" y="116" text-anchor="middle" class="lbl">navigate</text>
-        <rect x="256" y="84" width="190" height="24" rx="6" fill="#121C30" stroke="#FBBF24"/>
-        <text x="351" y="101" text-anchor="middle" class="lbl s">fetch list</text>
-        <rect x="256" y="114" width="190" height="24" rx="6" fill="#121C30" stroke="#FBBF24"/>
-        <text x="351" y="131" text-anchor="middle" class="lbl s">fetch detail</text>
-        <rect x="452" y="84" width="70" height="54" rx="7" fill="#121C30" stroke="#22D3EE"/>
-        <text x="487" y="116" text-anchor="middle" class="lbl">render</text>
-        <text x="534" y="116" class="lbl s" style="fill:#34D399">1 round trip</text>
+        <rect class="grow" data-in="1" x="170" y="22" width="80" height="34" rx="7" fill="#121C30" stroke="#64748B"/>
+        <text data-in="1" x="210" y="44" text-anchor="middle" class="lbl">navigate</text>
+        <rect class="grow" data-in="2" x="256" y="22" width="70" height="34" rx="7" fill="#121C30" stroke="#22D3EE"/>
+        <text data-in="2" x="291" y="44" text-anchor="middle" class="lbl">render</text>
+        <rect class="grow" data-in="3" style="--d:.9s" x="332" y="22" width="190" height="34" rx="7" fill="#121C30" stroke="#FBBF24"/>
+        <text data-in="3" x="427" y="44" text-anchor="middle" class="lbl">fetch list</text>
+        <rect class="grow" data-in="5" x="528" y="22" width="70" height="34" rx="7" fill="#121C30" stroke="#22D3EE"/>
+        <text data-in="5" x="563" y="44" text-anchor="middle" class="lbl">render</text>
+        <rect class="grow" data-in="6" style="--d:.9s" x="604" y="22" width="190" height="34" rx="7" fill="#121C30" stroke="#FBBF24"/>
+        <text data-in="6" x="699" y="44" text-anchor="middle" class="lbl">fetch detail</text>
+        <rect class="grow" data-in="7" x="800" y="22" width="70" height="34" rx="7" fill="#121C30" stroke="#22D3EE"/>
+        <text data-in="7" x="835" y="44" text-anchor="middle" class="lbl">render</text>
+        <text data-in="8" x="882" y="44" class="lbl s" style="fill:#F8717A">2 round trips</text>
+        <rect class="grow" data-in="1" x="170" y="94" width="80" height="34" rx="7" fill="#121C30" stroke="#64748B"/>
+        <text data-in="1" x="210" y="116" text-anchor="middle" class="lbl">navigate</text>
+        <rect class="grow" data-in="2" style="--d:.9s" x="256" y="84" width="190" height="24" rx="6" fill="#121C30" stroke="#FBBF24"/>
+        <text data-in="2" x="351" y="101" text-anchor="middle" class="lbl s">fetch list</text>
+        <rect class="grow" data-in="2" style="--d:.9s" x="256" y="114" width="190" height="24" rx="6" fill="#121C30" stroke="#FBBF24"/>
+        <text data-in="2" x="351" y="131" text-anchor="middle" class="lbl s">fetch detail</text>
+        <rect class="grow" data-in="4" x="452" y="84" width="70" height="54" rx="7" fill="#121C30" stroke="#22D3EE"/>
+        <text data-in="4" x="487" y="116" text-anchor="middle" class="lbl">render</text>
+        <text data-in="5" x="534" y="116" class="lbl s" style="fill:#34D399">1 round trip</text>
       </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>Same click, same moment, two apps.</i><i>Effects render first, then ask. Loaders ask for both at once.</i><i>The list starts fetching only after its first render.</i><i>Loaders: both answers are back, so the page renders once.</i><i>Loaders are done. The effect version only now renders the list…</i><i>…which mounts the detail panel, which starts its own fetch.</i><i>Render again, with the detail.</i><i>Two round trips, one after the other: a waterfall.</i></span>
+    </div>
     </div>
     <pre><code><span class="kw">function</span> <span class="fn">JobsPage</span>() {
   <span class="kw">const</span> search = Route.<span class="fn">useSearch</span>();                      <span class="cmt">// { q: string; remote: boolean; page: number }</span>
@@ -713,30 +984,32 @@
   <section class="slide" data-chip="MODULE 06 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 4</div><div class="cx-page"><b>15</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · Normalization</div>
     <h2>One job, three copies, two of them wrong</h2>
+    <div class="anim" id="fx-norm" data-at="200,800,1300,2000,2600,3100">
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 192" role="img" aria-label="Nested copies of job 42 disagree; normalized lists hold ids pointing at one record">
-        <text x="0" y="12" class="lbl b">nested: a copy per screen</text>
-        <rect x="0" y="26" width="420" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
-        <text x="210" y="51" text-anchor="middle" class="lbl">detail · job 42 · status: closed</text>
-        <rect x="0" y="86" width="420" height="40" rx="9" fill="#121C30" stroke="#F8717A"/>
-        <text x="210" y="111" text-anchor="middle" class="lbl">feed · job 42 · status: open</text>
-        <rect x="0" y="146" width="420" height="40" rx="9" fill="#121C30" stroke="#F8717A"/>
-        <text x="210" y="171" text-anchor="middle" class="lbl">saved · job 42 · status: open</text>
-        <text x="480" y="111" text-anchor="middle" class="lbl b">vs</text>
-        <text x="540" y="12" class="lbl b">normalized: ids point at one record</text>
-        <rect x="540" y="26" width="200" height="40" rx="9" fill="#121C30" stroke="#243349"/>
-        <text x="640" y="51" text-anchor="middle" class="lbl" style="font-family:var(--mono)">feed: [42, 17, 8]</text>
-        <rect x="540" y="86" width="200" height="40" rx="9" fill="#121C30" stroke="#243349"/>
-        <text x="640" y="111" text-anchor="middle" class="lbl" style="font-family:var(--mono)">saved: [42, 3]</text>
-        <rect x="540" y="146" width="200" height="40" rx="9" fill="#121C30" stroke="#243349"/>
-        <text x="640" y="171" text-anchor="middle" class="lbl" style="font-family:var(--mono)">detail: 42</text>
-        <rect x="800" y="61" width="200" height="90" rx="10" fill="#121C30" stroke="#34D399"/>
-        <text x="900" y="98" text-anchor="middle" class="lbl b" style="font-family:var(--mono)">entities[42]</text>
-        <text x="900" y="121" text-anchor="middle" class="lbl">status: closed</text>
-        <path class="draw" pathLength="1" d="M740,46 L795,84" stroke="#64748B" fill="none"/>
-        <path class="draw" pathLength="1" d="M740,106 L795,106" stroke="#64748B" fill="none"/>
-        <path class="draw" pathLength="1" d="M740,166 L795,128" stroke="#64748B" fill="none"/>
+        <text data-in="1" x="0" y="12" class="lbl b">nested: a copy per screen</text>
+        <rect data-in="1" x="0" y="26" width="420" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+        <text data-in="1" x="210" y="51" text-anchor="middle" class="lbl">detail · job 42 · status: closed</text>
+        <rect data-in="2" x="0" y="86" width="420" height="40" rx="9" fill="#121C30" stroke="#F8717A"/>
+        <text data-in="2" x="210" y="111" text-anchor="middle" class="lbl">feed · job 42 · status: open</text>
+        <rect data-in="3" x="0" y="146" width="420" height="40" rx="9" fill="#121C30" stroke="#F8717A"/>
+        <text data-in="3" x="210" y="171" text-anchor="middle" class="lbl">saved · job 42 · status: open</text>
+        <text data-in="4" x="480" y="111" text-anchor="middle" class="lbl b">vs</text>
+        <text data-in="4" x="540" y="12" class="lbl b">normalized: ids point at one record</text>
+        <rect data-in="4" x="540" y="26" width="200" height="40" rx="9" fill="#121C30" stroke="#243349"/>
+        <text data-in="4" x="640" y="51" text-anchor="middle" class="lbl" style="font-family:var(--mono)">feed: [42, 17, 8]</text>
+        <rect data-in="4" x="540" y="86" width="200" height="40" rx="9" fill="#121C30" stroke="#243349"/>
+        <text data-in="4" x="640" y="111" text-anchor="middle" class="lbl" style="font-family:var(--mono)">saved: [42, 3]</text>
+        <rect data-in="4" x="540" y="146" width="200" height="40" rx="9" fill="#121C30" stroke="#243349"/>
+        <text data-in="4" x="640" y="171" text-anchor="middle" class="lbl" style="font-family:var(--mono)">detail: 42</text>
+        <rect data-in="5" x="800" y="61" width="200" height="90" rx="10" fill="#121C30" stroke="#34D399"/>
+        <text data-in="5" x="900" y="98" text-anchor="middle" class="lbl b" style="font-family:var(--mono)">entities[42]</text>
+        <text data-in="5" x="900" y="121" text-anchor="middle" class="lbl">status: closed</text>
+        <path data-in="6" class="draw" pathLength="1" d="M740,46 L795,84" stroke="#64748B" fill="none"/>
+        <path data-in="6" class="draw" pathLength="1" d="M740,106 L795,106" stroke="#64748B" fill="none"/>
+        <path data-in="6" class="draw" pathLength="1" d="M740,166 L795,128" stroke="#64748B" fill="none"/>
       </svg>
+    </div>
     </div>
     <pre><code><span class="kw">const</span> jobsAdapter = <span class="fn">createEntityAdapter</span>&lt;<span class="ty">Job</span>&gt;();        <span class="cmt">// { ids: [], entities: {} }</span>
 <span class="kw">const</span> jobsSlice = <span class="fn">createSlice</span>({
@@ -830,33 +1103,41 @@
     <div class="kicker">Lesson 5 · Build</div>
     <h2>Rebuild Rasmi's data layer on Query and Router</h2>
     <p class="say">Same screens, new plumbing: every piece of state moves to the home Lesson 1 gave it.</p>
+    <div class="anim" id="fx-arch" data-at="200,700,1200,1700,2400,3100,3800">
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 214" role="img" aria-label="Target architecture: URL to route to QueryClient cache to components; polling and mutations write into the cache; Zustand holds only the compare tray">
-        <rect x="450" y="0" width="200" height="36" rx="9" fill="#121C30" stroke="#A78BFA"/>
-        <text x="550" y="23" text-anchor="middle" class="lbl b">refetchInterval · 30 s</text>
-        <rect x="0" y="78" width="150" height="56" rx="10" fill="#121C30" stroke="#2196F3"/>
-        <text x="75" y="101" text-anchor="middle" class="lbl b">URL</text>
-        <text x="75" y="120" text-anchor="middle" class="lbl s" style="font-family:var(--mono)">/jobs?q=…</text>
-        <rect x="190" y="78" width="200" height="56" rx="10" fill="#121C30" stroke="#2196F3"/>
-        <text x="290" y="101" text-anchor="middle" class="lbl b">Route</text>
-        <text x="290" y="120" text-anchor="middle" class="lbl s">validateSearch · loader</text>
-        <rect x="430" y="70" width="240" height="72" rx="10" fill="#121C30" stroke="#34D399"/>
-        <text x="550" y="100" text-anchor="middle" class="lbl b">QueryClient cache</text>
-        <text x="550" y="122" text-anchor="middle" class="lbl s">jobs · saved · applications</text>
-        <rect x="710" y="78" width="290" height="56" rx="10" fill="#121C30" stroke="#22D3EE"/>
-        <text x="855" y="101" text-anchor="middle" class="lbl b">Components</text>
-        <text x="855" y="120" text-anchor="middle" class="lbl s">useSuspenseQuery · useMutation</text>
-        <rect x="430" y="178" width="240" height="36" rx="9" fill="#121C30" stroke="#FBBF24"/>
-        <text x="550" y="201" text-anchor="middle" class="lbl b">save (optimistic) · apply</text>
-        <rect x="760" y="178" width="240" height="36" rx="9" fill="#121C30" stroke="#A78BFA" stroke-dasharray="5 4"/>
-        <text x="880" y="201" text-anchor="middle" class="lbl">Zustand: compare tray only</text>
-        <path class="draw" pathLength="1" d="M150,106 L185,106" stroke="#64748B" fill="none"/>
-        <path class="draw" pathLength="1" d="M390,106 L425,106" stroke="#64748B" fill="none"/>
-        <path class="draw" pathLength="1" d="M670,106 L705,106" stroke="#64748B" fill="none"/>
-        <path class="draw" pathLength="1" d="M550,36 L550,65" stroke="#A78BFA" fill="none"/>
-        <path class="draw" pathLength="1" d="M550,178 L550,147" stroke="#FBBF24" fill="none"/>
-        <path class="draw" pathLength="1" d="M725,134 L725,196 L675,196" stroke="#64748B" fill="none"/>
+        <rect data-in="5" x="450" y="0" width="200" height="36" rx="9" fill="#121C30" stroke="#A78BFA"/>
+        <text data-in="5" x="550" y="23" text-anchor="middle" class="lbl b">refetchInterval · 30 s</text>
+        <rect data-in="1" x="0" y="78" width="150" height="56" rx="10" fill="#121C30" stroke="#2196F3"/>
+        <text data-in="1" x="75" y="101" text-anchor="middle" class="lbl b">URL</text>
+        <text data-in="1" x="75" y="120" text-anchor="middle" class="lbl s" style="font-family:var(--mono)">/jobs?q=…</text>
+        <rect data-in="2" x="190" y="78" width="200" height="56" rx="10" fill="#121C30" stroke="#2196F3"/>
+        <text data-in="2" x="290" y="101" text-anchor="middle" class="lbl b">Route</text>
+        <text data-in="2" x="290" y="120" text-anchor="middle" class="lbl s">validateSearch · loader</text>
+        <rect data-in="3" x="430" y="70" width="240" height="72" rx="10" fill="#121C30" stroke="#34D399"/>
+        <text data-in="3" x="550" y="100" text-anchor="middle" class="lbl b">QueryClient cache</text>
+        <text data-in="3" x="550" y="122" text-anchor="middle" class="lbl s">jobs · saved · applications</text>
+        <rect data-in="4" x="710" y="78" width="290" height="56" rx="10" fill="#121C30" stroke="#22D3EE"/>
+        <text data-in="4" x="855" y="101" text-anchor="middle" class="lbl b">Components</text>
+        <text data-in="4" x="855" y="120" text-anchor="middle" class="lbl s">useSuspenseQuery · useMutation</text>
+        <rect data-in="6" x="430" y="178" width="240" height="36" rx="9" fill="#121C30" stroke="#FBBF24"/>
+        <text data-in="6" x="550" y="201" text-anchor="middle" class="lbl b">save (optimistic) · apply</text>
+        <rect data-in="7" x="760" y="178" width="240" height="36" rx="9" fill="#121C30" stroke="#A78BFA" stroke-dasharray="5 4"/>
+        <text data-in="7" x="880" y="201" text-anchor="middle" class="lbl">Zustand: compare tray only</text>
+        <path data-in="2" class="draw" pathLength="1" d="M150,106 L185,106" stroke="#64748B" fill="none"/>
+        <path data-in="3" class="draw" pathLength="1" d="M390,106 L425,106" stroke="#64748B" fill="none"/>
+        <path data-in="4" class="draw" pathLength="1" d="M670,106 L705,106" stroke="#64748B" fill="none"/>
+        <path data-in="5" class="draw" pathLength="1" d="M550,36 L550,65" stroke="#A78BFA" fill="none"/>
+        <path data-in="6" class="draw" pathLength="1" d="M550,178 L550,147" stroke="#FBBF24" fill="none"/>
+        <path data-in="6" class="draw" pathLength="1" d="M725,134 L725,196 L675,196" stroke="#64748B" fill="none"/>
       </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>The URL holds the filters.</i><i>The route validates them and starts the fetch.</i><i>Every read lands in one place: the Query cache.</i><i>Components only read from the cache.</i><i>A 30-second poll keeps application statuses fresh.</i><i>Saves and applications write back into the same cache.</i><i>Zustand keeps one job: the compare tray.</i></span>
+    </div>
     </div>
     <div class="key">Stage <code>module-6/data-layer</code> in the job board repo. One rule for the whole build: no component calls <code>fetch</code> — every read is a query, every write is a mutation.</div>
 </section>
@@ -977,6 +1258,401 @@
   });
   document.getElementById('stage').addEventListener('click',e=>{ if(e.target.closest('a')) return; e.clientX>innerWidth/2?next():prev(); });
   render();
+</script>
+<script>
+/* Step player — see the .anim block in the stylesheet for the vocabulary. Each player
+   restarts whenever its slide opens; R replays every player on the current slide. With
+   reduced motion, or for print, it jumps straight to the settled frame. */
+(function(){
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var players = [];
+  document.querySelectorAll('.anim[data-at]').forEach(function(root){
+    var at = root.dataset.at.split(',').map(Number), n = at.length, timers = [];
+    var ins  = [].slice.call(root.querySelectorAll('[data-in]'));
+    var outs = [].slice.call(root.querySelectorAll('[data-out]'));
+    var hls  = [].slice.call(root.querySelectorAll('[data-hl]')).map(function(el){
+      return { el:el, at:el.dataset.hl.split(/\s+/).map(Number) };
+    });
+    var says = [].slice.call(root.querySelectorAll('.anim-say i'));
+    var steps = [].slice.call(root.querySelectorAll('.anim-step')), cur = n;
+
+    function set(k){
+      cur = k;
+      for (var j = 1; j <= n; j++) root.classList.toggle('s' + j, j <= k);
+      root.dataset.step = k;
+      ins.forEach(function(el){ el.classList.toggle('in', k >= +el.dataset.in); });
+      outs.forEach(function(el){ el.classList.toggle('out', k >= +el.dataset.out); });
+      hls.forEach(function(h){ h.el.classList.toggle('lit', h.at.indexOf(k) >= 0); });
+      says.forEach(function(el, j){ el.classList.toggle('on', j === k - 1); });
+      steps.forEach(function(b){
+        var d = +b.dataset.d;
+        b.setAttribute('aria-disabled', String(d < 0 ? k <= 0 : k >= n));
+      });
+    }
+    function go(d){
+      timers.forEach(clearTimeout); timers = [];
+      set(Math.max(0, Math.min(n, cur + d)));
+    }
+    function settle(){ timers.forEach(clearTimeout); timers = []; set(n); }
+    function play(){
+      if (still.matches) return settle();
+      timers.forEach(clearTimeout); timers = [];
+      root.classList.add('rs'); set(0); void root.offsetWidth; root.classList.remove('rs');
+      at.forEach(function(ms, j){ timers.push(setTimeout(function(){ set(j + 1); }, ms)); });
+    }
+    set(n);
+    root.classList.add('live');
+
+    var btn = root.querySelector('.anim-replay');
+    if (btn) btn.addEventListener('click', play);
+    steps.forEach(function(b){ b.addEventListener('click', function(){ go(+b.dataset.d); }); });
+    // A press on a player button must not also turn the slide.
+    (btn ? [btn] : []).concat(steps).forEach(function(b){
+      ['click','pointerdown'].forEach(function(t){
+        b.addEventListener(t, function(e){ e.stopPropagation(); });
+      });
+    });
+
+    var slide = root.closest('.slide'), wasOn = slide.classList.contains('on');
+    if (wasOn) play();
+    new MutationObserver(function(){
+      var isOn = slide.classList.contains('on');
+      if (isOn && !wasOn) play();
+      if (!isOn && wasOn) settle();
+      wasOn = isOn;
+    }).observe(slide, { attributes:true, attributeFilter:['class'] });
+    players.push({ slide:slide, play:play, settle:settle });
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key.toLowerCase() !== 'r' || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+    players.forEach(function(p){ if (p.slide.classList.contains('on')) p.play(); });
+  });
+  window.addEventListener('beforeprint', function(){ players.forEach(function(p){ p.settle(); }); });
+})();
+</script>
+<script>
+/* Live demos — see the .demo block in the stylesheet. The deck turns slides on any click
+   and on Space or the arrow keys, so a demo keeps its own clicks, and keeps the keys that
+   belong to it: anything typed into an input, plus Space, Enter, Tab and Escape on its
+   controls. Arrow keys on a demo button still turn the slide. */
+(function(){
+  document.querySelectorAll('.demo').forEach(function(el){
+    ['click','pointerdown'].forEach(function(t){ el.addEventListener(t, function(e){ e.stopPropagation(); }); });
+    el.addEventListener('keydown', function(e){
+      var typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable;
+      if (typing || e.key === ' ' || e.key === 'Enter' || e.key === 'Tab' || e.key === 'Escape') e.stopPropagation();
+    });
+  });
+
+  // Runs open() each time the demo's slide opens and close() each time it leaves.
+  function watch(el, open, close){
+    var s = el.closest('.slide'), was = s.classList.contains('on');
+    if (was) open();
+    new MutationObserver(function(){
+      var is = s.classList.contains('on');
+      if (is && !was) open();
+      if (!is && was && close) close();
+      was = is;
+    }).observe(s, { attributes:true, attributeFilter:['class'] });
+  }
+  function again(el, cls){ el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]; }); }
+  function k(root, name){ return root.querySelector('[data-k="' + name + '"]'); }
+  window.cxDemo = { watch:watch, again:again, esc:esc, k:k };
+
+
+  /* L1c · walk the three questions for one piece of state */
+  (function(){
+    var root = document.getElementById('demo-home'), fig = document.getElementById('fx-home');
+    if (!root || !fig) return;
+    // yes: the question that says yes (0 = none does, so it stays in useState).
+    var PIECES = {
+      feed:   { yes:1, why:'Listings feed → the Query cache. Other people change it without telling you.' },
+      saved:  { yes:1, why:'Saved jobs → the Query cache. It is stored per account, so the phone shows it too.' },
+      q:      { yes:2, why:'Search text → the URL. A reload or a shared link should bring it back.' },
+      tray:   { yes:3, why:'Compare tray → a small store. The feed and the job page both need it.' },
+      drawer: { yes:0, why:'Filters drawer open → useState. Nobody else needs it, and a reload may close it.' },
+      draft:  { yes:0, why:'Apply-form draft → useState. One form owns it until it is sent.' }
+    };
+    var HOME = ['state', 'query', 'url', 'store'], timers = [];
+    function clear(){
+      timers.forEach(clearTimeout); timers = [];
+      fig.classList.remove('walk');
+      fig.querySelectorAll('.lit').forEach(function(e){ e.classList.remove('lit'); });
+      root.querySelectorAll('[data-s]').forEach(function(b){ b.classList.remove('on'); });
+      k(root,'why').textContent = '';
+    }
+    function walk(id){
+      clear();
+      var p = PIECES[id], seq = [];
+      for (var q = 1; q <= 3; q++){
+        seq.push('[data-q="' + q + '"]');
+        if (p.yes === q){ seq.push('[data-yes="' + q + '"]'); break; }
+        seq.push('[data-no="' + q + '"]');
+      }
+      seq.push('[data-home="' + HOME[p.yes] + '"]');
+      fig.classList.add('walk');
+      root.querySelector('[data-s="' + id + '"]').classList.add('on');
+      seq.forEach(function(sel, j){
+        timers.push(setTimeout(function(){ fig.querySelector(sel).classList.add('lit'); }, j * 380));
+      });
+      timers.push(setTimeout(function(){ k(root,'why').textContent = p.why; }, seq.length * 380));
+    }
+    root.addEventListener('click', function(e){ var b = e.target.closest('[data-s]'); if (b) walk(b.dataset.s); });
+    watch(root, clear, clear);
+  })();
+
+  /* L2a · one cache entry on a clock: staleTime 3 s and gcTime 5 s, scaled down from the code */
+  (function(){
+    var root = document.getElementById('demo-life'), fig = document.getElementById('fx-life');
+    if (!root || !fig) return;
+    var STALE = 3000, GC = 5000, FETCH = 900;
+    var s, timers = [], tick;
+    function now(){ return performance.now(); }
+    function later(ms, f){ timers.push(setTimeout(f, ms)); }
+    function secs(ms){ return (Math.max(0, ms) / 1000).toFixed(1) + ' s'; }
+    function note(t){ s.note = t; s.noteUntil = now() + 1800; paint(); }
+    function paint(){
+      var t = now(), fresh = s.data && t < s.freshUntil, st = '';
+      if (s.data) st = !s.obs ? 'inactive' : fresh ? 'fresh' : 'stale';
+      else if (s.fetching) st = 'fetching';
+      else if (t < s.goneUntil) st = 'deleted';
+      fig.classList.toggle('run', !!st);
+      fig.querySelectorAll('[data-st]').forEach(function(g){
+        g.classList.toggle('on', g.dataset.st === st || (g.dataset.st === 'fetching' && s.fetching));
+      });
+      k(root,'list').textContent = !s.obs ? 'unmounted' : !s.data ? '⟳ loading…' : '12 jobs' + (s.fetching ? ' · refetching behind it' : '');
+      root.querySelector('[data-act="mount"]').classList.toggle('on', !!s.obs);
+      var clock =
+        s.fetching && !s.data ? 'queryFn running: first load, isPending' :
+        st === 'fresh' ? 'fresh · stale in ' + secs(s.freshUntil - t) :
+        st === 'stale' ? 'stale · refetches on mount, focus, reconnect' :
+        st === 'inactive' ? 'no component reads it · deleted in ' + secs(s.gcAt - t) :
+        st === 'deleted' ? 'gcTime passed: the entry is gone' :
+        'staleTime 3 s · gcTime 5 s, scaled down';
+      k(root,'clock').textContent = t < s.noteUntil ? s.note : clock;
+    }
+    function fetch(){
+      if (s.fetching) return;
+      s.fetching = true; paint();
+      later(FETCH, function(){
+        s.fetching = false; s.data = true; s.freshUntil = now() + STALE;
+        if (s.obs) again(k(root,'list'), 'flash-g'); else gc();
+        paint();
+      });
+    }
+    function gc(){
+      clearTimeout(s.gcTimer);
+      s.gcAt = now() + GC;
+      s.gcTimer = setTimeout(function(){
+        if (s.obs) return;
+        s.data = false; s.goneUntil = now() + 2500; paint();
+      }, GC);
+      timers.push(s.gcTimer);
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-act]'); if (!b) return;
+      var a = b.dataset.act, stale = s.data && now() >= s.freshUntil;
+      if (a === 'mount'){
+        if (s.obs) return note('already mounted');
+        s.obs = 1; clearTimeout(s.gcTimer); s.goneUntil = 0;
+        if (!s.data) fetch();
+        else if (stale){ fetch(); note('cached data shows at once; it is stale, so it refetches behind it'); }
+        else note('cached and still fresh: shown at once, no request');
+      }
+      if (a === 'unmount'){
+        if (!s.obs) return note('nothing is mounted');
+        s.obs = 0; if (s.data) gc();
+      }
+      if (a === 'focus'){
+        if (!s.obs || !s.data) note('no component reads it, so focus refetches nothing');
+        else if (stale){ fetch(); note('window focus: stale, so it refetches behind the data'); }
+        else note('window focus: still fresh, so no request');
+      }
+      paint();
+    });
+    watch(root, function(){
+      timers.forEach(clearTimeout); timers = [];
+      s = { data:false, obs:0, fetching:false, freshUntil:0, gcAt:0, gcTimer:0, goneUntil:0, note:'', noteUntil:0 };
+      clearInterval(tick); tick = setInterval(paint, 100); paint();
+    }, function(){ timers.forEach(clearTimeout); timers = []; clearInterval(tick); });
+  })();
+
+  /* L2c · optimistic save: switch off cancelQueries or the rollback and watch the star */
+  (function(){
+    var root = document.getElementById('demo-opt'); if (!root) return;
+    var slide = root.closest('.slide');
+    var lines = { cancel: slide.querySelector('[data-line="cancel"]'), rollback: slide.querySelector('[data-line="rollback"]') };
+    var star = k(root,'star'), sw, cache, server, busy, timers = [];
+    function later(ms, f){ timers.push(setTimeout(f, ms)); }
+    function list(a){ return '[' + a.join(', ') + ']'; }
+    function without(a){ return a.filter(function(x){ return x !== 42; }); }
+    function say(t){ k(root,'say').textContent = t; }
+    function show(){
+      var on = cache.indexOf(42) >= 0;
+      star.classList.toggle('on', on);
+      star.textContent = (on ? '★ Saved' : '☆ Save') + ' job 42';
+      k(root,'cache').textContent = list(cache);
+      k(root,'server').textContent = list(server);
+      k(root,'cache').className = list(cache) === list(server) ? '' : 'bad';
+    }
+    function paint(){
+      root.querySelectorAll('[data-sw]').forEach(function(b){ b.classList.toggle('on', sw[b.dataset.sw]); });
+      lines.cancel.classList.toggle('gone', !sw.cancel);
+      lines.rollback.classList.toggle('gone', !sw.rollback);
+    }
+    function save(){
+      if (busy) return;
+      busy = true; star.setAttribute('aria-busy', 'true');
+      var want = cache.indexOf(42) < 0, before = cache.slice(), old = server.slice();
+      if (sw.inflight && sw.cancel){ again(lines.cancel, 'flash'); }
+      cache = want ? cache.concat(42) : without(cache);                 // 2 · snapshot, 3 · write the guess
+      show(); again(star, 'flash-g');
+      say(sw.inflight && sw.cancel ? 'the refetch in flight is cancelled, then the guess is written' : 'the guess is written before the server answers');
+      if (sw.inflight && !sw.cancel) later(450, function(){
+        cache = old; show(); again(star, 'flash-r');
+        say('an older refetch landed on top of the guess');
+      });
+      later(1200, function(){
+        if (sw.fail){
+          if (sw.rollback){ cache = before; show(); again(lines.rollback, 'flash'); again(star, 'flash-r'); say('the save failed: onError put the snapshot back'); }
+          else say('the save failed and nothing restored it: the star lies until the refetch lands');
+        } else {
+          server = want ? server.concat(42) : without(server); show();
+          say('the server saved it');
+        }
+      });
+      later(2400, function(){
+        cache = server.slice(); show();
+        say('onSettled refetched: the server has the last word');
+        busy = false; star.removeAttribute('aria-busy');
+      });
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-sw]');
+      if (b){ sw[b.dataset.sw] = !sw[b.dataset.sw]; paint(); return; }
+      if (e.target.closest('[data-k="star"]')) save();
+    });
+    watch(root, function(){
+      timers.forEach(clearTimeout); timers = []; busy = false; star.removeAttribute('aria-busy');
+      sw = { fail:false, inflight:false, cancel:true, rollback:true };
+      cache = [17]; server = [17];
+      paint(); show(); say('');
+    }, function(){ timers.forEach(clearTimeout); timers = []; });
+  })();
+
+  /* L2d · the same race, with a query key or a bare effect */
+  (function(){
+    var root = document.getElementById('demo-race'), fig = document.getElementById('fx-race');
+    if (!root || !fig) return;
+    function mode(m){
+      fig.classList.toggle('bare', m === 'bare');
+      root.querySelectorAll('[data-mode]').forEach(function(b){ b.classList.toggle('on', b.dataset.mode === m); });
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-mode]'); if (!b) return;
+      mode(b.dataset.mode);
+      fig.querySelector('.anim-replay').click();
+    });
+    watch(root, function(){ mode('key'); });
+  })();
+
+  /* L3a · the same filters in useState, or in the URL */
+  (function(){
+    var root = document.getElementById('demo-url'); if (!root) return;
+    var input = k(root,'q'), mode, f, hist, timer;
+    function fresh(){ return { q:'', remote:false, page:1 }; }
+    function url(x){
+      var p = [];
+      if (x.q) p.push('q=' + encodeURIComponent(x.q));
+      if (x.remote) p.push('remote=true');
+      if (x.page > 1) p.push('page=' + x.page);
+      return '/jobs' + (p.length ? '?' + p.join('&') : '');
+    }
+    function parse(u){
+      var x = fresh();
+      (u.split('?')[1] || '').split('&').forEach(function(kv){
+        var a = kv.split('=');
+        if (a[0] === 'q') x.q = decodeURIComponent(a[1] || '');
+        if (a[0] === 'remote') x.remote = a[1] === 'true';
+        if (a[0] === 'page') x.page = +a[1] || 1;
+      });
+      return x;
+    }
+    function say(t){ k(root,'say').textContent = t; }
+    function paint(){
+      if (input.value !== f.q) input.value = f.q;
+      k(root,'remote').classList.toggle('on', f.remote);
+      k(root,'page').textContent = f.page;
+      k(root,'url').textContent = mode === 'url' ? hist[hist.length - 1] : '/jobs';
+      root.querySelectorAll('[data-mode]').forEach(function(b){ b.classList.toggle('on', b.dataset.mode === mode); });
+    }
+    function commit(){
+      clearTimeout(timer);
+      if (mode === 'url'){
+        var u = url(f);
+        if (u !== hist[hist.length - 1]){ hist.push(u); again(k(root,'url'), 'flash'); }
+      }
+      paint();
+    }
+    function reset(m){
+      clearTimeout(timer);
+      mode = m; f = fresh(); hist = ['/jobs']; paint();
+      say(m === 'url' ? 'Now set them again, and reload.' : 'Set a search, a filter and a page, then reload.');
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-act],[data-mode]'); if (!b) return;
+      if (b.dataset.mode) return reset(b.dataset.mode);
+      var a = b.dataset.act;
+      if (a === 'remote'){ f.remote = !f.remote; commit(); }
+      if (a === 'page'){ f.page++; commit(); }
+      if (a === 'reload'){
+        commit(); again(root, 'flash');
+        if (mode === 'url'){ f = parse(hist[hist.length - 1]); paint(); say('Reload: the same filters, read back from the URL.'); }
+        else { f = fresh(); paint(); say('Reload: every filter is gone. A shared link opens page 1 of everything.'); }
+      }
+      if (a === 'back'){
+        commit();
+        if (mode === 'url' && hist.length > 1){ hist.pop(); f = parse(hist[hist.length - 1]); paint(); say('Back undid one change.'); }
+        else say(mode === 'url' ? 'Nothing to go back to yet.' : 'Back leaves the page: useState never made a history entry.');
+      }
+    });
+    input.addEventListener('input', function(){ f.q = input.value; clearTimeout(timer); timer = setTimeout(commit, 450); });
+    watch(root, function(){ reset('state'); }, function(){ clearTimeout(timer); });
+  })();
+
+  /* L3b · what validateSearch makes of a hand-edited URL */
+  (function(){
+    var root = document.getElementById('demo-parse'); if (!root) return;
+    var input = k(root,'in'), out = k(root,'out');
+    // TanStack Router's default parser tries JSON.parse on every value, so page=2 arrives as a number.
+    function val(v){ try { return JSON.parse(v); } catch (e) { return v; } }
+    function lit(v){ return typeof v === 'string' ? "'" + v + "'" : String(v); }
+    function run(){
+      var raw = {};
+      input.value.replace(/^[^?]*\?/, '').split('&').forEach(function(kv){
+        if (!kv) return;
+        var i = kv.indexOf('='), key = i < 0 ? kv : kv.slice(0, i), v = i < 0 ? '' : kv.slice(i + 1);
+        try { key = decodeURIComponent(key); v = decodeURIComponent(v.replace(/\+/g, ' ')); } catch (e) {}
+        raw[key] = val(v);
+      });
+      var p = raw.page, got = {
+        q: typeof raw.q === 'string' ? [raw.q] : ['', 1],
+        remote: typeof raw.remote === 'boolean' ? [raw.remote] : [false, 1],
+        page: typeof p === 'number' && Number.isInteger(p) && p >= 1 ? [p] : [1, 1]
+      };
+      var dropped = Object.keys(raw).filter(function(x){ return !(x in got); });
+      out.innerHTML = '{ ' + Object.keys(got).map(function(x){
+        var v = esc(lit(got[x][0]));
+        return x + ': ' + (got[x][1] ? '<b>' + v + '</b>' : v);
+      }).join(', ') + ' }' + (dropped.length ? ' <i>dropped: ' + esc(dropped.join(', ')) + '</i>' : '');
+    }
+    input.addEventListener('input', run);
+    watch(root, function(){ input.value = '?q=react&remote=yes&page=abc'; run(); });
+  })();
+})();
 </script>
 <!--catalyst-brand:copy-->
 <script>
