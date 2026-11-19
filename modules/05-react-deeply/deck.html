@@ -2794,7 +2794,11 @@ document.getElementById('stage').addEventListener('click',e=>{ if(e.target.close
     'react/jsx-runtime': ESM + 'react@' + REACT + '/jsx-runtime?dev&external=react',
     'react/jsx-dev-runtime': ESM + 'react@' + REACT + '/jsx-dev-runtime?dev&external=react',
     'react-dom': ESM + 'react-dom@' + REACT + '?dev&external=react',
-    'react-dom/client': ESM + 'react-dom@' + REACT + '/client?dev&external=react'
+    'react-dom/client': ESM + 'react-dom@' + REACT + '/client?dev&external=react',
+    // The server renderer is built with only React external: with react-dom external too,
+    // esm.sh leaves its own react-dom/cjs/… files as bare imports nothing can resolve.
+    'react-dom/server': ESM + 'react-dom@' + REACT + '/server?dev&external=react',
+    'react-dom/server.browser': ESM + 'react-dom@' + REACT + '/server.browser?dev&external=react'
   };
 
   var KEY = 'catalyst-sbx:' + location.pathname + ':';
@@ -3269,7 +3273,18 @@ document.getElementById('stage').addEventListener('click',e=>{ if(e.target.close
     if (shown) views[p] = editor.saveViewState();
     models[p] = makeModel(p, old.getValue());
     if (shown) { editor.setModel(models[p]); if (views[p]) editor.restoreViewState(views[p]); }
-    old.dispose();
+    retire(old);
+  }
+  // The old model goes a moment later: an inlay-hint or hover request still in flight on it
+  // would throw "Model is disposed!" if it went now. While it lingers at a live URI the
+  // checker still sees it, so everything is re-checked once it is gone.
+  function retire(m){
+    setTimeout(function(){
+      if (m.isDisposed()) return;
+      var live = m.getLanguageId() === 'typescript';
+      m.dispose();
+      if (live) recheck();
+    }, 1500);
   }
 
   function loadMode(m){
