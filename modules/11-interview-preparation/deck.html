@@ -1245,7 +1245,11 @@ An e2e test for the keyboard path.</code></pre>
     'react/jsx-runtime': ESM + 'react@' + REACT + '/jsx-runtime?dev&external=react',
     'react/jsx-dev-runtime': ESM + 'react@' + REACT + '/jsx-dev-runtime?dev&external=react',
     'react-dom': ESM + 'react-dom@' + REACT + '?dev&external=react',
-    'react-dom/client': ESM + 'react-dom@' + REACT + '/client?dev&external=react'
+    'react-dom/client': ESM + 'react-dom@' + REACT + '/client?dev&external=react',
+    // The server renderer is built with only React external: with react-dom external too,
+    // esm.sh leaves its own react-dom/cjs/… files as bare imports nothing can resolve.
+    'react-dom/server': ESM + 'react-dom@' + REACT + '/server?dev&external=react',
+    'react-dom/server.browser': ESM + 'react-dom@' + REACT + '/server.browser?dev&external=react'
   };
 
   var KEY = 'catalyst-sbx:' + location.pathname + ':';

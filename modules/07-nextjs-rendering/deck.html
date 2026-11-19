@@ -151,6 +151,107 @@
     animation:cxBar .5s cubic-bezier(.22,.72,.28,1) .12s both}
   .slide .card{transition:border-color .25s, transform .25s}
 
+  /* Title: the five lessons deal in once the heading has landed. */
+  @keyframes cxPop{from{opacity:0; transform:translateY(10px) scale(.92)}}
+  .pop{transform-box:fill-box; transform-origin:center}
+  .slide.on .pop{animation:cxPop .5s cubic-bezier(.2,1.3,.4,1) both; animation-delay:calc(.45s + var(--i,0) * .07s)}
+
+  /* ---- step player: a figure that plays itself when its slide opens ------------------
+     Same vocabulary as modules 4 to 6. .anim[data-at="0,900,…"] steps 1, 2, … at those times
+     (ms); R or the replay button plays it again; .anim-step[data-d="-1"|"1"] buttons
+     pause it and step by hand. The root carries s1..sN and data-step="N". On any
+     descendant: data-in="N" fades in at step N (an SVG path with pathLength=1 draws);
+     data-out="N" dims at step N; data-hl="N M" highlights while the step is N or M.
+     Until the script marks the root .live nothing is hidden, so the settled frame is
+     also what prints and what a reader without motion sees. */
+  .anim{width:100%}
+  .anim.live [data-in]{transition:opacity .45s, transform .55s cubic-bezier(.22,.72,.28,1), stroke-dashoffset .6s ease,
+    color .35s, border-color .35s, background-color .35s, fill .35s, stroke .35s}
+  .anim.live [data-in]:not(.in){opacity:0}
+  .anim.live path[data-in]{stroke-dasharray:1; stroke-dashoffset:1}
+  .anim.live path[data-in].in{stroke-dashoffset:0}
+  .anim.live [data-out].out{opacity:.3}
+  .anim [data-hl]{--hl:rgba(34,211,238,.17); border-radius:4px; -webkit-box-decoration-break:clone; box-decoration-break:clone;
+    transition:background-color .3s, box-shadow .3s}
+  .anim [data-hl].hl-g{--hl:rgba(52,211,153,.17)} .anim [data-hl].hl-r{--hl:rgba(248,113,122,.2)}
+  .anim [data-hl].hl-p{--hl:rgba(167,139,250,.22)} .anim [data-hl].hl-w{--hl:rgba(251,191,36,.17)}
+  .anim [data-hl].lit{background-color:var(--hl); box-shadow:0 0 0 3px var(--hl)}
+  .anim.rs,.anim.rs *{transition:none !important}
+  .anim-bar{display:flex; align-items:center; flex-wrap:wrap; gap:10px 14px; margin-top:10px; min-height:34px}
+  .anim-replay,.anim-step{cursor:pointer; background:var(--panel2); border:1px solid var(--line2); color:var(--ink2); border-radius:8px;
+    padding:7px 12px; font:700 11.5px/1 var(--mono); letter-spacing:1.2px; text-transform:uppercase;
+    transition:background .18s, color .18s, border-color .18s}
+  .anim-replay:hover,.anim-step:hover{background:var(--line2); color:#fff; border-color:var(--cy)}
+  .anim-step{padding:5px 10px; font:700 16px/1 var(--sans); letter-spacing:0}
+  .anim-step[aria-disabled="true"]{opacity:.35; cursor:default}
+  .anim-say{font:600 min(1.4vw,16px)/1.4 var(--sans); color:var(--ink2)}
+  .anim-say i{display:none; font-style:normal} .anim-say i.on{display:inline}
+
+  /* ---- live demos: small working pieces of UI on the slide ---------------------------
+     A .demo is self-contained. A click inside it never turns the slide, and neither do
+     Space, Enter, Tab or Escape on its controls, or any key typed into its inputs.
+     Each demo is wired by id in the demo script at the end of the deck and resets
+     whenever its slide opens. */
+  .demo{background:var(--panel); border:1px solid var(--line2); border-radius:12px; padding:11px 14px; margin-top:14px;
+    width:100%; max-width:1060px; font:min(1.45vw,15.5px)/1.4 var(--sans); color:var(--ink2)}
+  .demo.bare{background:none; border:0; padding:0; border-radius:0}
+  .demo .row{display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px}
+  .demo .row + .row{margin-top:9px}
+  .demo-tag{font:700 10.5px/1 var(--mono); letter-spacing:1.6px; text-transform:uppercase; color:var(--cy)}
+  .demo-hint{font-size:.9em; color:var(--grey3)}
+  .dbtn{cursor:pointer; background:var(--panel2); border:1px solid var(--line2); color:var(--ink); border-radius:8px;
+    padding:7px 12px; font:600 12.5px/1 var(--mono); transition:background .18s, border-color .18s, color .18s}
+  .dbtn:hover{border-color:var(--cy)}
+  .dbtn:focus-visible,.dinput:focus-visible{outline:2px solid var(--cy); outline-offset:2px}
+  .dbtn.on{background:rgba(34,211,238,.14); border-color:var(--cy); color:#fff}
+  .dbtn.on.g{background:rgba(52,211,153,.14); border-color:var(--good)}
+  .dinput{background:var(--code); border:1px solid var(--line2); color:#fff; border-radius:8px; padding:7px 11px;
+    font:14.5px/1.2 var(--mono); min-width:0}
+  .dinput:focus{outline:none; border-color:var(--cy); box-shadow:0 0 0 3px rgba(34,211,238,.18)}
+  .meter{font:600 12px/1 var(--mono); color:var(--muted); white-space:nowrap}
+  .meter b{display:inline-block; min-width:2ch; margin-left:5px; color:#fff; font-size:15px}
+  .meter b.good{color:var(--good)} .meter b.bad{color:var(--bad)}
+  .dom{font:13.5px/1 var(--mono); color:var(--grey3); padding:6px 9px; border-radius:7px; border:1px dashed var(--line2)}
+  .dom b{color:#fff; font-weight:600}
+  @keyframes cxFlash{15%{box-shadow:0 0 0 4px rgba(251,191,36,.5); background-color:rgba(251,191,36,.14)}}
+  @keyframes cxFlashG{15%{box-shadow:0 0 0 4px rgba(52,211,153,.5); background-color:rgba(52,211,153,.14)}}
+  @keyframes cxFlashR{15%{box-shadow:0 0 0 4px rgba(248,113,122,.55); background-color:rgba(248,113,122,.16)}}
+  @keyframes cxBump{40%{transform:scale(1.35); color:var(--ochre)}}
+  .flash{animation:cxFlash .7s ease} .flash-g{animation:cxFlashG .7s ease} .flash-r{animation:cxFlashR .8s ease}
+  .bump{animation:cxBump .35s ease}
+
+  /* L1a: click a component to move the 'use client' boundary. */
+  #fx-tree [data-node]{cursor:pointer}
+  #fx-tree [data-node] rect{transition:stroke .3s, fill .3s, stroke-width .3s}
+  #fx-tree [data-node]:hover rect{stroke-width:2.5}
+  #fx-tree [data-node].dir rect{fill:rgba(52,211,153,.13)}
+  #fx-tree path{transition:stroke .3s}
+  #fx-tree .bnd{transition:opacity .3s}
+  #fx-tree.moved .bnd{opacity:0}
+
+  /* L1b: the table row the chosen line of code belongs to. */
+  #tbl-sides td{transition:background-color .3s}
+  #tbl-sides tr.hl td{background:rgba(34,211,238,.1)}
+
+  /* L2b: the flow lights each question a route passes, then its strategy. */
+  #fx-route [data-q],#fx-route [data-no],#fx-route [data-yes],#fx-route [data-home]{transition:opacity .3s}
+  #fx-route.walk [data-q]:not(.lit),#fx-route.walk [data-no]:not(.lit),
+  #fx-route.walk [data-yes]:not(.lit),#fx-route.walk [data-home]:not(.lit){opacity:.2}
+  #fx-route rect,#fx-route path{transition:stroke-width .3s, fill .3s}
+  #fx-route .lit rect,#fx-route .lit path{stroke-width:2.5}
+  #fx-route [data-home].lit rect{fill:rgba(34,211,238,.13)}
+
+  /* L2c: a request lights each cache it passes; a dot is a cache holding something fresh. */
+  #fx-cache [data-layer],#fx-cache [data-hop]{transition:opacity .25s, stroke-width .25s}
+  #fx-cache.run [data-layer]:not(.lit):not(.hit),#fx-cache.run [data-hop]:not(.lit){opacity:.28}
+  #fx-cache [data-layer] rect{transition:fill .25s, stroke .25s, stroke-width .25s}
+  #fx-cache .lit rect,#fx-cache path.lit{stroke-width:2.5}
+  #fx-cache .hit rect{fill:rgba(52,211,153,.16); stroke:#34D399; stroke-width:2.5}
+  #fx-cache .skip rect{stroke-dasharray:5 4}
+  #fx-cache [data-dot]{fill:none; stroke:#64748B; stroke-width:1.5; transition:fill .3s, stroke .3s}
+  #fx-cache [data-dot].warm{fill:#34D399; stroke:#34D399}
+
+
   @media (prefers-reduced-motion: reduce){
     .slide.on *{animation:none !important}
     .slide .draw{stroke-dashoffset:0 !important}
@@ -292,22 +393,30 @@
     <div class="sub">Five lessons on where your HTML gets made, how long it stays true, and the routes where Next.js is the wrong answer.</div>
     <div class="fig" style="max-width:980px">
       <svg viewBox="0 0 980 64" role="img" aria-label="Five lessons: boundaries, rendering and caching per route, actions and auth, SEO and when not to use Next.js, the port">
-        <g>
-          <rect x="0" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="90" y="26" text-anchor="middle" class="lbl s">Lesson 1</text>
-          <text x="90" y="45" text-anchor="middle" class="lbl b">Boundaries</text>
-          <rect x="200" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="290" y="26" text-anchor="middle" class="lbl s">Lesson 2</text>
-          <text x="290" y="45" text-anchor="middle" class="lbl b">Render &amp; cache</text>
-          <rect x="400" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#F8717A"/>
-          <text x="490" y="26" text-anchor="middle" class="lbl s">Lesson 3</text>
-          <text x="490" y="45" text-anchor="middle" class="lbl b">Actions &amp; auth</text>
-          <rect x="600" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#A78BFA"/>
-          <text x="690" y="26" text-anchor="middle" class="lbl s">Lesson 4</text>
-          <text x="690" y="45" text-anchor="middle" class="lbl b">SEO, or not Next</text>
-          <rect x="800" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#FBBF24"/>
-          <text x="890" y="26" text-anchor="middle" class="lbl s">Lesson 5</text>
-          <text x="890" y="45" text-anchor="middle" class="lbl b">The port</text>
+        <g class="pop" style="--i:0">
+            <rect x="0" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
+            <text x="90" y="26" text-anchor="middle" class="lbl s">Lesson 1</text>
+            <text x="90" y="45" text-anchor="middle" class="lbl b">Boundaries</text>
+        </g>
+        <g class="pop" style="--i:1">
+            <rect x="200" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#34D399"/>
+            <text x="290" y="26" text-anchor="middle" class="lbl s">Lesson 2</text>
+            <text x="290" y="45" text-anchor="middle" class="lbl b">Render &amp; cache</text>
+        </g>
+        <g class="pop" style="--i:2">
+            <rect x="400" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#F8717A"/>
+            <text x="490" y="26" text-anchor="middle" class="lbl s">Lesson 3</text>
+            <text x="490" y="45" text-anchor="middle" class="lbl b">Actions &amp; auth</text>
+        </g>
+        <g class="pop" style="--i:3">
+            <rect x="600" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#A78BFA"/>
+            <text x="690" y="26" text-anchor="middle" class="lbl s">Lesson 4</text>
+            <text x="690" y="45" text-anchor="middle" class="lbl b">SEO, or not Next</text>
+        </g>
+        <g class="pop" style="--i:4">
+            <rect x="800" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#FBBF24"/>
+            <text x="890" y="26" text-anchor="middle" class="lbl s">Lesson 5</text>
+            <text x="890" y="45" text-anchor="middle" class="lbl b">The port</text>
         </g>
       </svg>
     </div>
@@ -316,42 +425,67 @@
   <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>02</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · The App Router mental model</div>
     <h2>Server by default, client by exception</h2>
-    <div class="fig" style="max-width:1000px">
+    <div class="fig" id="fx-tree" style="max-width:1000px">
       <svg viewBox="0 0 1000 272" role="img" aria-label="Component tree of a job page: layout and page on the server, three server leaves, and two client leaves inside a client boundary">
-        <rect x="390" y="0" width="220" height="48" rx="9" fill="#121C30" stroke="#22D3EE"/>
-        <text x="500" y="21" text-anchor="middle" class="lbl b" font-size="14">RootLayout</text>
-        <text x="500" y="38" text-anchor="middle" class="lbl s" font-size="11">server · app/layout.tsx</text>
-        <path class="draw" pathLength="1" d="M500,48 L500,82" stroke="#64748B" fill="none"/>
-        <rect x="390" y="84" width="220" height="48" rx="9" fill="#121C30" stroke="#22D3EE"/>
-        <text x="500" y="105" text-anchor="middle" class="lbl b" font-size="14">JobPage</text>
-        <text x="500" y="122" text-anchor="middle" class="lbl s" font-size="11">server · async · awaits getJob()</text>
-        <path class="draw" pathLength="1" d="M500,132 L112,182" stroke="#64748B" fill="none"/>
-        <path class="draw" pathLength="1" d="M500,132 L306,182" stroke="#64748B" fill="none"/>
-        <path class="draw" pathLength="1" d="M500,132 L500,182" stroke="#64748B" fill="none"/>
-        <path class="draw" pathLength="1" d="M500,132 L694,182" stroke="#34D399" fill="none"/>
-        <path class="draw" pathLength="1" d="M500,132 L888,182" stroke="#34D399" fill="none"/>
-        <rect x="592" y="170" width="402" height="76" rx="12" fill="none" stroke="#34D399" stroke-dasharray="5 5"/>
-        <text x="984" y="164" text-anchor="end" class="lbl s" font-size="11" style="fill:#34D399">'use client' boundary</text>
-        <rect x="24" y="184" width="176" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
-        <text x="112" y="206" text-anchor="middle" class="lbl b" font-size="13">JobHeader</text>
-        <text x="112" y="224" text-anchor="middle" class="lbl s" font-size="11">server · 0 KB to the browser</text>
-        <rect x="218" y="184" width="176" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
-        <text x="306" y="206" text-anchor="middle" class="lbl b" font-size="13">JobDescription</text>
-        <text x="306" y="224" text-anchor="middle" class="lbl s" font-size="11">server · its parser stays here</text>
-        <rect x="412" y="184" width="176" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
-        <text x="500" y="206" text-anchor="middle" class="lbl b" font-size="13">SimilarJobs</text>
-        <text x="500" y="224" text-anchor="middle" class="lbl s" font-size="11">server · its own fetch</text>
-        <rect x="606" y="184" width="176" height="52" rx="9" fill="#121C30" stroke="#34D399"/>
-        <text x="694" y="206" text-anchor="middle" class="lbl b" font-size="13">ApplyButton</text>
-        <text x="694" y="224" text-anchor="middle" class="lbl s" font-size="11">client · onClick, pending</text>
-        <rect x="800" y="184" width="176" height="52" rx="9" fill="#121C30" stroke="#34D399"/>
-        <text x="888" y="206" text-anchor="middle" class="lbl b" font-size="13">SaveToggle</text>
-        <text x="888" y="224" text-anchor="middle" class="lbl s" font-size="11">client · useState</text>
+        <g data-node="root">
+          <rect x="390" y="0" width="220" height="48" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="500" y="21" text-anchor="middle" class="lbl b" font-size="14">RootLayout</text>
+          <text x="500" y="38" text-anchor="middle" class="lbl s" font-size="11">server · app/layout.tsx</text>
+        </g>
+        <path data-edge="page" class="draw" pathLength="1" d="M500,48 L500,82" stroke="#64748B" fill="none"/>
+        <g data-node="page">
+          <rect x="390" y="84" width="220" height="48" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="500" y="105" text-anchor="middle" class="lbl b" font-size="14">JobPage</text>
+          <text x="500" y="122" text-anchor="middle" class="lbl s" font-size="11">server · async · awaits getJob()</text>
+        </g>
+        <path data-edge="header" class="draw" pathLength="1" d="M500,132 L112,182" stroke="#64748B" fill="none"/>
+        <path data-edge="desc" class="draw" pathLength="1" d="M500,132 L306,182" stroke="#64748B" fill="none"/>
+        <path data-edge="similar" class="draw" pathLength="1" d="M500,132 L500,182" stroke="#64748B" fill="none"/>
+        <path data-edge="apply" class="draw" pathLength="1" d="M500,132 L694,182" stroke="#34D399" fill="none"/>
+        <path data-edge="save" class="draw" pathLength="1" d="M500,132 L888,182" stroke="#34D399" fill="none"/>
+        <g class="bnd">
+          <rect x="592" y="170" width="402" height="76" rx="12" fill="none" stroke="#34D399" stroke-dasharray="5 5"/>
+          <text x="984" y="164" text-anchor="end" class="lbl s" font-size="11" style="fill:#34D399">'use client' boundary</text>
+        </g>
+        <g data-node="header">
+          <rect x="24" y="184" width="176" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="112" y="206" text-anchor="middle" class="lbl b" font-size="13">JobHeader</text>
+          <text x="112" y="224" text-anchor="middle" class="lbl s" font-size="11">server · 0 KB to the browser</text>
+        </g>
+        <g data-node="desc">
+          <rect x="218" y="184" width="176" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="306" y="206" text-anchor="middle" class="lbl b" font-size="13">JobDescription</text>
+          <text x="306" y="224" text-anchor="middle" class="lbl s" font-size="11">server · its parser stays here</text>
+        </g>
+        <g data-node="similar">
+          <rect x="412" y="184" width="176" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="500" y="206" text-anchor="middle" class="lbl b" font-size="13">SimilarJobs</text>
+          <text x="500" y="224" text-anchor="middle" class="lbl s" font-size="11">server · its own fetch</text>
+        </g>
+        <g data-node="apply">
+          <rect x="606" y="184" width="176" height="52" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="694" y="206" text-anchor="middle" class="lbl b" font-size="13">ApplyButton</text>
+          <text x="694" y="224" text-anchor="middle" class="lbl s" font-size="11">client · onClick, pending</text>
+        </g>
+        <g data-node="save">
+          <rect x="800" y="184" width="176" height="52" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="888" y="206" text-anchor="middle" class="lbl b" font-size="13">SaveToggle</text>
+          <text x="888" y="224" text-anchor="middle" class="lbl s" font-size="11">client · useState</text>
+        </g>
         <rect x="24" y="256" width="12" height="12" rx="3" fill="none" stroke="#22D3EE"/>
         <text x="44" y="267" class="lbl" font-size="12">Server Component — renders on the server, ships no JS</text>
         <rect x="520" y="256" width="12" height="12" rx="3" fill="none" stroke="#34D399"/>
         <text x="540" y="267" class="lbl" font-size="12">Client Component — HTML on the server, then hydrates</text>
       </svg>
+    </div>
+    <div class="demo bare" id="demo-tree">
+      <div class="row">
+        <span class="demo-tag">Click a component</span>
+        <span class="demo-hint">to put <code>'use client'</code> on it, or take it off.</span>
+        <span class="meter">JS to the browser<b data-k="kb"></b></span>
+        <span class="demo-hint" data-k="who"></span>
+        <button type="button" class="dbtn" data-act="reset">reset</button>
+      </div>
     </div>
     <div class="key">A Server Component renders on the server and sends its <i>result</i>, never its code. <code>'use client'</code> marks a door into the browser bundle: that file and everything it imports ship to the client — and it still renders to HTML on the server first.</div>
 </section>
@@ -359,7 +493,7 @@
   <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>03</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Two kinds of component</div>
     <h2>What each side can and cannot do</h2>
-    <table class="grid">
+    <table class="grid" id="tbl-sides">
       <tr><th></th><th>Server Component</th><th>Client Component</th></tr>
       <tr><td><b>Read data</b></td><td><code>await</code> the database or an API right in the component</td><td>Receive it as props, or fetch after hydration</td></tr>
       <tr><td><b>Secrets</b></td><td>Safe — env keys, DB clients, <code>import 'server-only'</code></td><td><span class="r">Never.</span> Everything in this file is public JavaScript</td></tr>
@@ -367,6 +501,18 @@
       <tr><td><b>Browser APIs</b></td><td>No <code>window</code>, no <code>localStorage</code></td><td>Yes, once mounted</td></tr>
       <tr><td><b>Cost to the user</b></td><td class="g">Zero JavaScript shipped</td><td class="w">Its code plus everything it imports</td></tr>
     </table>
+    <div class="demo bare" id="demo-sides">
+      <div class="row">
+        <span class="demo-tag">Where can it run?</span>
+        <button type="button" class="dbtn" data-c="db"><code>await db.job(id)</code></button>
+        <button type="button" class="dbtn" data-c="env"><code>process.env.DB_KEY</code></button>
+        <button type="button" class="dbtn" data-c="state"><code>useState(0)</code></button>
+        <button type="button" class="dbtn" data-c="click"><code>onClick={save}</code></button>
+        <button type="button" class="dbtn" data-c="win"><code>window.innerWidth</code></button>
+        <button type="button" class="dbtn" data-c="lib"><code>import { marked }</code></button>
+      </div>
+      <div class="row"><span class="demo-hint" data-k="why"></span></div>
+    </div>
     <div class="key w">Props that cross from server to client must be serializable: strings, numbers, plain objects, arrays, Dates, promises — and server actions. A plain function or a class instance can't make the trip.</div>
 </section>
 
@@ -448,45 +594,82 @@
   <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>07</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Choosing per route</div>
     <h2>Three questions pick the strategy</h2>
-    <div class="fig" style="max-width:980px">
+    <div class="fig" id="fx-route" style="max-width:980px">
       <svg viewBox="0 0 980 300" role="img" aria-label="Decision flow: depends on who is asking leads to dynamic with streaming; depends on the query leads to dynamic with cached data; never changes after deploy leads to static; otherwise ISR">
-        <rect x="0" y="0" width="200" height="70" rx="10" fill="#121C30" stroke="#243349"/>
-        <text x="100" y="31" text-anchor="middle" class="lbl b" font-size="14">Depends on who's asking?</text>
-        <text x="100" y="51" text-anchor="middle" class="lbl s" font-size="11">cookies · the session</text>
-        <path class="draw" pathLength="1" d="M200,35 L257,35" stroke="#64748B" fill="none"/>
-        <text x="229" y="27" text-anchor="middle" class="lbl s" font-size="11">no</text>
-        <rect x="260" y="0" width="200" height="70" rx="10" fill="#121C30" stroke="#243349"/>
-        <text x="360" y="31" text-anchor="middle" class="lbl b" font-size="14">Depends on the query?</text>
-        <text x="360" y="51" text-anchor="middle" class="lbl s" font-size="11">searchParams · filters</text>
-        <path class="draw" pathLength="1" d="M460,35 L517,35" stroke="#64748B" fill="none"/>
-        <text x="489" y="27" text-anchor="middle" class="lbl s" font-size="11">no</text>
-        <rect x="520" y="0" width="200" height="70" rx="10" fill="#121C30" stroke="#243349"/>
-        <text x="620" y="31" text-anchor="middle" class="lbl b" font-size="14">Changes after deploy?</text>
-        <text x="620" y="51" text-anchor="middle" class="lbl s" font-size="11">edits · new rows</text>
-        <path class="draw" pathLength="1" d="M720,35 L777,35" stroke="#A78BFA" fill="none"/>
-        <text x="749" y="27" text-anchor="middle" class="lbl s" font-size="11" style="fill:#A78BFA">yes</text>
-        <rect x="780" y="0" width="200" height="70" rx="10" fill="#121C30" stroke="#A78BFA"/>
-        <text x="880" y="24" text-anchor="middle" class="lbl b" font-size="14">ISR</text>
-        <text x="880" y="43" text-anchor="middle" class="lbl s" font-size="11">on a timer → /</text>
-        <text x="880" y="59" text-anchor="middle" class="lbl s" font-size="11">on demand → /jobs/[id]</text>
-        <path class="draw" pathLength="1" d="M100,70 L100,137" stroke="#FBBF24" fill="none"/>
-        <text x="110" y="108" class="lbl s" font-size="11" style="fill:#FBBF24">yes</text>
-        <path class="draw" pathLength="1" d="M360,70 L360,137" stroke="#FBBF24" fill="none"/>
-        <text x="370" y="108" class="lbl s" font-size="11" style="fill:#FBBF24">yes</text>
-        <path class="draw" pathLength="1" d="M620,70 L620,137" stroke="#2196F3" fill="none"/>
-        <text x="630" y="108" class="lbl s" font-size="11" style="fill:#2196F3">no</text>
-        <rect x="0" y="140" width="200" height="70" rx="10" fill="#121C30" stroke="#FBBF24"/>
-        <text x="100" y="171" text-anchor="middle" class="lbl b" font-size="14">Dynamic + streaming</text>
-        <text x="100" y="191" text-anchor="middle" class="lbl s" font-size="11">/dashboard</text>
-        <rect x="260" y="140" width="200" height="70" rx="10" fill="#121C30" stroke="#FBBF24"/>
-        <text x="360" y="171" text-anchor="middle" class="lbl b" font-size="14">Dynamic, cached data</text>
-        <text x="360" y="191" text-anchor="middle" class="lbl s" font-size="11">/jobs?q=react</text>
-        <rect x="520" y="140" width="200" height="70" rx="10" fill="#121C30" stroke="#2196F3"/>
-        <text x="620" y="171" text-anchor="middle" class="lbl b" font-size="14">Static (SSG)</text>
-        <text x="620" y="191" text-anchor="middle" class="lbl s" font-size="11">/login · /about</text>
+        <g data-q="1">
+          <rect x="0" y="0" width="200" height="70" rx="10" fill="#121C30" stroke="#243349"/>
+          <text x="100" y="31" text-anchor="middle" class="lbl b" font-size="14">Depends on who's asking?</text>
+          <text x="100" y="51" text-anchor="middle" class="lbl s" font-size="11">cookies · the session</text>
+        </g>
+        <g data-no="1">
+          <path class="draw" pathLength="1" d="M200,35 L257,35" stroke="#64748B" fill="none"/>
+          <text x="229" y="27" text-anchor="middle" class="lbl s" font-size="11">no</text>
+        </g>
+        <g data-q="2">
+          <rect x="260" y="0" width="200" height="70" rx="10" fill="#121C30" stroke="#243349"/>
+          <text x="360" y="31" text-anchor="middle" class="lbl b" font-size="14">Depends on the query?</text>
+          <text x="360" y="51" text-anchor="middle" class="lbl s" font-size="11">searchParams · filters</text>
+        </g>
+        <g data-no="2">
+          <path class="draw" pathLength="1" d="M460,35 L517,35" stroke="#64748B" fill="none"/>
+          <text x="489" y="27" text-anchor="middle" class="lbl s" font-size="11">no</text>
+        </g>
+        <g data-q="3">
+          <rect x="520" y="0" width="200" height="70" rx="10" fill="#121C30" stroke="#243349"/>
+          <text x="620" y="31" text-anchor="middle" class="lbl b" font-size="14">Changes after deploy?</text>
+          <text x="620" y="51" text-anchor="middle" class="lbl s" font-size="11">edits · new rows</text>
+        </g>
+        <g data-yes="3">
+          <path class="draw" pathLength="1" d="M720,35 L777,35" stroke="#A78BFA" fill="none"/>
+          <text x="749" y="27" text-anchor="middle" class="lbl s" font-size="11" style="fill:#A78BFA">yes</text>
+        </g>
+        <g data-home="isr">
+          <rect x="780" y="0" width="200" height="70" rx="10" fill="#121C30" stroke="#A78BFA"/>
+          <text x="880" y="24" text-anchor="middle" class="lbl b" font-size="14">ISR</text>
+          <text x="880" y="43" text-anchor="middle" class="lbl s" font-size="11">on a timer → /</text>
+          <text x="880" y="59" text-anchor="middle" class="lbl s" font-size="11">on demand → /jobs/[id]</text>
+        </g>
+        <g data-yes="1">
+          <path class="draw" pathLength="1" d="M100,70 L100,137" stroke="#FBBF24" fill="none"/>
+          <text x="110" y="108" class="lbl s" font-size="11" style="fill:#FBBF24">yes</text>
+        </g>
+        <g data-yes="2">
+          <path class="draw" pathLength="1" d="M360,70 L360,137" stroke="#FBBF24" fill="none"/>
+          <text x="370" y="108" class="lbl s" font-size="11" style="fill:#FBBF24">yes</text>
+        </g>
+        <g data-no="3">
+          <path class="draw" pathLength="1" d="M620,70 L620,137" stroke="#2196F3" fill="none"/>
+          <text x="630" y="108" class="lbl s" font-size="11" style="fill:#2196F3">no</text>
+        </g>
+        <g data-home="dyn">
+          <rect x="0" y="140" width="200" height="70" rx="10" fill="#121C30" stroke="#FBBF24"/>
+          <text x="100" y="171" text-anchor="middle" class="lbl b" font-size="14">Dynamic + streaming</text>
+          <text x="100" y="191" text-anchor="middle" class="lbl s" font-size="11">/dashboard</text>
+        </g>
+        <g data-home="cached">
+          <rect x="260" y="140" width="200" height="70" rx="10" fill="#121C30" stroke="#FBBF24"/>
+          <text x="360" y="171" text-anchor="middle" class="lbl b" font-size="14">Dynamic, cached data</text>
+          <text x="360" y="191" text-anchor="middle" class="lbl s" font-size="11">/jobs?q=react</text>
+        </g>
+        <g data-home="ssg">
+          <rect x="520" y="140" width="200" height="70" rx="10" fill="#121C30" stroke="#2196F3"/>
+          <text x="620" y="171" text-anchor="middle" class="lbl b" font-size="14">Static (SSG)</text>
+          <text x="620" y="191" text-anchor="middle" class="lbl s" font-size="11">/login · /about</text>
+        </g>
         <rect x="0" y="246" width="980" height="46" rx="10" fill="none" stroke="#34D399" stroke-dasharray="5 5"/>
         <text x="490" y="274" text-anchor="middle" class="lbl" font-size="13">Inside any of them, interactive leaves are Client Components — CSR for the part that needs it, never the whole page</text>
       </svg>
+    </div>
+    <div class="demo bare" id="demo-route">
+      <div class="row">
+        <span class="demo-tag">Route it</span>
+        <button type="button" class="dbtn" data-r="dash"><code>/dashboard</code></button>
+        <button type="button" class="dbtn" data-r="search"><code>/jobs?q=react</code></button>
+        <button type="button" class="dbtn" data-r="job"><code>/jobs/[id]</code></button>
+        <button type="button" class="dbtn" data-r="home"><code>/</code></button>
+        <button type="button" class="dbtn" data-r="login"><code>/login</code></button>
+      </div>
+      <div class="row"><span class="demo-hint" data-k="why"></span></div>
     </div>
     <div class="key">Write the answer next to the route before you write the route. If you can't say why a page is dynamic, it probably shouldn't be.</div>
 </section>
@@ -494,46 +677,71 @@
   <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>08</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · The caching layers, in order</div>
     <h2>Four caches stand between a click and your database</h2>
-    <div class="fig" style="max-width:1000px">
+    <div class="fig" id="fx-cache" style="max-width:1000px">
       <svg viewBox="0 0 1000 180" role="img" aria-label="A request passes the router cache in the browser, then the full route cache, request memoization and the data cache on the server, before reaching the database">
         <text x="209" y="12" text-anchor="middle" class="lbl s" font-size="11" style="fill:#22D3EE">BROWSER</text>
         <text x="597" y="12" text-anchor="middle" class="lbl s" font-size="11" style="fill:#2196F3">SERVER</text>
         <text x="950" y="12" text-anchor="middle" class="lbl s" font-size="11">SOURCE</text>
         <line x1="306" y1="2" x2="306" y2="146" stroke="#243349" stroke-dasharray="4 4"/>
         <line x1="888" y1="2" x2="888" y2="146" stroke="#243349" stroke-dasharray="4 4"/>
-        <rect x="0" y="56" width="100" height="50" rx="9" fill="#121C30" stroke="#64748B"/>
-        <text x="50" y="78" text-anchor="middle" class="lbl b" font-size="13">Click</text>
-        <text x="50" y="95" text-anchor="middle" class="lbl s" font-size="11">or a URL</text>
-        <path class="draw" pathLength="1" d="M100,81 L122,81" stroke="#64748B" fill="none"/>
-        <rect x="124" y="26" width="170" height="110" rx="10" fill="#121C30" stroke="#22D3EE"/>
-        <text x="209" y="50" text-anchor="middle" class="lbl b" font-size="13">1 · Router cache</text>
-        <text x="209" y="72" text-anchor="middle" class="lbl s" font-size="11">RSC payload of visited</text>
-        <text x="209" y="87" text-anchor="middle" class="lbl s" font-size="11">and prefetched segments</text>
-        <text x="209" y="118" text-anchor="middle" class="lbl s" font-size="11" style="fill:#FBBF24">lives: this tab, briefly</text>
-        <path class="draw" pathLength="1" d="M294,81 L316,81" stroke="#64748B" fill="none"/>
-        <rect x="318" y="26" width="170" height="110" rx="10" fill="#121C30" stroke="#2196F3"/>
-        <text x="403" y="50" text-anchor="middle" class="lbl b" font-size="13">2 · Full route cache</text>
-        <text x="403" y="72" text-anchor="middle" class="lbl s" font-size="11">HTML + RSC payload</text>
-        <text x="403" y="87" text-anchor="middle" class="lbl s" font-size="11">of static routes</text>
-        <text x="403" y="118" text-anchor="middle" class="lbl s" font-size="11" style="fill:#FBBF24">lives: until revalidated</text>
-        <path class="draw" pathLength="1" d="M488,81 L510,81" stroke="#64748B" fill="none"/>
-        <rect x="512" y="26" width="170" height="110" rx="10" fill="#121C30" stroke="#A78BFA"/>
-        <text x="597" y="50" text-anchor="middle" class="lbl b" font-size="13">3 · Request memo</text>
-        <text x="597" y="72" text-anchor="middle" class="lbl s" font-size="11">same call, same args,</text>
-        <text x="597" y="87" text-anchor="middle" class="lbl s" font-size="11">inside one render</text>
-        <text x="597" y="118" text-anchor="middle" class="lbl s" font-size="11" style="fill:#FBBF24">lives: one request</text>
-        <path class="draw" pathLength="1" d="M682,81 L704,81" stroke="#64748B" fill="none"/>
-        <rect x="706" y="26" width="170" height="110" rx="10" fill="#121C30" stroke="#FBBF24"/>
-        <text x="791" y="50" text-anchor="middle" class="lbl b" font-size="13">4 · Data cache</text>
-        <text x="791" y="72" text-anchor="middle" class="lbl s" font-size="11">fetch and cached-</text>
-        <text x="791" y="87" text-anchor="middle" class="lbl s" font-size="11">function results</text>
-        <text x="791" y="118" text-anchor="middle" class="lbl s" font-size="11" style="fill:#FBBF24">lives: across requests</text>
-        <path class="draw" pathLength="1" d="M876,81 L898,81" stroke="#64748B" fill="none"/>
-        <rect x="900" y="56" width="100" height="50" rx="9" fill="#121C30" stroke="#64748B"/>
-        <text x="950" y="78" text-anchor="middle" class="lbl b" font-size="13">Database</text>
-        <text x="950" y="95" text-anchor="middle" class="lbl s" font-size="11">or an API</text>
+        <g data-layer="click">
+          <rect x="0" y="56" width="100" height="50" rx="9" fill="#121C30" stroke="#64748B"/>
+          <text x="50" y="78" text-anchor="middle" class="lbl b" font-size="13">Click</text>
+          <text x="50" y="95" text-anchor="middle" class="lbl s" font-size="11">or a URL</text>
+        </g>
+        <path data-hop="router" class="draw" pathLength="1" d="M100,81 L122,81" stroke="#64748B" fill="none"/>
+        <g data-layer="router">
+          <rect x="124" y="26" width="170" height="110" rx="10" fill="#121C30" stroke="#22D3EE"/>
+          <text x="209" y="50" text-anchor="middle" class="lbl b" font-size="13">1 · Router cache</text>
+          <text x="209" y="72" text-anchor="middle" class="lbl s" font-size="11">RSC payload of visited</text>
+          <text x="209" y="87" text-anchor="middle" class="lbl s" font-size="11">and prefetched segments</text>
+          <text x="209" y="118" text-anchor="middle" class="lbl s" font-size="11" style="fill:#FBBF24">lives: this tab, briefly</text>
+        </g>
+        <path data-hop="route" class="draw" pathLength="1" d="M294,81 L316,81" stroke="#64748B" fill="none"/>
+        <g data-layer="route">
+          <rect x="318" y="26" width="170" height="110" rx="10" fill="#121C30" stroke="#2196F3"/>
+          <text x="403" y="50" text-anchor="middle" class="lbl b" font-size="13">2 · Full route cache</text>
+          <text x="403" y="72" text-anchor="middle" class="lbl s" font-size="11">HTML + RSC payload</text>
+          <text x="403" y="87" text-anchor="middle" class="lbl s" font-size="11">of static routes</text>
+          <text x="403" y="118" text-anchor="middle" class="lbl s" font-size="11" style="fill:#FBBF24">lives: until revalidated</text>
+        </g>
+        <path data-hop="memo" class="draw" pathLength="1" d="M488,81 L510,81" stroke="#64748B" fill="none"/>
+        <g data-layer="memo">
+          <rect x="512" y="26" width="170" height="110" rx="10" fill="#121C30" stroke="#A78BFA"/>
+          <text x="597" y="50" text-anchor="middle" class="lbl b" font-size="13">3 · Request memo</text>
+          <text x="597" y="72" text-anchor="middle" class="lbl s" font-size="11">same call, same args,</text>
+          <text x="597" y="87" text-anchor="middle" class="lbl s" font-size="11">inside one render</text>
+          <text x="597" y="118" text-anchor="middle" class="lbl s" font-size="11" style="fill:#FBBF24">lives: one request</text>
+        </g>
+        <path data-hop="data" class="draw" pathLength="1" d="M682,81 L704,81" stroke="#64748B" fill="none"/>
+        <g data-layer="data">
+          <rect x="706" y="26" width="170" height="110" rx="10" fill="#121C30" stroke="#FBBF24"/>
+          <text x="791" y="50" text-anchor="middle" class="lbl b" font-size="13">4 · Data cache</text>
+          <text x="791" y="72" text-anchor="middle" class="lbl s" font-size="11">fetch and cached-</text>
+          <text x="791" y="87" text-anchor="middle" class="lbl s" font-size="11">function results</text>
+          <text x="791" y="118" text-anchor="middle" class="lbl s" font-size="11" style="fill:#FBBF24">lives: across requests</text>
+        </g>
+        <path data-hop="db" class="draw" pathLength="1" d="M876,81 L898,81" stroke="#64748B" fill="none"/>
+        <g data-layer="db">
+          <rect x="900" y="56" width="100" height="50" rx="9" fill="#121C30" stroke="#64748B"/>
+          <text x="950" y="78" text-anchor="middle" class="lbl b" font-size="13">Database</text>
+          <text x="950" y="95" text-anchor="middle" class="lbl s" font-size="11">or an API</text>
+        </g>
         <text x="500" y="172" text-anchor="middle" class="lbl" font-size="13">Each arrow is a miss: a request only travels right when the layer before it had nothing fresh to give.</text>
+        <circle data-dot="router" cx="280" cy="38" r="5"/>
+        <circle data-dot="route" cx="474" cy="38" r="5"/>
+        <circle data-dot="data" cx="862" cy="38" r="5"/>
       </svg>
+    </div>
+    <div class="demo bare" id="demo-cache">
+      <div class="row">
+        <span class="demo-tag">Send a request</span>
+        <button type="button" class="dbtn" data-act="link">Click a link to /jobs</button>
+        <button type="button" class="dbtn" data-act="reload">Hard reload</button>
+        <button type="button" class="dbtn" data-act="tag"><code>revalidateTag('jobs')</code></button>
+        <button type="button" class="dbtn" data-act="dyn">route reads <code>cookies()</code></button>
+      </div>
+      <div class="row"><span class="demo-hint" data-k="say"></span></div>
     </div>
     <div class="key w">Every “why is this stale?” bug lives in one of these four boxes. Name the box before you touch a setting — the fix for each one is different.</div>
 </section>
@@ -631,41 +839,49 @@
   <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>13</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Sessions that survive a refresh</div>
     <h2>Put the session where the server can read it</h2>
+    <div class="anim" id="fx-refresh" data-at="300,1200,2300,3500">
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 200" role="img" aria-label="Two timelines after a refresh: a token in localStorage produces a logged-out flash; an httpOnly cookie lets the server render the dashboard on the first byte">
         <text x="0" y="14" class="lbl b" font-size="13" style="fill:#F8717A">Token in localStorage</text>
-        <rect x="0" y="24" width="205" height="56" rx="9" fill="#121C30" stroke="#243349"/>
-        <text x="102" y="47" text-anchor="middle" class="lbl b" font-size="13">Refresh</text>
-        <text x="102" y="65" text-anchor="middle" class="lbl s" font-size="11">no token sent — JS hasn't run</text>
-        <path class="draw" pathLength="1" d="M205,52 L262,52" stroke="#64748B" fill="none"/>
-        <rect x="265" y="24" width="205" height="56" rx="9" fill="#121C30" stroke="#243349"/>
-        <text x="367" y="47" text-anchor="middle" class="lbl b" font-size="13">Server renders</text>
-        <text x="367" y="65" text-anchor="middle" class="lbl s" font-size="11">the logged-out shell</text>
-        <path class="draw" pathLength="1" d="M470,52 L527,52" stroke="#64748B" fill="none"/>
-        <rect x="530" y="24" width="205" height="56" rx="9" fill="#121C30" stroke="#243349"/>
-        <text x="632" y="47" text-anchor="middle" class="lbl b" font-size="13">JS loads, reads token</text>
-        <text x="632" y="65" text-anchor="middle" class="lbl s" font-size="11">then fetches the user</text>
-        <path class="draw" pathLength="1" d="M735,52 L792,52" stroke="#F8717A" fill="none"/>
-        <rect x="795" y="24" width="205" height="56" rx="9" fill="#121C30" stroke="#F8717A"/>
-        <text x="897" y="47" text-anchor="middle" class="lbl b" font-size="13">Re-render</text>
-        <text x="897" y="65" text-anchor="middle" class="lbl s" font-size="11">flash of the wrong page</text>
+        <rect data-in="1" x="0" y="24" width="205" height="56" rx="9" fill="#121C30" stroke="#243349"/>
+        <text data-in="1" x="102" y="47" text-anchor="middle" class="lbl b" font-size="13">Refresh</text>
+        <text data-in="1" x="102" y="65" text-anchor="middle" class="lbl s" font-size="11">no token sent — JS hasn't run</text>
+        <path data-in="2" class="draw" pathLength="1" d="M205,52 L262,52" stroke="#64748B" fill="none"/>
+        <rect data-in="2" x="265" y="24" width="205" height="56" rx="9" fill="#121C30" stroke="#243349"/>
+        <text data-in="2" x="367" y="47" text-anchor="middle" class="lbl b" font-size="13">Server renders</text>
+        <text data-in="2" x="367" y="65" text-anchor="middle" class="lbl s" font-size="11">the logged-out shell</text>
+        <path data-in="3" class="draw" pathLength="1" d="M470,52 L527,52" stroke="#64748B" fill="none"/>
+        <rect data-in="3" x="530" y="24" width="205" height="56" rx="9" fill="#121C30" stroke="#243349"/>
+        <text data-in="3" x="632" y="47" text-anchor="middle" class="lbl b" font-size="13">JS loads, reads token</text>
+        <text data-in="3" x="632" y="65" text-anchor="middle" class="lbl s" font-size="11">then fetches the user</text>
+        <path data-in="4" class="draw" pathLength="1" d="M735,52 L792,52" stroke="#F8717A" fill="none"/>
+        <rect data-in="4" x="795" y="24" width="205" height="56" rx="9" fill="#121C30" stroke="#F8717A"/>
+        <text data-in="4" x="897" y="47" text-anchor="middle" class="lbl b" font-size="13">Re-render</text>
+        <text data-in="4" x="897" y="65" text-anchor="middle" class="lbl s" font-size="11">flash of the wrong page</text>
         <text x="0" y="124" class="lbl b" font-size="13" style="fill:#34D399">httpOnly session cookie</text>
-        <rect x="0" y="134" width="205" height="56" rx="9" fill="#121C30" stroke="#243349"/>
-        <text x="102" y="157" text-anchor="middle" class="lbl b" font-size="13">Refresh</text>
-        <text x="102" y="175" text-anchor="middle" class="lbl s" font-size="11">the cookie rides along</text>
-        <path class="draw" pathLength="1" d="M205,162 L262,162" stroke="#64748B" fill="none"/>
-        <rect x="265" y="134" width="205" height="56" rx="9" fill="#121C30" stroke="#243349"/>
-        <text x="367" y="157" text-anchor="middle" class="lbl b" font-size="13">Server verifies</text>
-        <text x="367" y="175" text-anchor="middle" class="lbl s" font-size="11">verifySession() → the user</text>
-        <path class="draw" pathLength="1" d="M470,162 L527,162" stroke="#64748B" fill="none"/>
-        <rect x="530" y="134" width="205" height="56" rx="9" fill="#121C30" stroke="#243349"/>
-        <text x="632" y="157" text-anchor="middle" class="lbl b" font-size="13">HTML is the dashboard</text>
-        <text x="632" y="175" text-anchor="middle" class="lbl s" font-size="11">their applications, first byte</text>
-        <path class="draw" pathLength="1" d="M735,162 L792,162" stroke="#34D399" fill="none"/>
-        <rect x="795" y="134" width="205" height="56" rx="9" fill="#121C30" stroke="#34D399"/>
-        <text x="897" y="157" text-anchor="middle" class="lbl b" font-size="13">No flash</text>
-        <text x="897" y="175" text-anchor="middle" class="lbl s" font-size="11">and page JS can't read it</text>
+        <rect data-in="1" x="0" y="134" width="205" height="56" rx="9" fill="#121C30" stroke="#243349"/>
+        <text data-in="1" x="102" y="157" text-anchor="middle" class="lbl b" font-size="13">Refresh</text>
+        <text data-in="1" x="102" y="175" text-anchor="middle" class="lbl s" font-size="11">the cookie rides along</text>
+        <path data-in="2" class="draw" pathLength="1" d="M205,162 L262,162" stroke="#64748B" fill="none"/>
+        <rect data-in="2" x="265" y="134" width="205" height="56" rx="9" fill="#121C30" stroke="#243349"/>
+        <text data-in="2" x="367" y="157" text-anchor="middle" class="lbl b" font-size="13">Server verifies</text>
+        <text data-in="2" x="367" y="175" text-anchor="middle" class="lbl s" font-size="11">verifySession() → the user</text>
+        <path data-in="3" class="draw" pathLength="1" d="M470,162 L527,162" stroke="#64748B" fill="none"/>
+        <rect data-in="3" x="530" y="134" width="205" height="56" rx="9" fill="#121C30" stroke="#243349"/>
+        <text data-in="3" x="632" y="157" text-anchor="middle" class="lbl b" font-size="13">HTML is the dashboard</text>
+        <text data-in="3" x="632" y="175" text-anchor="middle" class="lbl s" font-size="11">their applications, first byte</text>
+        <path data-in="3" class="draw" pathLength="1" d="M735,162 L792,162" stroke="#34D399" fill="none"/>
+        <rect data-in="3" x="795" y="134" width="205" height="56" rx="9" fill="#121C30" stroke="#34D399"/>
+        <text data-in="3" x="897" y="157" text-anchor="middle" class="lbl b" font-size="13">No flash</text>
+        <text data-in="3" x="897" y="175" text-anchor="middle" class="lbl s" font-size="11">and page JS can't read it</text>
       </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>Both users press refresh.</i><i>No token reaches the server, so it renders logged out. The cookie came with the request.</i><i>JS loads and reads the token. The cookie user already has their dashboard.</i><i>Then the re-render: a flash of the wrong page.</i></span>
+    </div>
     </div>
     <div class="key">The flags that make a cookie a session, not a liability: <code>HttpOnly</code> so scripts can't read it, <code>Secure</code>, <code>SameSite=Lax</code>, a short <code>Max-Age</code>, and a value that's signed or encrypted.</div>
 </section>
@@ -948,6 +1164,691 @@ proxy.ts               <span class="cmt">the door</span></code></pre>
   });
   document.getElementById('stage').addEventListener('click',e=>{ if(e.target.closest('a')) return; e.clientX>innerWidth/2?next():prev(); });
   render();
+</script>
+<!-- Sandbox starter for this deck (React mode): one tab group per idea, each its own little
+     app. The sandbox reads these on a fresh project or a reset; see brand/sandbox.html. -->
+<script type="text/plain" data-sbx-file="App.tsx" data-sbx-first>
+import './styles.css';
+
+// Module 7 lab. The sandbox has no Next.js server, but React's own server renderer runs
+// right here in the browser, so each group shows a piece of the machinery Next.js is
+// built on. Every tab group is its own small app: open a tab and the preview switches.
+// Right-click a group's label to fold it or turn it off.
+
+const ideas: [group: string, what: string][] = [
+  ['boundary', 'server HTML arrives inert; hydration is what makes it click'],
+  ['hydration', 'render twice, at two moments: a mismatch, and the fix'],
+  ['streaming', 'the real chunks: the shell first, each Suspense boundary later'],
+  ['cache', 'a data cache with revalidate and tags: stale-while-revalidate'],
+  ['actions', 'a form that posts to a function, with pending state and checks'],
+];
+
+export default function App() {
+  return (
+    <main>
+      <h1>Module 7 lab</h1>
+      <p className="muted">Open a tab in any group to try that idea.</p>
+      <ol>
+        {ideas.map(([group, what]) => (
+          <li key={group}>
+            <b>{group}</b> · {what}
+          </li>
+        ))}
+      </ol>
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="styles.css">
+body {
+  font-family: system-ui, sans-serif;
+  margin: 20px;
+  color: #0f172a;
+}
+
+main {
+  display: grid;
+  gap: 12px;
+  max-width: 680px;
+}
+
+h1 { font-size: 20px; margin: 0; }
+h2 { font-size: 16px; margin: 0 0 4px; }
+ul, ol { margin: 0; padding-left: 20px; }
+li { margin: 4px 0; }
+form { display: grid; gap: 8px; }
+form label { display: grid; gap: 4px; }
+
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.card { border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 12px; }
+.muted { color: #64748b; margin: 0; }
+.bad { color: #dc2626; margin: 0; }
+.good { color: #059669; margin: 0; }
+
+input,
+button {
+  font: inherit;
+  padding: 6px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+button {
+  background: #0f172a;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:disabled { opacity: 0.45; cursor: default; }
+input[type='checkbox'] { padding: 0; }
+code, pre { font: 12.5px ui-monospace, monospace; }
+pre { background: #f1f5f9; padding: 8px 10px; border-radius: 8px; margin: 0; white-space: pre-wrap; word-break: break-all; }
+</script>
+<script type="text/plain" data-sbx-file="ServerHtml.tsx" data-sbx-group="boundary" data-sbx-color="#22D3EE">
+import { useEffect, useRef, useState } from 'react';
+import { renderToString } from 'react-dom/server';
+import { hydrateRoot } from 'react-dom/client';
+import { JobPage } from './JobPage';
+
+// The server sends HTML, not behaviour. Click Apply before you hydrate: nothing happens,
+// because no JavaScript is attached to that HTML yet. Hydrate, and the same markup comes
+// alive. That gap is why a 'use client' leaf still renders on the server first.
+const html = renderToString(<JobPage />);
+
+export default function ServerHtml() {
+  const box = useRef<HTMLDivElement>(null);
+  const [hydrated, setHydrated] = useState(false);
+
+  // What arrives from the server: plain HTML, written into a box this app doesn't render into.
+  useEffect(() => {
+    if (box.current) box.current.innerHTML = html;
+  }, []);
+
+  function hydrate() {
+    if (box.current) hydrateRoot(box.current, <JobPage />);
+    setHydrated(true);
+  }
+
+  return (
+    <main>
+      <h1>boundary · HTML first, JavaScript second</h1>
+      <div className="row">
+        <button disabled={hydrated} onClick={hydrate}>
+          {hydrated ? 'Hydrated' : 'Hydrate'}
+        </button>
+        <span className="muted">{html.length} bytes of server HTML</span>
+      </div>
+      <div ref={box} className="card" />
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="JobPage.tsx" data-sbx-group="boundary">
+import { useState } from 'react';
+
+// A page with one interactive leaf. In Next.js, ApplyButton would be the only file that
+// says 'use client': JobPage stays a Server Component and ships no JavaScript.
+export function ApplyButton() {
+  const [applied, setApplied] = useState(false);
+  return <button onClick={() => setApplied(true)}>{applied ? 'Applied ✓' : 'Apply'}</button>;
+}
+
+export function JobPage() {
+  return (
+    <article>
+      <h2>Frontend Engineer · Qafla</h2>
+      <p className="muted">Remote · posted today</p>
+      <ApplyButton />
+    </article>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="Mismatch.tsx" data-sbx-group="hydration" data-sbx-color="#FBBF24" data-sbx-shut>
+import { useEffect, useRef, useState } from 'react';
+import { renderToString } from 'react-dom/server';
+import { hydrateRoot, type Root } from 'react-dom/client';
+
+// The server renders at one moment and the browser hydrates at another. Anything that
+// differs between the two (the time, a random number, window) is a mismatch: React throws
+// the server HTML away and renders again. Tick the fix and run it again.
+function Clock({ fixed }: { fixed: boolean }) {
+  const [now, setNow] = useState(fixed ? '' : new Date().toLocaleTimeString());
+  useEffect(() => {
+    if (fixed) setNow(new Date().toLocaleTimeString()); // the fix: only the browser reads the clock
+  }, [fixed]);
+  return (
+    <p>
+      Rendered at <b>{now || '…'}</b>
+    </p>
+  );
+}
+
+export default function Mismatch() {
+  const box = useRef<HTMLDivElement>(null);
+  const root = useRef<Root | null>(null);
+  const [fixed, setFixed] = useState(false);
+  const [log, setLog] = useState<string[]>([]);
+  const add = (line: string) => setLog((l) => [...l, line]);
+
+  function run() {
+    if (!box.current) return;
+    root.current?.unmount();
+    const host = document.createElement('div');
+    box.current.replaceChildren(host);
+    host.innerHTML = renderToString(<Clock fixed={fixed} />); // the "server"
+    setLog(['server rendered at ' + new Date().toLocaleTimeString()]);
+    setTimeout(() => {
+      root.current = hydrateRoot(host, <Clock fixed={fixed} />, {
+        onRecoverableError: (err) => add('✗ ' + String(err instanceof Error ? err.message : err).split('\n')[0]),
+      });
+      add('hydrated at ' + new Date().toLocaleTimeString());
+    }, 1500);
+  }
+
+  return (
+    <main>
+      <h1>hydration · same component, two moments</h1>
+      <label className="row">
+        <input type="checkbox" checked={fixed} onChange={(e) => setFixed(e.target.checked)} />
+        the fix: read the clock in an effect
+      </label>
+      <button onClick={run}>Render on the “server”, hydrate 1.5 s later</button>
+      <div ref={box} className="card" />
+      <pre>{log.join('\n') || 'nothing yet'}</pre>
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="Stream.tsx" data-sbx-group="streaming" data-sbx-color="#34D399" data-sbx-shut>
+import { Suspense, use, useState } from 'react';
+import { renderToReadableStream } from 'react-dom/server';
+
+// renderToReadableStream sends the page in pieces: the shell, with each Suspense fallback
+// in place, as soon as it can; then each boundary's HTML (and a tiny script that swaps it
+// in) when its data arrives. These are the real chunks, as the browser would receive them.
+function Recommendations({ data }: { data: Promise<string[]> }) {
+  const jobs = use(data);
+  return (
+    <ul>
+      {jobs.map((j) => (
+        <li key={j}>{j}</li>
+      ))}
+    </ul>
+  );
+}
+
+function Page({ data }: { data: Promise<string[]> }) {
+  return (
+    <main>
+      <h1>Jobs for you</h1>
+      <Suspense fallback={<p>loading recommendations…</p>}>
+        <Recommendations data={data} />
+      </Suspense>
+    </main>
+  );
+}
+
+type Chunk = { at: number; text: string };
+
+export default function Stream() {
+  const [chunks, setChunks] = useState<Chunk[]>([]);
+  const [busy, setBusy] = useState(false);
+
+  async function run() {
+    setChunks([]);
+    setBusy(true);
+    const t0 = performance.now();
+    const data = new Promise<string[]>((r) => setTimeout(() => r(['UI Engineer', 'React Developer']), 1500));
+    const stream = await renderToReadableStream(<Page data={data} />);
+    const reader = stream.getReader();
+    const text = new TextDecoder();
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      const at = Math.round(performance.now() - t0);
+      setChunks((c) => [...c, { at, text: text.decode(value) }]);
+    }
+    setBusy(false);
+  }
+
+  return (
+    <main>
+      <h1>streaming · the page in pieces</h1>
+      <button disabled={busy} onClick={run}>
+        {busy ? 'Streaming…' : 'Render the page as a stream'}
+      </button>
+      {chunks.map((c, i) => (
+        <section key={i} className="card">
+          <b>chunk {i + 1}</b> <span className="muted">· {c.at} ms · {c.text.length} bytes</span>
+          <pre>{c.text.length > 420 ? c.text.slice(0, 420) + ' …' : c.text}</pre>
+        </section>
+      ))}
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="Isr.tsx" data-sbx-group="cache" data-sbx-color="#A78BFA" data-sbx-shut>
+import { useState } from 'react';
+import { cached, revalidateTag, log } from './dataCache';
+
+// The "database": edit the job to bump its version.
+let version = 1;
+const getJob = () => new Promise<string>((r) => setTimeout(() => r(`Frontend Engineer · v${version}`), 600));
+
+// Each request renders /jobs/42 through the cache (revalidate 5 s, tag 'jobs'). Edit the
+// job, then request: the old page keeps coming until the window passes, and the first
+// request after it is still served stale while the refresh runs. revalidateTag skips the wait.
+export default function Isr() {
+  const [page, setPage] = useState('');
+  const [, redraw] = useState(0);
+
+  async function request() {
+    const title = await cached('job:42', getJob, { revalidate: 5, tags: ['jobs'] });
+    setPage(`${title} · served ${new Date().toLocaleTimeString()}`);
+  }
+
+  return (
+    <main>
+      <h1>cache · stale-while-revalidate</h1>
+      <div className="row">
+        <button onClick={request}>Request /jobs/42</button>
+        <button onClick={() => { version++; redraw((n) => n + 1); }}>Edit the job</button>
+        <button onClick={() => { revalidateTag('jobs'); redraw((n) => n + 1); }}>revalidateTag('jobs')</button>
+      </div>
+      <p>
+        page: <b>{page || '—'}</b> <span className="muted">· database: v{version}</span>
+      </p>
+      <pre>{log.slice(-6).join('\n') || 'nothing cached yet'}</pre>
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="dataCache.ts" data-sbx-group="cache">
+// A toy data cache with Next.js's rules, in seconds instead of minutes: an answer is kept
+// across requests; after `revalidate` seconds it is stale, still served once while a
+// refresh runs behind it; revalidateTag drops every entry with that tag.
+type Entry = { value: unknown; at: number; tags: string[]; refreshing?: boolean };
+const store = new Map<string, Entry>();
+export const log: string[] = [];
+
+export async function cached<T>(key: string, load: () => Promise<T>, opts: { revalidate: number; tags: string[] }): Promise<T> {
+  const e = store.get(key);
+  if (!e) {
+    log.push(`${key}: miss, loading`);
+    const value = await load();
+    store.set(key, { value, at: Date.now(), tags: opts.tags });
+    return value;
+  }
+  const age = (Date.now() - e.at) / 1000;
+  if (age < opts.revalidate) log.push(`${key}: hit, ${age.toFixed(1)} s old`);
+  else if (!e.refreshing) {
+    log.push(`${key}: stale after ${age.toFixed(1)} s: served stale, refreshing behind it`);
+    e.refreshing = true;
+    load().then((value) => {
+      store.set(key, { value, at: Date.now(), tags: opts.tags });
+      log.push(`${key}: refreshed`);
+    });
+  } else log.push(`${key}: stale, refresh already running`);
+  return e.value as T;
+}
+
+export function revalidateTag(tag: string) {
+  for (const [key, e] of store) {
+    if (e.tags.includes(tag)) {
+      store.delete(key);
+      log.push(`revalidateTag('${tag}'): ${key} dropped`);
+    }
+  }
+}
+</script>
+<script type="text/plain" data-sbx-file="PostJob.tsx" data-sbx-group="actions" data-sbx-color="#F8717A" data-sbx-shut>
+import { useActionState, useState } from 'react';
+import { useFormStatus } from 'react-dom';
+import { postJob, session, type FormState } from './actions';
+
+function Submit() {
+  const { pending } = useFormStatus();
+  return <button disabled={pending}>{pending ? 'Posting…' : 'Post job'}</button>;
+}
+
+// useActionState gives the form its action, the last result and a pending flag. Post as
+// is: the salary fails validation. Fix it and post again. Then sign in as a seeker.
+export default function PostJob() {
+  const [state, action] = useActionState(postJob, {} as FormState);
+  const [role, setRole] = useState(session.role);
+
+  return (
+    <main>
+      <h1>actions · a form that posts to a function</h1>
+      <label className="row">
+        <input
+          type="checkbox"
+          checked={role === 'seeker'}
+          onChange={(e) => {
+            session.role = e.target.checked ? 'seeker' : 'company';
+            setRole(session.role);
+          }}
+        />
+        signed in as a seeker, not a company
+      </label>
+      <form action={action} className="card">
+        <label>
+          Title <input name="title" defaultValue="Frontend Engineer" />
+        </label>
+        {state.fields?.title && <p className="bad">{state.fields.title}</p>}
+        <label>
+          Monthly salary <input name="salary" defaultValue="abc" />
+        </label>
+        {state.fields?.salary && <p className="bad">{state.fields.salary}</p>}
+        <Submit />
+      </form>
+      {state.error && <p className="bad">{state.error}</p>}
+      {state.posted && <p className="good">Posted: {state.posted}</p>}
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="actions.ts" data-sbx-group="actions">
+import { z } from 'zod';
+
+// A pretend server action. In Next.js this file starts with 'use server' and the form posts
+// to it. It is a public endpoint, so it asks who, may they, and is it valid, every time.
+export type FormState = { error?: string; fields?: Record<string, string>; posted?: string };
+
+export const session: { role: 'company' | 'seeker' } = { role: 'company' };
+
+const NewJob = z.object({
+  title: z.string().trim().min(3, 'At least 3 characters'),
+  salary: z.coerce.number({ error: 'A whole number above zero' }).int('A whole number above zero').positive('A whole number above zero'),
+});
+
+export async function postJob(_prev: FormState, form: FormData): Promise<FormState> {
+  await new Promise((r) => setTimeout(r, 800)); // the network
+  if (session.role !== 'company') return { error: 'Not allowed: only companies post jobs' }; // may they?
+  const input = NewJob.safeParse(Object.fromEntries(form)); // is it valid?
+  if (!input.success) {
+    const fields: Record<string, string> = {};
+    for (const issue of input.error.issues) fields[String(issue.path[0])] = issue.message;
+    return { error: 'Check the highlighted fields', fields };
+  }
+  return { posted: `${input.data.title}, ${input.data.salary.toLocaleString('en')} a month` };
+}
+</script>
+<script>
+/* Step player — see the .anim block in the stylesheet for the vocabulary. Each player
+   restarts whenever its slide opens; R replays every player on the current slide. With
+   reduced motion, or for print, it jumps straight to the settled frame. */
+(function(){
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var players = [];
+  document.querySelectorAll('.anim[data-at]').forEach(function(root){
+    var at = root.dataset.at.split(',').map(Number), n = at.length, timers = [];
+    var ins  = [].slice.call(root.querySelectorAll('[data-in]'));
+    var outs = [].slice.call(root.querySelectorAll('[data-out]'));
+    var hls  = [].slice.call(root.querySelectorAll('[data-hl]')).map(function(el){
+      return { el:el, at:el.dataset.hl.split(/\s+/).map(Number) };
+    });
+    var says = [].slice.call(root.querySelectorAll('.anim-say i'));
+    var steps = [].slice.call(root.querySelectorAll('.anim-step')), cur = n;
+
+    function set(k){
+      cur = k;
+      for (var j = 1; j <= n; j++) root.classList.toggle('s' + j, j <= k);
+      root.dataset.step = k;
+      ins.forEach(function(el){ el.classList.toggle('in', k >= +el.dataset.in); });
+      outs.forEach(function(el){ el.classList.toggle('out', k >= +el.dataset.out); });
+      hls.forEach(function(h){ h.el.classList.toggle('lit', h.at.indexOf(k) >= 0); });
+      says.forEach(function(el, j){ el.classList.toggle('on', j === k - 1); });
+      steps.forEach(function(b){
+        var d = +b.dataset.d;
+        b.setAttribute('aria-disabled', String(d < 0 ? k <= 0 : k >= n));
+      });
+    }
+    function go(d){
+      timers.forEach(clearTimeout); timers = [];
+      set(Math.max(0, Math.min(n, cur + d)));
+    }
+    function settle(){ timers.forEach(clearTimeout); timers = []; set(n); }
+    function play(){
+      if (still.matches) return settle();
+      timers.forEach(clearTimeout); timers = [];
+      root.classList.add('rs'); set(0); void root.offsetWidth; root.classList.remove('rs');
+      at.forEach(function(ms, j){ timers.push(setTimeout(function(){ set(j + 1); }, ms)); });
+    }
+    set(n);
+    root.classList.add('live');
+
+    var btn = root.querySelector('.anim-replay');
+    if (btn) btn.addEventListener('click', play);
+    steps.forEach(function(b){ b.addEventListener('click', function(){ go(+b.dataset.d); }); });
+    // A press on a player button must not also turn the slide.
+    (btn ? [btn] : []).concat(steps).forEach(function(b){
+      ['click','pointerdown'].forEach(function(t){
+        b.addEventListener(t, function(e){ e.stopPropagation(); });
+      });
+    });
+
+    var slide = root.closest('.slide'), wasOn = slide.classList.contains('on');
+    if (wasOn) play();
+    new MutationObserver(function(){
+      var isOn = slide.classList.contains('on');
+      if (isOn && !wasOn) play();
+      if (!isOn && wasOn) settle();
+      wasOn = isOn;
+    }).observe(slide, { attributes:true, attributeFilter:['class'] });
+    players.push({ slide:slide, play:play, settle:settle });
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key.toLowerCase() !== 'r' || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+    players.forEach(function(p){ if (p.slide.classList.contains('on')) p.play(); });
+  });
+  window.addEventListener('beforeprint', function(){ players.forEach(function(p){ p.settle(); }); });
+})();
+</script>
+<script>
+/* Live demos — see the .demo block in the stylesheet. The deck turns slides on any click
+   and on Space or the arrow keys, so a demo keeps its own clicks, and keeps the keys that
+   belong to it: anything typed into an input, plus Space, Enter, Tab and Escape on its
+   controls. Arrow keys on a demo button still turn the slide. */
+(function(){
+  document.querySelectorAll('.demo').forEach(function(el){
+    ['click','pointerdown'].forEach(function(t){ el.addEventListener(t, function(e){ e.stopPropagation(); }); });
+    el.addEventListener('keydown', function(e){
+      var typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable;
+      if (typing || e.key === ' ' || e.key === 'Enter' || e.key === 'Tab' || e.key === 'Escape') e.stopPropagation();
+    });
+  });
+
+  // Runs open() each time the demo's slide opens and close() each time it leaves.
+  function watch(el, open, close){
+    var s = el.closest('.slide'), was = s.classList.contains('on');
+    if (was) open();
+    new MutationObserver(function(){
+      var is = s.classList.contains('on');
+      if (is && !was) open();
+      if (!is && was && close) close();
+      was = is;
+    }).observe(s, { attributes:true, attributeFilter:['class'] });
+  }
+  function again(el, cls){ el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]; }); }
+  function k(root, name){ return root.querySelector('[data-k="' + name + '"]'); }
+  window.cxDemo = { watch:watch, again:again, esc:esc, k:k };
+
+
+  /* L1a · move the 'use client' boundary and watch what ships */
+  (function(){
+    var root = document.getElementById('demo-tree'), fig = document.getElementById('fx-tree');
+    if (!root || !fig) return;
+    var UP = { root: null, page: 'root', header: 'page', desc: 'page', similar: 'page', apply: 'page', save: 'page' };
+    // Illustrative sizes: what each component's own code and imports add to the bundle.
+    var KB = { root: 4, page: 6, header: 3, desc: 38, similar: 9, apply: 2, save: 2 };
+    var NAME = { root: 'RootLayout', page: 'JobPage', header: 'JobHeader', desc: 'JobDescription',
+                 similar: 'SimilarJobs', apply: 'ApplyButton', save: 'SaveToggle' };
+    var START = { apply: true, save: true }, dir, was = {};
+    fig.querySelectorAll('[data-node]').forEach(function(g){ was[g.dataset.node] = g.querySelectorAll('text')[1].textContent; });
+    function client(n){ for (var x = n; x; x = UP[x]) if (dir[x]) return true; return false; }
+    function paint(){
+      var moved = Object.keys(UP).some(function(n){ return !!dir[n] !== !!START[n]; }), ships = [], kb = 0;
+      fig.classList.toggle('moved', moved);
+      fig.querySelectorAll('[data-node]').forEach(function(g){
+        var n = g.dataset.node, c = client(n);
+        g.classList.toggle('dir', !!dir[n]);
+        g.querySelector('rect').setAttribute('stroke', c ? '#34D399' : '#22D3EE');
+        g.querySelectorAll('text')[1].textContent = !moved ? was[n]
+          : dir[n] ? "'use client' · ships " + KB[n] + ' KB'
+          : c ? 'client: imported, ships ' + KB[n] + ' KB' : was[n];
+        if (c) { ships.push(NAME[n]); kb += KB[n]; }
+      });
+      fig.querySelectorAll('[data-edge]').forEach(function(p){ p.setAttribute('stroke', client(p.dataset.edge) ? '#34D399' : '#64748B'); });
+      var m = k(root,'kb');
+      m.textContent = kb + ' KB';
+      m.className = kb > 10 ? 'bad' : 'good';
+      k(root,'who').textContent = ships.length ? ships.join(', ') : 'nothing: every component stays on the server';
+    }
+    fig.addEventListener('click', function(e){
+      var g = e.target.closest('[data-node]'); if (!g) return;
+      e.stopPropagation();
+      dir[g.dataset.node] = !dir[g.dataset.node];
+      paint();
+      again(k(root,'kb'), 'bump');
+    });
+    fig.addEventListener('pointerdown', function(e){ if (e.target.closest('[data-node]')) e.stopPropagation(); });
+    root.addEventListener('click', function(e){ if (e.target.closest('[data-act="reset"]')) { dir = { apply: true, save: true }; paint(); } });
+    watch(root, function(){ dir = { apply: true, save: true }; paint(); });
+  })();
+
+  /* L1b · which side can run this line of code */
+  (function(){
+    var root = document.getElementById('demo-sides'), tbl = document.getElementById('tbl-sides');
+    if (!root || !tbl) return;
+    // [the table row it belongs to, the answer]
+    var C = {
+      db:    [1, 'Server ✓: await it right in the component. Client: only after hydration, through an API.'],
+      env:   [2, 'Server ✓ · client ✗: every line of a client file is public JavaScript.'],
+      state: [3, 'Client only: a Server Component renders once and never updates.'],
+      click: [3, 'Client only: a handler is a function, and a function can’t cross to the browser.'],
+      win:   [4, 'Client, once mounted: there is no window on the server.'],
+      lib:   [5, 'Both. Imported on the server it never reaches the user; in a client file it ships.']
+    };
+    var rows = tbl.querySelectorAll('tr');
+    function pick(c){
+      root.querySelectorAll('[data-c]').forEach(function(b){ b.classList.toggle('on', b.dataset.c === c); });
+      rows.forEach(function(r, i){ r.classList.toggle('hl', !!c && i === C[c][0]); });
+      k(root,'why').textContent = c ? C[c][1] : '';
+    }
+    root.addEventListener('click', function(e){ var b = e.target.closest('[data-c]'); if (b) pick(b.dataset.c); });
+    watch(root, function(){ pick(null); });
+  })();
+
+  /* L2b · route a URL through the three questions */
+  (function(){
+    var root = document.getElementById('demo-route'), fig = document.getElementById('fx-route');
+    if (!root || !fig) return;
+    // yes: the question that says yes (0: none does, so the route is static).
+    var R = {
+      dash:   { yes: 1, why: '/dashboard → dynamic + streaming. It reads the session cookie, so each user gets their own HTML.' },
+      search: { yes: 2, why: '/jobs?q=react → dynamic, cached data. The query shapes the HTML; the fetch under it can still be cached.' },
+      job:    { yes: 3, why: '/jobs/[id] → ISR on demand. When a job is edited or closed, revalidate that page.' },
+      home:   { yes: 3, why: '/ → ISR on a timer. New jobs arrive all day; a page a few minutes old is fine.' },
+      login:  { yes: 0, why: '/login → static. Nothing in it changes after deploy, so it is built once.' }
+    };
+    var HOME = ['ssg', 'dyn', 'cached', 'isr'], timers = [];
+    function clear(){
+      timers.forEach(clearTimeout); timers = [];
+      fig.classList.remove('walk');
+      fig.querySelectorAll('.lit').forEach(function(e){ e.classList.remove('lit'); });
+      root.querySelectorAll('[data-r]').forEach(function(b){ b.classList.remove('on'); });
+      k(root,'why').textContent = '';
+    }
+    function walk(id){
+      clear();
+      var r = R[id], seq = [];
+      for (var q = 1; q <= 3; q++){
+        seq.push('[data-q="' + q + '"]');
+        if (r.yes === q){ seq.push('[data-yes="' + q + '"]'); break; }
+        seq.push('[data-no="' + q + '"]');
+      }
+      seq.push('[data-home="' + HOME[r.yes] + '"]');
+      fig.classList.add('walk');
+      root.querySelector('[data-r="' + id + '"]').classList.add('on');
+      seq.forEach(function(sel, j){
+        timers.push(setTimeout(function(){ fig.querySelector(sel).classList.add('lit'); }, j * 380));
+      });
+      timers.push(setTimeout(function(){ k(root,'why').textContent = r.why; }, seq.length * 380));
+    }
+    root.addEventListener('click', function(e){ var b = e.target.closest('[data-r]'); if (b) walk(b.dataset.r); });
+    watch(root, clear, clear);
+  })();
+
+  /* L2c · send a request through the four caches */
+  (function(){
+    var root = document.getElementById('demo-cache'), fig = document.getElementById('fx-cache');
+    if (!root || !fig) return;
+    var st, timers = [];
+    function el(kind, n){ return fig.querySelector('[data-' + kind + '="' + n + '"]'); }
+    function say(t){ k(root,'say').textContent = t; }
+    function dots(){
+      ['router', 'route', 'data'].forEach(function(n){ el('dot', n).classList.toggle('warm', !!st[n]); });
+      el('layer', 'route').classList.toggle('skip', st.dyn);
+      root.querySelector('[data-act="dyn"]').classList.toggle('on', st.dyn);
+    }
+    function clear(){
+      timers.forEach(clearTimeout); timers = [];
+      fig.classList.remove('run');
+      fig.querySelectorAll('.lit, .hit').forEach(function(e){ e.classList.remove('lit', 'hit'); });
+    }
+    function trip(first){
+      clear();
+      fig.classList.add('run');
+      var seq = [['layer', 'click'], ['hop', 'router']], end, msg;
+      if (st.router) { end = 'router'; msg = 'Router cache hit: this tab already had the page. Nothing left the browser.'; }
+      else {
+        seq.push(['layer', 'router'], ['hop', 'route']);
+        if (!st.dyn && st.route) { end = 'route'; msg = 'Full route cache hit: prebuilt HTML and payload, and no render ran.'; }
+        else {
+          seq.push(['layer', 'route'], ['hop', 'memo'], ['layer', 'memo'], ['hop', 'data']);
+          var memo = ' Request memo turned two getJobs() calls in the render into one.';
+          if (st.data) { end = 'data'; msg = (st.dyn ? 'cookies() makes the route render per request, ' : 'The route rendered, ') + 'but getJobs() came from the data cache.' + memo; }
+          else { seq.push(['layer', 'data'], ['hop', 'db']); end = 'db'; msg = 'Database: no layer had anything fresh, so the render waited for it.' + memo; }
+        }
+      }
+      seq.forEach(function(x, j){
+        timers.push(setTimeout(function(){ el(x[0], x[1]).classList.add('lit'); }, j * 260));
+      });
+      timers.push(setTimeout(function(){
+        el('layer', end).classList.add('hit');
+        // the answer fills every cache on its way back
+        if (end === 'db') st.data = true;
+        if (end === 'db' || end === 'data') st.route = !st.dyn;
+        st.router = true;
+        dots();
+        say(first + msg);
+      }, seq.length * 260));
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-act]'); if (!b) return;
+      var a = b.dataset.act;
+      if (a === 'link') trip('');
+      if (a === 'reload') { st.router = false; trip('Hard reload skips the router cache. '); }
+      if (a === 'tag') {
+        clear(); st.data = st.route = st.router = false; dots();
+        say("revalidateTag('jobs') in an action: the data, the routes built from it and this tab's router cache are empty.");
+      }
+      if (a === 'dyn') {
+        clear(); st.dyn = !st.dyn; st.route = false; dots();
+        say(st.dyn ? 'The route reads cookies(): it renders per request, so the full route cache is skipped.'
+                   : 'Static again: the next render is kept in the full route cache.');
+      }
+    });
+    watch(root, function(){
+      st = { router: false, route: false, data: false, dyn: false };
+      clear(); dots(); say('Nothing is cached yet. Click a link.');
+    }, clear);
+  })();
+})();
 </script>
 <!--catalyst-brand:copy-->
 <script>
@@ -1281,7 +2182,11 @@ proxy.ts               <span class="cmt">the door</span></code></pre>
     'react/jsx-runtime': ESM + 'react@' + REACT + '/jsx-runtime?dev&external=react',
     'react/jsx-dev-runtime': ESM + 'react@' + REACT + '/jsx-dev-runtime?dev&external=react',
     'react-dom': ESM + 'react-dom@' + REACT + '?dev&external=react',
-    'react-dom/client': ESM + 'react-dom@' + REACT + '/client?dev&external=react'
+    'react-dom/client': ESM + 'react-dom@' + REACT + '/client?dev&external=react',
+    // The server renderer is built with only React external: with react-dom external too,
+    // esm.sh leaves its own react-dom/cjs/… files as bare imports nothing can resolve.
+    'react-dom/server': ESM + 'react-dom@' + REACT + '/server?dev&external=react',
+    'react-dom/server.browser': ESM + 'react-dom@' + REACT + '/server.browser?dev&external=react'
   };
 
   var KEY = 'catalyst-sbx:' + location.pathname + ':';
