@@ -151,6 +151,114 @@
     animation:cxBar .5s cubic-bezier(.22,.72,.28,1) .12s both}
   .slide .card{transition:border-color .25s, transform .25s}
 
+  /* Title: the five lessons deal in once the heading has landed. */
+  @keyframes cxPop{from{opacity:0; transform:translateY(10px) scale(.92)}}
+  .pop{transform-box:fill-box; transform-origin:center}
+  .slide.on .pop{animation:cxPop .5s cubic-bezier(.2,1.3,.4,1) both; animation-delay:calc(.45s + var(--i,0) * .07s)}
+
+  /* ---- step player: a figure that plays itself when its slide opens ------------------
+     Same vocabulary as modules 4 and 5. .anim[data-at="0,900,…"] steps 1, 2, … at those times
+     (ms); R or the replay button plays it again; .anim-step[data-d="-1"|"1"] buttons
+     pause it and step by hand. The root carries s1..sN and data-step="N". On any
+     descendant: data-in="N" fades in at step N (an SVG path with pathLength=1 draws);
+     data-out="N" dims at step N; data-hl="N M" highlights while the step is N or M.
+     Until the script marks the root .live nothing is hidden, so the settled frame is
+     also what prints and what a reader without motion sees. */
+  .anim{width:100%}
+  .anim.live [data-in]{transition:opacity .45s, transform .55s cubic-bezier(.22,.72,.28,1), stroke-dashoffset .6s ease,
+    color .35s, border-color .35s, background-color .35s, fill .35s, stroke .35s}
+  .anim.live [data-in]:not(.in){opacity:0}
+  .anim.live path[data-in]{stroke-dasharray:1; stroke-dashoffset:1}
+  .anim.live path[data-in].in{stroke-dashoffset:0}
+  .anim.live [data-out].out{opacity:.3}
+  .anim [data-hl]{--hl:rgba(34,211,238,.17); border-radius:4px; -webkit-box-decoration-break:clone; box-decoration-break:clone;
+    transition:background-color .3s, box-shadow .3s}
+  .anim [data-hl].hl-g{--hl:rgba(52,211,153,.17)} .anim [data-hl].hl-r{--hl:rgba(248,113,122,.2)}
+  .anim [data-hl].hl-p{--hl:rgba(167,139,250,.22)} .anim [data-hl].hl-w{--hl:rgba(251,191,36,.17)}
+  .anim [data-hl].lit{background-color:var(--hl); box-shadow:0 0 0 3px var(--hl)}
+  .anim.rs,.anim.rs *{transition:none !important}
+  .anim-bar{display:flex; align-items:center; flex-wrap:wrap; gap:10px 14px; margin-top:10px; min-height:34px}
+  .anim-replay,.anim-step{cursor:pointer; background:var(--panel2); border:1px solid var(--line2); color:var(--ink2); border-radius:8px;
+    padding:7px 12px; font:700 11.5px/1 var(--mono); letter-spacing:1.2px; text-transform:uppercase;
+    transition:background .18s, color .18s, border-color .18s}
+  .anim-replay:hover,.anim-step:hover{background:var(--line2); color:#fff; border-color:var(--cy)}
+  .anim-step{padding:5px 10px; font:700 16px/1 var(--sans); letter-spacing:0}
+  .anim-step[aria-disabled="true"]{opacity:.35; cursor:default}
+  .anim-say{font:600 min(1.4vw,16px)/1.4 var(--sans); color:var(--ink2)}
+  .anim-say i{display:none; font-style:normal} .anim-say i.on{display:inline}
+
+  /* ---- live demos: small working pieces of UI on the slide ---------------------------
+     A .demo is self-contained. A click inside it never turns the slide, and neither do
+     Space, Enter, Tab or Escape on its controls, or any key typed into its inputs.
+     Each demo is wired by id in the demo script at the end of the deck and resets
+     whenever its slide opens. */
+  .demo{background:var(--panel); border:1px solid var(--line2); border-radius:12px; padding:11px 14px; margin-top:14px;
+    width:100%; max-width:1060px; font:min(1.45vw,15.5px)/1.4 var(--sans); color:var(--ink2)}
+  .demo.bare{background:none; border:0; padding:0; border-radius:0}
+  .demo .row{display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px}
+  .demo .row + .row{margin-top:9px}
+  .demo-tag{font:700 10.5px/1 var(--mono); letter-spacing:1.6px; text-transform:uppercase; color:var(--cy)}
+  .demo-hint{font-size:.9em; color:var(--grey3)}
+  .dbtn{cursor:pointer; background:var(--panel2); border:1px solid var(--line2); color:var(--ink); border-radius:8px;
+    padding:7px 12px; font:600 12.5px/1 var(--mono); transition:background .18s, border-color .18s, color .18s}
+  .dbtn:hover{border-color:var(--cy)}
+  .dbtn:focus-visible,.dinput:focus-visible{outline:2px solid var(--cy); outline-offset:2px}
+  .dbtn.on{background:rgba(34,211,238,.14); border-color:var(--cy); color:#fff}
+  .dbtn.on.g{background:rgba(52,211,153,.14); border-color:var(--good)}
+  .dinput{background:var(--code); border:1px solid var(--line2); color:#fff; border-radius:8px; padding:7px 11px;
+    font:14.5px/1.2 var(--mono); min-width:0}
+  .dinput:focus{outline:none; border-color:var(--cy); box-shadow:0 0 0 3px rgba(34,211,238,.18)}
+  .meter{font:600 12px/1 var(--mono); color:var(--muted); white-space:nowrap}
+  .meter b{display:inline-block; min-width:2ch; margin-left:5px; color:#fff; font-size:15px}
+  .meter b.good{color:var(--good)} .meter b.bad{color:var(--bad)}
+  .dom{font:13.5px/1 var(--mono); color:var(--grey3); padding:6px 9px; border-radius:7px; border:1px dashed var(--line2)}
+  .dom b{color:#fff; font-weight:600}
+  @keyframes cxFlash{15%{box-shadow:0 0 0 4px rgba(251,191,36,.5); background-color:rgba(251,191,36,.14)}}
+  @keyframes cxFlashG{15%{box-shadow:0 0 0 4px rgba(52,211,153,.5); background-color:rgba(52,211,153,.14)}}
+  @keyframes cxFlashR{15%{box-shadow:0 0 0 4px rgba(248,113,122,.55); background-color:rgba(248,113,122,.16)}}
+  @keyframes cxBump{40%{transform:scale(1.35); color:var(--ochre)}}
+  .flash{animation:cxFlash .7s ease} .flash-g{animation:cxFlashG .7s ease} .flash-r{animation:cxFlashR .8s ease}
+  .bump{animation:cxBump .35s ease}
+
+  /* A timeline bar in a player grows from its left edge over --d instead of fading in. */
+  .anim .grow{transform-box:fill-box; transform-origin:left center}
+  .anim.live .grow[data-in]{transition:opacity .15s, transform var(--d,.35s) linear}
+  .anim.live .grow[data-in]:not(.in){transform:scaleX(0)}
+  /* A demo can sit inside a player's bar, next to its buttons. */
+  .demo.inline{display:inline-flex; align-items:center; gap:8px; width:auto; margin:0}
+
+  /* L1c: the flow lights each question a piece of state passes, then its home. */
+  #fx-home [data-q],#fx-home [data-no],#fx-home [data-yes],#fx-home [data-home]{transition:opacity .3s}
+  #fx-home.walk [data-q]:not(.lit),#fx-home.walk [data-no]:not(.lit),
+  #fx-home.walk [data-yes]:not(.lit),#fx-home.walk [data-home]:not(.lit){opacity:.2}
+  #fx-home rect,#fx-home path{transition:stroke-width .3s, fill .3s}
+  #fx-home .lit rect,#fx-home .lit path{stroke-width:2.5}
+  #fx-home [data-home].lit rect{fill:rgba(34,211,238,.13)}
+
+  /* L2a: the strip lights the entry's state while the demo's clock runs. */
+  #fx-life [data-st]{transition:opacity .3s}
+  #fx-life.run [data-st]:not(.on){opacity:.28}
+  #fx-life [data-st] rect{transition:fill .3s, stroke-width .3s}
+  #fx-life [data-st].on rect{fill:rgba(34,211,238,.13); stroke-width:2.5}
+
+  /* L2c: the two lines the demo can switch off, and the star. */
+  .ln{border-radius:4px; transition:opacity .3s}
+  .ln.gone{opacity:.3; text-decoration:line-through}
+  .dbtn.star{min-width:150px}
+  .dbtn.star.on{color:var(--ochre); border-color:var(--ochre)}
+
+  /* L2d: the race shows one ending at a time. */
+  #fx-race:not(.bare) .only-bare,#fx-race.bare .only-key{display:none}
+
+  /* L3a: the address bar of the mini Rasmi. */
+  .dinput.url{flex:1; min-width:18ch; color:var(--ink2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+
+  /* L3b: what validateSearch returns; ochre is a .catch() fallback. */
+  .parsed{font:600 14px/1.3 var(--mono); color:var(--ink)}
+  .parsed b{color:var(--ochre); font-weight:700}
+  .parsed i{color:var(--grey3); font-style:normal; font-weight:400}
+
+
   @media (prefers-reduced-motion: reduce){
     .slide.on *{animation:none !important}
     .slide .draw{stroke-dashoffset:0 !important}
@@ -292,22 +400,30 @@
     <div class="sub">Which state is the server's, which is yours — and where each piece belongs.</div>
     <div class="fig" style="max-width:980px">
       <svg viewBox="0 0 980 64" role="img" aria-label="Five lessons: whose state, TanStack Query and the race it fixes, the URL as state, stores, build it">
-        <g>
-          <rect x="0" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
-          <text x="90" y="26" text-anchor="middle" class="lbl s">Lesson 1</text>
-          <text x="90" y="45" text-anchor="middle" class="lbl b">Whose state?</text>
-          <rect x="200" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#34D399"/>
-          <text x="290" y="26" text-anchor="middle" class="lbl s">Lesson 2</text>
-          <text x="290" y="45" text-anchor="middle" class="lbl b">Query &amp; races</text>
-          <rect x="400" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#2196F3"/>
-          <text x="490" y="26" text-anchor="middle" class="lbl s">Lesson 3</text>
-          <text x="490" y="45" text-anchor="middle" class="lbl b">URL as state</text>
-          <rect x="600" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#A78BFA"/>
-          <text x="690" y="26" text-anchor="middle" class="lbl s">Lesson 4</text>
-          <text x="690" y="45" text-anchor="middle" class="lbl b">Stores</text>
-          <rect x="800" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#FBBF24"/>
-          <text x="890" y="26" text-anchor="middle" class="lbl s">Lesson 5</text>
-          <text x="890" y="45" text-anchor="middle" class="lbl b">Build it</text>
+        <g class="pop" style="--i:0">
+            <rect x="0" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
+            <text x="90" y="26" text-anchor="middle" class="lbl s">Lesson 1</text>
+            <text x="90" y="45" text-anchor="middle" class="lbl b">Whose state?</text>
+        </g>
+        <g class="pop" style="--i:1">
+            <rect x="200" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#34D399"/>
+            <text x="290" y="26" text-anchor="middle" class="lbl s">Lesson 2</text>
+            <text x="290" y="45" text-anchor="middle" class="lbl b">Query &amp; races</text>
+        </g>
+        <g class="pop" style="--i:2">
+            <rect x="400" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#2196F3"/>
+            <text x="490" y="26" text-anchor="middle" class="lbl s">Lesson 3</text>
+            <text x="490" y="45" text-anchor="middle" class="lbl b">URL as state</text>
+        </g>
+        <g class="pop" style="--i:3">
+            <rect x="600" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#A78BFA"/>
+            <text x="690" y="26" text-anchor="middle" class="lbl s">Lesson 4</text>
+            <text x="690" y="45" text-anchor="middle" class="lbl b">Stores</text>
+        </g>
+        <g class="pop" style="--i:4">
+            <rect x="800" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#FBBF24"/>
+            <text x="890" y="26" text-anchor="middle" class="lbl s">Lesson 5</text>
+            <text x="890" y="45" text-anchor="middle" class="lbl b">Build it</text>
         </g>
       </svg>
     </div>
@@ -330,47 +446,67 @@
   <section class="slide" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>03</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Sorting Rasmi's state</div>
     <h2>Every piece of state gets exactly one home</h2>
+    <div class="anim" id="fx-homes" data-at="300,1300,2400,3400,4300,5400">
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 262" role="img" aria-label="Rasmi's state sorted into four homes: server cache, the URL, the component, and a small store">
-        <rect x="0" y="0" width="235" height="56" rx="10" fill="#121C30" stroke="#34D399"/>
-        <text x="117.5" y="24" text-anchor="middle" class="lbl b">Server cache</text>
-        <text x="117.5" y="43" text-anchor="middle" class="lbl s">TanStack Query</text>
-        <rect x="255" y="0" width="235" height="56" rx="10" fill="#121C30" stroke="#2196F3"/>
-        <text x="372.5" y="24" text-anchor="middle" class="lbl b">The URL</text>
-        <text x="372.5" y="43" text-anchor="middle" class="lbl s">search params</text>
-        <rect x="510" y="0" width="235" height="56" rx="10" fill="#121C30" stroke="#22D3EE"/>
-        <text x="627.5" y="24" text-anchor="middle" class="lbl b">The component</text>
-        <text x="627.5" y="43" text-anchor="middle" class="lbl s">useState · useReducer</text>
-        <rect x="765" y="0" width="235" height="56" rx="10" fill="#121C30" stroke="#A78BFA"/>
-        <text x="882.5" y="24" text-anchor="middle" class="lbl b">A small store</text>
-        <text x="882.5" y="43" text-anchor="middle" class="lbl s">Zustand</text>
+        <g data-in="1">
+          <rect x="0" y="0" width="235" height="56" rx="10" fill="#121C30" stroke="#34D399"/>
+          <text x="117.5" y="24" text-anchor="middle" class="lbl b">Server cache</text>
+          <text x="117.5" y="43" text-anchor="middle" class="lbl s">TanStack Query</text>
+          <rect x="255" y="0" width="235" height="56" rx="10" fill="#121C30" stroke="#2196F3"/>
+          <text x="372.5" y="24" text-anchor="middle" class="lbl b">The URL</text>
+          <text x="372.5" y="43" text-anchor="middle" class="lbl s">search params</text>
+          <rect x="510" y="0" width="235" height="56" rx="10" fill="#121C30" stroke="#22D3EE"/>
+          <text x="627.5" y="24" text-anchor="middle" class="lbl b">The component</text>
+          <text x="627.5" y="43" text-anchor="middle" class="lbl s">useState · useReducer</text>
+          <rect x="765" y="0" width="235" height="56" rx="10" fill="#121C30" stroke="#A78BFA"/>
+          <text x="882.5" y="24" text-anchor="middle" class="lbl b">A small store</text>
+          <text x="882.5" y="43" text-anchor="middle" class="lbl s">Zustand</text>
+        </g>
 
-        <rect x="12" y="72" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
-        <text x="117.5" y="94" text-anchor="middle" class="lbl">Listings feed</text>
-        <rect x="12" y="116" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
-        <text x="117.5" y="138" text-anchor="middle" class="lbl">Job detail</text>
-        <rect x="12" y="160" width="211" height="34" rx="17" fill="#0E1525" stroke="#FBBF24"/>
-        <text x="117.5" y="182" text-anchor="middle" class="lbl" style="fill:#FBBF24">Saved jobs ★</text>
-        <rect x="12" y="204" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
-        <text x="117.5" y="226" text-anchor="middle" class="lbl">Application statuses</text>
+        <g data-in="2">
+          <rect x="12" y="72" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
+          <text x="117.5" y="94" text-anchor="middle" class="lbl">Listings feed</text>
+          <rect x="12" y="116" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
+          <text x="117.5" y="138" text-anchor="middle" class="lbl">Job detail</text>
+          <rect x="12" y="204" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
+          <text x="117.5" y="226" text-anchor="middle" class="lbl">Application statuses</text>
+        </g>
+        <g data-in="6">
+          <rect x="12" y="160" width="211" height="34" rx="17" fill="#0E1525" stroke="#FBBF24"/>
+          <text x="117.5" y="182" text-anchor="middle" class="lbl" style="fill:#FBBF24">Saved jobs ★</text>
+        </g>
 
-        <rect x="267" y="72" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
-        <text x="372.5" y="94" text-anchor="middle" class="lbl">Search text · q</text>
-        <rect x="267" y="116" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
-        <text x="372.5" y="138" text-anchor="middle" class="lbl">Remote only</text>
-        <rect x="267" y="160" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
-        <text x="372.5" y="182" text-anchor="middle" class="lbl">Page number</text>
+        <g data-in="3">
+          <rect x="267" y="72" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
+          <text x="372.5" y="94" text-anchor="middle" class="lbl">Search text · q</text>
+          <rect x="267" y="116" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
+          <text x="372.5" y="138" text-anchor="middle" class="lbl">Remote only</text>
+          <rect x="267" y="160" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
+          <text x="372.5" y="182" text-anchor="middle" class="lbl">Page number</text>
+        </g>
 
-        <rect x="522" y="72" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
-        <text x="627.5" y="94" text-anchor="middle" class="lbl">Filters drawer open</text>
-        <rect x="522" y="116" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
-        <text x="627.5" y="138" text-anchor="middle" class="lbl">Apply-form draft</text>
+        <g data-in="4">
+          <rect x="522" y="72" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
+          <text x="627.5" y="94" text-anchor="middle" class="lbl">Filters drawer open</text>
+          <rect x="522" y="116" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
+          <text x="627.5" y="138" text-anchor="middle" class="lbl">Apply-form draft</text>
+        </g>
 
-        <rect x="777" y="72" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
-        <text x="882.5" y="94" text-anchor="middle" class="lbl">Compare tray · 3 job ids</text>
+        <g data-in="5">
+          <rect x="777" y="72" width="211" height="34" rx="17" fill="#0E1525" stroke="#243349"/>
+          <text x="882.5" y="94" text-anchor="middle" class="lbl">Compare tray · 3 job ids</text>
+        </g>
 
-        <text x="0" y="258" class="lbl s" style="fill:#FBBF24">★ the user clicks it, but it is stored per account and shows on their phone too</text>
+        <text data-in="6" x="0" y="258" class="lbl s" style="fill:#FBBF24">★ the user clicks it, but it is stored per account and shows on their phone too</text>
       </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>Four homes. Every piece of state goes in exactly one.</i><i>The server owns these. What the app holds is a cache.</i><i>A reload or a shared link should bring these back.</i><i>Only this component cares, and only for now.</i><i>One item needs a store: the compare tray.</i><i>The trap: saved jobs. The user clicks it, the server keeps it.</i></span>
+    </div>
     </div>
     <div class="key w">The trap is <b>Saved jobs</b>. The user decides it, so it feels like client state — but the server keeps it. The click isn't the state; it's a <i>request</i> to change the server's state.</div>
 </section>
@@ -378,45 +514,83 @@
   <section class="slide" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>04</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · The interview question</div>
     <h2>Three questions decide where state lives</h2>
-    <div class="fig" style="max-width:1000px">
+    <div class="fig" id="fx-home" style="max-width:1000px">
       <svg viewBox="0 0 1000 206" role="img" aria-label="Decision flow: does the server own it, then the query cache; should a reload restore it, then the URL; do distant parts need it, then a small store; otherwise useState">
-        <rect x="0" y="0" width="200" height="72" rx="10" fill="#121C30" stroke="#243349"/>
-        <text x="100" y="32" text-anchor="middle" class="lbl b">Does the server</text>
-        <text x="100" y="51" text-anchor="middle" class="lbl b">own the truth?</text>
-        <rect x="260" y="0" width="200" height="72" rx="10" fill="#121C30" stroke="#243349"/>
-        <text x="360" y="32" text-anchor="middle" class="lbl b">Should a reload or a</text>
-        <text x="360" y="51" text-anchor="middle" class="lbl b">shared link restore it?</text>
-        <rect x="520" y="0" width="200" height="72" rx="10" fill="#121C30" stroke="#243349"/>
-        <text x="620" y="32" text-anchor="middle" class="lbl b">Do distant parts of</text>
-        <text x="620" y="51" text-anchor="middle" class="lbl b">the tree need it?</text>
-        <rect x="780" y="8" width="220" height="56" rx="10" fill="#121C30" stroke="#22D3EE"/>
-        <text x="890" y="32" text-anchor="middle" class="lbl b">useState</text>
-        <text x="890" y="50" text-anchor="middle" class="lbl s">next to where it's used</text>
+        <g data-q="1">
+          <rect x="0" y="0" width="200" height="72" rx="10" fill="#121C30" stroke="#243349"/>
+          <text x="100" y="32" text-anchor="middle" class="lbl b">Does the server</text>
+          <text x="100" y="51" text-anchor="middle" class="lbl b">own the truth?</text>
+        </g>
+        <g data-q="2">
+          <rect x="260" y="0" width="200" height="72" rx="10" fill="#121C30" stroke="#243349"/>
+          <text x="360" y="32" text-anchor="middle" class="lbl b">Should a reload or a</text>
+          <text x="360" y="51" text-anchor="middle" class="lbl b">shared link restore it?</text>
+        </g>
+        <g data-q="3">
+          <rect x="520" y="0" width="200" height="72" rx="10" fill="#121C30" stroke="#243349"/>
+          <text x="620" y="32" text-anchor="middle" class="lbl b">Do distant parts of</text>
+          <text x="620" y="51" text-anchor="middle" class="lbl b">the tree need it?</text>
+        </g>
+        <g data-home="state">
+          <rect x="780" y="8" width="220" height="56" rx="10" fill="#121C30" stroke="#22D3EE"/>
+          <text x="890" y="32" text-anchor="middle" class="lbl b">useState</text>
+          <text x="890" y="50" text-anchor="middle" class="lbl s">next to where it's used</text>
+        </g>
 
-        <path class="draw" pathLength="1" d="M200,36 L255,36" stroke="#64748B" fill="none"/>
-        <text x="228" y="28" text-anchor="middle" class="lbl s">no</text>
-        <path class="draw" pathLength="1" d="M460,36 L515,36" stroke="#64748B" fill="none"/>
-        <text x="488" y="28" text-anchor="middle" class="lbl s">no</text>
-        <path class="draw" pathLength="1" d="M720,36 L775,36" stroke="#64748B" fill="none"/>
-        <text x="748" y="28" text-anchor="middle" class="lbl s">no</text>
+        <g data-no="1">
+          <path class="draw" pathLength="1" d="M200,36 L255,36" stroke="#64748B" fill="none"/>
+          <text x="228" y="28" text-anchor="middle" class="lbl s">no</text>
+        </g>
+        <g data-no="2">
+          <path class="draw" pathLength="1" d="M460,36 L515,36" stroke="#64748B" fill="none"/>
+          <text x="488" y="28" text-anchor="middle" class="lbl s">no</text>
+        </g>
+        <g data-no="3">
+          <path class="draw" pathLength="1" d="M720,36 L775,36" stroke="#64748B" fill="none"/>
+          <text x="748" y="28" text-anchor="middle" class="lbl s">no</text>
+        </g>
 
-        <path class="draw" pathLength="1" d="M100,72 L100,138" stroke="#34D399" fill="none"/>
-        <text x="110" y="110" class="lbl s" style="fill:#34D399">yes</text>
-        <path class="draw" pathLength="1" d="M360,72 L360,138" stroke="#2196F3" fill="none"/>
-        <text x="370" y="110" class="lbl s" style="fill:#2196F3">yes</text>
-        <path class="draw" pathLength="1" d="M620,72 L620,138" stroke="#A78BFA" fill="none"/>
-        <text x="630" y="110" class="lbl s" style="fill:#A78BFA">yes</text>
+        <g data-yes="1">
+          <path class="draw" pathLength="1" d="M100,72 L100,138" stroke="#34D399" fill="none"/>
+          <text x="110" y="110" class="lbl s" style="fill:#34D399">yes</text>
+        </g>
+        <g data-yes="2">
+          <path class="draw" pathLength="1" d="M360,72 L360,138" stroke="#2196F3" fill="none"/>
+          <text x="370" y="110" class="lbl s" style="fill:#2196F3">yes</text>
+        </g>
+        <g data-yes="3">
+          <path class="draw" pathLength="1" d="M620,72 L620,138" stroke="#A78BFA" fill="none"/>
+          <text x="630" y="110" class="lbl s" style="fill:#A78BFA">yes</text>
+        </g>
 
-        <rect x="0" y="144" width="200" height="60" rx="10" fill="#121C30" stroke="#34D399"/>
-        <text x="100" y="170" text-anchor="middle" class="lbl b">Query cache</text>
-        <text x="100" y="189" text-anchor="middle" class="lbl s">keyed, expiring, refetched</text>
-        <rect x="260" y="144" width="200" height="60" rx="10" fill="#121C30" stroke="#2196F3"/>
-        <text x="360" y="170" text-anchor="middle" class="lbl b">URL search params</text>
-        <text x="360" y="189" text-anchor="middle" class="lbl s">validated at the route</text>
-        <rect x="520" y="144" width="200" height="60" rx="10" fill="#121C30" stroke="#A78BFA"/>
-        <text x="620" y="170" text-anchor="middle" class="lbl b">Zustand or Context</text>
-        <text x="620" y="189" text-anchor="middle" class="lbl s">the smallest store that works</text>
+        <g data-home="query">
+          <rect x="0" y="144" width="200" height="60" rx="10" fill="#121C30" stroke="#34D399"/>
+          <text x="100" y="170" text-anchor="middle" class="lbl b">Query cache</text>
+          <text x="100" y="189" text-anchor="middle" class="lbl s">keyed, expiring, refetched</text>
+        </g>
+        <g data-home="url">
+          <rect x="260" y="144" width="200" height="60" rx="10" fill="#121C30" stroke="#2196F3"/>
+          <text x="360" y="170" text-anchor="middle" class="lbl b">URL search params</text>
+          <text x="360" y="189" text-anchor="middle" class="lbl s">validated at the route</text>
+        </g>
+        <g data-home="store">
+          <rect x="520" y="144" width="200" height="60" rx="10" fill="#121C30" stroke="#A78BFA"/>
+          <text x="620" y="170" text-anchor="middle" class="lbl b">Zustand or Context</text>
+          <text x="620" y="189" text-anchor="middle" class="lbl s">the smallest store that works</text>
+        </g>
       </svg>
+    </div>
+    <div class="demo bare" id="demo-home">
+      <div class="row">
+        <span class="demo-tag">Route it</span>
+        <button type="button" class="dbtn" data-s="feed">Listings feed</button>
+        <button type="button" class="dbtn" data-s="saved">Saved jobs</button>
+        <button type="button" class="dbtn" data-s="q">Search text</button>
+        <button type="button" class="dbtn" data-s="tray">Compare tray</button>
+        <button type="button" class="dbtn" data-s="drawer">Filters drawer open</button>
+        <button type="button" class="dbtn" data-s="draft">Apply-form draft</button>
+      </div>
+      <div class="row"><span class="demo-hint" data-k="why"></span></div>
     </div>
     <div class="key">Mid-level answer: “I'd put it in Redux.” Senior answer: ask these three questions out loud for each piece — and say what breaks if it lived anywhere else.</div>
 </section>
@@ -446,18 +620,28 @@
   <section class="slide" data-chip="MODULE 06 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 2</div><div class="cx-page"><b>06</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · The cache</div>
     <h2>One key, one entry, one lifecycle</h2>
-    <div class="fig" style="max-width:1000px">
+    <div class="fig" id="fx-life" style="max-width:1000px">
       <svg viewBox="0 0 1000 90" role="img" aria-label="Query entry lifecycle: fetching, fresh, stale, inactive, deleted">
-        <rect x="0" y="0" width="168" height="44" rx="9" fill="#121C30" stroke="#FBBF24"/>
-        <text x="84" y="27" text-anchor="middle" class="lbl b">fetching</text>
-        <rect x="208" y="0" width="168" height="44" rx="9" fill="#121C30" stroke="#34D399"/>
-        <text x="292" y="27" text-anchor="middle" class="lbl b">fresh</text>
-        <rect x="416" y="0" width="168" height="44" rx="9" fill="#121C30" stroke="#22D3EE"/>
-        <text x="500" y="27" text-anchor="middle" class="lbl b">stale</text>
-        <rect x="624" y="0" width="168" height="44" rx="9" fill="#121C30" stroke="#64748B"/>
-        <text x="708" y="27" text-anchor="middle" class="lbl b">inactive</text>
-        <rect x="832" y="0" width="168" height="44" rx="9" fill="#121C30" stroke="#F8717A"/>
-        <text x="916" y="27" text-anchor="middle" class="lbl b">deleted</text>
+        <g data-st="fetching">
+          <rect x="0" y="0" width="168" height="44" rx="9" fill="#121C30" stroke="#FBBF24"/>
+          <text x="84" y="27" text-anchor="middle" class="lbl b">fetching</text>
+        </g>
+        <g data-st="fresh">
+          <rect x="208" y="0" width="168" height="44" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="292" y="27" text-anchor="middle" class="lbl b">fresh</text>
+        </g>
+        <g data-st="stale">
+          <rect x="416" y="0" width="168" height="44" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="500" y="27" text-anchor="middle" class="lbl b">stale</text>
+        </g>
+        <g data-st="inactive">
+          <rect x="624" y="0" width="168" height="44" rx="9" fill="#121C30" stroke="#64748B"/>
+          <text x="708" y="27" text-anchor="middle" class="lbl b">inactive</text>
+        </g>
+        <g data-st="deleted">
+          <rect x="832" y="0" width="168" height="44" rx="9" fill="#121C30" stroke="#F8717A"/>
+          <text x="916" y="27" text-anchor="middle" class="lbl b">deleted</text>
+        </g>
         <path class="draw" pathLength="1" d="M168,22 L203,22" stroke="#64748B" fill="none"/>
         <path class="draw" pathLength="1" d="M376,22 L411,22" stroke="#64748B" fill="none"/>
         <path class="draw" pathLength="1" d="M584,22 L619,22" stroke="#64748B" fill="none"/>
@@ -474,6 +658,15 @@
         <text x="916" y="82" text-anchor="middle" class="lbl s">default: 5 minutes</text>
       </svg>
     </div>
+    <div class="demo bare" id="demo-life">
+      <div class="row">
+        <button type="button" class="dbtn" data-act="mount">Mount JobList</button>
+        <button type="button" class="dbtn" data-act="unmount">Unmount</button>
+        <button type="button" class="dbtn" data-act="focus">Focus window</button>
+        <span class="dom">JobList: <b data-k="list">unmounted</b></span>
+        <span class="demo-hint" data-k="clock"></span>
+      </div>
+    </div>
     <pre><code><span class="kw">export const</span> <span class="fn">jobsQuery</span> = (filters: <span class="ty">JobFilters</span>) =&gt;
   <span class="fn">queryOptions</span>({
     queryKey: [<span class="st">'jobs'</span>, <span class="st">'list'</span>, filters],                     <span class="cmt">// the entry's address</span>
@@ -482,7 +675,7 @@
   });
 
 <span class="fn">useQuery</span>(<span class="fn">jobsQuery</span>({ q: <span class="st">'react'</span>, remote: <span class="kw">true</span>, page: <span class="st">1</span> }));</code></pre>
-    <div class="key"><code>staleTime</code> decides when data is <b>refetched</b>; <code>gcTime</code> decides when it is <b>deleted</b>. Stale data still renders instantly — the refetch runs behind it.</div>
+    <div class="key"><code>staleTime</code> decides when data is <b>refetched</b>; <code>gcTime</code> decides when it is <b>deleted</b>.</div>
 </section>
 
   <section class="slide" data-chip="MODULE 06 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 2</div><div class="cx-page"><b>07</b> / 22</div><!--/catalyst-brand:chrome-->
@@ -524,40 +717,78 @@
     <pre><code><span class="kw">const</span> save = <span class="fn">useMutation</span>({
   mutationFn: (jobId: <span class="ty">string</span>) =&gt; api.<span class="fn">saveJob</span>(jobId),
   onMutate: <span class="kw">async</span> (jobId) =&gt; {
-    <span class="kw">await</span> queryClient.<span class="fn">cancelQueries</span>({ queryKey: [<span class="st">'saved'</span>] });                      <span class="cmt">// 1 · stop refetches in flight</span>
+    <span class="ln" data-line="cancel"><span class="kw">await</span> queryClient.<span class="fn">cancelQueries</span>({ queryKey: [<span class="st">'saved'</span>] });                      <span class="cmt">// 1 · stop refetches in flight</span></span>
     <span class="kw">const</span> previous = queryClient.<span class="fn">getQueryData</span>&lt;<span class="ty">string</span>[]&gt;([<span class="st">'saved'</span>]);                <span class="cmt">// 2 · snapshot</span>
     queryClient.<span class="fn">setQueryData</span>&lt;<span class="ty">string</span>[]&gt;([<span class="st">'saved'</span>], (old = []) =&gt; [...old, jobId]);  <span class="cmt">// 3 · write the guess</span>
     <span class="kw">return</span> { previous };                                                           <span class="cmt">// 4 · hand the snapshot on</span>
   },
   onError: (_err, _jobId, snapshot) =&gt; {
-    queryClient.<span class="fn">setQueryData</span>([<span class="st">'saved'</span>], snapshot?.previous);                       <span class="no">// the rollback</span>
+    <span class="ln" data-line="rollback">queryClient.<span class="fn">setQueryData</span>([<span class="st">'saved'</span>], snapshot?.previous);                       <span class="no">// the rollback</span></span>
   },
   onSettled: () =&gt; queryClient.<span class="fn">invalidateQueries</span>({ queryKey: [<span class="st">'saved'</span>] }),         <span class="cmt">// then the server's answer wins</span>
 });</code></pre>
-    <div class="key r">Most hand-written optimistic updates skip two lines: the <code>onError</code> restore, and the <code>cancelQueries</code> that stops a refetch already in flight from landing on top of your guess. Without them the star lies.</div>
+    <div class="demo bare" id="demo-opt">
+      <div class="row">
+        <button type="button" class="dbtn star" data-k="star">☆ Save job 42</button>
+        <span class="demo-hint">server</span>
+        <button type="button" class="dbtn" data-sw="fail">fails the save</button>
+        <button type="button" class="dbtn" data-sw="inflight">has a refetch in flight</button>
+        <span class="demo-hint">code</span>
+        <button type="button" class="dbtn" data-sw="cancel">cancelQueries</button>
+        <button type="button" class="dbtn" data-sw="rollback">onError restore</button>
+      </div>
+      <div class="row">
+        <span class="meter">cache<b data-k="cache"></b></span>
+        <span class="meter">server<b data-k="server"></b></span>
+        <span class="demo-hint" data-k="say"></span>
+      </div>
+    </div>
+    <div class="key r">Skip <code>cancelQueries</code> or the <code>onError</code> restore, and the star lies.</div>
 </section>
 
   <section class="slide" data-chip="MODULE 06 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 2</div><div class="cx-page"><b>09</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · The race it fixes</div>
     <h2>A late answer lands in its own key — not on screen</h2>
+    <div class="anim" id="fx-race" data-at="300,1200,2100,3100,4000">
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 140" role="img" aria-label="Late response for re fills the re entry; the component reads only the react entry">
-        <rect x="0" y="14" width="240" height="40" rx="9" fill="#121C30" stroke="#F8717A"/>
-        <text x="120" y="39" text-anchor="middle" class="lbl">response · q=re (late)</text>
-        <rect x="0" y="86" width="240" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
-        <text x="120" y="111" text-anchor="middle" class="lbl">response · q=react</text>
-        <rect x="300" y="2" width="400" height="136" rx="12" fill="none" stroke="#243349" stroke-dasharray="5 5"/>
-        <rect x="320" y="14" width="360" height="40" rx="9" fill="#121C30" stroke="#64748B"/>
-        <text x="500" y="39" text-anchor="middle" class="lbl" style="font-family:var(--mono)">['jobs','list',{ q:'re' }]</text>
-        <rect x="320" y="86" width="360" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
-        <text x="500" y="111" text-anchor="middle" class="lbl" style="font-family:var(--mono)">['jobs','list',{ q:'react' }]</text>
-        <rect x="780" y="86" width="220" height="40" rx="9" fill="#121C30" stroke="#22D3EE"/>
-        <text x="890" y="111" text-anchor="middle" class="lbl b">JobList · q = react</text>
-        <path class="draw" pathLength="1" d="M240,34 L315,34" stroke="#F8717A" fill="none"/>
-        <path class="draw" pathLength="1" d="M240,106 L315,106" stroke="#34D399" fill="none"/>
-        <path class="draw" pathLength="1" d="M680,106 L775,106" stroke="#22D3EE" fill="none"/>
-        <text x="716" y="39" class="lbl s">cached — nobody reads this key now</text>
+        <g data-in="1">
+          <rect x="780" y="86" width="220" height="40" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="890" y="111" text-anchor="middle" class="lbl b">JobList · q = react</text>
+        </g>
+        <rect class="only-key" data-in="1" x="300" y="2" width="400" height="136" rx="12" fill="none" stroke="#243349" stroke-dasharray="5 5"/>
+        <g data-in="2">
+          <rect x="0" y="86" width="240" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="120" y="111" text-anchor="middle" class="lbl">response · q=react</text>
+        </g>
+        <g class="only-key" data-in="2">
+          <rect x="320" y="86" width="360" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="500" y="111" text-anchor="middle" class="lbl" style="font-family:var(--mono)">['jobs','list',{ q:'react' }]</text>
+        </g>
+        <path class="draw only-key" data-in="2" pathLength="1" d="M240,106 L315,106" stroke="#34D399" fill="none"/>
+        <path class="draw only-key" data-in="3" pathLength="1" d="M680,106 L775,106" stroke="#22D3EE" fill="none"/>
+        <path class="draw only-bare" data-in="3" pathLength="1" d="M240,106 L775,106" stroke="#34D399" fill="none"/>
+        <g data-in="4">
+          <rect x="0" y="14" width="240" height="40" rx="9" fill="#121C30" stroke="#F8717A"/>
+          <text x="120" y="39" text-anchor="middle" class="lbl">response · q=re (late)</text>
+        </g>
+        <g class="only-key" data-in="4">
+          <rect x="320" y="14" width="360" height="40" rx="9" fill="#121C30" stroke="#64748B"/>
+          <text x="500" y="39" text-anchor="middle" class="lbl" style="font-family:var(--mono)">['jobs','list',{ q:'re' }]</text>
+        </g>
+        <path class="draw only-key" data-in="4" pathLength="1" d="M240,34 L315,34" stroke="#F8717A" fill="none"/>
+        <text class="lbl s only-key" data-in="5" x="716" y="39">cached — nobody reads this key now</text>
+        <path class="draw only-bare" data-in="4" pathLength="1" d="M240,34 L772,90" stroke="#F8717A" fill="none"/>
+        <text class="lbl s only-bare" data-in="5" x="780" y="62" style="fill:#F8717A">now showing “re” results ✗</text>
       </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="demo bare inline" id="demo-race"><button type="button" class="dbtn" data-mode="key">query key</button><button type="button" class="dbtn" data-mode="bare">bare useEffect</button></span>
+      <span class="anim-say"><i>You typed “re”, then “react”: two requests are in flight.</i><i><span class="only-key">“react” answers first, filed under its own key.</span><span class="only-bare">“react” answers first.</span></i><i><span class="only-key">JobList reads the key for what's in the box: react.</span><span class="only-bare">The effect sets state: the list shows react's jobs.</span></i><i><span class="only-key">“re” answers late, and lands in the “re” key…</span><span class="only-bare">“re” answers late, and its effect sets state too…</span></i><i><span class="only-key">…which nothing on screen reads. The race is designed out.</span><span class="only-bare">…so the list shows “re” results under “react”.</span></i></span>
+    </div>
     </div>
     <pre><code><span class="kw">const</span> { q } = Route.<span class="fn">useSearch</span>();
 <span class="kw">const</span> jobs = <span class="fn">useQuery</span>({
@@ -594,24 +825,50 @@
   <section class="slide" data-chip="MODULE 06 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 3</div><div class="cx-page"><b>11</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Search params as state</div>
     <h2>If it lives in useState, nobody can share it</h2>
+    <div class="anim" id="fx-url" data-at="200,650,1100,1550">
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 72" role="img" aria-label="The URL string is validated by the route into a typed object, which becomes the query key">
-        <rect x="0" y="6" width="300" height="60" rx="10" fill="#121C30" stroke="#2196F3"/>
-        <text x="150" y="31" text-anchor="middle" class="lbl b" style="font-family:var(--mono)">/jobs?q=react&amp;remote=true&amp;page=2</text>
-        <text x="150" y="52" text-anchor="middle" class="lbl s">a string anyone can paste</text>
-        <path class="draw" pathLength="1" d="M300,36 L333,36" stroke="#64748B" fill="none"/>
-        <rect x="338" y="6" width="160" height="60" rx="10" fill="#121C30" stroke="#FBBF24"/>
-        <text x="418" y="31" text-anchor="middle" class="lbl b">validateSearch</text>
-        <text x="418" y="52" text-anchor="middle" class="lbl s">parse · fall back</text>
-        <path class="draw" pathLength="1" d="M498,36 L531,36" stroke="#64748B" fill="none"/>
-        <rect x="536" y="6" width="280" height="60" rx="10" fill="#121C30" stroke="#34D399"/>
-        <text x="676" y="31" text-anchor="middle" class="lbl b" style="font-family:var(--mono); font-size:12px">{ q: 'react', remote: true, page: 2 }</text>
-        <text x="676" y="52" text-anchor="middle" class="lbl s">typed — bad values never get in</text>
-        <path class="draw" pathLength="1" d="M816,36 L849,36" stroke="#64748B" fill="none"/>
-        <rect x="854" y="6" width="146" height="60" rx="10" fill="#121C30" stroke="#22D3EE"/>
-        <text x="927" y="31" text-anchor="middle" class="lbl b" style="font-family:var(--mono); font-size:12px">jobsQuery(search)</text>
-        <text x="927" y="52" text-anchor="middle" class="lbl s">same URL, same entry</text>
+        <g data-in="1">
+          <rect x="0" y="6" width="300" height="60" rx="10" fill="#121C30" stroke="#2196F3"/>
+          <text x="150" y="31" text-anchor="middle" class="lbl b" style="font-family:var(--mono)">/jobs?q=react&amp;remote=true&amp;page=2</text>
+          <text x="150" y="52" text-anchor="middle" class="lbl s">a string anyone can paste</text>
+        </g>
+        <path class="draw" data-in="2" pathLength="1" d="M300,36 L333,36" stroke="#64748B" fill="none"/>
+        <g data-in="2">
+          <rect x="338" y="6" width="160" height="60" rx="10" fill="#121C30" stroke="#FBBF24"/>
+          <text x="418" y="31" text-anchor="middle" class="lbl b">validateSearch</text>
+          <text x="418" y="52" text-anchor="middle" class="lbl s">parse · fall back</text>
+        </g>
+        <path class="draw" data-in="3" pathLength="1" d="M498,36 L531,36" stroke="#64748B" fill="none"/>
+        <g data-in="3">
+          <rect x="536" y="6" width="280" height="60" rx="10" fill="#121C30" stroke="#34D399"/>
+          <text x="676" y="31" text-anchor="middle" class="lbl b" style="font-family:var(--mono); font-size:12px">{ q: 'react', remote: true, page: 2 }</text>
+          <text x="676" y="52" text-anchor="middle" class="lbl s">typed — bad values never get in</text>
+        </g>
+        <path class="draw" data-in="4" pathLength="1" d="M816,36 L849,36" stroke="#64748B" fill="none"/>
+        <g data-in="4">
+          <rect x="854" y="6" width="146" height="60" rx="10" fill="#121C30" stroke="#22D3EE"/>
+          <text x="927" y="31" text-anchor="middle" class="lbl b" style="font-family:var(--mono); font-size:12px">jobsQuery(search)</text>
+          <text x="927" y="52" text-anchor="middle" class="lbl s">same URL, same entry</text>
+        </g>
       </svg>
+    </div>
+    </div>
+    <div class="demo" id="demo-url">
+      <div class="row">
+        <button type="button" class="dbtn" data-act="back" aria-label="Back">←</button>
+        <button type="button" class="dbtn" data-act="reload" aria-label="Reload">⟳</button>
+        <span class="dinput url" data-k="url">/jobs</span>
+        <span class="demo-hint">filters live in</span>
+        <button type="button" class="dbtn" data-mode="state">useState</button>
+        <button type="button" class="dbtn" data-mode="url">the URL</button>
+      </div>
+      <div class="row">
+        <input class="dinput" data-k="q" placeholder="search jobs" size="12" spellcheck="false" aria-label="Search text">
+        <button type="button" class="dbtn" data-act="remote" data-k="remote">Remote only</button>
+        <button type="button" class="dbtn" data-act="page">Page <span data-k="page">1</span> →</button>
+        <span class="demo-hint" data-k="say"></span>
+      </div>
     </div>
     <div class="two">
       <div class="card g">
@@ -623,7 +880,7 @@
         <p>Hover and focus, the search box before its debounce, form drafts, anything secret — a token in a URL ends up in logs and history.</p>
       </div>
     </div>
-    <div class="key">Move the filters into the URL and you get three features for free: refresh keeps them, a link shares them, and Back undoes the last one.</div>
+    <div class="key">Filters in the URL survive a refresh, travel in a link, and undo with Back.</div>
 </section>
 
   <section class="slide" data-chip="MODULE 06 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 3</div><div class="cx-page"><b>12</b> / 22</div><!--/catalyst-brand:chrome-->
@@ -642,41 +899,55 @@
     queryClient.<span class="fn">ensureQueryData</span>(<span class="fn">jobsQuery</span>(deps)),                          <span class="cmt">// the fetch starts before render</span>
   component: JobsPage,
 });</code></pre>
-    <div class="key"><code>.catch()</code> turns a hand-edited URL into a valid default instead of an error page. <code>loaderDeps</code> names what the loader reads, so changing anything else in the URL doesn't refetch.</div>
+    <div class="demo bare" id="demo-parse">
+      <div class="row">
+        <span class="dom">/jobs</span><input class="dinput" data-k="in" size="30" spellcheck="false" aria-label="Search string">
+        <span class="meter">→</span><span class="parsed" data-k="out"></span>
+      </div>
+    </div>
+    <div class="key"><code>.catch()</code> turns a bad URL into a default, not a crash.</div>
 </section>
 
   <section class="slide" data-chip="MODULE 06 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 3</div><div class="cx-page"><b>13</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Loaders and typed links</div>
     <h2>Fetch on navigation, not on render</h2>
+    <div class="anim" id="fx-fall" data-at="200,700,1150,1700,2150,2550,3550,4000">
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 142" role="img" aria-label="Fetching in effects waits for each render before the next fetch; route loaders start both fetches in parallel at navigation">
         <text x="0" y="38" class="lbl b">fetch in useEffect</text>
         <text x="0" y="55" class="lbl s">fetch-on-render</text>
         <text x="0" y="110" class="lbl b">route loaders</text>
         <text x="0" y="127" class="lbl s">fetch-on-navigation</text>
-        <rect x="170" y="22" width="80" height="34" rx="7" fill="#121C30" stroke="#64748B"/>
-        <text x="210" y="44" text-anchor="middle" class="lbl">navigate</text>
-        <rect x="256" y="22" width="70" height="34" rx="7" fill="#121C30" stroke="#22D3EE"/>
-        <text x="291" y="44" text-anchor="middle" class="lbl">render</text>
-        <rect x="332" y="22" width="190" height="34" rx="7" fill="#121C30" stroke="#FBBF24"/>
-        <text x="427" y="44" text-anchor="middle" class="lbl">fetch list</text>
-        <rect x="528" y="22" width="70" height="34" rx="7" fill="#121C30" stroke="#22D3EE"/>
-        <text x="563" y="44" text-anchor="middle" class="lbl">render</text>
-        <rect x="604" y="22" width="190" height="34" rx="7" fill="#121C30" stroke="#FBBF24"/>
-        <text x="699" y="44" text-anchor="middle" class="lbl">fetch detail</text>
-        <rect x="800" y="22" width="70" height="34" rx="7" fill="#121C30" stroke="#22D3EE"/>
-        <text x="835" y="44" text-anchor="middle" class="lbl">render</text>
-        <text x="882" y="44" class="lbl s" style="fill:#F8717A">2 round trips</text>
-        <rect x="170" y="94" width="80" height="34" rx="7" fill="#121C30" stroke="#64748B"/>
-        <text x="210" y="116" text-anchor="middle" class="lbl">navigate</text>
-        <rect x="256" y="84" width="190" height="24" rx="6" fill="#121C30" stroke="#FBBF24"/>
-        <text x="351" y="101" text-anchor="middle" class="lbl s">fetch list</text>
-        <rect x="256" y="114" width="190" height="24" rx="6" fill="#121C30" stroke="#FBBF24"/>
-        <text x="351" y="131" text-anchor="middle" class="lbl s">fetch detail</text>
-        <rect x="452" y="84" width="70" height="54" rx="7" fill="#121C30" stroke="#22D3EE"/>
-        <text x="487" y="116" text-anchor="middle" class="lbl">render</text>
-        <text x="534" y="116" class="lbl s" style="fill:#34D399">1 round trip</text>
+        <rect class="grow" data-in="1" x="170" y="22" width="80" height="34" rx="7" fill="#121C30" stroke="#64748B"/>
+        <text data-in="1" x="210" y="44" text-anchor="middle" class="lbl">navigate</text>
+        <rect class="grow" data-in="2" x="256" y="22" width="70" height="34" rx="7" fill="#121C30" stroke="#22D3EE"/>
+        <text data-in="2" x="291" y="44" text-anchor="middle" class="lbl">render</text>
+        <rect class="grow" data-in="3" style="--d:.9s" x="332" y="22" width="190" height="34" rx="7" fill="#121C30" stroke="#FBBF24"/>
+        <text data-in="3" x="427" y="44" text-anchor="middle" class="lbl">fetch list</text>
+        <rect class="grow" data-in="5" x="528" y="22" width="70" height="34" rx="7" fill="#121C30" stroke="#22D3EE"/>
+        <text data-in="5" x="563" y="44" text-anchor="middle" class="lbl">render</text>
+        <rect class="grow" data-in="6" style="--d:.9s" x="604" y="22" width="190" height="34" rx="7" fill="#121C30" stroke="#FBBF24"/>
+        <text data-in="6" x="699" y="44" text-anchor="middle" class="lbl">fetch detail</text>
+        <rect class="grow" data-in="7" x="800" y="22" width="70" height="34" rx="7" fill="#121C30" stroke="#22D3EE"/>
+        <text data-in="7" x="835" y="44" text-anchor="middle" class="lbl">render</text>
+        <text data-in="8" x="882" y="44" class="lbl s" style="fill:#F8717A">2 round trips</text>
+        <rect class="grow" data-in="1" x="170" y="94" width="80" height="34" rx="7" fill="#121C30" stroke="#64748B"/>
+        <text data-in="1" x="210" y="116" text-anchor="middle" class="lbl">navigate</text>
+        <rect class="grow" data-in="2" style="--d:.9s" x="256" y="84" width="190" height="24" rx="6" fill="#121C30" stroke="#FBBF24"/>
+        <text data-in="2" x="351" y="101" text-anchor="middle" class="lbl s">fetch list</text>
+        <rect class="grow" data-in="2" style="--d:.9s" x="256" y="114" width="190" height="24" rx="6" fill="#121C30" stroke="#FBBF24"/>
+        <text data-in="2" x="351" y="131" text-anchor="middle" class="lbl s">fetch detail</text>
+        <rect class="grow" data-in="4" x="452" y="84" width="70" height="54" rx="7" fill="#121C30" stroke="#22D3EE"/>
+        <text data-in="4" x="487" y="116" text-anchor="middle" class="lbl">render</text>
+        <text data-in="5" x="534" y="116" class="lbl s" style="fill:#34D399">1 round trip</text>
       </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>Same click, same moment, two apps.</i><i>Effects render first, then ask. Loaders ask for both at once.</i><i>The list starts fetching only after its first render.</i><i>Loaders: both answers are back, so the page renders once.</i><i>Loaders are done. The effect version only now renders the list…</i><i>…which mounts the detail panel, which starts its own fetch.</i><i>Render again, with the detail.</i><i>Two round trips, one after the other: a waterfall.</i></span>
+    </div>
     </div>
     <pre><code><span class="kw">function</span> <span class="fn">JobsPage</span>() {
   <span class="kw">const</span> search = Route.<span class="fn">useSearch</span>();                      <span class="cmt">// { q: string; remote: boolean; page: number }</span>
@@ -713,30 +984,32 @@
   <section class="slide" data-chip="MODULE 06 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 4</div><div class="cx-page"><b>15</b> / 22</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · Normalization</div>
     <h2>One job, three copies, two of them wrong</h2>
+    <div class="anim" id="fx-norm" data-at="200,800,1300,2000,2600,3100">
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 192" role="img" aria-label="Nested copies of job 42 disagree; normalized lists hold ids pointing at one record">
-        <text x="0" y="12" class="lbl b">nested: a copy per screen</text>
-        <rect x="0" y="26" width="420" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
-        <text x="210" y="51" text-anchor="middle" class="lbl">detail · job 42 · status: closed</text>
-        <rect x="0" y="86" width="420" height="40" rx="9" fill="#121C30" stroke="#F8717A"/>
-        <text x="210" y="111" text-anchor="middle" class="lbl">feed · job 42 · status: open</text>
-        <rect x="0" y="146" width="420" height="40" rx="9" fill="#121C30" stroke="#F8717A"/>
-        <text x="210" y="171" text-anchor="middle" class="lbl">saved · job 42 · status: open</text>
-        <text x="480" y="111" text-anchor="middle" class="lbl b">vs</text>
-        <text x="540" y="12" class="lbl b">normalized: ids point at one record</text>
-        <rect x="540" y="26" width="200" height="40" rx="9" fill="#121C30" stroke="#243349"/>
-        <text x="640" y="51" text-anchor="middle" class="lbl" style="font-family:var(--mono)">feed: [42, 17, 8]</text>
-        <rect x="540" y="86" width="200" height="40" rx="9" fill="#121C30" stroke="#243349"/>
-        <text x="640" y="111" text-anchor="middle" class="lbl" style="font-family:var(--mono)">saved: [42, 3]</text>
-        <rect x="540" y="146" width="200" height="40" rx="9" fill="#121C30" stroke="#243349"/>
-        <text x="640" y="171" text-anchor="middle" class="lbl" style="font-family:var(--mono)">detail: 42</text>
-        <rect x="800" y="61" width="200" height="90" rx="10" fill="#121C30" stroke="#34D399"/>
-        <text x="900" y="98" text-anchor="middle" class="lbl b" style="font-family:var(--mono)">entities[42]</text>
-        <text x="900" y="121" text-anchor="middle" class="lbl">status: closed</text>
-        <path class="draw" pathLength="1" d="M740,46 L795,84" stroke="#64748B" fill="none"/>
-        <path class="draw" pathLength="1" d="M740,106 L795,106" stroke="#64748B" fill="none"/>
-        <path class="draw" pathLength="1" d="M740,166 L795,128" stroke="#64748B" fill="none"/>
+        <text data-in="1" x="0" y="12" class="lbl b">nested: a copy per screen</text>
+        <rect data-in="1" x="0" y="26" width="420" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
+        <text data-in="1" x="210" y="51" text-anchor="middle" class="lbl">detail · job 42 · status: closed</text>
+        <rect data-in="2" x="0" y="86" width="420" height="40" rx="9" fill="#121C30" stroke="#F8717A"/>
+        <text data-in="2" x="210" y="111" text-anchor="middle" class="lbl">feed · job 42 · status: open</text>
+        <rect data-in="3" x="0" y="146" width="420" height="40" rx="9" fill="#121C30" stroke="#F8717A"/>
+        <text data-in="3" x="210" y="171" text-anchor="middle" class="lbl">saved · job 42 · status: open</text>
+        <text data-in="4" x="480" y="111" text-anchor="middle" class="lbl b">vs</text>
+        <text data-in="4" x="540" y="12" class="lbl b">normalized: ids point at one record</text>
+        <rect data-in="4" x="540" y="26" width="200" height="40" rx="9" fill="#121C30" stroke="#243349"/>
+        <text data-in="4" x="640" y="51" text-anchor="middle" class="lbl" style="font-family:var(--mono)">feed: [42, 17, 8]</text>
+        <rect data-in="4" x="540" y="86" width="200" height="40" rx="9" fill="#121C30" stroke="#243349"/>
+        <text data-in="4" x="640" y="111" text-anchor="middle" class="lbl" style="font-family:var(--mono)">saved: [42, 3]</text>
+        <rect data-in="4" x="540" y="146" width="200" height="40" rx="9" fill="#121C30" stroke="#243349"/>
+        <text data-in="4" x="640" y="171" text-anchor="middle" class="lbl" style="font-family:var(--mono)">detail: 42</text>
+        <rect data-in="5" x="800" y="61" width="200" height="90" rx="10" fill="#121C30" stroke="#34D399"/>
+        <text data-in="5" x="900" y="98" text-anchor="middle" class="lbl b" style="font-family:var(--mono)">entities[42]</text>
+        <text data-in="5" x="900" y="121" text-anchor="middle" class="lbl">status: closed</text>
+        <path data-in="6" class="draw" pathLength="1" d="M740,46 L795,84" stroke="#64748B" fill="none"/>
+        <path data-in="6" class="draw" pathLength="1" d="M740,106 L795,106" stroke="#64748B" fill="none"/>
+        <path data-in="6" class="draw" pathLength="1" d="M740,166 L795,128" stroke="#64748B" fill="none"/>
       </svg>
+    </div>
     </div>
     <pre><code><span class="kw">const</span> jobsAdapter = <span class="fn">createEntityAdapter</span>&lt;<span class="ty">Job</span>&gt;();        <span class="cmt">// { ids: [], entities: {} }</span>
 <span class="kw">const</span> jobsSlice = <span class="fn">createSlice</span>({
@@ -830,33 +1103,41 @@
     <div class="kicker">Lesson 5 · Build</div>
     <h2>Rebuild Rasmi's data layer on Query and Router</h2>
     <p class="say">Same screens, new plumbing: every piece of state moves to the home Lesson 1 gave it.</p>
+    <div class="anim" id="fx-arch" data-at="200,700,1200,1700,2400,3100,3800">
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 214" role="img" aria-label="Target architecture: URL to route to QueryClient cache to components; polling and mutations write into the cache; Zustand holds only the compare tray">
-        <rect x="450" y="0" width="200" height="36" rx="9" fill="#121C30" stroke="#A78BFA"/>
-        <text x="550" y="23" text-anchor="middle" class="lbl b">refetchInterval · 30 s</text>
-        <rect x="0" y="78" width="150" height="56" rx="10" fill="#121C30" stroke="#2196F3"/>
-        <text x="75" y="101" text-anchor="middle" class="lbl b">URL</text>
-        <text x="75" y="120" text-anchor="middle" class="lbl s" style="font-family:var(--mono)">/jobs?q=…</text>
-        <rect x="190" y="78" width="200" height="56" rx="10" fill="#121C30" stroke="#2196F3"/>
-        <text x="290" y="101" text-anchor="middle" class="lbl b">Route</text>
-        <text x="290" y="120" text-anchor="middle" class="lbl s">validateSearch · loader</text>
-        <rect x="430" y="70" width="240" height="72" rx="10" fill="#121C30" stroke="#34D399"/>
-        <text x="550" y="100" text-anchor="middle" class="lbl b">QueryClient cache</text>
-        <text x="550" y="122" text-anchor="middle" class="lbl s">jobs · saved · applications</text>
-        <rect x="710" y="78" width="290" height="56" rx="10" fill="#121C30" stroke="#22D3EE"/>
-        <text x="855" y="101" text-anchor="middle" class="lbl b">Components</text>
-        <text x="855" y="120" text-anchor="middle" class="lbl s">useSuspenseQuery · useMutation</text>
-        <rect x="430" y="178" width="240" height="36" rx="9" fill="#121C30" stroke="#FBBF24"/>
-        <text x="550" y="201" text-anchor="middle" class="lbl b">save (optimistic) · apply</text>
-        <rect x="760" y="178" width="240" height="36" rx="9" fill="#121C30" stroke="#A78BFA" stroke-dasharray="5 4"/>
-        <text x="880" y="201" text-anchor="middle" class="lbl">Zustand: compare tray only</text>
-        <path class="draw" pathLength="1" d="M150,106 L185,106" stroke="#64748B" fill="none"/>
-        <path class="draw" pathLength="1" d="M390,106 L425,106" stroke="#64748B" fill="none"/>
-        <path class="draw" pathLength="1" d="M670,106 L705,106" stroke="#64748B" fill="none"/>
-        <path class="draw" pathLength="1" d="M550,36 L550,65" stroke="#A78BFA" fill="none"/>
-        <path class="draw" pathLength="1" d="M550,178 L550,147" stroke="#FBBF24" fill="none"/>
-        <path class="draw" pathLength="1" d="M725,134 L725,196 L675,196" stroke="#64748B" fill="none"/>
+        <rect data-in="5" x="450" y="0" width="200" height="36" rx="9" fill="#121C30" stroke="#A78BFA"/>
+        <text data-in="5" x="550" y="23" text-anchor="middle" class="lbl b">refetchInterval · 30 s</text>
+        <rect data-in="1" x="0" y="78" width="150" height="56" rx="10" fill="#121C30" stroke="#2196F3"/>
+        <text data-in="1" x="75" y="101" text-anchor="middle" class="lbl b">URL</text>
+        <text data-in="1" x="75" y="120" text-anchor="middle" class="lbl s" style="font-family:var(--mono)">/jobs?q=…</text>
+        <rect data-in="2" x="190" y="78" width="200" height="56" rx="10" fill="#121C30" stroke="#2196F3"/>
+        <text data-in="2" x="290" y="101" text-anchor="middle" class="lbl b">Route</text>
+        <text data-in="2" x="290" y="120" text-anchor="middle" class="lbl s">validateSearch · loader</text>
+        <rect data-in="3" x="430" y="70" width="240" height="72" rx="10" fill="#121C30" stroke="#34D399"/>
+        <text data-in="3" x="550" y="100" text-anchor="middle" class="lbl b">QueryClient cache</text>
+        <text data-in="3" x="550" y="122" text-anchor="middle" class="lbl s">jobs · saved · applications</text>
+        <rect data-in="4" x="710" y="78" width="290" height="56" rx="10" fill="#121C30" stroke="#22D3EE"/>
+        <text data-in="4" x="855" y="101" text-anchor="middle" class="lbl b">Components</text>
+        <text data-in="4" x="855" y="120" text-anchor="middle" class="lbl s">useSuspenseQuery · useMutation</text>
+        <rect data-in="6" x="430" y="178" width="240" height="36" rx="9" fill="#121C30" stroke="#FBBF24"/>
+        <text data-in="6" x="550" y="201" text-anchor="middle" class="lbl b">save (optimistic) · apply</text>
+        <rect data-in="7" x="760" y="178" width="240" height="36" rx="9" fill="#121C30" stroke="#A78BFA" stroke-dasharray="5 4"/>
+        <text data-in="7" x="880" y="201" text-anchor="middle" class="lbl">Zustand: compare tray only</text>
+        <path data-in="2" class="draw" pathLength="1" d="M150,106 L185,106" stroke="#64748B" fill="none"/>
+        <path data-in="3" class="draw" pathLength="1" d="M390,106 L425,106" stroke="#64748B" fill="none"/>
+        <path data-in="4" class="draw" pathLength="1" d="M670,106 L705,106" stroke="#64748B" fill="none"/>
+        <path data-in="5" class="draw" pathLength="1" d="M550,36 L550,65" stroke="#A78BFA" fill="none"/>
+        <path data-in="6" class="draw" pathLength="1" d="M550,178 L550,147" stroke="#FBBF24" fill="none"/>
+        <path data-in="6" class="draw" pathLength="1" d="M725,134 L725,196 L675,196" stroke="#64748B" fill="none"/>
       </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>The URL holds the filters.</i><i>The route validates them and starts the fetch.</i><i>Every read lands in one place: the Query cache.</i><i>Components only read from the cache.</i><i>A 30-second poll keeps application statuses fresh.</i><i>Saves and applications write back into the same cache.</i><i>Zustand keeps one job: the compare tray.</i></span>
+    </div>
     </div>
     <div class="key">Stage <code>module-6/data-layer</code> in the job board repo. One rule for the whole build: no component calls <code>fetch</code> — every read is a query, every write is a mutation.</div>
 </section>
@@ -978,6 +1259,978 @@
   document.getElementById('stage').addEventListener('click',e=>{ if(e.target.closest('a')) return; e.clientX>innerWidth/2?next():prev(); });
   render();
 </script>
+<!-- Sandbox starter for this deck (React mode): one tab group per idea, each its own little
+     app. The sandbox reads these on a fresh project or a reset; see brand/sandbox.html. -->
+<script type="text/plain" data-sbx-file="App.tsx" data-sbx-first>
+import './styles.css';
+
+// Module 6 lab. Every tab group is one idea from the slides, and each group is its own
+// small app: open any tab in a group and the preview switches to it.
+// Right-click a group's label to fold it, add a file to it, or turn it off. An off group
+// leaves the checker and the preview, so you can work on one idea at a time.
+
+const ideas: [group: string, what: string][] = [
+  ['cache', 'one key, one entry: staleTime decides the refetch, gcTime the delete'],
+  ['invalidate', 'mark stale and refetch what is on screen, matched by key prefix'],
+  ['optimistic', 'save now, keep a snapshot, roll back when the server says no'],
+  ['race', 'a bare effect shows the late answer; a query key never does'],
+  ['url', 'filters in the URL, parsed once by a schema that falls back'],
+  ['store', 'a small Zustand store for state the server has never heard of'],
+];
+
+export default function App() {
+  return (
+    <main>
+      <h1>Module 6 lab</h1>
+      <p className="muted">
+        Open a tab in any group to try that idea. They share the slow, fallible fake server
+        in <code>api.ts</code>.
+      </p>
+      <ol>
+        {ideas.map(([group, what]) => (
+          <li key={group}>
+            <b>{group}</b> · {what}
+          </li>
+        ))}
+      </ol>
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="api.ts">
+// A fake server shared by every group. Slow on purpose, and it can fail on purpose.
+export type Job = { id: number; title: string; status: 'open' | 'closed' };
+
+const jobs: Job[] = [
+  { id: 42, title: 'Frontend Engineer', status: 'open' },
+  { id: 17, title: 'React Developer', status: 'open' },
+  { id: 8, title: 'UI Engineer', status: 'open' },
+  { id: 23, title: 'Design Systems Lead', status: 'open' },
+  { id: 5, title: 'Full-stack Engineer', status: 'open' },
+];
+const saved = new Set<number>([17]);
+let requests = 0;
+
+// Flip this from a demo: while it is true, every write fails.
+export const server = { failWrites: false };
+
+function wait(ms: number, signal?: AbortSignal) {
+  return new Promise<void>((resolve, reject) => {
+    const t = setTimeout(resolve, ms);
+    signal?.addEventListener('abort', () => {
+      clearTimeout(t);
+      reject(new DOMException('Aborted', 'AbortError'));
+    });
+  });
+}
+async function write(change: () => void) {
+  await wait(700);
+  if (server.failWrites) throw new Error('500: the server said no');
+  change();
+}
+
+export const api = {
+  requests: () => requests,
+  // Shorter searches answer slower, so typing "react" fast makes the answers arrive backwards.
+  async jobs(q: string, { signal }: { signal?: AbortSignal } = {}) {
+    requests++;
+    await wait(1500 - Math.min(q.length, 5) * 250, signal);
+    return jobs.filter((j) => j.title.toLowerCase().includes(q.trim().toLowerCase()));
+  },
+  async job(id: number) {
+    requests++;
+    await wait(500);
+    const job = jobs.find((j) => j.id === id);
+    if (!job) throw new Error(`404: no job ${id}`);
+    return { ...job };
+  },
+  async saved() {
+    requests++;
+    await wait(600);
+    return [...saved];
+  },
+  save: (id: number) => write(() => saved.add(id)),
+  unsave: (id: number) => write(() => saved.delete(id)),
+};
+</script>
+<script type="text/plain" data-sbx-file="query.tsx">
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import type { ReactNode } from 'react';
+
+// One client for the preview. Each group's app wraps itself in <WithQuery>.
+export const queryClient = new QueryClient();
+
+export function WithQuery({ children }: { children: ReactNode }) {
+  return <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>;
+}
+</script>
+<script type="text/plain" data-sbx-file="styles.css">
+body {
+  font-family: system-ui, sans-serif;
+  margin: 20px;
+  color: #0f172a;
+}
+
+main {
+  display: grid;
+  gap: 12px;
+  max-width: 680px;
+}
+
+h1 { font-size: 20px; margin: 0; }
+h2 { font-size: 15px; margin: 0 0 4px; }
+ul, ol { margin: 0; padding-left: 20px; }
+li { margin: 4px 0; }
+
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grow { flex: 1; }
+.card { border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 12px; }
+.card.bad { border-color: #f87171; background: #fef2f2; }
+.muted { color: #64748b; margin: 0; }
+.bad { color: #dc2626; margin: 0; }
+
+input,
+button {
+  font: inherit;
+  padding: 6px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+button {
+  background: #0f172a;
+  color: #fff;
+  cursor: pointer;
+}
+
+button.on { background: #fbbf24; color: #0f172a; border-color: #f59e0b; }
+button:disabled { opacity: 0.4; cursor: default; }
+input[type='checkbox'] { padding: 0; }
+code, pre { font: 13px ui-monospace, monospace; }
+pre { background: #f1f5f9; padding: 8px 10px; border-radius: 8px; margin: 0; white-space: pre-wrap; }
+</script>
+<script type="text/plain" data-sbx-file="CacheDemo.tsx" data-sbx-group="cache" data-sbx-color="#34D399">
+import { useEffect, useState } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { WithQuery } from './query';
+import { jobsQuery } from './jobsQuery';
+import { api } from './api';
+
+// Watch one entry live. Wait 3 s and it goes stale. "Refetch stale" is what a tab switch
+// does. Unmount JobList: the entry goes inactive, and 5 s later gcTime deletes it.
+// Remount before then and the data is instant.
+function JobList() {
+  const jobs = useQuery(jobsQuery(''));
+  if (jobs.isPending) return <p className="muted">loading…</p>;
+  if (jobs.isError) return <p className="bad">{jobs.error.message}</p>;
+  return (
+    <ul>
+      {jobs.data.map((j) => (
+        <li key={j.id}>{j.title}</li>
+      ))}
+    </ul>
+  );
+}
+
+function useTick(ms: number) {
+  const [, setN] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setN((n) => n + 1), ms);
+    return () => clearInterval(t);
+  }, [ms]);
+}
+
+function Lab() {
+  const [mounted, setMounted] = useState(true);
+  const client = useQueryClient();
+  useTick(250);
+  const entry = client.getQueryCache().find({ queryKey: jobsQuery('').queryKey });
+  const state = !entry
+    ? 'deleted (or not fetched yet)'
+    : entry.state.fetchStatus === 'fetching'
+      ? 'fetching'
+      : entry.getObserversCount() === 0
+        ? 'inactive: nobody reads it'
+        : entry.isStale()
+          ? 'stale'
+          : 'fresh';
+
+  return (
+    <main>
+      <h1>cache · one key, one entry</h1>
+      <div className="row">
+        <button onClick={() => setMounted((m) => !m)}>{mounted ? 'Unmount' : 'Mount'} JobList</button>
+        <button onClick={() => client.refetchQueries({ queryKey: ['jobs'], type: 'active', stale: true })}>
+          Refetch stale
+        </button>
+      </div>
+      <p>
+        entry: <b>{state}</b> <span className="muted">· requests so far: {api.requests()}</span>
+      </p>
+      {mounted && <JobList />}
+    </main>
+  );
+}
+
+export default function CacheDemo() {
+  return (
+    <WithQuery>
+      <Lab />
+    </WithQuery>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="jobsQuery.ts" data-sbx-group="cache">
+import { queryOptions } from '@tanstack/react-query';
+import { api } from './api';
+
+// One factory per kind of data: the key, the fetcher and the timing travel together.
+// Scaled down so you can watch it: fresh for 3 s, deleted 5 s after nobody reads it.
+export const jobsQuery = (q: string) =>
+  queryOptions({
+    queryKey: ['jobs', 'list', { q }],
+    queryFn: ({ signal }) => api.jobs(q, { signal }),
+    staleTime: 3_000,
+    gcTime: 5_000,
+  });
+</script>
+<script type="text/plain" data-sbx-file="InvalidateDemo.tsx" data-sbx-group="invalidate" data-sbx-color="#22D3EE" data-sbx-shut>
+import { useQuery, useQueryClient, type QueryKey } from '@tanstack/react-query';
+import { WithQuery } from './query';
+import { api } from './api';
+
+// Three entries on screen. Invalidate by prefix and watch which ones refetch: each keeps
+// its old data on screen until the new answer lands. Reset is the visible cousin of
+// removeQueries: the entry starts over from loading.
+function Entry({ label, queryKey, load }: { label: string; queryKey: QueryKey; load: () => Promise<unknown> }) {
+  const q = useQuery({ queryKey, queryFn: load, staleTime: Infinity });
+  const when = q.isPending
+    ? 'loading…'
+    : q.isFetching
+      ? 'refetching, old data still shown'
+      : 'fetched at ' + new Date(q.dataUpdatedAt).toLocaleTimeString();
+  return (
+    <li>
+      <code>{JSON.stringify(queryKey)}</code> {label} · <span className="muted">{when}</span>
+    </li>
+  );
+}
+
+function Lab() {
+  const client = useQueryClient();
+  return (
+    <main>
+      <h1>invalidate · mark stale, not delete</h1>
+      <ul>
+        <Entry label="the feed" queryKey={['jobs', 'list', { q: '' }]} load={() => api.jobs('')} />
+        <Entry label="job 42" queryKey={['jobs', 'detail', 42]} load={() => api.job(42)} />
+        <Entry label="saved jobs" queryKey={['saved']} load={() => api.saved()} />
+      </ul>
+      <div className="row">
+        <button onClick={() => client.invalidateQueries({ queryKey: ['jobs'] })}>invalidate ['jobs']</button>
+        <button onClick={() => client.invalidateQueries({ queryKey: ['jobs', 'detail', 42] })}>invalidate job 42</button>
+        <button onClick={() => client.resetQueries({ queryKey: ['jobs', 'detail', 42] })}>reset job 42</button>
+      </div>
+    </main>
+  );
+}
+
+export default function InvalidateDemo() {
+  return (
+    <WithQuery>
+      <Lab />
+    </WithQuery>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="SaveDemo.tsx" data-sbx-group="optimistic" data-sbx-color="#FBBF24" data-sbx-shut>
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { WithQuery } from './query';
+import { useToggleSave } from './useToggleSave';
+import { api, server } from './api';
+
+// Click a star: it flips at once. Tick "fail every save" and click again: it flips, then
+// rolls back. Now delete the onError block in useToggleSave.ts and try once more.
+function Lab() {
+  const saved = useQuery({ queryKey: ['saved'], queryFn: () => api.saved() });
+  const toggle = useToggleSave();
+  const [fail, setFail] = useState(server.failWrites);
+  const ids = saved.data ?? [];
+
+  return (
+    <main>
+      <h1>optimistic · save now, keep a way back</h1>
+      <label className="row">
+        <input
+          type="checkbox"
+          checked={fail}
+          onChange={(e) => {
+            setFail(e.target.checked);
+            server.failWrites = e.target.checked;
+          }}
+        />
+        fail every save
+      </label>
+      <ul>
+        {[42, 8, 23].map((id) => {
+          const on = ids.includes(id);
+          return (
+            <li key={id} className="row">
+              <button className={on ? 'on' : ''} onClick={() => toggle.mutate({ id, save: !on })}>
+                {on ? '★' : '☆'}
+              </button>
+              job {id}
+            </li>
+          );
+        })}
+      </ul>
+      <p className={toggle.isError ? 'bad' : 'muted'}>
+        {toggle.isPending ? 'saving…' : toggle.isError ? toggle.error.message : `saved: [${ids.join(', ')}]`}
+      </p>
+    </main>
+  );
+}
+
+export default function SaveDemo() {
+  return (
+    <WithQuery>
+      <Lab />
+    </WithQuery>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="useToggleSave.ts" data-sbx-group="optimistic">
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { api } from './api';
+
+// The four steps from the slide, then the rollback and the refetch.
+export function useToggleSave() {
+  const client = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, save }: { id: number; save: boolean }) => (save ? api.save(id) : api.unsave(id)),
+    onMutate: async ({ id, save }) => {
+      await client.cancelQueries({ queryKey: ['saved'] }); // 1 · stop refetches in flight
+      const previous = client.getQueryData<number[]>(['saved']); // 2 · snapshot
+      client.setQueryData<number[]>(['saved'], (old = []) => // 3 · write the guess
+        save ? [...old, id] : old.filter((x) => x !== id),
+      );
+      return { previous }; // 4 · hand the snapshot on
+    },
+    onError: (_err, _vars, snapshot) => {
+      client.setQueryData(['saved'], snapshot?.previous); // the rollback
+    },
+    onSettled: () => client.invalidateQueries({ queryKey: ['saved'] }), // the server has the last word
+  });
+}
+</script>
+<script type="text/plain" data-sbx-file="RaceDemo.tsx" data-sbx-group="race" data-sbx-color="#F8717A" data-sbx-shut>
+import { useEffect, useState } from 'react';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { WithQuery } from './query';
+import { api, type Job } from './api';
+
+// Type "react" fast. Shorter searches answer slower, so the answers land backwards: the
+// effect list ends on the wrong search, the query list never does. Then fix the effect
+// by hand: uncomment the three `ignore` lines.
+function EffectList({ q }: { q: string }) {
+  const [jobs, setJobs] = useState<Job[]>([]);
+  const [answered, setAnswered] = useState(q);
+  useEffect(() => {
+    // let ignore = false;
+    api.jobs(q).then((data) => {
+      // if (ignore) return;
+      setJobs(data);
+      setAnswered(q);
+    });
+    // return () => { ignore = true; };
+  }, [q]);
+  return <List title="bare useEffect" q={q} answered={answered} jobs={jobs} />;
+}
+
+function QueryList({ q }: { q: string }) {
+  const jobs = useQuery({
+    queryKey: ['jobs', 'list', { q }],
+    queryFn: ({ signal }) => api.jobs(q, { signal }),
+    placeholderData: keepPreviousData,
+  });
+  return <List title="query key" q={q} answered={jobs.isPlaceholderData ? '…' : q} jobs={jobs.data ?? []} />;
+}
+
+function List({ title, q, answered, jobs }: { title: string; q: string; answered: string; jobs: Job[] }) {
+  const wrong = answered !== '…' && answered !== q;
+  return (
+    <section className={wrong ? 'card bad' : 'card'}>
+      <h2>{title}</h2>
+      <p className="muted">
+        box: “{q}” · showing: “{answered}” {wrong ? '✗' : ''}
+      </p>
+      <ul>
+        {jobs.map((j) => (
+          <li key={j.id}>{j.title}</li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
+function Lab() {
+  const [q, setQ] = useState('');
+  return (
+    <main>
+      <h1>race · the late answer</h1>
+      <input value={q} onChange={(e) => setQ(e.target.value)} placeholder='type "react" fast' />
+      <div className="two">
+        <EffectList q={q} />
+        <QueryList q={q} />
+      </div>
+    </main>
+  );
+}
+
+export default function RaceDemo() {
+  return (
+    <WithQuery>
+      <Lab />
+    </WithQuery>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="UrlDemo.tsx" data-sbx-group="url" data-sbx-color="#60A5FA" data-sbx-shut>
+import { useState } from 'react';
+import { parseSearch, toUrl, type JobSearch } from './search';
+
+// A pretend address bar. Edit it by hand and press Enter (try ?page=abc or ?remote=yes),
+// or change the filters and watch it follow. Filters push a history entry, so ← undoes
+// one change; typing in the search box replaces the entry instead.
+export default function UrlDemo() {
+  const [history, setHistory] = useState(['/jobs?q=react&page=2']);
+  const [draft, setDraft] = useState(history[0]);
+  const url = history[history.length - 1];
+  const search = parseSearch(url);
+
+  const go = (next: string, replace = false) => {
+    setHistory((h) => (replace ? [...h.slice(0, -1), next] : [...h, next]));
+    setDraft(next);
+  };
+  const set = (patch: Partial<JobSearch>, replace = false) => go(toUrl({ ...search, ...patch }), replace);
+  const back = () => {
+    const h = history.slice(0, -1);
+    setHistory(h);
+    setDraft(h[h.length - 1]);
+  };
+
+  return (
+    <main>
+      <h1>url · search params as state</h1>
+      <div className="row">
+        <button disabled={history.length < 2} onClick={back}>←</button>
+        <input className="grow" value={draft} onChange={(e) => setDraft(e.target.value)}
+          onKeyDown={(e) => { if (e.key === 'Enter') go(draft); }} />
+      </div>
+      <div className="row">
+        <input value={search.q} placeholder="search" onChange={(e) => set({ q: e.target.value, page: 1 }, true)} />
+        <label className="row">
+          <input type="checkbox" checked={search.remote} onChange={(e) => set({ remote: e.target.checked, page: 1 })} />
+          remote only
+        </label>
+        <button onClick={() => set({ page: search.page + 1 })}>page {search.page} →</button>
+      </div>
+      <pre>{JSON.stringify(search)}</pre>
+      <p className="muted">
+        query key: <code>{JSON.stringify(['jobs', 'list', search])}</code>
+      </p>
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="search.ts" data-sbx-group="url">
+import { z } from 'zod';
+
+// The route's schema: it parses, it falls back, and it is the type.
+export const jobSearch = z.object({
+  q: z.string().catch(''),
+  remote: z.boolean().catch(false),
+  page: z.number().int().min(1).catch(1),
+});
+export type JobSearch = z.infer<typeof jobSearch>;
+
+// What the router does before the schema sees the URL: every value is JSON-parsed when it
+// can be, so ?page=2 arrives as the number 2 and ?q=react stays a string.
+export function parseSearch(url: string): JobSearch {
+  const raw: Record<string, unknown> = {};
+  new URLSearchParams(url.split('?')[1] ?? '').forEach((value, key) => {
+    try {
+      raw[key] = JSON.parse(value);
+    } catch {
+      raw[key] = value;
+    }
+  });
+  return jobSearch.parse(raw);
+}
+
+export function toUrl(search: JobSearch) {
+  const p = new URLSearchParams();
+  if (search.q) p.set('q', search.q);
+  if (search.remote) p.set('remote', 'true');
+  if (search.page > 1) p.set('page', String(search.page));
+  const qs = p.toString();
+  return '/jobs' + (qs ? '?' + qs : '');
+}
+</script>
+<script type="text/plain" data-sbx-file="CompareDemo.tsx" data-sbx-group="store" data-sbx-color="#A78BFA" data-sbx-shut>
+import { useCompare } from './compare';
+
+// Two components far apart share the compare tray: no provider, no prop drilling.
+// Each one selects only the slice it reads.
+function JobCard({ id }: { id: number }) {
+  const on = useCompare((s) => s.ids.includes(id));
+  const toggle = useCompare((s) => s.toggle);
+  return (
+    <li className="row">
+      <button className={on ? 'on' : ''} onClick={() => toggle(id)}>
+        {on ? '− compare' : '+ compare'}
+      </button>
+      job {id}
+    </li>
+  );
+}
+
+function Tray() {
+  const ids = useCompare((s) => s.ids);
+  const clear = useCompare((s) => s.clear);
+  return (
+    <section className="card row">
+      <b>Compare tray</b> [{ids.join(', ')}]
+      <button disabled={!ids.length} onClick={clear}>clear</button>
+    </section>
+  );
+}
+
+export default function CompareDemo() {
+  return (
+    <main>
+      <h1>store · one small Zustand store</h1>
+      <ul>
+        {[42, 17, 8, 23].map((id) => (
+          <JobCard key={id} id={id} />
+        ))}
+      </ul>
+      <Tray />
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="compare.ts" data-sbx-group="store">
+import { create } from 'zustand';
+
+// The compare tray: client state the server has never heard of, needed far apart in the
+// tree. It holds ids only, never a job listing: those live in the query cache.
+type CompareState = { ids: number[]; toggle: (id: number) => void; clear: () => void };
+
+export const useCompare = create<CompareState>()((set) => ({
+  ids: [],
+  toggle: (id) =>
+    set((s) => ({ ids: s.ids.includes(id) ? s.ids.filter((x) => x !== id) : [...s.ids, id].slice(-3) })),
+  clear: () => set({ ids: [] }),
+}));
+</script>
+<script>
+/* Step player — see the .anim block in the stylesheet for the vocabulary. Each player
+   restarts whenever its slide opens; R replays every player on the current slide. With
+   reduced motion, or for print, it jumps straight to the settled frame. */
+(function(){
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var players = [];
+  document.querySelectorAll('.anim[data-at]').forEach(function(root){
+    var at = root.dataset.at.split(',').map(Number), n = at.length, timers = [];
+    var ins  = [].slice.call(root.querySelectorAll('[data-in]'));
+    var outs = [].slice.call(root.querySelectorAll('[data-out]'));
+    var hls  = [].slice.call(root.querySelectorAll('[data-hl]')).map(function(el){
+      return { el:el, at:el.dataset.hl.split(/\s+/).map(Number) };
+    });
+    var says = [].slice.call(root.querySelectorAll('.anim-say i'));
+    var steps = [].slice.call(root.querySelectorAll('.anim-step')), cur = n;
+
+    function set(k){
+      cur = k;
+      for (var j = 1; j <= n; j++) root.classList.toggle('s' + j, j <= k);
+      root.dataset.step = k;
+      ins.forEach(function(el){ el.classList.toggle('in', k >= +el.dataset.in); });
+      outs.forEach(function(el){ el.classList.toggle('out', k >= +el.dataset.out); });
+      hls.forEach(function(h){ h.el.classList.toggle('lit', h.at.indexOf(k) >= 0); });
+      says.forEach(function(el, j){ el.classList.toggle('on', j === k - 1); });
+      steps.forEach(function(b){
+        var d = +b.dataset.d;
+        b.setAttribute('aria-disabled', String(d < 0 ? k <= 0 : k >= n));
+      });
+    }
+    function go(d){
+      timers.forEach(clearTimeout); timers = [];
+      set(Math.max(0, Math.min(n, cur + d)));
+    }
+    function settle(){ timers.forEach(clearTimeout); timers = []; set(n); }
+    function play(){
+      if (still.matches) return settle();
+      timers.forEach(clearTimeout); timers = [];
+      root.classList.add('rs'); set(0); void root.offsetWidth; root.classList.remove('rs');
+      at.forEach(function(ms, j){ timers.push(setTimeout(function(){ set(j + 1); }, ms)); });
+    }
+    set(n);
+    root.classList.add('live');
+
+    var btn = root.querySelector('.anim-replay');
+    if (btn) btn.addEventListener('click', play);
+    steps.forEach(function(b){ b.addEventListener('click', function(){ go(+b.dataset.d); }); });
+    // A press on a player button must not also turn the slide.
+    (btn ? [btn] : []).concat(steps).forEach(function(b){
+      ['click','pointerdown'].forEach(function(t){
+        b.addEventListener(t, function(e){ e.stopPropagation(); });
+      });
+    });
+
+    var slide = root.closest('.slide'), wasOn = slide.classList.contains('on');
+    if (wasOn) play();
+    new MutationObserver(function(){
+      var isOn = slide.classList.contains('on');
+      if (isOn && !wasOn) play();
+      if (!isOn && wasOn) settle();
+      wasOn = isOn;
+    }).observe(slide, { attributes:true, attributeFilter:['class'] });
+    players.push({ slide:slide, play:play, settle:settle });
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key.toLowerCase() !== 'r' || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+    players.forEach(function(p){ if (p.slide.classList.contains('on')) p.play(); });
+  });
+  window.addEventListener('beforeprint', function(){ players.forEach(function(p){ p.settle(); }); });
+})();
+</script>
+<script>
+/* Live demos — see the .demo block in the stylesheet. The deck turns slides on any click
+   and on Space or the arrow keys, so a demo keeps its own clicks, and keeps the keys that
+   belong to it: anything typed into an input, plus Space, Enter, Tab and Escape on its
+   controls. Arrow keys on a demo button still turn the slide. */
+(function(){
+  document.querySelectorAll('.demo').forEach(function(el){
+    ['click','pointerdown'].forEach(function(t){ el.addEventListener(t, function(e){ e.stopPropagation(); }); });
+    el.addEventListener('keydown', function(e){
+      var typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable;
+      if (typing || e.key === ' ' || e.key === 'Enter' || e.key === 'Tab' || e.key === 'Escape') e.stopPropagation();
+    });
+  });
+
+  // Runs open() each time the demo's slide opens and close() each time it leaves.
+  function watch(el, open, close){
+    var s = el.closest('.slide'), was = s.classList.contains('on');
+    if (was) open();
+    new MutationObserver(function(){
+      var is = s.classList.contains('on');
+      if (is && !was) open();
+      if (!is && was && close) close();
+      was = is;
+    }).observe(s, { attributes:true, attributeFilter:['class'] });
+  }
+  function again(el, cls){ el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]; }); }
+  function k(root, name){ return root.querySelector('[data-k="' + name + '"]'); }
+  window.cxDemo = { watch:watch, again:again, esc:esc, k:k };
+
+
+  /* L1c · walk the three questions for one piece of state */
+  (function(){
+    var root = document.getElementById('demo-home'), fig = document.getElementById('fx-home');
+    if (!root || !fig) return;
+    // yes: the question that says yes (0 = none does, so it stays in useState).
+    var PIECES = {
+      feed:   { yes:1, why:'Listings feed → the Query cache. Other people change it without telling you.' },
+      saved:  { yes:1, why:'Saved jobs → the Query cache. It is stored per account, so the phone shows it too.' },
+      q:      { yes:2, why:'Search text → the URL. A reload or a shared link should bring it back.' },
+      tray:   { yes:3, why:'Compare tray → a small store. The feed and the job page both need it.' },
+      drawer: { yes:0, why:'Filters drawer open → useState. Nobody else needs it, and a reload may close it.' },
+      draft:  { yes:0, why:'Apply-form draft → useState. One form owns it until it is sent.' }
+    };
+    var HOME = ['state', 'query', 'url', 'store'], timers = [];
+    function clear(){
+      timers.forEach(clearTimeout); timers = [];
+      fig.classList.remove('walk');
+      fig.querySelectorAll('.lit').forEach(function(e){ e.classList.remove('lit'); });
+      root.querySelectorAll('[data-s]').forEach(function(b){ b.classList.remove('on'); });
+      k(root,'why').textContent = '';
+    }
+    function walk(id){
+      clear();
+      var p = PIECES[id], seq = [];
+      for (var q = 1; q <= 3; q++){
+        seq.push('[data-q="' + q + '"]');
+        if (p.yes === q){ seq.push('[data-yes="' + q + '"]'); break; }
+        seq.push('[data-no="' + q + '"]');
+      }
+      seq.push('[data-home="' + HOME[p.yes] + '"]');
+      fig.classList.add('walk');
+      root.querySelector('[data-s="' + id + '"]').classList.add('on');
+      seq.forEach(function(sel, j){
+        timers.push(setTimeout(function(){ fig.querySelector(sel).classList.add('lit'); }, j * 380));
+      });
+      timers.push(setTimeout(function(){ k(root,'why').textContent = p.why; }, seq.length * 380));
+    }
+    root.addEventListener('click', function(e){ var b = e.target.closest('[data-s]'); if (b) walk(b.dataset.s); });
+    watch(root, clear, clear);
+  })();
+
+  /* L2a · one cache entry on a clock: staleTime 3 s and gcTime 5 s, scaled down from the code */
+  (function(){
+    var root = document.getElementById('demo-life'), fig = document.getElementById('fx-life');
+    if (!root || !fig) return;
+    var STALE = 3000, GC = 5000, FETCH = 900;
+    var s, timers = [], tick;
+    function now(){ return performance.now(); }
+    function later(ms, f){ timers.push(setTimeout(f, ms)); }
+    function secs(ms){ return (Math.max(0, ms) / 1000).toFixed(1) + ' s'; }
+    function note(t){ s.note = t; s.noteUntil = now() + 1800; paint(); }
+    function paint(){
+      var t = now(), fresh = s.data && t < s.freshUntil, st = '';
+      if (s.data) st = !s.obs ? 'inactive' : fresh ? 'fresh' : 'stale';
+      else if (s.fetching) st = 'fetching';
+      else if (t < s.goneUntil) st = 'deleted';
+      fig.classList.toggle('run', !!st);
+      fig.querySelectorAll('[data-st]').forEach(function(g){
+        g.classList.toggle('on', g.dataset.st === st || (g.dataset.st === 'fetching' && s.fetching));
+      });
+      k(root,'list').textContent = !s.obs ? 'unmounted' : !s.data ? '⟳ loading…' : '12 jobs' + (s.fetching ? ' · refetching behind it' : '');
+      root.querySelector('[data-act="mount"]').classList.toggle('on', !!s.obs);
+      var clock =
+        s.fetching && !s.data ? 'queryFn running: first load, isPending' :
+        st === 'fresh' ? 'fresh · stale in ' + secs(s.freshUntil - t) :
+        st === 'stale' ? 'stale · refetches on mount, focus, reconnect' :
+        st === 'inactive' ? 'no component reads it · deleted in ' + secs(s.gcAt - t) :
+        st === 'deleted' ? 'gcTime passed: the entry is gone' :
+        'staleTime 3 s · gcTime 5 s, scaled down';
+      k(root,'clock').textContent = t < s.noteUntil ? s.note : clock;
+    }
+    function fetch(){
+      if (s.fetching) return;
+      s.fetching = true; paint();
+      later(FETCH, function(){
+        s.fetching = false; s.data = true; s.freshUntil = now() + STALE;
+        if (s.obs) again(k(root,'list'), 'flash-g'); else gc();
+        paint();
+      });
+    }
+    function gc(){
+      clearTimeout(s.gcTimer);
+      s.gcAt = now() + GC;
+      s.gcTimer = setTimeout(function(){
+        if (s.obs) return;
+        s.data = false; s.goneUntil = now() + 2500; paint();
+      }, GC);
+      timers.push(s.gcTimer);
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-act]'); if (!b) return;
+      var a = b.dataset.act, stale = s.data && now() >= s.freshUntil;
+      if (a === 'mount'){
+        if (s.obs) return note('already mounted');
+        s.obs = 1; clearTimeout(s.gcTimer); s.goneUntil = 0;
+        if (!s.data) fetch();
+        else if (stale){ fetch(); note('cached data shows at once; it is stale, so it refetches behind it'); }
+        else note('cached and still fresh: shown at once, no request');
+      }
+      if (a === 'unmount'){
+        if (!s.obs) return note('nothing is mounted');
+        s.obs = 0; if (s.data) gc();
+      }
+      if (a === 'focus'){
+        if (!s.obs || !s.data) note('no component reads it, so focus refetches nothing');
+        else if (stale){ fetch(); note('window focus: stale, so it refetches behind the data'); }
+        else note('window focus: still fresh, so no request');
+      }
+      paint();
+    });
+    watch(root, function(){
+      timers.forEach(clearTimeout); timers = [];
+      s = { data:false, obs:0, fetching:false, freshUntil:0, gcAt:0, gcTimer:0, goneUntil:0, note:'', noteUntil:0 };
+      clearInterval(tick); tick = setInterval(paint, 100); paint();
+    }, function(){ timers.forEach(clearTimeout); timers = []; clearInterval(tick); });
+  })();
+
+  /* L2c · optimistic save: switch off cancelQueries or the rollback and watch the star */
+  (function(){
+    var root = document.getElementById('demo-opt'); if (!root) return;
+    var slide = root.closest('.slide');
+    var lines = { cancel: slide.querySelector('[data-line="cancel"]'), rollback: slide.querySelector('[data-line="rollback"]') };
+    var star = k(root,'star'), sw, cache, server, busy, timers = [];
+    function later(ms, f){ timers.push(setTimeout(f, ms)); }
+    function list(a){ return '[' + a.join(', ') + ']'; }
+    function without(a){ return a.filter(function(x){ return x !== 42; }); }
+    function say(t){ k(root,'say').textContent = t; }
+    function show(){
+      var on = cache.indexOf(42) >= 0;
+      star.classList.toggle('on', on);
+      star.textContent = (on ? '★ Saved' : '☆ Save') + ' job 42';
+      k(root,'cache').textContent = list(cache);
+      k(root,'server').textContent = list(server);
+      k(root,'cache').className = list(cache) === list(server) ? '' : 'bad';
+    }
+    function paint(){
+      root.querySelectorAll('[data-sw]').forEach(function(b){ b.classList.toggle('on', sw[b.dataset.sw]); });
+      lines.cancel.classList.toggle('gone', !sw.cancel);
+      lines.rollback.classList.toggle('gone', !sw.rollback);
+    }
+    function save(){
+      if (busy) return;
+      busy = true; star.setAttribute('aria-busy', 'true');
+      var want = cache.indexOf(42) < 0, before = cache.slice(), old = server.slice();
+      if (sw.inflight && sw.cancel){ again(lines.cancel, 'flash'); }
+      cache = want ? cache.concat(42) : without(cache);                 // 2 · snapshot, 3 · write the guess
+      show(); again(star, 'flash-g');
+      say(sw.inflight && sw.cancel ? 'the refetch in flight is cancelled, then the guess is written' : 'the guess is written before the server answers');
+      if (sw.inflight && !sw.cancel) later(450, function(){
+        cache = old; show(); again(star, 'flash-r');
+        say('an older refetch landed on top of the guess');
+      });
+      later(1200, function(){
+        if (sw.fail){
+          if (sw.rollback){ cache = before; show(); again(lines.rollback, 'flash'); again(star, 'flash-r'); say('the save failed: onError put the snapshot back'); }
+          else say('the save failed and nothing restored it: the star lies until the refetch lands');
+        } else {
+          server = want ? server.concat(42) : without(server); show();
+          say('the server saved it');
+        }
+      });
+      later(2400, function(){
+        cache = server.slice(); show();
+        say('onSettled refetched: the server has the last word');
+        busy = false; star.removeAttribute('aria-busy');
+      });
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-sw]');
+      if (b){ sw[b.dataset.sw] = !sw[b.dataset.sw]; paint(); return; }
+      if (e.target.closest('[data-k="star"]')) save();
+    });
+    watch(root, function(){
+      timers.forEach(clearTimeout); timers = []; busy = false; star.removeAttribute('aria-busy');
+      sw = { fail:false, inflight:false, cancel:true, rollback:true };
+      cache = [17]; server = [17];
+      paint(); show(); say('');
+    }, function(){ timers.forEach(clearTimeout); timers = []; });
+  })();
+
+  /* L2d · the same race, with a query key or a bare effect */
+  (function(){
+    var root = document.getElementById('demo-race'), fig = document.getElementById('fx-race');
+    if (!root || !fig) return;
+    function mode(m){
+      fig.classList.toggle('bare', m === 'bare');
+      root.querySelectorAll('[data-mode]').forEach(function(b){ b.classList.toggle('on', b.dataset.mode === m); });
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-mode]'); if (!b) return;
+      mode(b.dataset.mode);
+      fig.querySelector('.anim-replay').click();
+    });
+    watch(root, function(){ mode('key'); });
+  })();
+
+  /* L3a · the same filters in useState, or in the URL */
+  (function(){
+    var root = document.getElementById('demo-url'); if (!root) return;
+    var input = k(root,'q'), mode, f, hist, timer;
+    function fresh(){ return { q:'', remote:false, page:1 }; }
+    function url(x){
+      var p = [];
+      if (x.q) p.push('q=' + encodeURIComponent(x.q));
+      if (x.remote) p.push('remote=true');
+      if (x.page > 1) p.push('page=' + x.page);
+      return '/jobs' + (p.length ? '?' + p.join('&') : '');
+    }
+    function parse(u){
+      var x = fresh();
+      (u.split('?')[1] || '').split('&').forEach(function(kv){
+        var a = kv.split('=');
+        if (a[0] === 'q') x.q = decodeURIComponent(a[1] || '');
+        if (a[0] === 'remote') x.remote = a[1] === 'true';
+        if (a[0] === 'page') x.page = +a[1] || 1;
+      });
+      return x;
+    }
+    function say(t){ k(root,'say').textContent = t; }
+    function paint(){
+      if (input.value !== f.q) input.value = f.q;
+      k(root,'remote').classList.toggle('on', f.remote);
+      k(root,'page').textContent = f.page;
+      k(root,'url').textContent = mode === 'url' ? hist[hist.length - 1] : '/jobs';
+      root.querySelectorAll('[data-mode]').forEach(function(b){ b.classList.toggle('on', b.dataset.mode === mode); });
+    }
+    function commit(){
+      clearTimeout(timer);
+      if (mode === 'url'){
+        var u = url(f);
+        if (u !== hist[hist.length - 1]){ hist.push(u); again(k(root,'url'), 'flash'); }
+      }
+      paint();
+    }
+    function reset(m){
+      clearTimeout(timer);
+      mode = m; f = fresh(); hist = ['/jobs']; paint();
+      say(m === 'url' ? 'Now set them again, and reload.' : 'Set a search, a filter and a page, then reload.');
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-act],[data-mode]'); if (!b) return;
+      if (b.dataset.mode) return reset(b.dataset.mode);
+      var a = b.dataset.act;
+      if (a === 'remote'){ f.remote = !f.remote; commit(); }
+      if (a === 'page'){ f.page++; commit(); }
+      if (a === 'reload'){
+        commit(); again(root, 'flash');
+        if (mode === 'url'){ f = parse(hist[hist.length - 1]); paint(); say('Reload: the same filters, read back from the URL.'); }
+        else { f = fresh(); paint(); say('Reload: every filter is gone. A shared link opens page 1 of everything.'); }
+      }
+      if (a === 'back'){
+        commit();
+        if (mode === 'url' && hist.length > 1){ hist.pop(); f = parse(hist[hist.length - 1]); paint(); say('Back undid one change.'); }
+        else say(mode === 'url' ? 'Nothing to go back to yet.' : 'Back leaves the page: useState never made a history entry.');
+      }
+    });
+    input.addEventListener('input', function(){ f.q = input.value; clearTimeout(timer); timer = setTimeout(commit, 450); });
+    watch(root, function(){ reset('state'); }, function(){ clearTimeout(timer); });
+  })();
+
+  /* L3b · what validateSearch makes of a hand-edited URL */
+  (function(){
+    var root = document.getElementById('demo-parse'); if (!root) return;
+    var input = k(root,'in'), out = k(root,'out');
+    // TanStack Router's default parser tries JSON.parse on every value, so page=2 arrives as a number.
+    function val(v){ try { return JSON.parse(v); } catch (e) { return v; } }
+    function lit(v){ return typeof v === 'string' ? "'" + v + "'" : String(v); }
+    function run(){
+      var raw = {};
+      input.value.replace(/^[^?]*\?/, '').split('&').forEach(function(kv){
+        if (!kv) return;
+        var i = kv.indexOf('='), key = i < 0 ? kv : kv.slice(0, i), v = i < 0 ? '' : kv.slice(i + 1);
+        try { key = decodeURIComponent(key); v = decodeURIComponent(v.replace(/\+/g, ' ')); } catch (e) {}
+        raw[key] = val(v);
+      });
+      var p = raw.page, got = {
+        q: typeof raw.q === 'string' ? [raw.q] : ['', 1],
+        remote: typeof raw.remote === 'boolean' ? [raw.remote] : [false, 1],
+        page: typeof p === 'number' && Number.isInteger(p) && p >= 1 ? [p] : [1, 1]
+      };
+      var dropped = Object.keys(raw).filter(function(x){ return !(x in got); });
+      out.innerHTML = '{ ' + Object.keys(got).map(function(x){
+        var v = esc(lit(got[x][0]));
+        return x + ': ' + (got[x][1] ? '<b>' + v + '</b>' : v);
+      }).join(', ') + ' }' + (dropped.length ? ' <i>dropped: ' + esc(dropped.join(', ')) + '</i>' : '');
+    }
+    input.addEventListener('input', run);
+    watch(root, function(){ input.value = '?q=react&remote=yes&page=abc'; run(); });
+  })();
+})();
+</script>
 <!--catalyst-brand:copy-->
 <script>
 /* A copy button on every code block. Injected here rather than written into each deck
@@ -1084,6 +2337,8 @@
      under a name pins its type inline. Two modes, each a small multi-file project:
        TS     plain TypeScript; Run executes it in a worker, console output below.
        React  components in .tsx files and CSS; a live preview re-renders as you type.
+     Right-click a tab to put it in a tab group. A group folds its tabs away, and a
+     group that is off leaves the checker, the preview and Run.
      Injected by brand/apply_brand.py into module decks from 04 on; edit
      brand/sandbox.html, not this block.
 
@@ -1155,6 +2410,45 @@
   .sbx-name.sbx-bad{border-color:var(--bad)}
   .sbx-nerr{align-self:center; color:var(--bad); font:11.5px/1.3 var(--mono); white-space:nowrap; padding-right:8px}
 
+  /* Tab groups, Chrome style: a coloured label, then its tabs. A click on the label
+     folds them away; a click on its dot turns the group off. --g is the group's
+     colour, --gb a faint tint of it (set inline). */
+  .sbx-grp{display:flex; align-items:center; gap:6px; align-self:center; margin:0 3px 0 7px; padding:4px 8px 4px 6px; border-radius:6px;
+    background:var(--gb); color:var(--g); font:700 11.5px/1 var(--mono); cursor:pointer; white-space:nowrap; user-select:none}
+  .sbx-grp:hover{box-shadow:inset 0 0 0 1px var(--g)}
+  .sbx-grp span:empty{display:none}
+  .sbx-grp b{font-weight:500; opacity:.75}
+  .sbx-grp em{display:none; font:700 9.5px/1 var(--mono); font-style:normal; letter-spacing:.8px; text-transform:uppercase; opacity:.85}
+  .sbx-grp .sbx-pow{display:grid; place-items:center; width:18px; height:18px; margin:-4px -3px -4px -4px; border-radius:50%; font-style:normal}
+  .sbx-grp .sbx-pow::before{content:''; width:8px; height:8px; border-radius:50%; background:var(--g)}
+  .sbx-grp .sbx-pow:hover{background:rgba(255,255,255,.1)}
+  .sbx-grp.sbx-goff{opacity:.65}
+  .sbx-grp.sbx-goff em{display:inline}
+  .sbx-grp.sbx-goff .sbx-pow::before{background:none; box-shadow:inset 0 0 0 1.5px var(--g)}
+  .sbx-file[data-g]{box-shadow:inset 0 2px 0 var(--g)}
+  .sbx-file.sbx-off{opacity:.5}
+  .sbx-file.sbx-off span{font-style:italic}
+
+
+  /* Right-click menus for tabs and group labels. */
+  .sbx-menu{position:fixed; z-index:30; width:236px; padding:6px; background:#0E1525; border:1px solid #243349; border-radius:9px;
+    box-shadow:0 14px 40px rgba(0,0,0,.6); font:600 12px/1.2 var(--mono); color:var(--ink2)}
+  .sbx-menu button{display:flex; align-items:center; gap:8px; width:100%; padding:8px 10px; margin:0; background:none; border:0; border-radius:6px;
+    color:inherit; font:inherit; text-align:left; cursor:pointer}
+  .sbx-menu button:disabled{opacity:.45; cursor:default}
+  .sbx-menu button:disabled:hover{background:none; color:inherit}
+  .sbx-menu button:hover, .sbx-menu button:focus-visible{background:rgba(34,211,238,.1); color:#fff; outline:none}
+  .sbx-menu hr{border:0; border-top:1px solid var(--line2); margin:5px 2px}
+  .sbx-menu small{display:block; padding:0 10px 6px; color:var(--grey3); font:500 11px/1.45 var(--mono)}
+  .sbx-menu input{display:block; width:100%; box-sizing:border-box; padding:7px 9px; background:var(--code); color:var(--ink);
+    border:1px solid var(--line2); border-radius:6px; font:600 12px/1.2 var(--mono); outline:none}
+  .sbx-menu input:focus{border-color:var(--cy)}
+  .sbx-menu .sbx-sw{display:flex; flex-wrap:wrap; gap:7px; padding:9px 3px 5px}
+  .sbx-menu .sbx-sw button{width:17px; height:17px; padding:0; border-radius:50%}
+  .sbx-menu .sbx-sw button.sbx-on{box-shadow:0 0 0 2px #0E1525, 0 0 0 4px #fff}
+  .sbx-chip{display:inline-flex; align-items:center; gap:6px; color:var(--g); font-style:normal; min-width:0; overflow:hidden; text-overflow:ellipsis}
+  .sbx-chip::before{content:''; flex:none; width:7px; height:7px; border-radius:50%; background:var(--g)}
+
   .sbx-ed{flex:1; min-height:80px; position:relative; background:var(--code)}
   .sbx-msg{position:absolute; inset:0; display:grid; place-items:center; padding:24px; text-align:center;
     font:13px/1.6 var(--mono); color:var(--muted)}
@@ -1175,6 +2469,7 @@
   .sbx-count.sbx-bad{background:rgba(248,113,122,.18); color:var(--bad)}
   .sbx-status{margin-left:auto; font:600 11.5px/1 var(--mono); color:var(--muted); white-space:nowrap}
   .sbx-status.sbx-ok{color:var(--good)} .sbx-status.sbx-bad{color:var(--bad)}
+  .sbx-status.sbx-note{color:var(--ochre); overflow:hidden; text-overflow:ellipsis; min-width:0}
   .sbx-pane{display:none; flex:1; min-height:0; overflow:auto; padding:6px 0}
   .sbx-pane.sbx-on{display:block}
   .sbx-none{padding:10px 16px; color:var(--grey3); font:13px var(--mono)}
@@ -1223,7 +2518,13 @@
 /* Code sandbox (see the style block above). Monaco is fetched from jsDelivr on first
    open, so a deck that never opens the panel loads nothing extra. React mode adds
    React's type definitions (jsDelivr) and React itself (esm.sh, inside the preview).
-   A file that imports a TYPED package (zod) pulls in that package's own types too.
+   A file that imports a TYPED package (zod, TanStack Query, Zustand) pulls in that
+   package's own types too.
+
+   A deck can ship its own starter: one <script type="text/plain" data-sbx-file="…">
+   per file, with data-sbx-group naming the tab group it starts in. In React mode the
+   preview follows the open tab: a group with a .tsx file that has a default export
+   previews that file, so each group can be one small app.
 
    T opens and closes it from the slides; Ctrl+` does it from anywhere, the editor and
    the preview included. Inside the editor every key belongs to the editor; Esc (or a
@@ -1241,13 +2542,20 @@
   var REACT = '19.2.9';
   var TYPES = {
     '@types/react@19.2.18': ['index.d.ts', 'global.d.ts', 'jsx-runtime.d.ts'],
-    '@types/react-dom@19.2.7': ['index.d.ts', 'client.d.ts'],
+    '@types/react-dom@19.2.7': ['index.d.ts', 'client.d.ts', 'server.d.ts', 'static.d.ts'],
     'csstype@3.2.3': ['index.d.ts']
   };
   // Packages that ship their own types. A file that imports one loads its .d.ts files
   // from jsDelivr, and the runner imports the same version from esm.sh, so the checker
-  // and the code that runs agree. Any other package type-checks as `any`.
-  var TYPED = { 'zod': '4.6.7' };
+  // and the code that runs agree. Any other package type-checks as `any`. `types` is the
+  // entry when the package keeps it away from its root; a package another one's types
+  // import (query-core under react-query) is listed so the walk can follow it.
+  var TYPED = {
+    'zod': { v: '4.6.7' },
+    '@tanstack/react-query': { v: '5.106.0', types: 'build/modern/index.d.ts' },
+    '@tanstack/query-core': { v: '5.106.0', types: 'build/modern/index.d.ts' },
+    'zustand': { v: '5.0.16' }
+  };
   // The preview's import map. Everything React-shaped resolves to one copy of React;
   // other packages come from esm.sh with React left external, so they share it.
   var IMPORTS = {
@@ -1450,7 +2758,7 @@
     root.classList.toggle('sbx-open', v);
     layout();
     if (v) ensureEditor().then(function(){ editor.focus(); }, noop);
-    else if (panel.contains(document.activeElement)) document.activeElement.blur();
+    else { closeMenu(); if (panel.contains(document.activeElement)) document.activeElement.blur(); }
   }
   addEventListener('resize', layout);
   if (vv) { vv.addEventListener('resize', layout); vv.addEventListener('scroll', layout); }
@@ -1520,7 +2828,7 @@
 
   /* ---- editor ------------------------------------------------------------------ */
   var monaco, editor, ready, queries, typesReady, ambientLib, ambientKey = '', typed = {}, typeTexts = {},
-      models = {}, order = [], views = {}, active = null, errs = {}, problems = 0,
+      models = {}, order = [], views = {}, active = null, errs = {}, problems = 0, groups = [], groupOf = {},
       fontSize = +get('font', 0) || 16, hints = get('hints', 'on') === 'on';
 
   function loadMonaco(){
@@ -1573,6 +2881,17 @@
     });
     d.setEagerModelSync(true);
     ver.textContent = 'TS ' + ts.typescriptVersion + ' · strict';
+
+    // Files of a group that is off keep TypeScript's colours but not its checker: a
+    // language of their own with the TypeScript tokenizer and nothing else, so the
+    // TypeScript worker never sees them.
+    monaco.languages.register({ id: 'sbx-off' });
+    monaco.languages.setMonarchTokensProvider('sbx-off', new Promise(function(res, rej){
+      window.require(['vs/basic-languages/typescript/typescript'], function(m){
+        monaco.languages.setLanguageConfiguration('sbx-off', m.conf);
+        res(m.language);
+      }, rej);
+    }).catch(function(){ return { tokenizer: { root: [] } }; }));
 
     // Token colours as [scope, colour, style] rows, not one object literal per scope:
     // the commit-time secret scanner reads a long quoted scope name next to the
@@ -1632,31 +2951,58 @@
   }
 
   /* ---- projects: one per mode, a handful of files ------------------------------ */
-  function uriOf(p){ return monaco.Uri.parse('file:///' + mode + '/' + p); }
+  // An off file lives under file:///off/, out of reach of the live files' imports, so an
+  // import of it fails in the checker just as it fails in the preview.
+  function uriOf(p){ return monaco.Uri.parse('file:///' + (isOff(p) ? 'off/' + mode + '/' + p : mode + '/' + nameOf(p))); }
   function owns(u){ return order.some(function(p){ return models[p].uri.toString() === u.toString(); }); }
   function langOf(p){
     var x = ext(p);
-    return x === 'css' ? 'css' : x === 'json' ? 'json' : 'typescript';
+    return x === 'css' ? 'css' : x === 'json' ? 'json' : isOff(p) ? 'sbx-off' : 'typescript';
   }
   function loadProject(m){
     try {
       var p = JSON.parse(get('proj:' + m, ''));
-      if (p && p.files && Object.keys(p.files).length) return p;
+      if (p && p.files && Object.keys(p.files).length && !(untouched(p, m) && deckStart(m))) return p;
     } catch (e) {}
     var old = m === 'ts' ? get('code', null) : null;     // the single-file sandbox's buffer
     if (old != null) {
       try { localStorage.removeItem(KEY + 'code'); } catch (e) {}
       return { files: { 'index.ts': old }, active: 'index.ts' };
     }
-    return { files: JSON.parse(JSON.stringify(MODES[m].start)), active: MODES[m].first };
+    return deckStart(m) || { files: JSON.parse(JSON.stringify(MODES[m].start)), active: MODES[m].first };
   }
+  // The deck's own starter for mode m, or null. Each <script type="text/plain"
+  // data-sbx-file> is one file; data-sbx-group puts it in that tab group, and on any of a
+  // group's files data-sbx-color sets its colour, data-sbx-off starts it off and
+  // data-sbx-shut starts it folded. data-sbx-first opens that file first.
+  function deckStart(m){
+    var files = {}, of = {}, gs = [], first = null;
+    document.querySelectorAll('script[type="text/plain"][data-sbx-file]').forEach(function(el){
+      if ((el.dataset.sbxMode || 'react') !== m) return;
+      var p = el.dataset.sbxFile, name = el.dataset.sbxGroup, i = 1;
+      while (files[p] != null) p = '~' + (++i) + '/' + el.dataset.sbxFile;
+      files[p] = el.textContent.replace(/^\n/, '').replace(/\s*$/, '\n');
+      if (first == null || el.hasAttribute('data-sbx-first')) first = p;
+      if (!name) return;
+      var g = gs.filter(function(x){ return x.name === name; })[0];
+      if (!g) gs.push(g = { id: 'g' + (gs.length + 1), name: name, shut: false, off: false, color: COLORS[gs.length % COLORS.length] });
+      if (/^#[0-9A-F]{6}$/i.test(el.dataset.sbxColor || '')) g.color = el.dataset.sbxColor;
+      if (el.hasAttribute('data-sbx-off')) g.off = true;
+      if (el.hasAttribute('data-sbx-shut')) g.shut = true;
+      of[p] = g.id;
+    });
+    return first == null ? null : { files: files, active: first, groups: gs, of: of };
+  }
+  // A saved project that is still the generic starter, unedited, makes way for the deck's.
+  function untouched(p, m){ return !p.groups && JSON.stringify(p.files) === JSON.stringify(MODES[m].start); }
   var saveT;
   function saveProject(){
     clearTimeout(saveT);
     if (!order.length) return;
-    var files = {};
-    order.forEach(function(p){ files[p] = models[p].getValue(); });
-    put('proj:' + mode, JSON.stringify({ files: files, active: active }));
+    var files = {}, of = {}, proj = { files: files, active: active };
+    order.forEach(function(p){ files[p] = models[p].getValue(); if (groupOf[p]) of[p] = groupOf[p]; });
+    if (groups.length) { proj.groups = groups; proj.of = of; }
+    put('proj:' + mode, JSON.stringify(proj));
   }
   function saveSoon(){ clearTimeout(saveT); saveT = setTimeout(saveProject, 400); }
 
@@ -1667,25 +3013,40 @@
     clearTimeout(ambT); ambT = setTimeout(ambient, 600);
     if (mode === 'react') { clearTimeout(liveT); liveT = setTimeout(preview, 650); }
   }
-  function addModel(p, text, at){
+  function makeModel(p, text){
     var uri = uriOf(p), old = monaco.editor.getModel(uri);
     if (old) old.dispose();
     var m = monaco.editor.createModel(text, langOf(p), uri);
     m.onDidChangeContent(changed);
-    models[p] = m;
-    if (at == null) order.push(p); else order.splice(at, 0, p);
     return m;
+  }
+  // The file's group (groupOf) must be set first: it decides whether the model is live.
+  function addModel(p, text, at){
+    models[p] = makeModel(p, text);
+    if (at == null) order.push(p); else order.splice(at, 0, p);
+    return models[p];
   }
   function dropModel(p){
     order.splice(order.indexOf(p), 1);
     models[p].dispose();
-    delete models[p]; delete views[p]; delete errs[p];
+    delete models[p]; delete views[p]; delete errs[p]; delete groupOf[p];
+  }
+  // After its group turns on or off, a file moves to a new model: same text, new place.
+  // The editor moves to the new model before the old one goes.
+  function remodel(p){
+    var old = models[p], shown = editor.getModel() === old;
+    if (shown) views[p] = editor.saveViewState();
+    models[p] = makeModel(p, old.getValue());
+    if (shown) { editor.setModel(models[p]); if (views[p]) editor.restoreViewState(views[p]); }
+    old.dispose();
   }
 
   function loadMode(m){
     saveProject();
     order.slice().forEach(dropModel);
     active = null;
+    groups = []; groupOf = {};
+    closeMenu();
     mode = m;
     put('mode', m);
     panel.classList.toggle('sbx-react', m === 'react');
@@ -1706,7 +3067,18 @@
     });
     return Promise.all(types.map(function(t){ return Promise.resolve(t).catch(noop); })).then(function(){
       if (mode !== m) return;
+      groups = (proj.groups || []).filter(function(g){ return g && g.id && /^#[0-9A-F]{6}$/i.test(g.color); });
+      Object.keys(proj.of || {}).forEach(function(p){ if (p in proj.files && grp(proj.of[p])) groupOf[p] = proj.of[p]; });
+      var seen = {};
+      Object.keys(proj.files).forEach(function(p){
+        var g = grp(groupOf[p]), n = p.replace(/^~\d+\//, '');
+        if (g && g.off) return;
+        if (!seen[n]) seen[n] = g || true;
+        else if (g) g.off = true;
+        else if (seen[n] !== true) seen[n].off = true;
+      });
       Object.keys(proj.files).forEach(function(p){ addModel(p, proj.files[p]); });
+      tidy();
       openFile(models[proj.active] ? proj.active : order[0]);
       ambient();
       report();
@@ -1716,6 +3088,8 @@
 
   function openFile(p){
     if (!models[p]) return;
+    var g = grp(groupOf[p]);
+    if (g && g.shut) g.shut = false;      // opening a file unfolds its group
     if (active && models[active] && editor.getModel() === models[active]) views[active] = editor.saveViewState();
     active = p;
     editor.setModel(models[p]);
@@ -1723,6 +3097,21 @@
     renderTabs();
     ask();
     saveSoon();
+    follow();
+  }
+
+  // In React mode the preview shows the open tab's group when one of its .tsx files has a
+  // default export (the first such file), and App.tsx otherwise.
+  var shown = null;
+  function appFor(){
+    var g = active && !isOff(active) && groupOf[active];
+    var own = g && order.filter(function(p){
+      return groupOf[p] === g && /\.(tsx|jsx)$/.test(p) && /\bexport\s+default\b/.test(models[p].getValue());
+    })[0];
+    return own || pick(['App.tsx', 'App.jsx']);
+  }
+  function follow(){
+    if (mode === 'react' && editor && shown !== null && appFor() !== shown) { clearTimeout(liveT); liveT = setTimeout(preview, 120); }
   }
 
   function reactTypes(){
@@ -1754,9 +3143,21 @@
     return [sub + '.d.ts', sub + '/index.d.ts'];
   }
   // One .d.ts from jsDelivr, handed to the checker once; null when the package has no such file.
+  // A package's own entry. When it isn't index.d.ts, a root index.d.ts re-exports it, so
+  // the checker's node resolution finds it without the package.json.
+  function rootOf(name){
+    var t = TYPED[name].types;
+    if (!t) return entries('');
+    if (!typeTexts[name + '/index.d.ts']) {
+      typeTexts[name + '/index.d.ts'] = Promise.resolve('');
+      monaco.languages.typescript.typescriptDefaults.addExtraLib(
+        'export * from ' + JSON.stringify('./' + t.replace(/\.d\.ts$/, '')) + ';', 'file:///node_modules/' + name + '/index.d.ts');
+    }
+    return [t];
+  }
   function typeText(name, f){
     var key = name + '/' + f;
-    return typeTexts[key] || (typeTexts[key] = fetch(NPM + name + '@' + TYPED[name] + '/' + f)
+    return typeTexts[key] || (typeTexts[key] = fetch(NPM + name + '@' + TYPED[name].v + '/' + f)
       .then(function(r){
         if (r.status === 404) return null;
         if (!r.ok) throw new Error(key + ': ' + r.status);
@@ -1768,14 +3169,17 @@
       .catch(function(e){ delete typeTexts[key]; throw e; }));
   }
   // Every .d.ts reachable from the first of `cands` that exists, through relative imports
-  // and the package's own subpaths. `seen` belongs to one walk, so import cycles end.
-  function typeWalk(name, cands, seen){
+  // and the package's own subpaths. `seen` belongs to one walk, so import cycles end. Only
+  // a missing entry fails the walk: a relative import with no file behind it is skipped,
+  // because the pattern also catches import lines quoted in doc comments.
+  function typeWalk(name, cands, seen, inner){
     var f = cands[0];
     if (seen[f]) return Promise.resolve();
     seen[f] = 1;
     return typeText(name, f).then(function(t){
       if (t == null) {
-        if (cands.length > 1) return typeWalk(name, cands.slice(1), seen);
+        if (cands.length > 1) return typeWalk(name, cands.slice(1), seen, inner);
+        if (inner) return;
         throw new Error(name + '/' + f + ': not found');
       }
       var dir = f.split('/').slice(0, -1), jobs = [];
@@ -1784,8 +3188,9 @@
         if (/^\.{1,2}\//.test(s)) {
           var parts = dir.slice();
           s.split('/').forEach(function(x){ if (x === '..') parts.pop(); else if (x && x !== '.') parts.push(x); });
-          jobs.push(typeWalk(name, entries(parts.join('/')), seen));
-        } else if (p && p.name === name) jobs.push(typeWalk(name, entries(p.sub), seen));
+          jobs.push(typeWalk(name, entries(parts.join('/')), seen, true));
+        } else if (p && p.name === name) jobs.push(typeWalk(name, p.sub ? entries(p.sub) : rootOf(name), seen, true));
+        else if (p) jobs.push(pkgLoad(s));
         return all;
       });
       return Promise.all(jobs);
@@ -1797,7 +3202,7 @@
     if (typed[spec]) return Promise.resolve(typed[spec]);
     var p = pkgOf(spec);
     status.textContent = 'loading ' + p.name + ' types…';
-    return typed[spec] = typeWalk(p.name, entries(p.sub), {}).then(
+    return typed[spec] = typeWalk(p.name, p.sub ? entries(p.sub) : rootOf(p.name), {}).then(
       function(){ typed[spec] = true; ambient(); report(); },
       function(e){ delete typed[spec]; report(); throw e; });
   }
@@ -1809,7 +3214,7 @@
   function ambient(){
     var names = {};
     order.forEach(function(p){
-      if (!isCode(p)) return;
+      if (!isCode(p) || isOff(p)) return;
       models[p].getValue().replace(SPEC, function(all, pre, q, s){
         if (/^[.\/]|^[a-z]+:/i.test(s)) return all;
         if (/^react(-dom)?(\/|$)/.test(s)) reactTypes().catch(noop);
@@ -1832,14 +3237,32 @@
   /* ---- file tabs ----------------------------------------------------------------- */
   function renderTabs(){
     filesEl.textContent = '';
+    var labelled = {};
     order.forEach(function(p){
+      var g = grp(groupOf[p]);
+      if (g && !labelled[g.id]) {
+        labelled[g.id] = 1;
+        var l = document.createElement('div');
+        l.className = 'sbx-grp' + (g.off ? ' sbx-goff' : '');
+        l.dataset.g = g.id;
+        paint(l, g.color);
+        l.innerHTML = '<i class="sbx-pow"></i><span></span><em>off</em><b></b>';
+        l.children[1].textContent = g.name;
+        l.children[3].textContent = g.shut ? '▸ ' + members(g).length : '▾';
+        l.title = (g.name || 'This group') + (g.off ? ' is off' : '') + ' · click to ' + (g.shut ? 'show' : 'fold') +
+          ' its tabs · right-click for more';
+        l.firstChild.title = g.off ? 'Turn the group on' : 'Turn the group off: its files leave the checker, the preview and Run';
+        filesEl.appendChild(l);
+      }
+      if (g && g.shut) return;
       var t = document.createElement('div');
-      t.className = 'sbx-file' + (p === active ? ' sbx-on' : '') + (errs[p] ? ' sbx-err' : '');
+      t.className = 'sbx-file' + (p === active ? ' sbx-on' : '') + (errs[p] ? ' sbx-err' : '') + (g && g.off ? ' sbx-off' : '');
       t.dataset.path = p;
+      if (g) { t.dataset.g = g.id; paint(t, g.color); }
       t.innerHTML = '<i class="sbx-dot"></i><span></span>' +
         (order.length > 1 ? '<i class="sbx-x" title="Delete this file">×</i>' : '');
-      t.children[1].textContent = p;
-      t.title = p + ' · double-click to rename';
+      t.children[1].textContent = nameOf(p);
+      t.title = nameOf(p) + (g && g.off ? ' (off)' : '') + ' · double-click to rename · right-click to group';
       filesEl.appendChild(t);
     });
     var add = document.createElement('div');
@@ -1848,11 +3271,237 @@
     add.textContent = '+';
     filesEl.appendChild(add);
   }
-  function validName(n, except){
+  function tabEl(p){ return filesEl.querySelector('.sbx-file[data-path="' + CSS.escape(p) + '"]'); }
+
+  /* ---- tab groups ---------------------------------------------------------------- */
+  // A group is a label in the tab row with its tabs after it. It can fold its tabs away,
+  // and it can be turned off: its files keep their tabs and their text but leave the
+  // project, so the checker, the preview and Run act as if they weren't there. That is
+  // how a step-two file or a solution waits beside the exercise without breaking it.
+  // groups: [{ id, name, color, shut, off }] in creation order; groupOf: path → id.
+  var COLORS = ['#22D3EE', '#A78BFA', '#FBBF24', '#34D399', '#F472B6', '#60A5FA', '#FB923C', '#F8717A', '#94A3B8'];
+  function grp(id){ return id && groups.filter(function(g){ return g.id === id; })[0] || null; }
+  function isOff(p){ var g = grp(groupOf[p]); return !!(g && g.off); }
+  function live(p){ return !!models[p] && !isOff(p); }
+  // A file's key is its name, unless another file already holds that name; then it is
+  // ~2/name (a name can't start with ~). Names clash only among live files and inside one
+  // group, so an off group can keep its own App.tsx beside the live one.
+  function nameOf(p){ return p.replace(/^~\d+\//, ''); }
+  function keyFor(n){ var k = n, i = 1; while (models[k]) k = '~' + (++i) + '/' + n; return k; }
+  function liveKey(n){ return order.filter(function(k){ return live(k) && nameOf(k) === n; })[0] || null; }
+  // The file that name n would clash with in group id (undefined: no group): one with
+  // that name in the same group, or a live one when the group is live.
+  function clash(n, id, except){
+    var g = grp(id), off = !!(g && g.off);
+    return order.filter(function(k){
+      return k !== except && nameOf(k) === n && (groupOf[k] === id || (!off && live(k)));
+    })[0] || null;
+  }
+  function label(g){ return g && g.name ? '“' + g.name + '”' : 'a group'; }
+  function members(g){ return order.filter(function(p){ return groupOf[p] === g.id; }); }
+  function paint(el, c){
+    var n = parseInt(c.slice(1), 16);
+    el.style.setProperty('--g', c);
+    el.style.setProperty('--gb', 'rgba(' + (n >> 16) + ',' + (n >> 8 & 255) + ',' + (n & 255) + ',.16)');
+  }
+  // A group's tabs sit together, where its first tab is. A group with no files is gone.
+  function tidy(){
+    var out = [], done = {};
+    order.forEach(function(p){
+      var id = groupOf[p];
+      if (!id) return out.push(p);
+      if (done[id]) return;
+      done[id] = 1;
+      order.forEach(function(q){ if (groupOf[q] === id) out.push(q); });
+    });
+    order = out;
+    groups = groups.filter(function(g){ return done[g.id]; });
+  }
+  // Turning files on or off changes which files exist for the checker, and an import
+  // elsewhere may have just broken or healed. A change to the extra libs re-checks every
+  // file in place; new compiler options would too, but they restart the worker, which
+  // cancels the requests a new model just sent into an uncaught "Canceled".
+  function recheck(){
+    monaco.languages.typescript.typescriptDefaults
+      .addExtraLib('export {};', 'file:///node_modules/@types/sbx-recheck/index.d.ts').dispose();
+  }
+  // Puts p in group g, or with g null takes it out of its group, next to its new
+  // neighbours. True when p crossed between on and off, so the project changed.
+  function place(p, g){
+    var id = g ? g.id : undefined, old = groupOf[p];
+    if (old === id) return false;
+    var was = isOff(p), at = order.indexOf(p);
+    order.splice(at, 1);
+    if (id) groupOf[p] = id; else delete groupOf[p];
+    var near = order.filter(function(q){ return groupOf[q] === (id || old); }).pop();
+    order.splice(near ? order.indexOf(near) + 1 : at, 0, p);
+    if (isOff(p) === was) return false;
+    remodel(p);
+    return true;
+  }
+  function regroup(moved){
+    tidy();
+    renderTabs();
+    if (moved) { recheck(); report(); ask(); changed(); } else saveSoon();
+    follow();
+  }
+  function newGroup(p){
+    var used = groups.map(function(g){ return g.color; });
+    var g = { id: 'g' + Math.random().toString(36).slice(2, 8), name: '', shut: false, off: false,
+      color: COLORS.filter(function(c){ return used.indexOf(c) < 0; })[0] || COLORS[groups.length % COLORS.length] };
+    groups.push(g);
+    regroup(place(p, g));
+    // Like Chrome, a new group opens its menu so it can be named straight away.
+    var l = filesEl.querySelector('.sbx-grp[data-g="' + g.id + '"]');
+    if (l) { var r = l.getBoundingClientRect(); groupMenu(g, r.left, r.bottom + 4); }
+  }
+  function setOff(g, off){
+    if (g.off === off) return;
+    if (!off) {
+      var others = [], stuck = null;
+      members(g).forEach(function(p){
+        var c = order.filter(function(k){ return live(k) && groupOf[k] !== g.id && nameOf(k) === nameOf(p); })[0];
+        var h = c && grp(groupOf[c]);
+        if (c && !h) stuck = stuck || c;
+        else if (h && others.indexOf(h) < 0) others.push(h);
+      });
+      if (stuck) return note(nameOf(stuck) + ' is live outside any group, so ' + label(g) + ' stays off');
+      // Off first, so their models leave the shared file:///mode/name before ours take it.
+      others.forEach(function(h){ h.off = true; members(h).forEach(remodel); });
+      if (others.length) note(others.map(label).join(', ') + ' is off now: same file name');
+    }
+    g.off = off;
+    members(g).forEach(remodel);
+    regroup(true);
+  }
+  function fold(g, shut){
+    g.shut = shut;
+    if (shut && groupOf[active] === g.id) {
+      // The open file is folding away: open the nearest tab still showing, if any.
+      var i = order.indexOf(active), shown = function(p){ var h = grp(groupOf[p]); return !h || !h.shut; };
+      var to = order.slice(i).filter(shown)[0] || order.slice(0, i).filter(shown).pop();
+      if (to) openFile(to);
+    }
+    renderTabs();
+    saveSoon();
+  }
+  function ungroup(g){
+    var c = members(g).map(function(p){ return clash(nameOf(p), undefined, p); }).filter(Boolean)[0];
+    if (c) return note(nameOf(c) + ' already exists outside a group');
+    var moved = g.off;
+    members(g).forEach(function(p){ delete groupOf[p]; if (moved) remodel(p); });
+    regroup(moved);
+  }
+
+  /* ---- menus ---------------------------------------------------------------------- */
+  var menu = null;
+  function closeMenu(){ if (menu) { menu.remove(); menu = null; } }
+  function showMenu(x, y, fill){
+    closeMenu();
+    menu = document.createElement('div');
+    menu.className = 'sbx-menu';
+    fill(menu);
+    panel.appendChild(menu);
+    var r = panel.getBoundingClientRect();
+    menu.style.left = Math.max(r.left + 6, Math.min(x, r.right - menu.offsetWidth - 6)) + 'px';
+    menu.style.top = Math.max(r.top + 6, Math.min(y, r.bottom - menu.offsetHeight - 6)) + 'px';
+    menu.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') { e.preventDefault(); closeMenu(); if (editor) editor.focus(); return; }
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      e.preventDefault();
+      var bs = [].slice.call(menu.querySelectorAll(':scope > button')), i = bs.indexOf(document.activeElement);
+      var to = bs[i < 0 ? 0 : (i + (e.key === 'ArrowDown' ? 1 : bs.length - 1)) % bs.length];
+      if (to) to.focus();
+    });
+    var first = menu.querySelector('input, button');
+    if (first) first.focus();
+  }
+  function item(m, label, act){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = label;
+    b.addEventListener('click', function(){ closeMenu(); act(); });
+    m.appendChild(b);
+    return b;
+  }
+  function chip(g){
+    var c = document.createElement('i');
+    c.className = 'sbx-chip';
+    c.textContent = g.name || 'unnamed group';
+    paint(c, g.color);
+    return c;
+  }
+  document.addEventListener('pointerdown', function(e){ if (menu && !menu.contains(e.target)) closeMenu(); }, true);
+
+  function tabMenu(p, x, y){
+    var mine = groupOf[p], n = nameOf(p);
+    function blocked(b, c){
+      if (c) { b.disabled = true; b.title = n + (live(c) ? ' is already live' : ' is already in that group'); }
+      return b;
+    }
+    showMenu(x, y, function(m){
+      blocked(item(m, mine ? 'Move to a new group' : 'Add to a new group', function(){ newGroup(p); }), clash(n, '', p));
+      groups.forEach(function(g){
+        if (g.id !== mine) blocked(item(m, mine ? 'Move to ' : 'Add to ', function(){ regroup(place(p, g)); }), clash(n, g.id, p)).appendChild(chip(g));
+      });
+      if (mine) blocked(item(m, 'Remove from ', function(){ regroup(place(p, null)); }), clash(n, undefined, p)).appendChild(chip(grp(mine)));
+      m.appendChild(document.createElement('hr'));
+      item(m, 'Rename', function(){ var t = tabEl(p); if (t) renameFile(p, t); });
+    });
+  }
+  function groupMenu(g, x, y){
+    showMenu(x, y, function(m){
+      var name = document.createElement('input');
+      name.value = g.name;
+      name.placeholder = 'Name this group';
+      name.maxLength = 24;
+      name.spellcheck = false;
+      name.addEventListener('input', function(){
+        g.name = name.value.trim();
+        var l = filesEl.querySelector('.sbx-grp[data-g="' + g.id + '"] span');
+        if (l) l.textContent = g.name;
+        saveSoon();
+      });
+      name.addEventListener('keydown', function(e){
+        if (e.key === 'Enter') { e.preventDefault(); closeMenu(); renderTabs(); if (editor) editor.focus(); }
+      });
+      m.appendChild(name);
+      var sw = document.createElement('div');
+      sw.className = 'sbx-sw';
+      COLORS.forEach(function(c){
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = c === g.color ? 'sbx-on' : '';
+        b.style.background = c;
+        b.setAttribute('aria-label', 'Colour ' + c);
+        b.addEventListener('click', function(){
+          g.color = c;
+          sw.querySelectorAll('button').forEach(function(x){ x.classList.toggle('sbx-on', x === b); });
+          renderTabs();
+          saveSoon();
+        });
+        sw.appendChild(b);
+      });
+      m.appendChild(sw);
+      m.appendChild(document.createElement('hr'));
+      item(m, g.off ? '● Turn on' : '○ Turn off', function(){ setOff(g, !g.off); });
+      var why = document.createElement('small');
+      why.textContent = g.off ? 'Back into the checker, the preview and Run.'
+        : 'Its files stay here but leave the checker, the preview and Run.';
+      m.appendChild(why);
+      item(m, g.shut ? '▾ Show its tabs' : '▸ Fold its tabs', function(){ fold(g, !g.shut); });
+      item(m, '+ New file in this group', function(){ newFile(g); });
+      item(m, 'Ungroup', function(){ ungroup(g); });
+    });
+  }
+  // except: the file being renamed; id: the group the name goes in.
+  function validName(n, except, id){
     if (!/\.[a-z]+$/i.test(n)) n += mode === 'react' ? '.tsx' : '.ts';
     if (!/^[\w-][\w.-]*(\/[\w-][\w.-]*)*\.(tsx|ts|jsx|css|json)$/.test(n))
       return { err: 'letters, digits, - _ /, ending .tsx .ts .jsx .css or .json' };
-    if (models[n] && n !== except) return { err: n + ' already exists' };
+    var c = clash(n, id, except);
+    if (c) return { err: groupOf[c] === id ? n + ' already exists' + (id ? ' in this group' : '')
+      : n + ' is live in ' + (groupOf[c] ? label(grp(groupOf[c])) : 'the project') + ': turn that off first' };
     return { name: n };
   }
   function template(n){
@@ -1865,7 +3514,7 @@
   }
   // An inline name box, used for both "new file" and "rename". Enter commits, Esc or
   // leaving the box cancels; a bad name keeps the box open and says why.
-  function nameBox(before, initial, commit){
+  function nameBox(before, initial, commit, except, id){
     var box = document.createElement('input'), why = document.createElement('span'), over = false;
     box.className = 'sbx-name';
     box.value = initial;
@@ -1878,7 +3527,7 @@
       if (e.key === 'Escape') { e.preventDefault(); end(); return; }
       if (e.key !== 'Enter') return;
       e.preventDefault();
-      var r = validName(box.value.trim(), initial);
+      var r = validName(box.value.trim(), except, id);
       if (r.err) { box.classList.add('sbx-bad'); why.textContent = r.err; return; }
       over = true;
       commit(r.name);
@@ -1887,37 +3536,51 @@
     box.focus();
     box.setSelectionRange(0, initial.replace(/\.[a-z]+$/i, '').length);
   }
-  function newFile(){
-    nameBox(filesEl.querySelector('.sbx-add').previousSibling, '', function(n){
-      addModel(n, template(n));
-      openFile(n);
+  // With a group, the new file joins it and its box opens after the group's last tab.
+  function newFile(g){
+    if (g && g.shut) { g.shut = false; renderTabs(); }
+    var last = g ? members(g).pop() : null;
+    nameBox(last ? tabEl(last) : filesEl.querySelector('.sbx-add').previousSibling, '', function(n){
+      var k = keyFor(n);
+      if (g && grp(g.id)) groupOf[k] = g.id;
+      addModel(k, template(n), last && models[last] ? order.indexOf(last) + 1 : null);
+      tidy();
+      openFile(k);
       editor.focus();
       changed();
-    });
+    }, null, g ? g.id : undefined);
     filesEl.querySelector('.sbx-add').remove();
   }
   function renameFile(p, tab){
-    nameBox(tab, p, function(n){
-      if (n !== p) {
-        var text = models[p].getValue(), at = order.indexOf(p), vs = views[p], was = active === p;
+    nameBox(tab, nameOf(p), function(n){
+      if (n !== nameOf(p)) {
+        var text = models[p].getValue(), at = order.indexOf(p), vs = views[p], was = active === p, g = groupOf[p];
         dropModel(p);
-        addModel(n, text, at);
-        views[n] = vs;
-        if (was) { active = null; openFile(n); }
+        var k = keyFor(n);
+        if (g) groupOf[k] = g;
+        addModel(k, text, at);
+        views[k] = vs;
+        if (was) { active = null; openFile(k); }
       }
       renderTabs();
       changed();
-    });
+    }, p, groupOf[p]);
     tab.remove();
   }
   function deleteFile(p){
     dropModel(p);
+    tidy();
     if (active === p) { active = null; openFile(order[0]); } else renderTabs();
     report();
     changed();
   }
   filesEl.addEventListener('click', function(e){
-    var x = e.target.closest('.sbx-x'), t = e.target.closest('.sbx-file');
+    var x = e.target.closest('.sbx-x'), t = e.target.closest('.sbx-file'), l = e.target.closest('.sbx-grp');
+    if (l && editor) {
+      var g = grp(l.dataset.g);
+      if (g) { if (e.target.closest('.sbx-pow')) setOff(g, !g.off); else fold(g, !g.shut); }
+      return;
+    }
     if (!t || !editor) return;
     if (t.classList.contains('sbx-add')) return newFile();
     if (x) {
@@ -1934,6 +3597,13 @@
     var t = e.target.closest('.sbx-file[data-path]');
     if (t && !e.target.closest('.sbx-x')) renameFile(t.dataset.path, t);
   });
+  filesEl.addEventListener('contextmenu', function(e){
+    var l = e.target.closest('.sbx-grp'), t = e.target.closest('.sbx-file[data-path]');
+    if (!editor || !(l || t)) return;
+    e.preventDefault();
+    if (l) groupMenu(grp(l.dataset.g), e.clientX, e.clientY);
+    else tabMenu(t.dataset.path, e.clientX, e.clientY);
+  });
 
   // The TypeScript worker registers itself a beat after the first .ts model appears;
   // until then getTypeScriptWorker rejects, so keep asking for a few seconds.
@@ -1948,11 +3618,19 @@
   }
 
   /* ---- problems ---------------------------------------------------------------- */
+  // A note takes the status line for a few seconds: why a group went off, or couldn't go on.
+  var noteText = '', noteUntil = 0, noteT;
+  function note(t){
+    noteText = t; noteUntil = Date.now() + 4000;
+    clearTimeout(noteT); noteT = setTimeout(report, 4050);
+    report();
+  }
   function report(){
     if (!monaco) return;
     var S = monaco.MarkerSeverity, all = [];
     errs = {};
     order.forEach(function(p, n){
+      if (isOff(p)) return;
       monaco.editor.getModelMarkers({ resource: models[p].uri }).forEach(function(m){
         if (m.severity < S.Warning) return;
         all.push({ p: p, n: n, m: m });
@@ -1963,8 +3641,12 @@
     problems = all.filter(function(x){ return x.m.severity === S.Error; }).length;
     pcount.textContent = all.length || '';
     pcount.classList.toggle('sbx-bad', problems > 0);
-    status.textContent = problems ? problems + (problems > 1 ? ' errors' : ' error') : '✓ type-checks';
+    var off = order.filter(isOff).length;
+    status.textContent = (problems ? problems + (problems > 1 ? ' errors' : ' error') : '✓ type-checks') +
+      (off ? ' · ' + off + (off > 1 ? ' files' : ' file') + ' off' : '');
+    status.title = off ? 'Files in a group that is off are left out of the check, the preview and Run.' : '';
     status.className = 'sbx-status ' + (problems ? 'sbx-bad' : 'sbx-ok');
+    if (Date.now() < noteUntil) { status.textContent = noteText; status.title = noteText; status.className = 'sbx-status sbx-note'; }
     filesEl.querySelectorAll('.sbx-file[data-path]').forEach(function(t){ t.classList.toggle('sbx-err', !!errs[t.dataset.path]); });
     probs.textContent = '';
     if (!all.length) {
@@ -1978,7 +3660,7 @@
       var code = m.code && typeof m.code === 'object' ? m.code.value : m.code;
       row.innerHTML = '<i>' + (m.severity === S.Error ? '✕' : '!') + '</i><span></span><small></small>';
       row.children[1].textContent = m.message;
-      row.children[2].textContent = x.p + ' ' + m.startLineNumber + ':' + m.startColumn + (code ? ' · ts(' + code + ')' : '');
+      row.children[2].textContent = nameOf(x.p) + ' ' + m.startLineNumber + ':' + m.startColumn + (code ? ' · ts(' + code + ')' : '');
       function jump(){
         if (active !== x.p) openFile(x.p);
         var at = { lineNumber: m.startLineNumber, column: m.startColumn };
@@ -1999,7 +3681,7 @@
   function ask(){
     if (!queries || !active) return;
     var model = models[active], seq = ++asking, asks = [];
-    if (!isCode(active)) { queries.clear(); return; }
+    if (!isCode(active) || isOff(active)) { queries.clear(); return; }
     var lines = model.getLinesContent();
     for (var n = 1; n < lines.length; n++) {
       if (!/^\s*\/\/\s*\^\?\s*$/.test(lines[n])) continue;
@@ -2029,8 +3711,9 @@
   }
 
   /* ---- building: TypeScript → one ES module per file ---------------------------- */
+  // Only live files: a file in a group that is off is left out of every build.
   function compileAll(){
-    var code = order.filter(isCode);
+    var code = order.filter(function(p){ return isCode(p) && !isOff(p); });
     return client(code.map(function(p){ return models[p].uri; })).then(function(c){
       return Promise.all(code.map(function(p){
         return c.getEmitOutput(models[p].uri.toString()).then(function(o){
@@ -2045,15 +3728,15 @@
     });
   }
   function resolve(from, spec){
-    var parts = spec.charAt(0) === '/' ? [] : from.split('/').slice(0, -1);
+    var parts = spec.charAt(0) === '/' ? [] : nameOf(from).split('/').slice(0, -1);
     spec.split('/').forEach(function(s){ if (s === '..') parts.pop(); else if (s && s !== '.') parts.push(s); });
     var p = parts.join('/'), js = p.replace(/\.js$/, '');
     return [p, p + '.tsx', p + '.ts', p + '.jsx', js + '.tsx', js + '.ts', p + '/index.tsx', p + '/index.ts']
-      .filter(function(c){ return models[c]; })[0] || null;
+      .map(liveKey).filter(Boolean)[0] || null;
   }
   function bare(spec, inPreview){
     if (/^[a-z]+:/i.test(spec) || (inPreview && IMPORTS[spec])) return null;
-    var t = pkgOf(spec), pinned = t ? t.name + '@' + TYPED[t.name] + (t.sub ? '/' + t.sub : '')
+    var t = pkgOf(spec), pinned = t ? t.name + '@' + TYPED[t.name].v + (t.sub ? '/' + t.sub : '')
       : spec.replace(/^(react-dom|react)(?=\/|$)/, '$1@' + REACT);
     return ESM + pinned + (pinned.indexOf('?') < 0 ? '?' : '&') + 'dev' + (inPreview ? '&external=react,react-dom' : '');
   }
@@ -2062,24 +3745,25 @@
   function moduleFor(p, js, local, inPreview){
     var x = ext(p), text = models[p].getValue();
     if (x === 'css') return inPreview
-      ? 'const s = document.createElement("style"); s.dataset.file = ' + JSON.stringify(p) +
+      ? 'const s = document.createElement("style"); s.dataset.file = ' + JSON.stringify(nameOf(p)) +
         '; s.textContent = ' + JSON.stringify(text) + '; document.head.appendChild(s);'
       : '';
     if (x === 'json') {
-      try { JSON.parse(text); } catch (e) { throw new Error(p + ' is not valid JSON: ' + e.message); }
+      try { JSON.parse(text); } catch (e) { throw new Error(nameOf(p) + ' is not valid JSON: ' + e.message); }
       return 'export default ' + text + ';';
     }
     return (js || '').replace(SPEC, function(all, pre, q, spec){
       var to;
       if (/^\.{0,2}\//.test(spec)) {
         var r = resolve(p, spec);
-        if (!r) throw new Error('Cannot find "' + spec + '", imported by ' + p + '.');
+        if (!r) throw new Error('Cannot find "' + spec + '", imported by ' + nameOf(p) + '.');
         to = local(r);
       } else to = bare(spec, inPreview);
       return to == null ? all : pre + q + to + q;
     });
   }
-  function pick(list){ return list.filter(function(p){ return models[p]; })[0]; }
+  // The first of list (names or keys) that is live, as its key.
+  function pick(list){ return list.map(function(x){ return live(x) ? x : liveKey(nameOf(x)); }).filter(Boolean)[0]; }
 
   /* ---- console ------------------------------------------------------------------- */
   var cerrs = 0;
@@ -2176,16 +3860,17 @@
       : '▶ running');
     compileAll().then(function(js){
       stop();
-      var entry = pick(MODES.ts.entries) || (isCode(active) ? active : order.filter(isCode)[0]);
-      if (!entry) return line('error', 'Nothing to run: add a .ts file.');
+      var entry = pick(MODES.ts.entries) || pick([active].concat(order).filter(isCode));
+      if (!entry) return line('error', order.some(isOff) ? 'Nothing to run: every .ts file is in a group that is off.'
+        : 'Nothing to run: add a .ts file.');
       // Blob URLs can't be imported relatively, so each file's imports are rewritten
       // to its dependencies' blob URLs — built leaves first, which rules out cycles.
       var urls = {}, walking = {};
       function url(p){
         if (urls[p]) return urls[p];
-        if (walking[p]) throw new Error('Circular import through ' + p + '. Run needs imports that only point one way.');
+        if (walking[p]) throw new Error('Circular import through ' + nameOf(p) + '. Run needs imports that only point one way.');
         walking[p] = true;
-        return (urls[p] = blob(moduleFor(p, js[p], url, false) + '\n//# sourceURL=' + p));
+        return (urls[p] = blob(moduleFor(p, js[p], url, false) + '\n//# sourceURL=' + nameOf(p)));
       }
       var main = blob('var inspect = ' + inspect + ', format = ' + format + ';\n(' + prelude + ')();\n' +
         'import(' + JSON.stringify(url(entry)) + ').then(function(){ postMessage({ t: "done" }); },' +
@@ -2283,13 +3968,18 @@
       var imports = {};
       Object.keys(IMPORTS).forEach(function(k){ imports[k] = IMPORTS[k]; });
       order.forEach(function(p){
-        imports['@sbx/' + p] = dataUrl(moduleFor(p, js[p], function(r){ return '@sbx/' + r; }, true), p);
+        if (isOff(p)) return;
+        imports['@sbx/' + p] = dataUrl(moduleFor(p, js[p], function(r){ return '@sbx/' + r; }, true), nameOf(p));
       });
-      var entry = pick(MODES.react.entries);
+      var entry = pick(MODES.react.entries), app = entry || appFor();
+      shown = app || '';
+      $('[data-tab="preview"]').textContent =
+        app && !entry && !/^App\.[jt]sx$/.test(nameOf(app)) ? 'Preview · ' + nameOf(app).replace(/\.[jt]sx$/, '') : 'Preview';
       if (!entry) {
-        var app = pick(['App.tsx', 'App.jsx']);
-        if (!app) throw new Error('Nothing to render: add App.tsx with a default export, the component to show.');
-        imports['@sbx/mount'] = dataUrl(MOUNT.replace('__APP__', '@sbx/' + app).replace('__FILE__', app), 'mount.js');
+        if (!app) throw new Error(order.some(function(k){ return /^App\.[jt]sx$/.test(nameOf(k)); })
+          ? 'Nothing to render: App.tsx is in a group that is off. Turn the group on to see it.'
+          : 'Nothing to render: add App.tsx with a default export, the component to show.');
+        imports['@sbx/mount'] = dataUrl(MOUNT.replace('__APP__', '@sbx/' + app).replace('__FILE__', nameOf(app)), 'mount.js');
         entry = 'mount';
       }
       clearConsole();
