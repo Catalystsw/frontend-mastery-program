@@ -1411,6 +1411,7 @@ code, pre { font: 13px ui-monospace, monospace; }
 pre { background: #f1f5f9; padding: 8px 10px; border-radius: 8px; margin: 0; white-space: pre-wrap; }
 </script>
 <script type="text/plain" data-sbx-file="CacheDemo.tsx" data-sbx-group="cache" data-sbx-color="#34D399">
+import './styles.css';
 import { useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { WithQuery } from './query';
@@ -1496,6 +1497,7 @@ export const jobsQuery = (q: string) =>
   });
 </script>
 <script type="text/plain" data-sbx-file="InvalidateDemo.tsx" data-sbx-group="invalidate" data-sbx-color="#22D3EE" data-sbx-shut>
+import './styles.css';
 import { useQuery, useQueryClient, type QueryKey } from '@tanstack/react-query';
 import { WithQuery } from './query';
 import { api } from './api';
@@ -1545,6 +1547,7 @@ export default function InvalidateDemo() {
 }
 </script>
 <script type="text/plain" data-sbx-file="SaveDemo.tsx" data-sbx-group="optimistic" data-sbx-color="#FBBF24" data-sbx-shut>
+import './styles.css';
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { WithQuery } from './query';
@@ -1626,6 +1629,7 @@ export function useToggleSave() {
 }
 </script>
 <script type="text/plain" data-sbx-file="RaceDemo.tsx" data-sbx-group="race" data-sbx-color="#F8717A" data-sbx-shut>
+import './styles.css';
 import { useEffect, useState } from 'react';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { WithQuery } from './query';
@@ -1698,6 +1702,7 @@ export default function RaceDemo() {
 }
 </script>
 <script type="text/plain" data-sbx-file="UrlDemo.tsx" data-sbx-group="url" data-sbx-color="#60A5FA" data-sbx-shut>
+import './styles.css';
 import { useState } from 'react';
 import { parseSearch, toUrl, type JobSearch } from './search';
 
@@ -1780,6 +1785,7 @@ export function toUrl(search: JobSearch) {
 }
 </script>
 <script type="text/plain" data-sbx-file="CompareDemo.tsx" data-sbx-group="store" data-sbx-color="#A78BFA" data-sbx-shut>
+import './styles.css';
 import { useCompare } from './compare';
 
 // Two components far apart share the compare tray: no provider, no prop drilling.
