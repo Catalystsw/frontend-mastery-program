@@ -1245,6 +1245,7 @@ code, pre { font: 12.5px ui-monospace, monospace; }
 pre { background: #f1f5f9; padding: 8px 10px; border-radius: 8px; margin: 0; white-space: pre-wrap; word-break: break-all; }
 </script>
 <script type="text/plain" data-sbx-file="ServerHtml.tsx" data-sbx-group="boundary" data-sbx-color="#22D3EE">
+import './styles.css';
 import { useEffect, useRef, useState } from 'react';
 import { renderToString } from 'react-dom/server';
 import { hydrateRoot } from 'react-dom/client';
@@ -1304,6 +1305,7 @@ export function JobPage() {
 }
 </script>
 <script type="text/plain" data-sbx-file="Mismatch.tsx" data-sbx-group="hydration" data-sbx-color="#FBBF24" data-sbx-shut>
+import './styles.css';
 import { useEffect, useRef, useState } from 'react';
 import { renderToString } from 'react-dom/server';
 import { hydrateRoot, type Root } from 'react-dom/client';
@@ -1360,6 +1362,7 @@ export default function Mismatch() {
 }
 </script>
 <script type="text/plain" data-sbx-file="Stream.tsx" data-sbx-group="streaming" data-sbx-color="#34D399" data-sbx-shut>
+import './styles.css';
 import { Suspense, use, useState } from 'react';
 import { renderToReadableStream } from 'react-dom/server';
 
@@ -1428,6 +1431,7 @@ export default function Stream() {
 }
 </script>
 <script type="text/plain" data-sbx-file="Isr.tsx" data-sbx-group="cache" data-sbx-color="#A78BFA" data-sbx-shut>
+import './styles.css';
 import { useState } from 'react';
 import { cached, revalidateTag, log } from './dataCache';
 
@@ -1503,6 +1507,7 @@ export function revalidateTag(tag: string) {
 }
 </script>
 <script type="text/plain" data-sbx-file="PostJob.tsx" data-sbx-group="actions" data-sbx-color="#F8717A" data-sbx-shut>
+import './styles.css';
 import { useActionState, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { postJob, session, type FormState } from './actions';
