@@ -477,6 +477,7 @@
         <rect x="520" y="256" width="12" height="12" rx="3" fill="none" stroke="#34D399"/>
         <text x="540" y="267" class="lbl" font-size="12">Client Component — HTML on the server, then hydrates</text>
       </svg>
+      <span class="illus">illustrative numbers</span>
     </div>
     <div class="demo bare" id="demo-tree">
       <div class="row">
@@ -1856,6 +1857,10 @@ export async function postJob(_prev: FormState, form: FormData): Promise<FormSta
   })();
 })();
 </script>
+<style>/* Made-up numbers say so on the slide, in the figure corner. */
+  .fig{position:relative}
+  .fig .illus{position:absolute; right:4px; top:0; font:500 11px/1 var(--mono); letter-spacing:.03em; color:var(--muted); opacity:.85; pointer-events:none}
+</style>
 <!--catalyst-brand:copy-->
 <script>
 /* A copy button on every code block. Injected here rather than written into each deck

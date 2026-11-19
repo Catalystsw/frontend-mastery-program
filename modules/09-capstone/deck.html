@@ -435,7 +435,7 @@
           <rect data-in="4" x="336" y="0" width="206" height="40" rx="9" fill="#121C30" stroke="#34D399"/>
           <text data-in="4" x="439" y="25" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px">module-6/data-layer</text>
           <rect data-in="6" x="552" y="0" width="206" height="40" rx="9" fill="#121C30" stroke="#22D3EE" stroke-dasharray="5 4"/>
-          <text data-in="6" x="655" y="25" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px;fill:#22D3EE">module-10/capstone</text>
+          <text data-in="6" x="655" y="25" text-anchor="middle" class="lbl b" style="font-family:var(--mono);font-size:12px;fill:#22D3EE">module-9/capstone</text>
           <text data-in="6" x="772" y="25" class="lbl s" style="fill:#22D3EE">← the only new stage</text>
 
           <rect x="0" y="50" width="320" height="40" rx="9" fill="#121C30" stroke="#243349"/>
@@ -854,6 +854,7 @@
           </g>
         </g>
       </svg>
+      <span class="illus">illustrative numbers</span>
     </div>
     <div class="demo bare" id="demo-gate">
       <div class="row">
@@ -980,7 +981,7 @@
         <p>Every row of the senior checklist, with the file, test or ADR that answers it. Gaps listed <b>honestly, not hidden</b>.</p>
       </div>
     </div>
-    <div class="key g">Stage: <code>module-10/capstone</code>. Branch from <code>main</code>, merge the earlier stages bottom-up, merge back when the checklist is done. Then rehearse: open any file at random and explain why it exists, in under a minute.</div>
+    <div class="key g">Stage: <code>module-9/capstone</code>. Branch from <code>main</code>, merge the earlier stages bottom-up, merge back when the checklist is done. Then rehearse: open any file at random and explain why it exists, in under a minute.</div>
 </section>
 
   <!-- L4 · READ NEXT -->
@@ -2163,6 +2164,10 @@ export default function Budget() {
   })();
 })();
 </script>
+<style>/* Made-up numbers say so on the slide, in the figure corner. */
+  .fig{position:relative}
+  .fig .illus{position:absolute; right:4px; top:0; font:500 11px/1 var(--mono); letter-spacing:.03em; color:var(--muted); opacity:.85; pointer-events:none}
+</style>
 <!--catalyst-brand:copy-->
 <script>
 /* A copy button on every code block. Injected here rather than written into each deck

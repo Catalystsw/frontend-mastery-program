@@ -528,7 +528,7 @@
     <div class="fig" id="fx-bundle" style="max-width:1000px">
       <svg viewBox="0 0 1000 226" role="img" aria-label="Treemap of Rasmi's main.js, 712 KB minified: rich-text editor 300 KB, react and react-dom 190 KB, app code 96 KB, every date locale 72 KB, other dependencies 54 KB">
         <text data-k="main" x="0" y="14" class="lbl b" style="font-size:14px">main.js · 712 KB minified · 214 KB gzip · loaded on every page</text>
-        <text x="998" y="14" text-anchor="end" class="lbl s" data-k="hint">click a box to fix it</text>
+        <text x="998" y="14" text-anchor="end" class="lbl s" data-k="hint">illustrative numbers · click a box to fix it</text>
         <g data-box="editor" tabindex="0" role="button" aria-label="Lazy-load the rich-text editor">
           <rect x="2" y="26" width="415" height="196" rx="6" fill="#F8717A" fill-opacity=".16" stroke="#F8717A"/>
           <text x="209" y="116" text-anchor="middle" class="lbl b" style="font-size:17px">Rich-text editor</text>
@@ -2022,7 +2022,7 @@ export async function run(): Promise<Result[]> {
       });
       head.textContent = 'main.js · ' + min + ' KB minified · ' + gz + ' KB gzip · loaded on every page';
       head.style.fill = min < 712 ? '#34D399' : '';
-      hint.textContent = on.editor || on.locale ? 'click again to undo' : 'click a box to fix it';
+      hint.textContent = on.editor || on.locale ? 'illustrative numbers · click again to undo' : 'illustrative numbers · click a box to fix it';
     }
     function flip(g){ on[g.dataset.box] = !on[g.dataset.box]; paint(); }
     fig.addEventListener('click', function(e){
