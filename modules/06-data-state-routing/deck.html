@@ -1084,6 +1084,8 @@
      under a name pins its type inline. Two modes, each a small multi-file project:
        TS     plain TypeScript; Run executes it in a worker, console output below.
        React  components in .tsx files and CSS; a live preview re-renders as you type.
+     Right-click a tab to put it in a tab group. A group folds its tabs away, and a
+     group that is off leaves the checker, the preview and Run.
      Injected by brand/apply_brand.py into module decks from 04 on; edit
      brand/sandbox.html, not this block.
 
@@ -1154,6 +1156,51 @@
     background:var(--code); color:var(--ink); border:1px solid var(--cy); border-radius:5px; font:600 12px/1.2 var(--mono)}
   .sbx-name.sbx-bad{border-color:var(--bad)}
   .sbx-nerr{align-self:center; color:var(--bad); font:11.5px/1.3 var(--mono); white-space:nowrap; padding-right:8px}
+
+  /* Tab groups, Chrome style: a coloured label, then its tabs. A click on the label
+     folds them away; a click on its dot turns the group off. --g is the group's
+     colour, --gb a faint tint of it (set inline). */
+  .sbx-grp{display:flex; align-items:center; gap:6px; align-self:center; margin:0 3px 0 7px; padding:4px 8px 4px 6px; border-radius:6px;
+    background:var(--gb); color:var(--g); font:700 11.5px/1 var(--mono); cursor:pointer; white-space:nowrap; user-select:none}
+  .sbx-grp:hover{box-shadow:inset 0 0 0 1px var(--g)}
+  .sbx-grp span:empty{display:none}
+  .sbx-grp b{font-weight:500; opacity:.75}
+  .sbx-grp em{display:none; font:700 9.5px/1 var(--mono); font-style:normal; letter-spacing:.8px; text-transform:uppercase; opacity:.85}
+  .sbx-grp .sbx-pow{display:grid; place-items:center; width:18px; height:18px; margin:-4px -3px -4px -4px; border-radius:50%; font-style:normal}
+  .sbx-grp .sbx-pow::before{content:''; width:8px; height:8px; border-radius:50%; background:var(--g)}
+  .sbx-grp .sbx-pow:hover{background:rgba(255,255,255,.1)}
+  .sbx-grp.sbx-goff{opacity:.65}
+  .sbx-grp.sbx-goff em{display:inline}
+  .sbx-grp.sbx-goff .sbx-pow::before{background:none; box-shadow:inset 0 0 0 1.5px var(--g)}
+  .sbx-file[data-g]{box-shadow:inset 0 2px 0 var(--g)}
+  .sbx-file.sbx-off{opacity:.5}
+  .sbx-file.sbx-off span{font-style:italic}
+
+  /* The open file belongs to a group that is off. */
+  .sbx-offnote{display:none; align-items:center; gap:10px; flex:none; padding:7px 10px 7px 14px; border-bottom:1px solid var(--line2);
+    background:rgba(251,191,36,.07); color:var(--ochre); font:600 11.5px/1.4 var(--mono)}
+  .sbx-offnote.sbx-on{display:flex}
+  .sbx-offnote span{flex:1; min-width:0}
+  .sbx-offnote button{flex:none; cursor:pointer; font:600 11.5px/1 var(--mono); color:var(--ochre); background:none;
+    border:1px solid rgba(251,191,36,.45); border-radius:6px; padding:5px 8px}
+  .sbx-offnote button:hover{background:rgba(251,191,36,.12)}
+
+  /* Right-click menus for tabs and group labels. */
+  .sbx-menu{position:fixed; z-index:30; width:236px; padding:6px; background:#0E1525; border:1px solid #243349; border-radius:9px;
+    box-shadow:0 14px 40px rgba(0,0,0,.6); font:600 12px/1.2 var(--mono); color:var(--ink2)}
+  .sbx-menu button{display:flex; align-items:center; gap:8px; width:100%; padding:8px 10px; margin:0; background:none; border:0; border-radius:6px;
+    color:inherit; font:inherit; text-align:left; cursor:pointer}
+  .sbx-menu button:hover, .sbx-menu button:focus-visible{background:rgba(34,211,238,.1); color:#fff; outline:none}
+  .sbx-menu hr{border:0; border-top:1px solid var(--line2); margin:5px 2px}
+  .sbx-menu small{display:block; padding:0 10px 6px; color:var(--grey3); font:500 11px/1.45 var(--mono)}
+  .sbx-menu input{display:block; width:100%; box-sizing:border-box; padding:7px 9px; background:var(--code); color:var(--ink);
+    border:1px solid var(--line2); border-radius:6px; font:600 12px/1.2 var(--mono); outline:none}
+  .sbx-menu input:focus{border-color:var(--cy)}
+  .sbx-menu .sbx-sw{display:flex; flex-wrap:wrap; gap:7px; padding:9px 3px 5px}
+  .sbx-menu .sbx-sw button{width:17px; height:17px; padding:0; border-radius:50%}
+  .sbx-menu .sbx-sw button.sbx-on{box-shadow:0 0 0 2px #0E1525, 0 0 0 4px #fff}
+  .sbx-chip{display:inline-flex; align-items:center; gap:6px; color:var(--g); font-style:normal; min-width:0; overflow:hidden; text-overflow:ellipsis}
+  .sbx-chip::before{content:''; flex:none; width:7px; height:7px; border-radius:50%; background:var(--g)}
 
   .sbx-ed{flex:1; min-height:80px; position:relative; background:var(--code)}
   .sbx-msg{position:absolute; inset:0; display:grid; place-items:center; padding:24px; text-align:center;
@@ -1396,6 +1443,7 @@
       '</div>' +
     '</div>' +
     '<div class="sbx-files"></div>' +
+    '<div class="sbx-offnote"><span></span><button type="button">turn it on</button></div>' +
     '<div class="sbx-ed"><div class="sbx-msg">Loading the editor…</div></div>' +
     '<div class="sbx-split" title="Drag to resize"></div>' +
     '<div class="sbx-bottom">' +
@@ -1419,7 +1467,7 @@
   var host = $('.sbx-ed'), grip = $('.sbx-grip'), split = $('.sbx-split'), bottom = $('.sbx-bottom'),
       filesEl = $('.sbx-files'), ver = $('.sbx-ver'), status = $('.sbx-status'),
       pcount = $('.sbx-pcount'), ccount = $('.sbx-ccount'), probs = $('.sbx-problems'),
-      outp = $('.sbx-console'), view = $('.sbx-view'), bigmsg = $('.sbx-bigmsg'),
+      outp = $('.sbx-console'), view = $('.sbx-view'), bigmsg = $('.sbx-bigmsg'), offnote = $('.sbx-offnote'),
       runBtn = $('[data-act="run"]'), hintsBtn = $('[data-act="hints"]');
 
   var foot = document.querySelector('#nav .navfoot');
@@ -1450,7 +1498,7 @@
     root.classList.toggle('sbx-open', v);
     layout();
     if (v) ensureEditor().then(function(){ editor.focus(); }, noop);
-    else if (panel.contains(document.activeElement)) document.activeElement.blur();
+    else { closeMenu(); if (panel.contains(document.activeElement)) document.activeElement.blur(); }
   }
   addEventListener('resize', layout);
   if (vv) { vv.addEventListener('resize', layout); vv.addEventListener('scroll', layout); }
@@ -1520,7 +1568,7 @@
 
   /* ---- editor ------------------------------------------------------------------ */
   var monaco, editor, ready, queries, typesReady, ambientLib, ambientKey = '', typed = {}, typeTexts = {},
-      models = {}, order = [], views = {}, active = null, errs = {}, problems = 0,
+      models = {}, order = [], views = {}, active = null, errs = {}, problems = 0, groups = [], groupOf = {},
       fontSize = +get('font', 0) || 16, hints = get('hints', 'on') === 'on';
 
   function loadMonaco(){
@@ -1573,6 +1621,17 @@
     });
     d.setEagerModelSync(true);
     ver.textContent = 'TS ' + ts.typescriptVersion + ' · strict';
+
+    // Files of a group that is off keep TypeScript's colours but not its checker: a
+    // language of their own with the TypeScript tokenizer and nothing else, so the
+    // TypeScript worker never sees them.
+    monaco.languages.register({ id: 'sbx-off' });
+    monaco.languages.setMonarchTokensProvider('sbx-off', new Promise(function(res, rej){
+      window.require(['vs/basic-languages/typescript/typescript'], function(m){
+        monaco.languages.setLanguageConfiguration('sbx-off', m.conf);
+        res(m.language);
+      }, rej);
+    }).catch(function(){ return { tokenizer: { root: [] } }; }));
 
     // Token colours as [scope, colour, style] rows, not one object literal per scope:
     // the commit-time secret scanner reads a long quoted scope name next to the
@@ -1632,11 +1691,13 @@
   }
 
   /* ---- projects: one per mode, a handful of files ------------------------------ */
-  function uriOf(p){ return monaco.Uri.parse('file:///' + mode + '/' + p); }
+  // An off file lives under file:///off/, out of reach of the live files' imports, so an
+  // import of it fails in the checker just as it fails in the preview.
+  function uriOf(p){ return monaco.Uri.parse('file:///' + (isOff(p) ? 'off/' : '') + mode + '/' + p); }
   function owns(u){ return order.some(function(p){ return models[p].uri.toString() === u.toString(); }); }
   function langOf(p){
     var x = ext(p);
-    return x === 'css' ? 'css' : x === 'json' ? 'json' : 'typescript';
+    return x === 'css' ? 'css' : x === 'json' ? 'json' : isOff(p) ? 'sbx-off' : 'typescript';
   }
   function loadProject(m){
     try {
@@ -1654,9 +1715,10 @@
   function saveProject(){
     clearTimeout(saveT);
     if (!order.length) return;
-    var files = {};
-    order.forEach(function(p){ files[p] = models[p].getValue(); });
-    put('proj:' + mode, JSON.stringify({ files: files, active: active }));
+    var files = {}, of = {}, proj = { files: files, active: active };
+    order.forEach(function(p){ files[p] = models[p].getValue(); if (groupOf[p]) of[p] = groupOf[p]; });
+    if (groups.length) { proj.groups = groups; proj.of = of; }
+    put('proj:' + mode, JSON.stringify(proj));
   }
   function saveSoon(){ clearTimeout(saveT); saveT = setTimeout(saveProject, 400); }
 
@@ -1667,25 +1729,40 @@
     clearTimeout(ambT); ambT = setTimeout(ambient, 600);
     if (mode === 'react') { clearTimeout(liveT); liveT = setTimeout(preview, 650); }
   }
-  function addModel(p, text, at){
+  function makeModel(p, text){
     var uri = uriOf(p), old = monaco.editor.getModel(uri);
     if (old) old.dispose();
     var m = monaco.editor.createModel(text, langOf(p), uri);
     m.onDidChangeContent(changed);
-    models[p] = m;
-    if (at == null) order.push(p); else order.splice(at, 0, p);
     return m;
+  }
+  // The file's group (groupOf) must be set first: it decides whether the model is live.
+  function addModel(p, text, at){
+    models[p] = makeModel(p, text);
+    if (at == null) order.push(p); else order.splice(at, 0, p);
+    return models[p];
   }
   function dropModel(p){
     order.splice(order.indexOf(p), 1);
     models[p].dispose();
-    delete models[p]; delete views[p]; delete errs[p];
+    delete models[p]; delete views[p]; delete errs[p]; delete groupOf[p];
+  }
+  // After its group turns on or off, a file moves to a new model: same text, new place.
+  // The editor moves to the new model before the old one goes.
+  function remodel(p){
+    var old = models[p], shown = editor.getModel() === old;
+    if (shown) views[p] = editor.saveViewState();
+    models[p] = makeModel(p, old.getValue());
+    if (shown) { editor.setModel(models[p]); if (views[p]) editor.restoreViewState(views[p]); }
+    old.dispose();
   }
 
   function loadMode(m){
     saveProject();
     order.slice().forEach(dropModel);
     active = null;
+    groups = []; groupOf = {};
+    closeMenu();
     mode = m;
     put('mode', m);
     panel.classList.toggle('sbx-react', m === 'react');
@@ -1706,7 +1783,10 @@
     });
     return Promise.all(types.map(function(t){ return Promise.resolve(t).catch(noop); })).then(function(){
       if (mode !== m) return;
+      groups = (proj.groups || []).filter(function(g){ return g && g.id && /^#[0-9A-F]{6}$/i.test(g.color); });
+      Object.keys(proj.of || {}).forEach(function(p){ if (p in proj.files && grp(proj.of[p])) groupOf[p] = proj.of[p]; });
       Object.keys(proj.files).forEach(function(p){ addModel(p, proj.files[p]); });
+      tidy();
       openFile(models[proj.active] ? proj.active : order[0]);
       ambient();
       report();
@@ -1716,6 +1796,8 @@
 
   function openFile(p){
     if (!models[p]) return;
+    var g = grp(groupOf[p]);
+    if (g && g.shut) g.shut = false;      // opening a file unfolds its group
     if (active && models[active] && editor.getModel() === models[active]) views[active] = editor.saveViewState();
     active = p;
     editor.setModel(models[p]);
@@ -1809,7 +1891,7 @@
   function ambient(){
     var names = {};
     order.forEach(function(p){
-      if (!isCode(p)) return;
+      if (!isCode(p) || isOff(p)) return;
       models[p].getValue().replace(SPEC, function(all, pre, q, s){
         if (/^[.\/]|^[a-z]+:/i.test(s)) return all;
         if (/^react(-dom)?(\/|$)/.test(s)) reactTypes().catch(noop);
@@ -1832,14 +1914,32 @@
   /* ---- file tabs ----------------------------------------------------------------- */
   function renderTabs(){
     filesEl.textContent = '';
+    var labelled = {};
     order.forEach(function(p){
+      var g = grp(groupOf[p]);
+      if (g && !labelled[g.id]) {
+        labelled[g.id] = 1;
+        var l = document.createElement('div');
+        l.className = 'sbx-grp' + (g.off ? ' sbx-goff' : '');
+        l.dataset.g = g.id;
+        paint(l, g.color);
+        l.innerHTML = '<i class="sbx-pow"></i><span></span><em>off</em><b></b>';
+        l.children[1].textContent = g.name;
+        l.children[3].textContent = g.shut ? '▸ ' + members(g).length : '▾';
+        l.title = (g.name || 'This group') + (g.off ? ' is off' : '') + ' · click to ' + (g.shut ? 'show' : 'fold') +
+          ' its tabs · right-click for more';
+        l.firstChild.title = g.off ? 'Turn the group on' : 'Turn the group off: its files leave the checker, the preview and Run';
+        filesEl.appendChild(l);
+      }
+      if (g && g.shut) return;
       var t = document.createElement('div');
-      t.className = 'sbx-file' + (p === active ? ' sbx-on' : '') + (errs[p] ? ' sbx-err' : '');
+      t.className = 'sbx-file' + (p === active ? ' sbx-on' : '') + (errs[p] ? ' sbx-err' : '') + (g && g.off ? ' sbx-off' : '');
       t.dataset.path = p;
+      if (g) { t.dataset.g = g.id; paint(t, g.color); }
       t.innerHTML = '<i class="sbx-dot"></i><span></span>' +
         (order.length > 1 ? '<i class="sbx-x" title="Delete this file">×</i>' : '');
       t.children[1].textContent = p;
-      t.title = p + ' · double-click to rename';
+      t.title = p + (g && g.off ? ' (off)' : '') + ' · double-click to rename · right-click to group';
       filesEl.appendChild(t);
     });
     var add = document.createElement('div');
@@ -1847,7 +1947,203 @@
     add.title = 'New file';
     add.textContent = '+';
     filesEl.appendChild(add);
+    var g = active && grp(groupOf[active]);
+    offnote.classList.toggle('sbx-on', !!(g && g.off));
+    if (g && g.off) offnote.firstChild.textContent = (g.name ? '“' + g.name + '”' : 'This group') +
+      ' is off: this file isn’t type-checked, previewed or run.';
   }
+  function tabEl(p){ return filesEl.querySelector('.sbx-file[data-path="' + CSS.escape(p) + '"]'); }
+
+  /* ---- tab groups ---------------------------------------------------------------- */
+  // A group is a label in the tab row with its tabs after it. It can fold its tabs away,
+  // and it can be turned off: its files keep their tabs and their text but leave the
+  // project, so the checker, the preview and Run act as if they weren't there. That is
+  // how a step-two file or a solution waits beside the exercise without breaking it.
+  // groups: [{ id, name, color, shut, off }] in creation order; groupOf: path → id.
+  var COLORS = ['#22D3EE', '#A78BFA', '#FBBF24', '#34D399', '#F472B6', '#60A5FA', '#FB923C', '#F8717A', '#94A3B8'];
+  function grp(id){ return id && groups.filter(function(g){ return g.id === id; })[0] || null; }
+  function isOff(p){ var g = grp(groupOf[p]); return !!(g && g.off); }
+  function live(p){ return !!models[p] && !isOff(p); }
+  function members(g){ return order.filter(function(p){ return groupOf[p] === g.id; }); }
+  function paint(el, c){
+    var n = parseInt(c.slice(1), 16);
+    el.style.setProperty('--g', c);
+    el.style.setProperty('--gb', 'rgba(' + (n >> 16) + ',' + (n >> 8 & 255) + ',' + (n & 255) + ',.16)');
+  }
+  // A group's tabs sit together, where its first tab is. A group with no files is gone.
+  function tidy(){
+    var out = [], done = {};
+    order.forEach(function(p){
+      var id = groupOf[p];
+      if (!id) return out.push(p);
+      if (done[id]) return;
+      done[id] = 1;
+      order.forEach(function(q){ if (groupOf[q] === id) out.push(q); });
+    });
+    order = out;
+    groups = groups.filter(function(g){ return done[g.id]; });
+  }
+  // Turning files on or off changes which files exist for the checker, and an import
+  // elsewhere may have just broken or healed. A change to the extra libs re-checks every
+  // file in place; new compiler options would too, but they restart the worker, which
+  // cancels the requests a new model just sent into an uncaught "Canceled".
+  function recheck(){
+    monaco.languages.typescript.typescriptDefaults
+      .addExtraLib('export {};', 'file:///node_modules/@types/sbx-recheck/index.d.ts').dispose();
+  }
+  // Puts p in group g, or with g null takes it out of its group, next to its new
+  // neighbours. True when p crossed between on and off, so the project changed.
+  function place(p, g){
+    var id = g ? g.id : undefined, old = groupOf[p];
+    if (old === id) return false;
+    var was = isOff(p), at = order.indexOf(p);
+    order.splice(at, 1);
+    if (id) groupOf[p] = id; else delete groupOf[p];
+    var near = order.filter(function(q){ return groupOf[q] === (id || old); }).pop();
+    order.splice(near ? order.indexOf(near) + 1 : at, 0, p);
+    if (isOff(p) === was) return false;
+    remodel(p);
+    return true;
+  }
+  function regroup(moved){
+    tidy();
+    renderTabs();
+    if (moved) { recheck(); report(); ask(); changed(); } else saveSoon();
+  }
+  function newGroup(p){
+    var used = groups.map(function(g){ return g.color; });
+    var g = { id: 'g' + Math.random().toString(36).slice(2, 8), name: '', shut: false, off: false,
+      color: COLORS.filter(function(c){ return used.indexOf(c) < 0; })[0] || COLORS[groups.length % COLORS.length] };
+    groups.push(g);
+    regroup(place(p, g));
+    // Like Chrome, a new group opens its menu so it can be named straight away.
+    var l = filesEl.querySelector('.sbx-grp[data-g="' + g.id + '"]');
+    if (l) { var r = l.getBoundingClientRect(); groupMenu(g, r.left, r.bottom + 4); }
+  }
+  function setOff(g, off){
+    if (g.off === off) return;
+    g.off = off;
+    members(g).forEach(remodel);
+    regroup(true);
+  }
+  function fold(g, shut){
+    g.shut = shut;
+    if (shut && groupOf[active] === g.id) {
+      // The open file is folding away: open the nearest tab still showing, if any.
+      var i = order.indexOf(active), shown = function(p){ var h = grp(groupOf[p]); return !h || !h.shut; };
+      var to = order.slice(i).filter(shown)[0] || order.slice(0, i).filter(shown).pop();
+      if (to) openFile(to);
+    }
+    renderTabs();
+    saveSoon();
+  }
+  function ungroup(g){
+    var moved = g.off;
+    members(g).forEach(function(p){ delete groupOf[p]; if (moved) remodel(p); });
+    regroup(moved);
+  }
+
+  /* ---- menus ---------------------------------------------------------------------- */
+  var menu = null;
+  function closeMenu(){ if (menu) { menu.remove(); menu = null; } }
+  function showMenu(x, y, fill){
+    closeMenu();
+    menu = document.createElement('div');
+    menu.className = 'sbx-menu';
+    fill(menu);
+    panel.appendChild(menu);
+    var r = panel.getBoundingClientRect();
+    menu.style.left = Math.max(r.left + 6, Math.min(x, r.right - menu.offsetWidth - 6)) + 'px';
+    menu.style.top = Math.max(r.top + 6, Math.min(y, r.bottom - menu.offsetHeight - 6)) + 'px';
+    menu.addEventListener('keydown', function(e){
+      if (e.key === 'Escape') { e.preventDefault(); closeMenu(); if (editor) editor.focus(); return; }
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      e.preventDefault();
+      var bs = [].slice.call(menu.querySelectorAll(':scope > button')), i = bs.indexOf(document.activeElement);
+      var to = bs[i < 0 ? 0 : (i + (e.key === 'ArrowDown' ? 1 : bs.length - 1)) % bs.length];
+      if (to) to.focus();
+    });
+    var first = menu.querySelector('input, button');
+    if (first) first.focus();
+  }
+  function item(m, label, act){
+    var b = document.createElement('button');
+    b.type = 'button';
+    b.textContent = label;
+    b.addEventListener('click', function(){ closeMenu(); act(); });
+    m.appendChild(b);
+    return b;
+  }
+  function chip(g){
+    var c = document.createElement('i');
+    c.className = 'sbx-chip';
+    c.textContent = g.name || 'unnamed group';
+    paint(c, g.color);
+    return c;
+  }
+  document.addEventListener('pointerdown', function(e){ if (menu && !menu.contains(e.target)) closeMenu(); }, true);
+
+  function tabMenu(p, x, y){
+    var mine = groupOf[p];
+    showMenu(x, y, function(m){
+      item(m, mine ? 'Move to a new group' : 'Add to a new group', function(){ newGroup(p); });
+      groups.forEach(function(g){
+        if (g.id !== mine) item(m, mine ? 'Move to ' : 'Add to ', function(){ regroup(place(p, g)); }).appendChild(chip(g));
+      });
+      if (mine) item(m, 'Remove from ', function(){ regroup(place(p, null)); }).appendChild(chip(grp(mine)));
+      m.appendChild(document.createElement('hr'));
+      item(m, 'Rename', function(){ var t = tabEl(p); if (t) renameFile(p, t); });
+    });
+  }
+  function groupMenu(g, x, y){
+    showMenu(x, y, function(m){
+      var name = document.createElement('input');
+      name.value = g.name;
+      name.placeholder = 'Name this group';
+      name.maxLength = 24;
+      name.spellcheck = false;
+      name.addEventListener('input', function(){
+        g.name = name.value.trim();
+        var l = filesEl.querySelector('.sbx-grp[data-g="' + g.id + '"] span');
+        if (l) l.textContent = g.name;
+        saveSoon();
+      });
+      name.addEventListener('keydown', function(e){
+        if (e.key === 'Enter') { e.preventDefault(); closeMenu(); renderTabs(); if (editor) editor.focus(); }
+      });
+      m.appendChild(name);
+      var sw = document.createElement('div');
+      sw.className = 'sbx-sw';
+      COLORS.forEach(function(c){
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = c === g.color ? 'sbx-on' : '';
+        b.style.background = c;
+        b.setAttribute('aria-label', 'Colour ' + c);
+        b.addEventListener('click', function(){
+          g.color = c;
+          sw.querySelectorAll('button').forEach(function(x){ x.classList.toggle('sbx-on', x === b); });
+          renderTabs();
+          saveSoon();
+        });
+        sw.appendChild(b);
+      });
+      m.appendChild(sw);
+      m.appendChild(document.createElement('hr'));
+      item(m, g.off ? '● Turn on' : '○ Turn off', function(){ setOff(g, !g.off); });
+      var why = document.createElement('small');
+      why.textContent = g.off ? 'Back into the checker, the preview and Run.'
+        : 'Its files stay here but leave the checker, the preview and Run.';
+      m.appendChild(why);
+      item(m, g.shut ? '▾ Show its tabs' : '▸ Fold its tabs', function(){ fold(g, !g.shut); });
+      item(m, '+ New file in this group', function(){ newFile(g); });
+      item(m, 'Ungroup', function(){ ungroup(g); });
+    });
+  }
+  offnote.querySelector('button').addEventListener('click', function(){
+    var g = grp(groupOf[active]);
+    if (g) setOff(g, false);
+  });
   function validName(n, except){
     if (!/\.[a-z]+$/i.test(n)) n += mode === 'react' ? '.tsx' : '.ts';
     if (!/^[\w-][\w.-]*(\/[\w-][\w.-]*)*\.(tsx|ts|jsx|css|json)$/.test(n))
@@ -1887,9 +2183,14 @@
     box.focus();
     box.setSelectionRange(0, initial.replace(/\.[a-z]+$/i, '').length);
   }
-  function newFile(){
-    nameBox(filesEl.querySelector('.sbx-add').previousSibling, '', function(n){
-      addModel(n, template(n));
+  // With a group, the new file joins it and its box opens after the group's last tab.
+  function newFile(g){
+    if (g && g.shut) { g.shut = false; renderTabs(); }
+    var last = g ? members(g).pop() : null;
+    nameBox(last ? tabEl(last) : filesEl.querySelector('.sbx-add').previousSibling, '', function(n){
+      if (g && grp(g.id)) groupOf[n] = g.id;
+      addModel(n, template(n), last && models[last] ? order.indexOf(last) + 1 : null);
+      tidy();
       openFile(n);
       editor.focus();
       changed();
@@ -1899,8 +2200,9 @@
   function renameFile(p, tab){
     nameBox(tab, p, function(n){
       if (n !== p) {
-        var text = models[p].getValue(), at = order.indexOf(p), vs = views[p], was = active === p;
+        var text = models[p].getValue(), at = order.indexOf(p), vs = views[p], was = active === p, g = groupOf[p];
         dropModel(p);
+        if (g) groupOf[n] = g;
         addModel(n, text, at);
         views[n] = vs;
         if (was) { active = null; openFile(n); }
@@ -1912,12 +2214,18 @@
   }
   function deleteFile(p){
     dropModel(p);
+    tidy();
     if (active === p) { active = null; openFile(order[0]); } else renderTabs();
     report();
     changed();
   }
   filesEl.addEventListener('click', function(e){
-    var x = e.target.closest('.sbx-x'), t = e.target.closest('.sbx-file');
+    var x = e.target.closest('.sbx-x'), t = e.target.closest('.sbx-file'), l = e.target.closest('.sbx-grp');
+    if (l && editor) {
+      var g = grp(l.dataset.g);
+      if (g) { if (e.target.closest('.sbx-pow')) setOff(g, !g.off); else fold(g, !g.shut); }
+      return;
+    }
     if (!t || !editor) return;
     if (t.classList.contains('sbx-add')) return newFile();
     if (x) {
@@ -1933,6 +2241,13 @@
   filesEl.addEventListener('dblclick', function(e){
     var t = e.target.closest('.sbx-file[data-path]');
     if (t && !e.target.closest('.sbx-x')) renameFile(t.dataset.path, t);
+  });
+  filesEl.addEventListener('contextmenu', function(e){
+    var l = e.target.closest('.sbx-grp'), t = e.target.closest('.sbx-file[data-path]');
+    if (!editor || !(l || t)) return;
+    e.preventDefault();
+    if (l) groupMenu(grp(l.dataset.g), e.clientX, e.clientY);
+    else tabMenu(t.dataset.path, e.clientX, e.clientY);
   });
 
   // The TypeScript worker registers itself a beat after the first .ts model appears;
@@ -1953,6 +2268,7 @@
     var S = monaco.MarkerSeverity, all = [];
     errs = {};
     order.forEach(function(p, n){
+      if (isOff(p)) return;
       monaco.editor.getModelMarkers({ resource: models[p].uri }).forEach(function(m){
         if (m.severity < S.Warning) return;
         all.push({ p: p, n: n, m: m });
@@ -1963,7 +2279,10 @@
     problems = all.filter(function(x){ return x.m.severity === S.Error; }).length;
     pcount.textContent = all.length || '';
     pcount.classList.toggle('sbx-bad', problems > 0);
-    status.textContent = problems ? problems + (problems > 1 ? ' errors' : ' error') : '✓ type-checks';
+    var off = order.filter(isOff).length;
+    status.textContent = (problems ? problems + (problems > 1 ? ' errors' : ' error') : '✓ type-checks') +
+      (off ? ' · ' + off + (off > 1 ? ' files' : ' file') + ' off' : '');
+    status.title = off ? 'Files in a group that is off are left out of the check, the preview and Run.' : '';
     status.className = 'sbx-status ' + (problems ? 'sbx-bad' : 'sbx-ok');
     filesEl.querySelectorAll('.sbx-file[data-path]').forEach(function(t){ t.classList.toggle('sbx-err', !!errs[t.dataset.path]); });
     probs.textContent = '';
@@ -1999,7 +2318,7 @@
   function ask(){
     if (!queries || !active) return;
     var model = models[active], seq = ++asking, asks = [];
-    if (!isCode(active)) { queries.clear(); return; }
+    if (!isCode(active) || isOff(active)) { queries.clear(); return; }
     var lines = model.getLinesContent();
     for (var n = 1; n < lines.length; n++) {
       if (!/^\s*\/\/\s*\^\?\s*$/.test(lines[n])) continue;
@@ -2029,8 +2348,9 @@
   }
 
   /* ---- building: TypeScript → one ES module per file ---------------------------- */
+  // Only live files: a file in a group that is off is left out of every build.
   function compileAll(){
-    var code = order.filter(isCode);
+    var code = order.filter(function(p){ return isCode(p) && !isOff(p); });
     return client(code.map(function(p){ return models[p].uri; })).then(function(c){
       return Promise.all(code.map(function(p){
         return c.getEmitOutput(models[p].uri.toString()).then(function(o){
@@ -2049,7 +2369,7 @@
     spec.split('/').forEach(function(s){ if (s === '..') parts.pop(); else if (s && s !== '.') parts.push(s); });
     var p = parts.join('/'), js = p.replace(/\.js$/, '');
     return [p, p + '.tsx', p + '.ts', p + '.jsx', js + '.tsx', js + '.ts', p + '/index.tsx', p + '/index.ts']
-      .filter(function(c){ return models[c]; })[0] || null;
+      .filter(live)[0] || null;
   }
   function bare(spec, inPreview){
     if (/^[a-z]+:/i.test(spec) || (inPreview && IMPORTS[spec])) return null;
@@ -2079,7 +2399,7 @@
       return to == null ? all : pre + q + to + q;
     });
   }
-  function pick(list){ return list.filter(function(p){ return models[p]; })[0]; }
+  function pick(list){ return list.filter(live)[0]; }
 
   /* ---- console ------------------------------------------------------------------- */
   var cerrs = 0;
@@ -2176,8 +2496,9 @@
       : '▶ running');
     compileAll().then(function(js){
       stop();
-      var entry = pick(MODES.ts.entries) || (isCode(active) ? active : order.filter(isCode)[0]);
-      if (!entry) return line('error', 'Nothing to run: add a .ts file.');
+      var entry = pick(MODES.ts.entries) || pick([active].concat(order).filter(isCode));
+      if (!entry) return line('error', order.some(isOff) ? 'Nothing to run: every .ts file is in a group that is off.'
+        : 'Nothing to run: add a .ts file.');
       // Blob URLs can't be imported relatively, so each file's imports are rewritten
       // to its dependencies' blob URLs — built leaves first, which rules out cycles.
       var urls = {}, walking = {};
@@ -2283,12 +2604,15 @@
       var imports = {};
       Object.keys(IMPORTS).forEach(function(k){ imports[k] = IMPORTS[k]; });
       order.forEach(function(p){
+        if (isOff(p)) return;
         imports['@sbx/' + p] = dataUrl(moduleFor(p, js[p], function(r){ return '@sbx/' + r; }, true), p);
       });
       var entry = pick(MODES.react.entries);
       if (!entry) {
         var app = pick(['App.tsx', 'App.jsx']);
-        if (!app) throw new Error('Nothing to render: add App.tsx with a default export, the component to show.');
+        if (!app) throw new Error(models['App.tsx'] || models['App.jsx']
+          ? 'Nothing to render: App.tsx is in a group that is off. Turn the group on to see it.'
+          : 'Nothing to render: add App.tsx with a default export, the component to show.');
         imports['@sbx/mount'] = dataUrl(MOUNT.replace('__APP__', '@sbx/' + app).replace('__FILE__', app), 'mount.js');
         entry = 'mount';
       }
