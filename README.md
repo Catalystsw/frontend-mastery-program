@@ -63,11 +63,11 @@ modules/
   05-react-deeply/
     deck.html             the render model, components built live, boundaries and the profiler — 42 slides
   06-data-state-routing/
-    deck.html             whose state is it — the server's or yours — 22 slides
+    deck.html             whose state is it — the server's or yours — 33 slides
   07-nextjs-rendering/
-    deck.html             a rendering strategy per route — 22 slides
+    deck.html             a rendering strategy per route — 27 slides
   08-performance-testing-security/
-    deck.html             prove the before and after with numbers — 23 slides
+    deck.html             prove the before and after with numbers — 25 slides
   09-capstone/
     deck.html             assembly week, not build week — 18 slides
   10-frontend-system-design/
