@@ -552,7 +552,7 @@
     <div class="kicker">Lesson 2 · Three checkpoints</div>
     <h2>Auth is three checks. Only one is security.</h2>
     <div class="fig" id="fx-auth" style="max-width:1000px">
-      <svg viewBox="0 0 980 145" role="img" aria-label="A request to the dashboard passes middleware, then a server-side session check next to the data, then the client UI; only the server check is the real gate">
+      <svg viewBox="0 0 980 145" role="img" aria-label="A request to the dashboard passes the proxy, then a server-side session check next to the data, then the client UI; only the server check is the real gate">
         <g>
           <g data-c="req">
             <rect x="0" y="10" width="200" height="76" rx="10" fill="#121C30" stroke="#64748B"/>
@@ -562,7 +562,7 @@
           <path data-hop="mw" class="draw" pathLength="1" d="M200,48 L254,48" stroke="#64748B" fill="none"/>
           <g data-c="mw">
             <rect x="260" y="10" width="200" height="76" rx="10" fill="#121C30" stroke="#FBBF24"/>
-            <text x="360" y="43" text-anchor="middle" class="lbl b">middleware</text>
+            <text x="360" y="43" text-anchor="middle" class="lbl b">proxy</text>
             <text x="360" y="66" text-anchor="middle" class="lbl">no cookie? → /login</text>
           </g>
           <path data-hop="srv" class="draw" pathLength="1" d="M460,48 L514,48" stroke="#64748B" fill="none"/>
@@ -603,8 +603,8 @@
         <span class="demo-hint" data-k="say"></span>
       </div>
     </div>
-    <p class="say">The session lives in an <b>httpOnly cookie</b>, so it survives a refresh and script on the page can't read it. Middleware turns a missing cookie into a fast redirect. The server decides.</p>
-    <div class="key g">Middleware can only say “probably”. The server, at the moment it reads the data, is the one place that can say “no” — so that is where the check lives.</div>
+    <p class="say">The session lives in an <b>httpOnly cookie</b>, so it survives a refresh and script on the page can't read it. The proxy turns a missing cookie into a fast redirect. The server decides.</p>
+    <div class="key g">The proxy can only say “probably”. The server, at the moment it reads the data, is the one place that can say “no” — so that is where the check lives.</div>
 </section>
 
 
@@ -614,19 +614,21 @@
     <h2>Check the session where the data is read</h2>
     <pre><code><span class="cmt">// data/session.server.ts — below features, so every feature may import it</span>
 <span class="kw">import</span> <span class="st">'server-only'</span>;
-
+<span class="kw">import</span> { cache } <span class="kw">from</span> <span class="st">'react'</span>;
+<span class="kw">import</span> { cookies } <span class="kw">from</span> <span class="st">'next/headers'</span>;
+<span class="kw">import</span> { redirect } <span class="kw">from</span> <span class="st">'next/navigation'</span>;
+<span class="kw">import</span> { decrypt } <span class="kw">from</span> <span class="st">'./crypto.server'</span>;
 <span class="kw">export const</span> <span class="fn">verifySession</span> = <span class="fn">cache</span>(<span class="kw">async</span> () =&gt; {
   <span class="kw">const</span> session = <span class="kw">await</span> <span class="fn">decrypt</span>((<span class="kw">await</span> <span class="fn">cookies</span>()).<span class="fn">get</span>(<span class="st">'session'</span>)?.value);
   <span class="kw">if</span> (!session) <span class="fn">redirect</span>(<span class="st">'/login'</span>);   <span class="cmt">// no session, no data</span>
   <span class="kw">return</span> session;
 });
-
 <span class="cmt">// features/applications/api/applications.server.ts</span>
 <span class="kw">export async function</span> <span class="fn">getMyApplications</span>() {
   <span class="kw">const</span> { userId } = <span class="kw">await</span> <span class="fn">verifySession</span>(); <span class="ok">// the check travels with the data</span>
   <span class="kw">return</span> api.applications.<span class="fn">listFor</span>(userId);
 }</code></pre>
-    <div class="key w">Don't stop at the layout. A layout doesn't re-render on client-side navigation, so a check there can be skipped. A check inside the function that reads the data can't — and a new page can't forget it.</div>
+    <div class="key w">A layout check can be skipped; the read can't.</div>
 </section>
 
 
@@ -637,7 +639,7 @@
     <table class="grid" id="tbl-auth">
       <tr><th>Path</th><th>Expected</th><th>Proved by</th></tr>
       <tr data-t="1"><td><b>Signed out, open <code>/dashboard</code></b></td><td>Redirect to <code>/login?next=/dashboard</code></td><td>Playwright, no cookie</td></tr>
-      <tr data-t="2"><td><b>Sign in from that redirect</b></td><td>Back on <code>/dashboard</code> — and <code>next</code> must be a same-site path, or it's an open redirect</td><td>Playwright, plus a unit test that rejects <code>next=https://…</code></td></tr>
+      <tr data-t="2"><td><b>Sign in from that redirect</b></td><td>Back on <code>/dashboard</code> — and <code>next</code> must be a same-site path, or it's an open redirect</td><td>Playwright, plus a unit test that rejects <code>https://…</code> and <code>/\…</code></td></tr>
       <tr data-t="3"><td><b>Refresh on <code>/dashboard</code></b></td><td>Still signed in; no token in <code>localStorage</code></td><td>Playwright reload</td></tr>
       <tr data-t="4"><td><b>Session expires mid-task</b></td><td>The next action sends you to sign in; nothing half-saved</td><td>Playwright, cookie cleared mid-test</td></tr>
       <tr data-t="5"><td><b>Sign out, press Back</b></td><td>Cookie gone; no private data from the cache</td><td>Playwright</td></tr>
@@ -938,7 +940,7 @@
       <div class="card b">
         <h3 class="b">Resources</h3>
         <ul class="plist reads" style="margin-top:4px">
-          <li><a href="https://docs.github.com/en/actions/writing-workflows/quickstart" target="_blank" rel="noopener">GitHub Actions quickstart</a><small>the workflow file behind the gate</small></li>
+          <li><a href="https://docs.github.com/en/actions/get-started/quickstart" target="_blank" rel="noopener">GitHub Actions quickstart</a><small>the workflow file behind the gate</small></li>
           <li><a href="https://github.com/GoogleChrome/lighthouse-ci" target="_blank" rel="noopener">Lighthouse CI</a><small>the performance budget as a CI step</small></li>
         </ul>
       </div>
@@ -1017,7 +1019,7 @@
         <h3 class="cy">What you now have</h3>
         <ul class="plist" style="margin-top:4px">
           <li>Rasmi, deployed<small>assembled from branches you wrote yourself</small></li>
-          <li>Auth that holds at the data<small>middleware for speed, the server for the decision</small></li>
+          <li>Auth that holds at the data<small>the proxy for speed, the server for the decision</small></li>
           <li>A story a reviewer reads in five minutes<small>a why-README and a handful of ADRs</small></li>
           <li>A gate that keeps it green<small>types, lint, tests, e2e and a budget on every push</small></li>
         </ul>
@@ -1433,9 +1435,11 @@ export const cases: Case[] = [
     expect(res.status).toBe(307);
     expect(res.location).toBe('/login?next=/dashboard');
   }],
-  ['sign in with next=https://evil.example: you stay on Rasmi', () => {
-    const res = new Browser().go('POST', '/login?next=https://evil.example', { password: 'correct horse' });
-    expect(res.location).toBe('/');
+  ['sign in with next=https://evil.example or /\\evil.example: you stay on Rasmi', () => {
+    for (const next of ['https://evil.example', '/\\evil.example']) {
+      const res = new Browser().go('POST', '/login?next=' + encodeURIComponent(next), { password: 'correct horse' });
+      expect(res.location).toBe('/');
+    }
   }],
   ['the session expires mid-task: the action sends you to sign in, nothing saved', () => {
     const b = signedIn();
@@ -1503,7 +1507,7 @@ export function run(cases: Case[]): Result[] {
 }
 </script>
 <script type="text/plain" data-sbx-file="server.ts" data-sbx-group="tests">
-// A pretend Rasmi server, small enough to read at once: middleware, sign-in, the
+// A pretend Rasmi server, small enough to read at once: the proxy, sign-in, the
 // dashboard, one action and sign-out. Each switch in `bugs` plants a mistake that one of
 // the auth tests exists to catch. Flip them in the preview, or break the code yourself.
 export const bugs = {
@@ -1533,10 +1537,12 @@ function session(cookie?: string) {
   return s && s.expires > clock.now ? s : null;
 }
 
-// Only a same-site path may follow a sign-in: “/dashboard”, never “https://…” or “//evil.example”.
+// Only a same-site path may follow a sign-in: “/dashboard”, never “https://…”. Parse it the way the browser
+// will: “//evil.example” and “/\evil.example” both start with a slash, and both leave the site.
 export function safeNext(next: string | null) {
   if (bugs.trustNext) return next ?? '/';
-  return next && next.startsWith('/') && !next.startsWith('//') ? next : '/';
+  const url = new URL(next ?? '/', 'https://rasmi.example');
+  return url.origin === 'https://rasmi.example' ? url.pathname + url.search : '/';
 }
 
 function privateHeaders() {
@@ -1549,7 +1555,7 @@ const toLogin = (path: string): Res => ({ status: 307, location: '/login?next=' 
 
 function handle(req: Req): Res {
   const path = req.url.pathname;
-  // Middleware: fast and optimistic. No cookie at all on a private route? Off to sign in.
+  // The proxy (middleware before Next 16): fast and optimistic. No cookie at all on a private route? Off to sign in.
   if (path.startsWith('/dashboard') && !req.cookie) return toLogin('/dashboard');
 
   if (req.method === 'POST' && path === '/login') {
@@ -2004,18 +2010,18 @@ export default function Budget() {
   (function(){
     var root = document.getElementById('demo-auth'), fig = document.getElementById('fx-auth');
     if (!root || !fig) return;
-    // mw: what middleware does with it. srv: whether verifySession() says no. ok: a request that should get the data.
+    // mw: what the proxy does with it. srv: whether verifySession() says no. ok: a request that should get the data.
     var CASES = {
       none:    { mw: 'stop',
-                 say: 'Middleware: no cookie, so a fast 302 to /login. Nothing else ran.' },
+                 say: 'The proxy: no cookie, so a fast 302 to /login. Nothing else ran.' },
       expired: { mw: 'pass', srv: 'stop',
-                 say: 'Middleware saw a cookie and let it through: it can only say “probably”. verifySession() couldn\'t decrypt it, so no data was read.',
-                 leak: '✗ Middleware let the expired cookie through and nothing else checked: the page read applications with no valid session.' },
+                 say: 'The proxy saw a cookie and let it through: it can only say “probably”. verifySession() couldn\'t decrypt it, so no data was read.',
+                 leak: '✗ The proxy let the expired cookie through and nothing else checked: the page read applications with no valid session.' },
       miss:    { mw: 'skip', srv: 'stop',
-                 say: 'The matcher misses <code>/dashboard/export</code>, so no middleware ran. verifySession() still said no.',
-                 leak: '✗ No middleware on this route and no server check: the export went to anyone who asked.' },
+                 say: 'The matcher misses <code>/dashboard/export</code>, so the proxy didn\'t run. verifySession() still said no.',
+                 leak: '✗ No proxy on this route and no server check: the export went to anyone who asked.' },
       action:  { mw: 'skip', srv: 'stop',
-                 say: 'A server action is a public POST: it skips the page, its middleware and the hidden button. verifySession() inside the action still said no.',
+                 say: 'A server action is a public POST: it skips the page and the hidden button, and needn\'t go through the proxy. verifySession() inside the action still said no.',
                  leak: '✗ The action ran for a stranger. Hiding the button protected nothing.' },
       valid:   { mw: 'pass', srv: 'pass', ok: true,
                  say: '✓ Every check passed: your applications, read with the userId from the session.',

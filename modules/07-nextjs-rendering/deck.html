@@ -232,6 +232,28 @@
   /* L1b: the table row the chosen line of code belongs to. */
   #tbl-sides td{transition:background-color .3s}
   #tbl-sides tr.hl td{background:rgba(34,211,238,.1)}
+  /* L1c: one chip per file. Cyan stays on the server; green ships to the browser. */
+  #demo-slot .graph{flex:1; min-width:0; display:flex; align-items:center; flex-wrap:wrap; gap:6px 8px}
+  .mod{font:600 12.5px/1 var(--mono); padding:7px 10px; border-radius:8px; border:1px solid var(--cy); background:var(--code);
+    color:var(--ink2); white-space:nowrap; transition:border-color .3s, background .3s, color .3s}
+  .mod.cli{border-color:var(--good); background:rgba(52,211,153,.12); color:#fff}
+  .mod-to{font:600 11px/1 var(--mono); color:var(--muted)}
+  .mod-gap{width:18px}
+  /* L2a: one lane per part of the page; the bar starts when that part reaches the browser. */
+  #demo-ppr .lanes{display:grid; grid-template-columns:minmax(0,300px) 1fr; gap:4px 14px; align-items:center; margin-top:8px}
+  #demo-ppr .lane-name{font:600 12.5px/1.25 var(--mono); color:var(--ink2); white-space:nowrap}
+  #demo-ppr .lane-name small{display:inline; margin-left:8px; font:500 11px/1.3 var(--mono); color:var(--muted)}
+  #demo-ppr .bar{position:relative; height:19px; border-radius:6px; background:var(--code); border:1px solid var(--line2); overflow:hidden}
+  #demo-ppr .bar i{position:absolute; top:0; bottom:0; right:0; transition:left .45s ease; border-radius:5px}
+  #demo-ppr .bar i.shell{background:rgba(33,150,243,.55)} #demo-ppr .bar i.cached{background:rgba(167,139,250,.55)}
+  #demo-ppr .bar i.stream{background:rgba(251,191,36,.6)} #demo-ppr .bar i.fallback{background:rgba(148,163,184,.25)}
+  #demo-ppr .bar i.whole{background:rgba(248,113,122,.5)} #demo-ppr .bar i.client{background:rgba(52,211,153,.55)}
+  #demo-ppr .bar b{position:absolute; top:3px; font:600 11px/1 var(--mono); color:#fff; white-space:nowrap; transition:left .45s ease}
+  #demo-ppr .axis{display:flex; justify-content:space-between; font:500 10.5px/1 var(--mono); color:var(--muted)}
+  /* L5b: a terminal for next build's route table; it changes text, so it isn't a <pre> with a copy button. */
+  #demo-build .term{margin-top:10px; background:var(--code); border:1px solid var(--line2); border-radius:10px; padding:12px 16px;
+    font:12.5px/1.4 var(--mono); color:var(--ink2); white-space:pre-wrap; min-height:25.2em}
+  #demo-build .term .s{color:var(--cy)} #demo-build .term .p{color:#FBBF24} #demo-build .term .e{color:var(--bad)} #demo-build .term .m{color:var(--muted)}
 
   /* L2b: the flow lights each question a route passes, then its strategy. */
   #fx-route [data-q],#fx-route [data-no],#fx-route [data-yes],#fx-route [data-home]{transition:opacity .3s}
@@ -387,7 +409,7 @@
 <div id="bar"></div>
 <div id="stage">
 <!-- 1 · TITLE -->
-  <section class="slide" style="justify-content:center" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>01</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" style="justify-content:center" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>01</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 07 · Next.js &amp; Rendering Architecture</div>
     <h1>A Rendering Strategy<br>for Every Route</h1>
     <div class="sub">Five lessons on where your HTML gets made, how long it stays true, and the routes where Next.js is the wrong answer.</div>
@@ -422,7 +444,7 @@
     </div>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>02</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>02</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · The App Router mental model</div>
     <h2>Server by default, client by exception</h2>
     <div class="fig" id="fx-tree" style="max-width:1000px">
@@ -488,10 +510,10 @@
         <button type="button" class="dbtn" data-act="reset">reset</button>
       </div>
     </div>
-    <div class="key">A Server Component renders on the server and sends its <i>result</i>, never its code. <code>'use client'</code> marks a door into the browser bundle: that file and everything it imports ship to the client — and it still renders to HTML on the server first.</div>
+    <div class="key">A Server Component sends its <i>result</i>, never its code; a <code>'use client'</code> file ships with everything it imports.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>03</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>03</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Two kinds of component</div>
     <h2>What each side can and cannot do</h2>
     <table class="grid" id="tbl-sides">
@@ -514,10 +536,10 @@
       </div>
       <div class="row"><span class="demo-hint" data-k="why"></span></div>
     </div>
-    <div class="key w">Props that cross from server to client must be serializable: strings, numbers, plain objects, arrays, Dates, promises — and server actions. A plain function or a class instance can't make the trip.</div>
+    <div class="key w">Props that cross to the client must be serializable: no plain functions, no class instances.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>04</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>04</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Where the boundary goes</div>
     <h2>Push <code>'use client'</code> down to the leaves</h2>
     <div class="two tight" style="grid-template-columns:1fr 1.2fr">
@@ -526,7 +548,7 @@
         <pre><code><span class="st">'use client'</span> <span class="cmt">// line 1 of page.tsx</span>
 
 <span class="kw">export default function</span> <span class="fn">JobPage</span>() {
-  <span class="kw">const</span> { id } = <span class="fn">useParams</span>()
+  <span class="kw">const</span> { id } = <span class="fn">useParams</span>&lt;{ id: <span class="ty">string</span> }&gt;()
   <span class="kw">const</span> [job, setJob] = <span class="fn">useState</span>&lt;<span class="ty">Job</span>&gt;()
   <span class="fn">useEffect</span>(() =&gt; {
     <span class="fn">getJob</span>(id).<span class="fn">then</span>(setJob)
@@ -548,7 +570,7 @@
   <span class="kw">const</span> job = <span class="kw">await</span> <span class="fn">getJob</span>(id)
   <span class="kw">return</span> &lt;<span class="ty">article</span>&gt;
     &lt;<span class="ty">JobView</span> job={job} /&gt;
-    &lt;<span class="ty">ApplyButton</span> jobId={job.id} /&gt; <span class="ok">// client</span>
+    &lt;<span class="ty">ApplyButton</span> jobId={job.id} /&gt; <span class="ok">{/* client */}</span>
   &lt;/<span class="ty">article</span>&gt;
 }</code></pre>
       </div>
@@ -556,47 +578,97 @@
     <div class="key g">Only <code>ApplyButton</code> crosses over. A client component can still wrap server-rendered <code>children</code>.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>05</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>05</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Composition</div>
+    <h2>The boundary follows imports, not the tree</h2>
+    <div class="demo" id="demo-slot">
+      <div class="row">
+        <span class="demo-tag">JobDescription goes in the modal by</span>
+        <button type="button" class="dbtn" data-mode="import">importing it in modal.tsx</button>
+        <button type="button" class="dbtn" data-mode="slot">passing it as children</button>
+        <span class="meter">JS to the browser<b data-k="kb"></b></span>
+        <span class="demo-hint">sizes are illustrative</span>
+      </div>
+      <div class="row"><span class="demo-tag">Imports</span><div class="graph" data-k="graph"></div></div>
+      <div class="row"><span class="demo-tag">Ships</span><div class="graph" data-k="ships"></div></div>
+      <div class="row"><span class="demo-hint" data-k="say"></span></div>
+    </div>
+    <pre><code><span class="cmt">// page.tsx, on the server: JobDescription renders here, and Modal gets the result</span>
+&lt;<span class="ty">Modal</span> title=<span class="st">"Full description"</span>&gt;
+  &lt;<span class="ty">JobDescription</span> markdown={job.body} /&gt;
+&lt;/<span class="ty">Modal</span>&gt;
+
+<span class="cmt">// modal.tsx: 'use client', and it never imports JobDescription</span>
+<span class="kw">export function</span> <span class="fn">Modal</span>({ title, children }: { title: <span class="ty">string</span>; children: <span class="ty">ReactNode</span> }) { … }</code></pre>
+    <div class="key"><code>'use client'</code> follows imports, not the render tree: pass server parts in as <code>children</code>.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 1</div><div class="cx-page"><b>06</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Read next</div>
     <h2>The boundary, in the docs</h2>
     <div class="two">
       <div class="card a">
         <h3 class="cy">References</h3>
         <ul class="plist refs" style="margin-top:4px">
-          <li><a href="https://nextjs.org/docs/app/getting-started/server-and-client-components" target="_blank" rel="noopener">Server and Client Components — Next.js</a><small>where the boundary goes, and what crosses it</small></li>
+          <li><a href="https://nextjs.org/docs/app/getting-started/server-and-client-components" target="_blank" rel="noopener">Server and Client Components — Next.js</a><small>where the boundary goes, what crosses it, and the children slot</small></li>
           <li><a href="https://react.dev/reference/rsc/server-components" target="_blank" rel="noopener">Server Components — react.dev</a><small>the React model underneath the App Router</small></li>
-          <li><a href="https://react.dev/reference/rsc/use-client" target="_blank" rel="noopener">&#x27;use client&#x27; — react.dev</a><small>a directive marks a door, not a component</small></li>
+          <li><a href="https://react.dev/reference/rsc/use-client" target="_blank" rel="noopener">&#x27;use client&#x27; — react.dev</a><small>the boundary is drawn on imports, not the render tree</small></li>
         </ul>
       </div>
       <div class="card b">
         <h3 class="b">Resources</h3>
         <ul class="plist refs" style="margin-top:4px">
           <li><a href="https://nextjs.org/learn/dashboard-app" target="_blank" rel="noopener">Next.js Learn — the dashboard course</a><small>the official hands-on App Router course</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener">Rasmi — the job board repo</a><small>mark which job-page components need the browser before Lesson 5</small></li>
           <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/07-nextjs-rendering" target="_blank" rel="noopener">Module 7 slides</a><small>the deck this video walks through</small></li>
         </ul>
       </div>
     </div>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>06</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>07</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Five ways to make HTML</div>
     <h2>One question: when is the HTML made?</h2>
     <table class="grid">
-      <tr><th>Strategy</th><th>HTML is made</th><th>Fresh as of</th><th>What puts a route here</th></tr>
-      <tr><td><b class="b">SSG</b></td><td>Once, at build</td><td>The last deploy</td><td><code>generateStaticParams</code>, nothing read from the request</td></tr>
-      <tr><td><b class="p">ISR</b></td><td>At build, then again in the background</td><td>A window you choose, or the last on-demand revalidate</td><td><code>next: { revalidate: 300 }</code> on the fetch · <code>revalidatePath</code></td></tr>
+      <tr><th>Strategy</th><th>HTML is made</th><th>Fresh as of</th><th>In Next 16, with Cache Components</th></tr>
+      <tr><td><b class="b">SSG</b></td><td>Once, at build</td><td>The last deploy</td><td>Anything that reads neither the request nor uncached data: the static shell</td></tr>
+      <tr><td><b class="p">ISR</b></td><td>At build, then again in the background</td><td>Its <code>cacheLife</code>, or the last <code>updateTag</code></td><td><code>'use cache'</code> with <code>cacheLife('hours')</code> or <code>cacheTag</code></td></tr>
       <tr><td><b class="w">SSR</b></td><td>On every request</td><td>This request</td><td>Reading <code>cookies()</code>, <code>headers()</code>, <code>searchParams</code> · <code>await connection()</code></td></tr>
-      <tr><td><b class="g">Streaming</b></td><td>On every request, in pieces</td><td>This request, fast parts first</td><td><code>loading.tsx</code>, or <code>&lt;Suspense&gt;</code> around the slow part</td></tr>
+      <tr><td><b class="g">Streaming</b></td><td>On every request, in pieces</td><td>This request, the shell first</td><td><code>&lt;Suspense&gt;</code> around each part that reads the request</td></tr>
       <tr><td><b class="r">CSR</b></td><td>In the browser, after JS runs</td><td>Whenever the client refetches</td><td><code>'use client'</code> plus a fetch after mount</td></tr>
     </table>
-    <div class="key">Whatever a given version's defaults are, a route can only be static if nothing in it needs the request. Know which row each route lands on — and which line of code put it there.</div>
+    <div class="key">With Cache Components one route mixes them: a static shell first, then each request-time part streams in.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>07</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>08</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Partial prerendering</div>
+    <h2>One route, three speeds</h2>
+    <div class="demo" id="demo-ppr">
+      <div class="row">
+        <span class="demo-tag">/jobs, rendered with</span>
+        <button type="button" class="dbtn" data-mode="prev">the previous model</button>
+        <button type="button" class="dbtn" data-mode="cc">Cache Components</button>
+        <button type="button" class="dbtn" data-act="nosus">MyApplications without <code>&lt;Suspense&gt;</code></button>
+        <span class="meter">first byte<b data-k="fb"></b></span>
+        <span class="demo-hint">times are illustrative</span>
+      </div>
+      <div class="lanes" data-k="lanes"></div>
+      <div class="row"><span class="demo-hint" data-k="say"></span></div>
+    </div>
+    <pre><code><span class="cmt">// app/jobs/page.tsx returns:</span>
+&lt;<span class="ty">h1</span>&gt;Jobs&lt;/<span class="ty">h1</span>&gt;                    <span class="cmt">{/* static: in the shell */}</span>
+&lt;<span class="ty">LatestJobs</span> /&gt;                   <span class="cmt">{/* 'use cache' + cacheLife: in the shell */}</span>
+&lt;<span class="ty">Suspense</span> fallback={&lt;<span class="ty">Skeleton</span> /&gt;}&gt;
+  &lt;<span class="ty">MyApplications</span> /&gt;             <span class="cmt">{/* reads cookies(): streams per request */}</span>
+&lt;/<span class="ty">Suspense</span>&gt;</code></pre>
+    <div class="key">The static shell leaves at once; only the parts that read the request wait, each behind its own <code>&lt;Suspense&gt;</code>.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>09</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Choosing per route</div>
     <h2>Three questions pick the strategy</h2>
     <div class="fig" id="fx-route" style="max-width:980px">
-      <svg viewBox="0 0 980 300" role="img" aria-label="Decision flow: depends on who is asking leads to dynamic with streaming; depends on the query leads to dynamic with cached data; never changes after deploy leads to static; otherwise ISR">
+      <svg viewBox="0 0 980 300" role="img" aria-label="Decision flow: depends on who is asking leads to streaming per request; depends on the query leads to streaming over cached data; never changes after deploy leads to the static shell; otherwise use cache with a lifetime or a tag">
         <g data-q="1">
           <rect x="0" y="0" width="200" height="70" rx="10" fill="#121C30" stroke="#243349"/>
           <text x="100" y="31" text-anchor="middle" class="lbl b" font-size="14">Depends on who's asking?</text>
@@ -626,9 +698,9 @@
         </g>
         <g data-home="isr">
           <rect x="780" y="0" width="200" height="70" rx="10" fill="#121C30" stroke="#A78BFA"/>
-          <text x="880" y="24" text-anchor="middle" class="lbl b" font-size="14">ISR</text>
-          <text x="880" y="43" text-anchor="middle" class="lbl s" font-size="11">on a timer → /</text>
-          <text x="880" y="59" text-anchor="middle" class="lbl s" font-size="11">on demand → /jobs/[id]</text>
+          <text x="880" y="24" text-anchor="middle" class="lbl b" font-size="14">'use cache'</text>
+          <text x="880" y="43" text-anchor="middle" class="lbl s" font-size="11">cacheLife → /</text>
+          <text x="880" y="59" text-anchor="middle" class="lbl s" font-size="11">cacheTag → /jobs/[id]</text>
         </g>
         <g data-yes="1">
           <path class="draw" pathLength="1" d="M100,70 L100,137" stroke="#FBBF24" fill="none"/>
@@ -644,17 +716,17 @@
         </g>
         <g data-home="dyn">
           <rect x="0" y="140" width="200" height="70" rx="10" fill="#121C30" stroke="#FBBF24"/>
-          <text x="100" y="171" text-anchor="middle" class="lbl b" font-size="14">Dynamic + streaming</text>
+          <text x="100" y="171" text-anchor="middle" class="lbl b" font-size="14">Streams per request</text>
           <text x="100" y="191" text-anchor="middle" class="lbl s" font-size="11">/dashboard</text>
         </g>
         <g data-home="cached">
           <rect x="260" y="140" width="200" height="70" rx="10" fill="#121C30" stroke="#FBBF24"/>
-          <text x="360" y="171" text-anchor="middle" class="lbl b" font-size="14">Dynamic, cached data</text>
+          <text x="360" y="171" text-anchor="middle" class="lbl b" font-size="14">Streams, data cached</text>
           <text x="360" y="191" text-anchor="middle" class="lbl s" font-size="11">/jobs?q=react</text>
         </g>
         <g data-home="ssg">
           <rect x="520" y="140" width="200" height="70" rx="10" fill="#121C30" stroke="#2196F3"/>
-          <text x="620" y="171" text-anchor="middle" class="lbl b" font-size="14">Static (SSG)</text>
+          <text x="620" y="171" text-anchor="middle" class="lbl b" font-size="14">Static shell</text>
           <text x="620" y="191" text-anchor="middle" class="lbl s" font-size="11">/login · /about</text>
         </g>
         <rect x="0" y="246" width="980" height="46" rx="10" fill="none" stroke="#34D399" stroke-dasharray="5 5"/>
@@ -675,11 +747,11 @@
     <div class="key">Write the answer next to the route before you write the route. If you can't say why a page is dynamic, it probably shouldn't be.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>08</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>10</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · The caching layers, in order</div>
     <h2>Four caches stand between a click and your database</h2>
     <div class="fig" id="fx-cache" style="max-width:1000px">
-      <svg viewBox="0 0 1000 180" role="img" aria-label="A request passes the router cache in the browser, then the full route cache, request memoization and the data cache on the server, before reaching the database">
+      <svg viewBox="0 0 1000 180" role="img" aria-label="A request passes the browser cache, then the static shell, request memoization and the use cache store on the server, before reaching the database">
         <text x="209" y="12" text-anchor="middle" class="lbl s" font-size="11" style="fill:#22D3EE">BROWSER</text>
         <text x="597" y="12" text-anchor="middle" class="lbl s" font-size="11" style="fill:#2196F3">SERVER</text>
         <text x="950" y="12" text-anchor="middle" class="lbl s" font-size="11">SOURCE</text>
@@ -693,17 +765,17 @@
         <path data-hop="router" class="draw" pathLength="1" d="M100,81 L122,81" stroke="#64748B" fill="none"/>
         <g data-layer="router">
           <rect x="124" y="26" width="170" height="110" rx="10" fill="#121C30" stroke="#22D3EE"/>
-          <text x="209" y="50" text-anchor="middle" class="lbl b" font-size="13">1 · Router cache</text>
+          <text x="209" y="50" text-anchor="middle" class="lbl b" font-size="13">1 · Browser</text>
           <text x="209" y="72" text-anchor="middle" class="lbl s" font-size="11">RSC payload of visited</text>
           <text x="209" y="87" text-anchor="middle" class="lbl s" font-size="11">and prefetched segments</text>
-          <text x="209" y="118" text-anchor="middle" class="lbl s" font-size="11" style="fill:#FBBF24">lives: this tab, briefly</text>
+          <text x="209" y="118" text-anchor="middle" class="lbl s" font-size="11" style="fill:#FBBF24">lives: its stale time, 5 min</text>
         </g>
         <path data-hop="route" class="draw" pathLength="1" d="M294,81 L316,81" stroke="#64748B" fill="none"/>
         <g data-layer="route">
           <rect x="318" y="26" width="170" height="110" rx="10" fill="#121C30" stroke="#2196F3"/>
-          <text x="403" y="50" text-anchor="middle" class="lbl b" font-size="13">2 · Full route cache</text>
+          <text x="403" y="50" text-anchor="middle" class="lbl b" font-size="13">2 · Static shell</text>
           <text x="403" y="72" text-anchor="middle" class="lbl s" font-size="11">HTML + RSC payload</text>
-          <text x="403" y="87" text-anchor="middle" class="lbl s" font-size="11">of static routes</text>
+          <text x="403" y="87" text-anchor="middle" class="lbl s" font-size="11">prerendered at build</text>
           <text x="403" y="118" text-anchor="middle" class="lbl s" font-size="11" style="fill:#FBBF24">lives: until revalidated</text>
         </g>
         <path data-hop="memo" class="draw" pathLength="1" d="M488,81 L510,81" stroke="#64748B" fill="none"/>
@@ -717,10 +789,10 @@
         <path data-hop="data" class="draw" pathLength="1" d="M682,81 L704,81" stroke="#64748B" fill="none"/>
         <g data-layer="data">
           <rect x="706" y="26" width="170" height="110" rx="10" fill="#121C30" stroke="#FBBF24"/>
-          <text x="791" y="50" text-anchor="middle" class="lbl b" font-size="13">4 · Data cache</text>
-          <text x="791" y="72" text-anchor="middle" class="lbl s" font-size="11">fetch and cached-</text>
-          <text x="791" y="87" text-anchor="middle" class="lbl s" font-size="11">function results</text>
-          <text x="791" y="118" text-anchor="middle" class="lbl s" font-size="11" style="fill:#FBBF24">lives: across requests</text>
+          <text x="791" y="50" text-anchor="middle" class="lbl b" font-size="13">4 · 'use cache'</text>
+          <text x="791" y="72" text-anchor="middle" class="lbl s" font-size="11">cached functions</text>
+          <text x="791" y="87" text-anchor="middle" class="lbl s" font-size="11">and components</text>
+          <text x="791" y="118" text-anchor="middle" class="lbl s" font-size="11" style="fill:#FBBF24">lives: its cacheLife</text>
         </g>
         <path data-hop="db" class="draw" pathLength="1" d="M876,81 L898,81" stroke="#64748B" fill="none"/>
         <g data-layer="db">
@@ -739,28 +811,28 @@
         <span class="demo-tag">Send a request</span>
         <button type="button" class="dbtn" data-act="link">Click a link to /jobs</button>
         <button type="button" class="dbtn" data-act="reload">Hard reload</button>
-        <button type="button" class="dbtn" data-act="tag"><code>revalidateTag('jobs')</code></button>
-        <button type="button" class="dbtn" data-act="dyn">route reads <code>cookies()</code></button>
+        <button type="button" class="dbtn" data-act="tag"><code>updateTag('jobs')</code></button>
+        <button type="button" class="dbtn" data-act="dyn">a part reads <code>cookies()</code></button>
       </div>
       <div class="row"><span class="demo-hint" data-k="say"></span></div>
     </div>
-    <div class="key w">Every “why is this stale?” bug lives in one of these four boxes. Name the box before you touch a setting — the fix for each one is different.</div>
+    <div class="key w">Every “why is this stale?” bug lives in one of these four boxes: name the box before you touch a setting.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>09</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>11</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Who controls each layer</div>
     <h2>Opt in, opt out, invalidate</h2>
     <table class="grid">
       <tr><th>Layer</th><th>You opt in with</th><th>It's skipped when</th><th>You clear it with</th></tr>
-      <tr><td><b class="cy">1 · Router</b></td><td>Nothing — visited and prefetched segments are kept</td><td>A hard reload</td><td><code>router.refresh()</code>, or an action that revalidates</td></tr>
-      <tr><td><b class="b">2 · Full route</b></td><td>A route that needs nothing from the request</td><td>It reads cookies, headers, <code>searchParams</code> or uncached data</td><td><code>revalidatePath</code>, revalidating its data, a deploy</td></tr>
-      <tr><td><b class="p">3 · Request memo</b></td><td>Automatic for GET <code>fetch</code>; <code>React.cache()</code> for anything else</td><td>—</td><td>Nothing to clear: it dies with the request</td></tr>
-      <tr><td><b class="w">4 · Data</b></td><td><code>next: { revalidate }</code>, <code>cache: 'force-cache'</code>, or <code>'use cache'</code></td><td>The fetch didn't opt in — uncached is the default since Next 15</td><td><code>revalidateTag</code>, <code>revalidatePath</code>, the timer</td></tr>
+      <tr><td><b class="cy">1 · Browser</b></td><td>Nothing: visited and prefetched segments are kept for their <code>stale</code> time</td><td>A hard reload</td><td><code>router.refresh()</code>, or <code>refresh()</code> in an action</td></tr>
+      <tr><td><b class="b">2 · Static shell</b></td><td>Everything outside <code>&lt;Suspense&gt;</code> that doesn't read the request</td><td>A crawler that needs full metadata gets the page rendered whole</td><td>Expiring the data in it, a deploy</td></tr>
+      <tr><td><b class="p">3 · Request memo</b></td><td>Automatic for identical <code>fetch</code>; <code>React.cache()</code> for anything else</td><td>—</td><td>Nothing to clear: it dies with the request</td></tr>
+      <tr><td><b class="w">4 · 'use cache'</b></td><td><code>'use cache'</code> with <code>cacheLife</code> and <code>cacheTag</code></td><td>Unmarked: data is fetched on every request by default</td><td><code>updateTag</code>, <code>revalidateTag(tag, 'max')</code>, the timer</td></tr>
     </table>
-    <div class="key">A mutation changes layer 4 first. Revalidate the data, and the route and router caches built from it follow — in a server action, the user's own browser included.</div>
+    <div class="key">A mutation clears layer 4 by tag, and the shells built from that data follow.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>10</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 2</div><div class="cx-page"><b>12</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Read next</div>
     <h2>Rendering and caching, at the source</h2>
     <div class="two">
@@ -768,42 +840,78 @@
         <h3 class="cy">References</h3>
         <ul class="plist refs" style="margin-top:4px">
           <li><a href="https://web.dev/articles/rendering-on-the-web" target="_blank" rel="noopener">Rendering on the Web — web.dev</a><small>CSR, SSR, static and streaming, framework-neutral</small></li>
-          <li><a href="https://nextjs.org/docs/app/guides/caching" target="_blank" rel="noopener">Caching in Next.js</a><small>the four layers, how to opt in, how to invalidate</small></li>
-          <li><a href="https://nextjs.org/docs/app/guides/incremental-static-regeneration" target="_blank" rel="noopener">Incremental Static Regeneration</a><small>time-based and on-demand revalidation</small></li>
+          <li><a href="https://nextjs.org/docs/app/getting-started/caching" target="_blank" rel="noopener">Caching — Next.js</a><small>Cache Components: use cache, cacheLife, the static shell</small></li>
+          <li><a href="https://nextjs.org/docs/app/getting-started/revalidating" target="_blank" rel="noopener">Revalidating — Next.js</a><small>cacheTag, updateTag and revalidateTag</small></li>
         </ul>
       </div>
       <div class="card b">
         <h3 class="b">Resources</h3>
         <ul class="plist refs" style="margin-top:4px">
-          <li><a href="https://nextjs.org/docs/app/api-reference/file-conventions/loading" target="_blank" rel="noopener">loading.js — streaming a route segment</a><small>Suspense around a whole segment</small></li>
+          <li><a href="https://nextjs.org/docs/app/guides/streaming" target="_blank" rel="noopener">Streaming — Next.js</a><small>Suspense, loading.js, and what crawlers get</small></li>
+          <li><a href="https://nextjs.org/docs/app/guides/caching-without-cache-components" target="_blank" rel="noopener">Caching, the previous model — Next.js</a><small>for apps without cacheComponents</small></li>
           <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/07-nextjs-rendering" target="_blank" rel="noopener">Module 7 slides</a><small>the deck this video walks through</small></li>
         </ul>
       </div>
     </div>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>11</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>13</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Server actions</div>
     <h2>A form that posts straight to a server function</h2>
     <pre><code><span class="st">'use server'</span> <span class="cmt">// features/jobs/actions.ts</span>
 <span class="kw">export async function</span> <span class="fn">postJob</span>(prev: <span class="ty">FormState</span>, form: <span class="ty">FormData</span>): <span class="ty">Promise</span>&lt;<span class="ty">FormState</span>&gt; {
-  <span class="kw">const</span> session = <span class="kw">await</span> <span class="fn">verifySession</span>()                              <span class="cmt">// 1 · who is this?</span>
+  <span class="kw">const</span> session = <span class="kw">await</span> <span class="fn">verifySession</span>()                                 <span class="cmt">// 1 · who is this?</span>
   <span class="kw">if</span> (session.role !== <span class="st">'company'</span>) <span class="kw">return</span> { error: <span class="st">'Not allowed'</span> }       <span class="cmt">// 2 · may they?</span>
 
-  <span class="kw">const</span> input = NewJobSchema.<span class="fn">safeParse</span>(<span class="ty">Object</span>.<span class="fn">fromEntries</span>(form))       <span class="cmt">// 3 · is it valid?</span>
+  <span class="kw">const</span> input = NewJobSchema.<span class="fn">safeParse</span>(<span class="ty">Object</span>.<span class="fn">fromEntries</span>(form))        <span class="cmt">// 3 · is it valid?</span>
   <span class="kw">if</span> (!input.success) <span class="kw">return</span> { error: <span class="st">'Check the highlighted fields'</span> }
 
   <span class="kw">const</span> job = <span class="kw">await</span> <span class="fn">createJob</span>(session.employerId, input.data)
-  <span class="fn">revalidatePath</span>(<span class="st">'/jobs'</span>)                                           <span class="cmt">// the list now shows it</span>
-  <span class="fn">redirect</span>(`/jobs/${job.id}`)                                       <span class="cmt">// throws: nothing after it runs</span>
+  <span class="fn">updateTag</span>(<span class="st">'jobs'</span>)                                                     <span class="cmt">// the list shows it, now</span>
+  <span class="fn">redirect</span>(`/jobs/${job.id}`)                                           <span class="cmt">// throws: nothing after it runs</span>
 }</code></pre>
     <p class="say">Client side: <code>useActionState(postJob, {})</code> gives the form its action and a pending flag. It submits even before JS loads.</p>
     <div class="key r">An action is a public endpoint. Authenticate, authorise and validate inside it — every time.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>12</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>14</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · After the write</div>
+    <h2>The writer must see their own write</h2>
+    <div class="demo" id="demo-write">
+      <div class="row">
+        <span class="demo-tag">The action calls</span>
+        <button type="button" class="dbtn" data-mode="update"><code>updateTag('jobs')</code></button>
+        <button type="button" class="dbtn" data-mode="revalidate"><code>revalidateTag('jobs', 'max')</code></button>
+      </div>
+      <div class="row">
+        <span class="demo-tag">Job 42</span>
+        <button type="button" class="dbtn" data-act="save">The employer saves a new title</button>
+        <span class="dom">database: <b data-k="db"></b></span>
+        <span class="dom">cache: <b data-k="cache"></b> <span data-k="state"></span></span>
+      </div>
+      <div class="row">
+        <span class="demo-tag">Then loads it</span>
+        <button type="button" class="dbtn" data-act="employer">the employer</button>
+        <button type="button" class="dbtn" data-act="visitor">a visitor</button>
+        <span class="dom">sees: <b data-k="seen">—</b></span>
+        <span class="demo-hint" data-k="how"></span>
+      </div>
+      <div class="row"><span class="demo-hint" data-k="say"></span></div>
+    </div>
+    <pre><code><span class="st">'use server'</span>
+<span class="kw">export async function</span> <span class="fn">renameJob</span>(id: <span class="ty">string</span>, title: <span class="ty">string</span>) {
+  <span class="kw">await</span> <span class="fn">verifySession</span>()             <span class="cmt">// the three checks, as before</span>
+  <span class="kw">await</span> db.job.<span class="fn">update</span>({ where: { id }, data: { title } })
+  <span class="fn">updateTag</span>(<span class="st">'jobs'</span>)                 <span class="cmt">// expired now: the next render waits for the new title</span>
+}
+<span class="cmt">// a CMS webhook, in a route handler, where updateTag isn't allowed:</span>
+<span class="fn">revalidateTag</span>(<span class="st">'jobs'</span>, <span class="st">'max'</span>)        <span class="cmt">// the old title once more, the new one in the background</span></code></pre>
+    <div class="key"><code>updateTag</code> when the writer must see the change; <code>revalidateTag(tag, 'max')</code> when a moment of stale is fine.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>15</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · The door and the side entrance</div>
-    <h2>Middleware checks for a wristband, not a password</h2>
+    <h2>The proxy checks for a wristband, not a password</h2>
     <div class="two tight">
       <div class="card w">
         <h3 class="w">proxy.ts · middleware.ts before 16</h3>
@@ -834,10 +942,10 @@
 }</code></pre>
       </div>
     </div>
-    <div class="key r">A cookie being present proves nothing about who sent it. Middleware makes the cheap, optimistic redirect; the real check lives next to the data, in <code>verifySession()</code> — two slides on.</div>
+    <div class="key r">A cookie being present proves nothing about who sent it. The proxy makes the cheap, optimistic redirect; the real check lives next to the data, in <code>verifySession()</code>, two slides on.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>13</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>16</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Sessions that survive a refresh</div>
     <h2>Put the session where the server can read it</h2>
     <div class="anim" id="fx-refresh" data-at="300,1200,2300,3500">
@@ -887,7 +995,7 @@
     <div class="key">The flags that make a cookie a session, not a liability: <code>HttpOnly</code> so scripts can't read it, <code>Secure</code>, <code>SameSite=Lax</code>, a short <code>Max-Age</code>, and a value that's signed or encrypted.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>14</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>17</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Check next to the data</div>
     <h2>One <code>verifySession()</code>, wherever data is read</h2>
     <div class="two tight" style="grid-template-columns:1.25fr 1fr">
@@ -896,6 +1004,7 @@
         <pre><code><span class="kw">import</span> <span class="st">'server-only'</span>
 <span class="kw">import</span> { cache } <span class="kw">from</span> <span class="st">'react'</span>
 <span class="kw">import</span> { cookies } <span class="kw">from</span> <span class="st">'next/headers'</span>
+<span class="kw">import</span> { redirect } <span class="kw">from</span> <span class="st">'next/navigation'</span>
 
 <span class="kw">export const</span> verifySession = <span class="fn">cache</span>(<span class="kw">async</span> () =&gt; {
   <span class="kw">const</span> raw = (<span class="kw">await</span> <span class="fn">cookies</span>()).<span class="fn">get</span>(<span class="st">'session'</span>)?.value
@@ -919,30 +1028,31 @@
     <div class="key g"><code>cache()</code> makes five calls in one render cost one cookie read and one lookup. <code>server-only</code> turns importing this file from a Client Component into a build error instead of a leak.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>15</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 3</div><div class="cx-page"><b>18</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Read next</div>
     <h2>Writes and sessions, read properly</h2>
     <div class="two">
       <div class="card a">
         <h3 class="cy">References</h3>
         <ul class="plist refs" style="margin-top:4px">
-          <li><a href="https://nextjs.org/docs/app/getting-started/mutating-data" target="_blank" rel="noopener">Updating data — Next.js</a><small>server functions, forms and revalidation</small></li>
+          <li><a href="https://nextjs.org/docs/app/getting-started/mutating-data" target="_blank" rel="noopener">Updating data — Next.js</a><small>server functions, forms, updateTag and refresh</small></li>
           <li><a href="https://nextjs.org/docs/app/guides/authentication" target="_blank" rel="noopener">Authentication — Next.js</a><small>sessions, the data access layer, verifySession</small></li>
           <li><a href="https://nextjs.org/docs/app/guides/data-security" target="_blank" rel="noopener">Data security — Next.js</a><small>why every action authenticates, authorises and validates</small></li>
-          <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie" target="_blank" rel="noopener">Set-Cookie — MDN</a><small>HttpOnly, Secure, SameSite, Max-Age</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie" target="_blank" rel="noopener">Set-Cookie — MDN</a><small>HttpOnly, Secure, SameSite, Max-Age</small></li>
         </ul>
       </div>
       <div class="card b">
         <h3 class="b">Resources</h3>
         <ul class="plist refs" style="margin-top:4px">
-          <li><a href="https://nextjs.org/docs/app/getting-started/route-handlers-and-middleware" target="_blank" rel="noopener">Route handlers and middleware — Next.js</a><small>the side entrance and the door</small></li>
+          <li><a href="https://nextjs.org/docs/app/getting-started/route-handlers" target="_blank" rel="noopener">Route handlers — Next.js</a><small>the side entrance</small></li>
+          <li><a href="https://nextjs.org/docs/app/getting-started/proxy" target="_blank" rel="noopener">Proxy — Next.js</a><small>the door, called middleware before Next 16</small></li>
           <li><a href="https://github.com/vercel/next.js/security/advisories/GHSA-f82v-jwr5-mffw" target="_blank" rel="noopener">The 2025 middleware bypass advisory</a><small>why middleware is never the real lock</small></li>
         </ul>
       </div>
     </div>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 4</div><div class="cx-page"><b>16</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 4</div><div class="cx-page"><b>19</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · Metadata in the first byte</div>
     <h2>Found in public, invisible behind login</h2>
     <div class="two tight" style="grid-template-columns:1.2fr 1fr">
@@ -971,10 +1081,36 @@
         <p style="margin-top:12px">Every page in the group inherits it. A crawler without a session never gets past the redirect anyway — <b>this is the second lock, not the first</b>.</p>
       </div>
     </div>
-    <div class="key w"><code>robots.txt</code> asks crawlers not to look — it's public and only advisory. <code>noindex</code> tells them not to list. Only auth keeps a page private. The dashboard gets the last two.</div>
+    <div class="key w"><code>robots.txt</code> asks, <code>noindex</code> tells, and only auth protects: the dashboard gets the last two.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 4</div><div class="cx-page"><b>17</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 4</div><div class="cx-page"><b>20</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Who reads the head</div>
+    <h2>A link preview never runs your JavaScript</h2>
+    <div class="demo" id="demo-bots">
+      <div class="row">
+        <span class="demo-tag">The job's title is set by</span>
+        <button type="button" class="dbtn" data-mode="effect"><code>document.title</code> in an effect</button>
+        <button type="button" class="dbtn" data-mode="meta"><code>generateMetadata</code>, cached</button>
+      </div>
+      <div class="row">
+        <span class="demo-tag">Fetched by</span>
+        <button type="button" class="dbtn" data-who="browser">a browser</button>
+        <button type="button" class="dbtn" data-who="google">Googlebot</button>
+        <button type="button" class="dbtn" data-who="slack">Slackbot, a link preview</button>
+      </div>
+      <div class="row"><span class="demo-tag">First byte</span><span class="dom" data-k="head"></span></div>
+      <div class="row"><span class="demo-tag">Then</span><span class="demo-hint" data-k="then"></span></div>
+    </div>
+    <pre><code><span class="no">// ✗ arrives after JavaScript runs, and a link preview never runs it</span>
+<span class="fn">useEffect</span>(() =&gt; { document.title = `${job.title} at ${job.employer.name}` }, [job])
+
+<span class="ok">// ✓ prerendered into &lt;head&gt;, for every visitor and every bot</span>
+<span class="kw">export async function</span> <span class="fn">generateMetadata</span>({ params }: <span class="ty">Props</span>): <span class="ty">Promise</span>&lt;<span class="ty">Metadata</span>&gt; { … }</code></pre>
+    <div class="key">Put the title on the server: a link preview never runs JavaScript, and Google runs it later.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 4</div><div class="cx-page"><b>21</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · When NOT to reach for Next.js</div>
     <h2>No route needs a server? Don't run one</h2>
     <table class="grid">
@@ -988,7 +1124,7 @@
     <div class="key g">Rasmi's verdict: the public job pages need it — search, first paint, shared links. The dashboard alone wouldn't; it rides along because it shares the session, the components and the domain.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 4</div><div class="cx-page"><b>18</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 4</div><div class="cx-page"><b>22</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · Read next</div>
     <h2>Be found — or choose not to need Next.js</h2>
     <div class="two">
@@ -996,8 +1132,9 @@
         <h3 class="cy">References</h3>
         <ul class="plist refs" style="margin-top:4px">
           <li><a href="https://nextjs.org/docs/app/getting-started/metadata-and-og-images" target="_blank" rel="noopener">Metadata and OG images — Next.js</a><small>metadata in the first byte</small></li>
+          <li><a href="https://nextjs.org/docs/app/api-reference/functions/generate-metadata" target="_blank" rel="noopener">generateMetadata — Next.js</a><small>cached, streamed, and what HTML-limited bots get</small></li>
           <li><a href="https://developers.google.com/search/docs/appearance/structured-data/job-posting" target="_blank" rel="noopener">Job posting structured data — Google</a><small>the JSON-LD that gets a listing into job search</small></li>
-          <li><a href="https://developers.google.com/search/docs/crawling-indexing/block-indexing" target="_blank" rel="noopener">Block indexing with noindex — Google</a><small>robots.txt asks; noindex tells; auth protects</small></li>
+          <li><a href="https://developers.google.com/search/docs/crawling-indexing/block-indexing" target="_blank" rel="noopener">Block indexing with noindex — Google</a><small>and why robots.txt hides the noindex</small></li>
         </ul>
       </div>
       <div class="card b">
@@ -1010,23 +1147,39 @@
     </div>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>19</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>23</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · Build · Port the job board</div>
     <h2>The route map is the spec</h2>
     <table class="grid">
       <tr><th>Route</th><th>Strategy</th><th>Why</th><th>Fresh after a change via</th></tr>
-      <tr><td><code>/</code></td><td><b class="p">Static, ISR hourly</b></td><td>Same for everyone; must be fast and indexable</td><td>The timer</td></tr>
-      <tr><td><code>/jobs</code></td><td><b class="w">Dynamic, streamed</b></td><td>Filters live in the query string</td><td>Cached data tagged <code>jobs</code>, revalidated by <code>postJob</code></td></tr>
-      <tr><td><code>/jobs/[id]</code></td><td><b class="p">Static + ISR, 200 at build</b></td><td>Search, shared links, JobPosting data</td><td><code>editJob</code> revalidates its path or its tag</td></tr>
-      <tr><td><code>/companies/[slug]</code></td><td><b class="p">Static + ISR</b></td><td>The employer page is searched for too</td><td>The company-profile action</td></tr>
-      <tr><td><code>/login</code></td><td><b class="b">Static</b></td><td>No data at all</td><td>—</td></tr>
-      <tr><td><code>/dashboard/**</code></td><td><b class="w">Dynamic, streamed, noindex</b></td><td>Different for every user</td><td><code>apply</code>, <code>withdraw</code>, <code>saveJob</code> actions</td></tr>
-      <tr><td><code>/api/jobs</code></td><td><b class="g">Route handler</b></td><td>The partner feed and the mobile app</td><td>Follows the data cache</td></tr>
+      <tr><td><code>/</code></td><td><b class="p">○ Static, <code>cacheLife('hours')</code></b></td><td>Same for everyone; must be fast and indexable</td><td>The timer</td></tr>
+      <tr><td><code>/jobs</code></td><td><b class="w">◐ Shell, results streamed</b></td><td>Filters live in the query string</td><td>Results cached with tag <code>jobs</code>; <code>postJob</code> calls <code>updateTag</code></td></tr>
+      <tr><td><code>/jobs/[id]</code></td><td><b class="p">○ 200 at build, ◐ the rest</b></td><td>Search, shared links, JobPosting data</td><td><code>editJob</code> calls <code>updateTag</code> for its tag</td></tr>
+      <tr><td><code>/companies/[slug]</code></td><td><b class="p">○ known at build, ◐ the rest</b></td><td>The employer page is searched for too</td><td>The company-profile action</td></tr>
+      <tr><td><code>/login</code></td><td><b class="b">○ Static</b></td><td>No data at all</td><td>—</td></tr>
+      <tr><td><code>/dashboard/**</code></td><td><b class="w">◐ Shell, user parts streamed, noindex</b></td><td>Different for every user</td><td><code>apply</code>, <code>withdraw</code>, <code>saveJob</code> actions</td></tr>
+      <tr><td><code>/api/jobs</code></td><td><b class="g">Route handler, prerendered</b></td><td>The partner feed and the mobile app</td><td>The same tags as <code>/jobs</code></td></tr>
     </table>
     <p class="say">Fill in the last column before you write a line of code — it's the column that turns into bugs.</p>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>20</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>24</b> / 27</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Build · Check the plan</div>
+    <h2>The build checks the plan</h2>
+    <div class="demo" id="demo-build">
+      <div class="row">
+        <span class="demo-tag"><code>next build</code> with</span>
+        <button type="button" class="dbtn" data-v="plan">the route map as planned</button>
+        <button type="button" class="dbtn" data-v="layout"><code>verifySession()</code> atop the dashboard layout</button>
+        <button type="button" class="dbtn" data-v="home">an uncached fetch on <code>/</code></button>
+      </div>
+      <div class="term" data-k="out"></div>
+      <div class="row"><span class="demo-hint" data-k="say"></span></div>
+    </div>
+    <div class="key">Read <code>next build</code> before you ship: it should say what the route map says, and a slip fails the build.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>25</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · Build · What done looks like</div>
     <h2>Port it, then prove every route</h2>
     <div class="two tight">
@@ -1045,7 +1198,8 @@
 │  └─ dashboard/…      <span class="cmt">seeker, company</span>
 ├─ api/jobs/route.ts
 └─ robots.ts · sitemap.ts
-proxy.ts               <span class="cmt">the door</span></code></pre>
+proxy.ts               <span class="cmt">the door</span>
+next.config.ts         <span class="cmt">cacheComponents: true</span></code></pre>
       </div>
       <div class="card g">
         <h3 class="g">Done when</h3>
@@ -1053,14 +1207,14 @@ proxy.ts               <span class="cmt">the door</span></code></pre>
           <li>View source on a job page shows its content<small>title, salary and the JobPosting JSON-LD</small></li>
           <li>Refreshing the dashboard never flashes logged-out<small>the session is read on the server</small></li>
           <li>No cookie, no dashboard<small><code>curl</code> gets a redirect to <code>/login</code></small></li>
-          <li>A new job shows on <code>/jobs</code> without a redeploy<small>revalidation, not a rebuild</small></li>
+          <li>A new job shows on <code>/jobs</code> without a redeploy<small><code>updateTag</code> in the action, not a rebuild</small></li>
         </ul>
       </div>
     </div>
     <p class="say">Stage: <code>module-7/next-rendering</code> — same features, same domain types, new rendering.</p>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>21</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>26</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · Read next</div>
     <h2>Everything the port leans on</h2>
     <div class="two">
@@ -1068,8 +1222,9 @@ proxy.ts               <span class="cmt">the door</span></code></pre>
         <h3 class="cy">References</h3>
         <ul class="plist refs" style="margin-top:4px">
           <li><a href="https://nextjs.org/docs/app/api-reference/file-conventions/route-groups" target="_blank" rel="noopener">Route groups — Next.js</a><small>(public) and (dashboard), two layouts, one URL space</small></li>
-          <li><a href="https://nextjs.org/docs/app/api-reference/functions/generate-static-params" target="_blank" rel="noopener">generateStaticParams</a><small>the 200 jobs built at deploy</small></li>
-          <li><a href="https://nextjs.org/docs/app/api-reference/functions/revalidateTag" target="_blank" rel="noopener">revalidateTag</a><small>a new job on /jobs without a redeploy</small></li>
+          <li><a href="https://nextjs.org/docs/app/api-reference/functions/generate-static-params" target="_blank" rel="noopener">generateStaticParams</a><small>the 200 jobs built at deploy; the rest get the shell</small></li>
+          <li><a href="https://nextjs.org/docs/app/api-reference/functions/updateTag" target="_blank" rel="noopener">updateTag — Next.js</a><small>a new job on /jobs without a redeploy</small></li>
+          <li><a href="https://nextjs.org/docs/app/guides/incremental-static-regeneration-cache-components" target="_blank" rel="noopener">ISR with Cache Components — Next.js</a><small>ids nobody built: the shell first, then filled in</small></li>
         </ul>
       </div>
       <div class="card b">
@@ -1082,7 +1237,7 @@ proxy.ts               <span class="cmt">the door</span></code></pre>
     </div>
 </section>
 
-  <section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>22</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 07 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 07 · VIDEO 5</div><div class="cx-page"><b>27</b> / 27</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 07 · done</div>
     <h2>A strategy per route, defended out loud</h2>
     <div class="two">
@@ -1090,8 +1245,8 @@ proxy.ts               <span class="cmt">the door</span></code></pre>
         <h3 class="cy">What you can now do</h3>
         <ul class="plist" style="margin-top:4px">
           <li>Draw the server/client boundary on purpose<small>server by default, <code>'use client'</code> at the leaves</small></li>
-          <li>Pick SSG, ISR, SSR, streaming or CSR per route<small>and point at the line that chose it</small></li>
-          <li>Find a stale-data bug by naming its cache<small>then clear it by path or by tag</small></li>
+          <li>Make every part of a route static, cached, streamed or client<small>and point at the line that chose it</small></li>
+          <li>Find a stale-data bug by naming its cache<small>then clear it by tag, now or in the background</small></li>
           <li>Write through actions with the checks inside<small>the real auth check sits next to the data</small></li>
           <li>Say no to Next.js when no route needs a server</li>
         </ul>
@@ -1099,7 +1254,7 @@ proxy.ts               <span class="cmt">the door</span></code></pre>
       <div>
         <div class="card g">
           <h3 class="g">Deliverable</h3>
-          <p>Rasmi on the App Router: public pages static and indexable, the dashboard per-user and <code>noindex</code>, and a route map that names every route's strategy.</p>
+          <p>Rasmi on the App Router: public pages prerendered and indexable, the dashboard per-user and <code>noindex</code>, and a route map that names every route's strategy.</p>
         </div>
         <div class="card b" style="margin-top:18px">
           <h3 class="b">Next · Module 08 — Performance, Testing &amp; Security</h3>
@@ -1180,7 +1335,7 @@ const ideas: [group: string, what: string][] = [
   ['boundary', 'server HTML arrives inert; hydration is what makes it click'],
   ['hydration', 'render twice, at two moments: a mismatch, and the fix'],
   ['streaming', 'the real chunks: the shell first, each Suspense boundary later'],
-  ['cache', 'a data cache with revalidate and tags: stale-while-revalidate'],
+  ['cache', "a 'use cache' store: a lifetime, updateTag and revalidateTag"],
   ['actions', 'a form that posts to a function, with pending state and checks'],
 ];
 
@@ -1434,7 +1589,7 @@ export default function Stream() {
 <script type="text/plain" data-sbx-file="Isr.tsx" data-sbx-group="cache" data-sbx-color="#A78BFA" data-sbx-shut>
 import './styles.css';
 import { useState } from 'react';
-import { cached, revalidateTag, log } from './dataCache';
+import { cached, updateTag, revalidateTag, log } from './dataCache';
 
 // The "database": edit the job to bump its version.
 let version = 1;
@@ -1442,7 +1597,8 @@ const getJob = () => new Promise<string>((r) => setTimeout(() => r(`Frontend Eng
 
 // Each request renders /jobs/42 through the cache (revalidate 5 s, tag 'jobs'). Edit the
 // job, then request: the old page keeps coming until the window passes, and the first
-// request after it is still served stale while the refresh runs. revalidateTag skips the wait.
+// request after it is still served stale while the refresh runs. updateTag expires it now,
+// so the next request waits for the new one; revalidateTag(tag, 'max') only marks it stale.
 export default function Isr() {
   // A new object per request, so two requests in the same second still both redraw.
   const [page, setPage] = useState<{ title: string; at: string } | null>(null);
@@ -1459,7 +1615,8 @@ export default function Isr() {
       <div className="row">
         <button onClick={request}>Request /jobs/42</button>
         <button onClick={() => { version++; redraw((n) => n + 1); }}>Edit the job</button>
-        <button onClick={() => { revalidateTag('jobs'); redraw((n) => n + 1); }}>revalidateTag('jobs')</button>
+        <button onClick={() => { updateTag('jobs'); redraw((n) => n + 1); }}>updateTag('jobs')</button>
+        <button onClick={() => { revalidateTag('jobs', 'max'); redraw((n) => n + 1); }}>revalidateTag('jobs', 'max')</button>
       </div>
       <p>
         page: <b>{page ? `${page.title} · served ${page.at}` : '—'}</b> <span className="muted">· database: v{version}</span>
@@ -1470,10 +1627,11 @@ export default function Isr() {
 }
 </script>
 <script type="text/plain" data-sbx-file="dataCache.ts" data-sbx-group="cache">
-// A toy data cache with Next.js's rules, in seconds instead of minutes: an answer is kept
-// across requests; after `revalidate` seconds it is stale, still served once while a
-// refresh runs behind it; revalidateTag drops every entry with that tag.
-type Entry = { value: unknown; at: number; tags: string[]; refreshing?: boolean };
+// A toy 'use cache' store with Next.js 16's rules, in seconds instead of minutes: an answer is
+// kept across requests; after `revalidate` seconds it is stale, still served once while a refresh
+// runs behind it. updateTag expires every entry with that tag now, so the next request waits for
+// fresh data; revalidateTag(tag, 'max') only marks them stale, so the next one still gets the old answer.
+type Entry = { value: unknown; at: number; tags: string[]; refreshing?: boolean; marked?: boolean };
 const store = new Map<string, Entry>();
 export const log: string[] = [];
 
@@ -1486,9 +1644,9 @@ export async function cached<T>(key: string, load: () => Promise<T>, opts: { rev
     return value;
   }
   const age = (Date.now() - e.at) / 1000;
-  if (age < opts.revalidate) log.push(`${key}: hit, ${age.toFixed(1)} s old`);
+  if (age < opts.revalidate && !e.marked) log.push(`${key}: hit, ${age.toFixed(1)} s old`);
   else if (!e.refreshing) {
-    log.push(`${key}: stale after ${age.toFixed(1)} s: served stale, refreshing behind it`);
+    log.push(`${key}: ${e.marked ? 'marked stale' : `stale after ${age.toFixed(1)} s`}: served stale, refreshing behind it`);
     e.refreshing = true;
     load().then((value) => {
       store.set(key, { value, at: Date.now(), tags: opts.tags });
@@ -1498,11 +1656,22 @@ export async function cached<T>(key: string, load: () => Promise<T>, opts: { rev
   return e.value as T;
 }
 
-export function revalidateTag(tag: string) {
+// In a server action: the writer's next request waits for the new data.
+export function updateTag(tag: string) {
   for (const [key, e] of store) {
     if (e.tags.includes(tag)) {
       store.delete(key);
-      log.push(`revalidateTag('${tag}'): ${key} dropped`);
+      log.push(`updateTag('${tag}'): ${key} expired, the next request waits`);
+    }
+  }
+}
+
+// In an action or a route handler: serve the old answer once more, refresh in the background.
+export function revalidateTag(tag: string, profile: 'max') {
+  for (const [key, e] of store) {
+    if (e.tags.includes(tag)) {
+      e.marked = true;
+      log.push(`revalidateTag('${tag}', '${profile}'): ${key} marked stale`);
     }
   }
 }
@@ -1750,17 +1919,43 @@ export async function postJob(_prev: FormState, form: FormData): Promise<FormSta
     watch(root, function(){ pick(null); });
   })();
 
+  /* L1c · the boundary follows imports: the same JobDescription, imported by a client file or passed in as children */
+  (function(){
+    var root = document.getElementById('demo-slot'); if (!root) return;
+    function chip(t, cli){ return '<span class="mod' + (cli ? ' cli' : '') + '">' + esc(t) + '</span>'; }
+    var TO = '<span class="mod-to">imports</span>', GAP = '<span class="mod-gap"></span>';
+    var M = {
+      import: { kb: 40,
+        graph: chip('page.tsx') + TO + chip("modal.tsx · 'use client'", 1) + TO + chip('job-description.tsx', 1) + TO + chip('marked', 1),
+        ships: chip('modal.tsx · 2 KB', 1) + chip('job-description.tsx + marked · 38 KB', 1),
+        say: 'modal.tsx imports it, so JobDescription and its parser join the client bundle. Anything it imports marked server-only now fails the build.' },
+      slot: { kb: 2,
+        graph: chip('page.tsx') + TO + chip("modal.tsx · 'use client'", 1) + GAP + chip('page.tsx') + TO + chip('job-description.tsx') + TO + chip('marked'),
+        ships: chip('modal.tsx · 2 KB', 1) + '<span class="demo-hint">the description arrives already rendered, in the RSC payload</span>',
+        say: 'page.tsx renders JobDescription and hands Modal the result as children. Only the modal ships; the parser never leaves the server.' }
+    };
+    function set(m){
+      var x = M[m];
+      root.querySelectorAll('[data-mode]').forEach(function(b){ b.classList.toggle('on', b.dataset.mode === m); });
+      k(root,'graph').innerHTML = x.graph; k(root,'ships').innerHTML = x.ships;
+      var b = k(root,'kb'); b.textContent = x.kb + ' KB'; b.className = x.kb > 10 ? 'bad' : 'good'; again(b, 'bump');
+      k(root,'say').textContent = x.say;
+    }
+    root.addEventListener('click', function(e){ var b = e.target.closest('[data-mode]'); if (b) set(b.dataset.mode); });
+    watch(root, function(){ set('import'); });
+  })();
+
   /* L2b · route a URL through the three questions */
   (function(){
     var root = document.getElementById('demo-route'), fig = document.getElementById('fx-route');
     if (!root || !fig) return;
     // yes: the question that says yes (0: none does, so the route is static).
     var R = {
-      dash:   { yes: 1, why: '/dashboard → dynamic + streaming. It reads the session cookie, so each user gets their own HTML.' },
-      search: { yes: 2, why: '/jobs?q=react → dynamic, cached data. The query shapes the HTML; the fetch under it can still be cached.' },
-      job:    { yes: 3, why: '/jobs/[id] → ISR on demand. When a job is edited or closed, revalidate that page.' },
-      home:   { yes: 3, why: '/ → ISR on a timer. New jobs arrive all day; a page a few minutes old is fine.' },
-      login:  { yes: 0, why: '/login → static. Nothing in it changes after deploy, so it is built once.' }
+      dash:   { yes: 1, why: '/dashboard → streams per request. The part that reads the session cookie sits in <Suspense>; the frame around it is still the static shell.' },
+      search: { yes: 2, why: '/jobs?q=react → streams over cached data. searchParams is request-time, so the results stream; the search under them is \'use cache\', keyed by the query.' },
+      job:    { yes: 3, why: '/jobs/[id] → \'use cache\' with cacheTag. When the company edits or closes the job, its action calls updateTag.' },
+      home:   { yes: 3, why: '/ → \'use cache\' with cacheLife(\'minutes\'). New jobs arrive all day; a list a few minutes old is fine.' },
+      login:  { yes: 0, why: '/login → static shell. Nothing in it reads the request or changes after deploy.' }
     };
     var HOME = ['ssg', 'dyn', 'cached', 'isr'], timers = [];
     function clear(){
@@ -1799,7 +1994,7 @@ export async function postJob(_prev: FormState, form: FormData): Promise<FormSta
     function say(t){ k(root,'say').textContent = t; }
     function dots(){
       ['router', 'route', 'data'].forEach(function(n){ el('dot', n).classList.toggle('warm', !!st[n]); });
-      el('layer', 'route').classList.toggle('skip', st.dyn);
+      el('layer', 'route').classList.remove('skip');   // with Cache Components a request-time part never skips the shell
       root.querySelector('[data-act="dyn"]').classList.toggle('on', st.dyn);
     }
     function clear(){
@@ -1811,15 +2006,16 @@ export async function postJob(_prev: FormState, form: FormData): Promise<FormSta
       clear();
       fig.classList.add('run');
       var seq = [['layer', 'click'], ['hop', 'router']], end, msg;
-      if (st.router) { end = 'router'; msg = 'Router cache hit: this tab already had the page. Nothing left the browser.'; }
+      if (st.router && !st.dyn) { end = 'router'; msg = 'Browser hit: this tab already had the page. Nothing left the browser.'; }
       else {
         seq.push(['layer', 'router'], ['hop', 'route']);
-        if (!st.dyn && st.route) { end = 'route'; msg = 'Full route cache hit: prebuilt HTML and payload, and no render ran.'; }
+        if (!st.dyn && st.route) { end = 'route'; msg = 'Static shell hit: prerendered HTML and payload, and no render ran.'; }
         else {
           seq.push(['layer', 'route'], ['hop', 'memo'], ['layer', 'memo'], ['hop', 'data']);
           var memo = ' Request memo turned two getJobs() calls in the render into one.';
-          if (st.data) { end = 'data'; msg = (st.dyn ? 'cookies() makes the route render per request, ' : 'The route rendered, ') + 'but getJobs() came from the data cache.' + memo; }
-          else { seq.push(['layer', 'data'], ['hop', 'db']); end = 'db'; msg = 'Database: no layer had anything fresh, so the render waited for it.' + memo; }
+          var lead = st.dyn ? (st.route ? 'The shell came straight from layer 2; the part that reads cookies() rendered for this request, ' : 'The part that reads cookies() rendered for this request, ') : 'The page rendered, ';
+          if (st.data) { end = 'data'; msg = lead + "and getJobs() came from the 'use cache' store." + memo; }
+          else { seq.push(['layer', 'data'], ['hop', 'db']); end = 'db'; msg = (st.dyn ? lead + 'and nothing was cached, so it waited for the database.' : 'Database: no layer had anything fresh, so the render waited for it.') + memo; }
         }
       }
       seq.forEach(function(x, j){
@@ -1829,7 +2025,7 @@ export async function postJob(_prev: FormState, form: FormData): Promise<FormSta
         el('layer', end).classList.add('hit');
         // the answer fills every cache on its way back
         if (end === 'db') st.data = true;
-        if (end === 'db' || end === 'data') st.route = !st.dyn;
+        if (end === 'db' || end === 'data') st.route = true;
         st.router = true;
         dots();
         say(first + msg);
@@ -1839,21 +2035,203 @@ export async function postJob(_prev: FormState, form: FormData): Promise<FormSta
       var b = e.target.closest('[data-act]'); if (!b) return;
       var a = b.dataset.act;
       if (a === 'link') trip('');
-      if (a === 'reload') { st.router = false; trip('Hard reload skips the router cache. '); }
+      if (a === 'reload') { st.router = false; trip('Hard reload skips the browser cache. '); }
       if (a === 'tag') {
         clear(); st.data = st.route = st.router = false; dots();
-        say("revalidateTag('jobs') in an action: the data, the routes built from it and this tab's router cache are empty.");
+        say("updateTag('jobs') in an action: every entry tagged jobs expires now, and the shells built from it. The next request, the writer's included, waits for fresh data.");
       }
       if (a === 'dyn') {
-        clear(); st.dyn = !st.dyn; st.route = false; dots();
-        say(st.dyn ? 'The route reads cookies(): it renders per request, so the full route cache is skipped.'
-                   : 'Static again: the next render is kept in the full route cache.');
+        clear(); st.dyn = !st.dyn; dots();
+        say(st.dyn ? 'A part reads cookies() inside <Suspense>: the shell is still served, and only that part renders per request.'
+                   : 'Nothing reads the request again: the whole page can come from the shell or the browser.');
       }
     });
     watch(root, function(){
       st = { router: false, route: false, data: false, dyn: false };
       clear(); dots(); say('Nothing is cached yet. Click a link.');
     }, clear);
+  })();
+
+  /* L2a · one route, three speeds: the same /jobs page in the previous model and with Cache Components */
+  (function(){
+    var root = document.getElementById('demo-ppr'); if (!root) return;
+    var MAX = 0.8;   // seconds on the axis; illustrative
+    var PARTS = [
+      { id:'nav',  name:'header and nav',   how:'static' },
+      { id:'list', name:'LatestJobs',       how:"'use cache' + cacheLife" },
+      { id:'mine', name:'MyApplications',   how:'reads cookies()' },
+      { id:'filt', name:'Filters',          how:"'use client' leaf" }
+    ];
+    // per mode: [arrives at s, bar class, label]
+    var PLAN = {
+      prev:  { fb:0.30, nav:[0.30,'whole','rendered per request'], list:[0.30,'whole','rendered per request'],
+               mine:[0.30,'whole','rendered per request'], filt:[0.30,'whole','HTML at 0.30 s, interactive at 0.55 s'] },
+      cc:    { fb:0.03, nav:[0.03,'shell','static shell, 0.03 s'], list:[0.03,'cached','in the shell, 0.03 s'],
+               mine:[0.30,'stream','fallback at 0.03 s, streams at 0.30 s'], filt:[0.03,'client','HTML in the shell, interactive at 0.40 s'] },
+      nosus: { fb:null, nav:[MAX,'fallback','blocked'], list:[MAX,'fallback','blocked'],
+               mine:[MAX,'whole','blocking route: no Suspense'], filt:[MAX,'fallback','blocked'] }
+    };
+    var SAY = {
+      prev: 'Previous model: MyApplications reads cookies(), so the whole route renders for every request. Nothing leaves before the render.',
+      cc: 'Cache Components: the shell, with the cached list in it, leaves at once. MyApplications streams into its Suspense fallback.',
+      nosus: 'Without <Suspense> the build stops: /jobs reads cookies() during prerendering. The fixes: wrap it in <Suspense>, or allow a blocking route with export const instant = false.'
+    };
+    var mode, lanes = k(root,'lanes');
+    function paint(){
+      var p = PLAN[mode];
+      root.querySelectorAll('[data-mode]').forEach(function(b){ b.classList.toggle('on', b.dataset.mode === mode || (mode === 'nosus' && b.dataset.mode === 'cc')); });
+      root.querySelector('[data-act="nosus"]').classList.toggle('on', mode === 'nosus');
+      lanes.innerHTML = PARTS.map(function(x){
+        var a = p[x.id], left = Math.min(100, a[0] / MAX * 100);
+        var fallback = mode === 'cc' && x.id === 'mine' ? '<i class="fallback" style="left:' + (0.03 / MAX * 100) + '%"></i>' : '';
+        return '<div class="lane-name">' + esc(x.name) + '<small>' + esc(x.how) + '</small></div>' +
+          '<div class="bar">' + fallback + '<i class="' + a[1] + '" style="left:' + left + '%"></i>' +
+          '<b style="left:calc(' + Math.min(left, 52) + '% + 6px)">' + esc(a[2]) + '</b></div>';
+      }).join('') + '<div></div><div class="axis"><span>0 s</span><span>0.2 s</span><span>0.4 s</span><span>0.6 s</span><span>0.8 s</span></div>';
+      var fb = k(root,'fb');
+      fb.textContent = p.fb == null ? 'build error' : p.fb.toFixed(2) + ' s';
+      fb.className = p.fb != null && p.fb < 0.1 ? 'good' : 'bad';
+      again(fb, 'bump');
+      k(root,'say').textContent = SAY[mode];
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-mode],[data-act]'); if (!b) return;
+      if (b.dataset.mode) mode = b.dataset.mode;
+      else mode = mode === 'nosus' ? 'cc' : 'nosus';
+      paint();
+    });
+    watch(root, function(){ mode = 'prev'; paint(); });
+  })();
+
+  /* L3b · read your own writes: updateTag expires now, revalidateTag(tag, 'max') serves stale once */
+  (function(){
+    var root = document.getElementById('demo-write'); if (!root) return;
+    var TITLES = ['Senior React engineer', 'Lead React engineer'];
+    var s;
+    function say(t){ k(root,'say').textContent = t; }
+    function paint(){
+      root.querySelectorAll('[data-mode]').forEach(function(b){ b.classList.toggle('on', b.dataset.mode === s.mode); });
+      k(root,'db').textContent = TITLES[s.db];
+      k(root,'cache').textContent = TITLES[s.cache];
+      k(root,'state').textContent = s.state === 'fresh' ? '· fresh' : s.state === 'stale' ? '· stale' : '· expired';
+      k(root,'seen').textContent = s.seen == null ? '—' : TITLES[s.seen];
+    }
+    function load(who){
+      var w = who === 'employer' ? 'The employer' : 'A visitor', how;
+      if (s.state === 'expired'){
+        s.cache = s.db; s.state = 'fresh'; s.seen = s.db; how = 'waited for the database';
+        say(w + ' sees the new title: updateTag expired the entry, so this request waited for fresh data.');
+      } else if (s.state === 'stale'){
+        s.seen = s.cache; s.cache = s.db; s.state = 'fresh'; how = 'at once, from the cache';
+        say(who === 'employer'
+          ? 'The employer sees the old title right after saving: stale-while-revalidate served it and refreshed behind it. To them, the save looks broken.'
+          : 'The visitor gets the old title once, at once; the background refresh means the next load is new.');
+      } else {
+        s.seen = s.cache; how = 'at once, from the cache';
+        say(w + ' gets the cached title: fresh, no database call.');
+      }
+      k(root,'how').textContent = how;
+      again(k(root,'seen'), s.seen === s.db ? 'flash-g' : 'flash-r');
+    }
+    function reset(m){
+      s = { mode:m, db:0, cache:0, state:'fresh', seen:null };
+      k(root,'how').textContent = '';
+      say(m === 'update' ? 'updateTag: save a new title, then load it as the employer.' : "revalidateTag(tag, 'max'): save a new title, then load it as the employer.");
+      paint();
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-mode],[data-act]'); if (!b) return;
+      if (b.dataset.mode) return reset(b.dataset.mode);
+      var a = b.dataset.act;
+      if (a === 'save'){
+        s.db = 1 - s.db; s.state = s.mode === 'update' ? 'expired' : 'stale';
+        k(root,'how').textContent = ''; s.seen = null;
+        again(k(root,'db'), 'flash');
+        say(s.mode === 'update' ? 'Saved. updateTag expired every entry tagged jobs.' : "Saved. revalidateTag(tag, 'max') marked the entry stale; it is still served.");
+      } else load(a);
+      paint();
+    });
+    watch(root, function(){ reset('revalidate'); });
+  })();
+
+  /* L4b · who reads the head: a browser, Googlebot and a link preview, with the title set two ways */
+  (function(){
+    var root = document.getElementById('demo-bots'); if (!root) return;
+    var DEF = '<title>Rasmi</title>', JOB = '<title>Senior React engineer at Qamar Studio · Rasmi</title>';
+    var O = {
+      effect: {
+        browser: [DEF, 'JavaScript runs and sets the job title. The tab is right; the HTML never was.'],
+        google:  [DEF, "Googlebot queues the page for rendering, so the title may be picked up on that later pass."],
+        slack:   [DEF, 'Slackbot never runs JavaScript: the shared link previews as “Rasmi”.']
+      },
+      meta: {
+        browser: [JOB, 'Nothing to wait for: it was in the prerendered shell from the first byte.'],
+        google:  [JOB, 'Googlebot gets the same prerendered HTML: title, description, canonical and JSON-LD.'],
+        slack:   [JOB, 'An HTML-limited bot skips the shell and gets a render made for it, with the metadata in <head> first.']
+      }
+    };
+    var mode, who;
+    function paint(){
+      root.querySelectorAll('[data-mode]').forEach(function(b){ b.classList.toggle('on', b.dataset.mode === mode); });
+      root.querySelectorAll('[data-who]').forEach(function(b){ b.classList.toggle('on', b.dataset.who === who); });
+      var o = O[mode][who], h = k(root,'head');
+      h.textContent = o[0]; h.style.color = o[0] === JOB ? 'var(--good)' : 'var(--bad)';
+      again(h, 'flash'); k(root,'then').textContent = o[1];
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-mode],[data-who]'); if (!b) return;
+      if (b.dataset.mode) mode = b.dataset.mode; else who = b.dataset.who;
+      paint();
+    });
+    watch(root, function(){ mode = 'effect'; who = 'slack'; paint(); });
+  })();
+
+  /* L5b · next build's route table, as planned and with two mistakes (real Next.js 16.4.6 output, trimmed) */
+  (function(){
+    var root = document.getElementById('demo-build'); if (!root) return;
+    var ERR = function(route){ return [
+      'Error: Route "' + route + '": Next.js encountered uncached or runtime data during prerendering.',
+      '`fetch(...)`, `cookies()`, `headers()`, `params`, `searchParams`, or `connection()` accessed outside of `<Suspense>` prevents the route from being prerendered, blocking the page load and leading to a slower user experience.',
+      '  - [stream] Provide a placeholder with `<Suspense fallback={...}>` around the data access',
+      '  - [cache] For uncached data (`fetch`, database calls): cache the access with `"use cache"` (does not apply to `connection()`)',
+      '  - [block] Set `export const instant = false` to allow a blocking route',
+      'Error occurred prerendering page "' + route + '". Read more: https://nextjs.org/docs/messages/prerender-error' ].join('\n'); };
+    var V = {
+      plan: { out: [
+        'Route (app)              Revalidate  Expire',
+        '┌ ○ /                            1h      1d',
+        '├ ○ /api/jobs                    1m      1h',
+        '├   /companies/[slug]',
+        '│ ├ ◐ /companies/[slug]',
+        '│ └ ○ /companies/rasmi          15m      1y',
+        '├ ◐ /dashboard',
+        '├ ◐ /jobs',
+        '├   /jobs/[id]',
+        '│ ├ ◐ /jobs/[id]',
+        '│ ├ ○ /jobs/1                    1d      1w',
+        '│ ├ ○ /jobs/2                    1d      1w',
+        '│ └ ○ /jobs/3                    1d      1w',
+        '├ ○ /login',
+        '├ ○ /robots.txt',
+        '└ ○ /sitemap.xml                 1m      1h',
+        '',
+        'ƒ Proxy (Middleware)' ].join('\n'),
+        say: 'As planned: ○ static or ◐ a shell with streamed parts, every row. The prebuilt jobs sit under the ◐ shell that serves every other id, and Revalidate and Expire are each cacheLife.' },
+      layout: { out: ERR('/dashboard'),
+        say: 'verifySession() awaited at the top of the dashboard layout reads cookies() outside any <Suspense>, so the build stops. Move the read into a component inside <Suspense>, as the dashboard page does.' },
+      home: { out: ERR('/'),
+        say: "An uncached fetch on / with no <Suspense>: the build stops. This one can be cached: 'use cache' with cacheLife('hours'), as the route map says." }
+    };
+    function paint(v){
+      root.querySelectorAll('[data-v]').forEach(function(b){ b.classList.toggle('on', b.dataset.v === v); });
+      k(root,'out').innerHTML = esc(V[v].out)
+        .replace(/○/g, '<span class="s">○</span>').replace(/◐/g, '<span class="p">◐</span>')
+        .replace(/^(Error.*)$/gm, '<span class="e">$1</span>')
+        .replace(/^(\s+- \[\w+\].*)$/gm, '<span class="m">$1</span>');
+      k(root,'say').textContent = V[v].say;
+    }
+    root.addEventListener('click', function(e){ var b = e.target.closest('[data-v]'); if (b) paint(b.dataset.v); });
+    watch(root, function(){ paint('plan'); });
   })();
 })();
 </script>

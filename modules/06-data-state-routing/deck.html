@@ -87,6 +87,8 @@
   table.grid th{text-align:left; font:700 12px/1 var(--mono); letter-spacing:1.4px; text-transform:uppercase; color:var(--muted); padding:10px 12px; border-bottom:2px solid var(--line2)}
   table.grid td{padding:10px 12px; border-bottom:1px solid var(--line); color:var(--muted); vertical-align:top}
   table.grid td b{color:var(--ink)}
+  /* The definition of done keeps each check's name on one line, so a two-line name never makes a one-line row tall. */
+  table.grid.dod td:first-child{white-space:nowrap}
 
   .num{font-family:var(--mono); font-weight:700; font-size:min(4.6vw,54px); line-height:1; letter-spacing:-1px}
   .numlbl{color:var(--muted); font-size:min(1.5vw,16px); margin-top:8px; line-height:1.45}
@@ -151,7 +153,7 @@
     animation:cxBar .5s cubic-bezier(.22,.72,.28,1) .12s both}
   .slide .card{transition:border-color .25s, transform .25s}
 
-  /* Title: the five lessons deal in once the heading has landed. */
+  /* Title: the six lessons deal in once the heading has landed. */
   @keyframes cxPop{from{opacity:0; transform:translateY(10px) scale(.92)}}
   .pop{transform-box:fill-box; transform-origin:center}
   .slide.on .pop{animation:cxPop .5s cubic-bezier(.2,1.3,.4,1) both; animation-delay:calc(.45s + var(--i,0) * .07s)}
@@ -227,7 +229,7 @@
   /* A demo can sit inside a player's bar, next to its buttons. */
   .demo.inline{display:inline-flex; align-items:center; gap:8px; width:auto; margin:0}
 
-  /* L1c: the flow lights each question a piece of state passes, then its home. */
+  /* L2c: the flow lights each question a piece of state passes, then its home. */
   #fx-home [data-q],#fx-home [data-no],#fx-home [data-yes],#fx-home [data-home]{transition:opacity .3s}
   #fx-home.walk [data-q]:not(.lit),#fx-home.walk [data-no]:not(.lit),
   #fx-home.walk [data-yes]:not(.lit),#fx-home.walk [data-home]:not(.lit){opacity:.2}
@@ -235,28 +237,87 @@
   #fx-home .lit rect,#fx-home .lit path{stroke-width:2.5}
   #fx-home [data-home].lit rect{fill:rgba(34,211,238,.13)}
 
-  /* L2a: the strip lights the entry's state while the demo's clock runs. */
+  /* L3a: the strip lights the entry's state while the demo's clock runs. */
   #fx-life [data-st]{transition:opacity .3s}
   #fx-life.run [data-st]:not(.on){opacity:.28}
   #fx-life [data-st] rect{transition:fill .3s, stroke-width .3s}
   #fx-life [data-st].on rect{fill:rgba(34,211,238,.13); stroke-width:2.5}
 
-  /* L2c: the two lines the demo can switch off, and the star. */
+  /* L3b: the cache's entries, one row per key. The state pill uses the lifecycle strip's colours. */
+  #fx-keys table.grid{margin-top:4px; table-layout:fixed}
+  #fx-keys th:first-child{width:56%} #fx-keys th:nth-child(2){width:26%}
+  #fx-keys td{padding:7px 12px; vertical-align:middle; color:var(--ink2)}
+  #fx-keys td code{white-space:nowrap}
+  .pill{display:inline-block; font:600 12px/1 var(--mono); padding:4px 9px; border-radius:999px; border:1px solid currentColor; white-space:nowrap}
+  .pill.fetching{color:var(--ochre)} .pill.fresh{color:var(--good)} .pill.stale{color:var(--cy)} .pill.inactive{color:var(--muted)}
+
+  /* L3c: the two lines the demo can switch off, and the star. */
   .ln{border-radius:4px; transition:opacity .3s}
   .ln.gone{opacity:.3; text-decoration:line-through}
   .dbtn.star{min-width:150px}
   .dbtn.star.on{color:var(--ochre); border-color:var(--ochre)}
 
-  /* L2d: the race shows one ending at a time. */
+  /* L3d: the race shows one ending at a time. */
   #fx-race:not(.bare) .only-bare,#fx-race.bare .only-key{display:none}
 
-  /* L3a: the address bar of the mini Rasmi. */
+  /* L4a: the address bar of the mini Rasmi. */
   .dinput.url{flex:1; min-width:18ch; color:var(--ink2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
 
-  /* L3b: what validateSearch returns; ochre is a .catch() fallback. */
+  /* L4b: what validateSearch returns; ochre is a .catch() fallback. */
   .parsed{font:600 14px/1.3 var(--mono); color:var(--ink)}
   .parsed b{color:var(--ochre); font-weight:700}
   .parsed i{color:var(--grey3); font-style:normal; font-weight:400}
+
+  /* L4c: the history stack, one chip per entry. The lit chip is the current entry; dim ones are where Forward would go. */
+  #demo-hist .hist{flex:1; min-width:0; display:flex; align-items:center; gap:6px; overflow:hidden; white-space:nowrap}
+  .hent{flex:none; font:600 12px/1 var(--mono); padding:6px 9px; border-radius:7px; border:1px solid var(--line2);
+    background:var(--code); color:var(--ink2); white-space:nowrap; transition:opacity .2s, border-color .2s, background .2s}
+  .hent.cur{border-color:var(--cy); background:rgba(34,211,238,.14); color:#fff}
+  .hent.fwd{opacity:.35}
+  #demo-hist .more{flex:none; font:600 12px/1 var(--mono); color:var(--muted)}
+
+  /* L5b: one chip per component that reads the tray. A green flash is a render with new output, a red one a render
+     that painted the same thing again. */
+  #demo-rr .comps{flex:1; min-width:0; display:flex; flex-wrap:wrap; gap:7px}
+  .rr{font:600 12.5px/1 var(--mono); padding:7px 10px; border-radius:8px; border:1px solid var(--line2);
+    background:var(--code); color:var(--ink2); white-space:nowrap}
+  .rr b{margin-left:7px; color:#fff; font-weight:600}
+  .rr small{margin-left:8px; color:var(--muted); font-size:11px}
+
+  /* L6a: the poll's requests, newest on the right. Green when the answer changed, dashed when a hidden tab skipped a tick. */
+  #demo-poll .hist{flex:1; min-width:0; display:flex; align-items:center; gap:6px; overflow:hidden; white-space:nowrap}
+  .hent.chg{border-color:var(--good); background:rgba(52,211,153,.14); color:#fff}
+  .hent.skip{border-style:dashed; opacity:.55}
+
+  /* L1b: the cost grid. One dot per cell: green buys, ochre depends, red costs. */
+  #fx-cost td{color:var(--ink2); padding:5px 12px; vertical-align:middle; transition:opacity .3s, background-color .3s}
+  #fx-cost td[data-m]::before{content:""; display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:10px; vertical-align:1px}
+  #fx-cost td[data-m="g"]::before{background:var(--good)}
+  #fx-cost td[data-m="w"]::before{background:var(--ochre)}
+  #fx-cost td[data-m="r"]::before{background:var(--bad)}
+  #fx-cost .dbtn{width:100%; text-align:left; font:600 14.5px/1.2 var(--sans); padding:6px 10px}
+  #fx-cost.walk tr:not(.lit) td{opacity:.3}
+  #fx-cost tr.lit td{background:rgba(34,211,238,.07)}
+  #demo-cost [data-k="why"]{display:block; min-height:2.9em}
+  #demo-cost [data-k="why"].said{color:var(--ink2); font-size:1em}
+
+  /* L1c: the trend cards and the npm pairs. */
+  .when{margin-top:auto; padding-top:12px; border-top:1px solid var(--line2); font:600 12.5px/1.6 var(--mono); color:var(--ink2)}
+  .card .numlbl{margin-bottom:14px}
+  .npm{display:flex; align-items:center; flex-wrap:wrap; gap:10px 12px; margin-top:16px; max-width:1060px}
+  .npm > .numlbl{margin:0 6px 0 0}
+  .npm .chip{font-size:min(1.5vw,16.5px); padding:9px 14px}
+
+  /* L1d: the stack flow lights each question a product passes, then its stack. */
+  #fx-stack [data-n]{transition:opacity .3s}
+  #fx-stack.walk [data-n]:not(.lit){opacity:.2}
+  #fx-stack rect,#fx-stack path{transition:stroke-width .3s, fill .3s}
+  #fx-stack .lit rect,#fx-stack .lit path{stroke-width:2.5}
+  #fx-stack [data-n="spa"].lit rect{fill:rgba(34,211,238,.13)}
+  #fx-stack [data-n="next"].lit rect{fill:rgba(167,139,250,.15)}
+  #fx-stack [data-n="start"].lit rect{fill:rgba(52,211,153,.13)}
+  #fx-stack [data-n^="q"]:not([data-n*="-"]).lit rect{stroke:#CBD5E1}
+  #demo-stack [data-k="why"]{display:block; min-height:2.9em; color:var(--ink2); font-size:1em}
 
 
   @media (prefers-reduced-motion: reduce){
@@ -394,57 +455,446 @@
 <div id="bar"></div>
 <div id="stage">
 <!-- 1 · TITLE -->
-  <section class="slide" style="justify-content:center" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>01</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" style="justify-content:center" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>1</b> / 33</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 06 · Data, State &amp; Routing</div>
     <h1>Whose State<br>Is It, Anyway?</h1>
-    <div class="sub">Which state is the server's, which is yours — and where each piece belongs.</div>
+    <div class="sub">Which stack ships it, which state is the server's — and where each piece belongs.</div>
     <div class="fig" style="max-width:980px">
-      <svg viewBox="0 0 980 64" role="img" aria-label="Five lessons: whose state, TanStack Query and the race it fixes, the URL as state, stores, build it">
+      <svg viewBox="0 0 980 64" role="img" aria-label="Six lessons: picking the stack, whose state, TanStack Query and the race it fixes, the URL as state, stores, build it">
         <g class="pop" style="--i:0">
-            <rect x="0" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
-            <text x="90" y="26" text-anchor="middle" class="lbl s">Lesson 1</text>
-            <text x="90" y="45" text-anchor="middle" class="lbl b">Whose state?</text>
+            <rect x="0" y="6" width="150" height="52" rx="9" fill="#121C30" stroke="#F8717A"/>
+            <text x="75" y="26" text-anchor="middle" class="lbl s">Lesson 1</text>
+            <text x="75" y="45" text-anchor="middle" class="lbl b">Picking the stack</text>
         </g>
         <g class="pop" style="--i:1">
-            <rect x="200" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#34D399"/>
-            <text x="290" y="26" text-anchor="middle" class="lbl s">Lesson 2</text>
-            <text x="290" y="45" text-anchor="middle" class="lbl b">Query &amp; races</text>
+            <rect x="166" y="6" width="150" height="52" rx="9" fill="#121C30" stroke="#22D3EE"/>
+            <text x="241" y="26" text-anchor="middle" class="lbl s">Lesson 2</text>
+            <text x="241" y="45" text-anchor="middle" class="lbl b">Whose state?</text>
         </g>
         <g class="pop" style="--i:2">
-            <rect x="400" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#2196F3"/>
-            <text x="490" y="26" text-anchor="middle" class="lbl s">Lesson 3</text>
-            <text x="490" y="45" text-anchor="middle" class="lbl b">URL as state</text>
+            <rect x="332" y="6" width="150" height="52" rx="9" fill="#121C30" stroke="#34D399"/>
+            <text x="407" y="26" text-anchor="middle" class="lbl s">Lesson 3</text>
+            <text x="407" y="45" text-anchor="middle" class="lbl b">Query &amp; races</text>
         </g>
         <g class="pop" style="--i:3">
-            <rect x="600" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#A78BFA"/>
-            <text x="690" y="26" text-anchor="middle" class="lbl s">Lesson 4</text>
-            <text x="690" y="45" text-anchor="middle" class="lbl b">Stores</text>
+            <rect x="498" y="6" width="150" height="52" rx="9" fill="#121C30" stroke="#2196F3"/>
+            <text x="573" y="26" text-anchor="middle" class="lbl s">Lesson 4</text>
+            <text x="573" y="45" text-anchor="middle" class="lbl b">URL as state</text>
         </g>
         <g class="pop" style="--i:4">
-            <rect x="800" y="6" width="180" height="52" rx="9" fill="#121C30" stroke="#FBBF24"/>
-            <text x="890" y="26" text-anchor="middle" class="lbl s">Lesson 5</text>
-            <text x="890" y="45" text-anchor="middle" class="lbl b">Build it</text>
+            <rect x="664" y="6" width="150" height="52" rx="9" fill="#121C30" stroke="#A78BFA"/>
+            <text x="739" y="26" text-anchor="middle" class="lbl s">Lesson 5</text>
+            <text x="739" y="45" text-anchor="middle" class="lbl b">Stores</text>
+        </g>
+        <g class="pop" style="--i:5">
+            <rect x="830" y="6" width="150" height="52" rx="9" fill="#121C30" stroke="#FBBF24"/>
+            <text x="905" y="26" text-anchor="middle" class="lbl s">Lesson 6</text>
+            <text x="905" y="45" text-anchor="middle" class="lbl b">Build it</text>
         </g>
       </svg>
     </div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>02</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 1 · Two kinds of state</div>
+  <section class="slide" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>2</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Where the code runs</div>
+    <h2>Three ways to ship React in 2026</h2>
+    <div class="anim" id="fx-ship" data-at="200,1000,1900,2800,3700">
+    <div class="fig" style="max-width:1000px">
+      <svg viewBox="0 0 1000 302" role="img" aria-label="Where each stack runs: a Vite SPA renders everything in the browser and the server only serves files; TanStack runs Router and Query in the browser and Start adds server rendering and server functions; Next.js renders Server Components on the server by default and hydrates the parts marked use client">
+        <g data-in="1">
+          <text x="0" y="92" class="lbl b">Server</text>
+          <text x="0" y="110" class="lbl s">you run it</text>
+          <line x1="104" y1="150" x2="1000" y2="150" stroke="#243349" stroke-dasharray="4 6"/>
+          <text x="0" y="154" class="lbl s">network</text>
+          <text x="0" y="200" class="lbl b">Browser</text>
+          <text x="0" y="218" class="lbl s">the visitor's</text>
+        </g>
+        <g data-in="2">
+          <rect x="104" y="0" width="290" height="44" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="249" y="20" text-anchor="middle" class="lbl b">Vite SPA</text>
+          <text x="249" y="36" text-anchor="middle" class="lbl s">plain React</text>
+          <rect x="104" y="56" width="290" height="80" rx="10" fill="none" stroke="#64748B" stroke-dasharray="5 5"/>
+          <text x="249" y="88" text-anchor="middle" class="lbl b">Static files on a CDN</text>
+          <text x="249" y="107" text-anchor="middle" class="lbl s">no server process of yours</text>
+          <text x="249" y="123" text-anchor="middle" class="lbl s">the API lives elsewhere</text>
+          <rect x="104" y="164" width="290" height="80" rx="10" fill="rgba(34,211,238,.10)" stroke="#22D3EE"/>
+          <text x="249" y="196" text-anchor="middle" class="lbl b">Everything renders here</text>
+          <text x="249" y="215" text-anchor="middle" class="lbl s">router and data library: your pick</text>
+          <text x="249" y="231" text-anchor="middle" class="lbl s">you assemble the framework</text>
+        </g>
+        <g data-in="3">
+          <rect x="407" y="0" width="290" height="44" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="552" y="20" text-anchor="middle" class="lbl b">TanStack</text>
+          <text x="552" y="36" text-anchor="middle" class="lbl s">Router + Query, then Start</text>
+          <rect x="407" y="56" width="290" height="80" rx="10" fill="none" stroke="#34D399" stroke-dasharray="5 5"/>
+          <text x="552" y="88" text-anchor="middle" class="lbl b">Start: SSR · server functions</text>
+          <text x="552" y="107" text-anchor="middle" class="lbl s">chosen per route</text>
+          <text x="552" y="123" text-anchor="middle" class="lbl s">stable since 13 Oct 2026</text>
+          <rect x="407" y="164" width="290" height="80" rx="10" fill="rgba(52,211,153,.10)" stroke="#34D399"/>
+          <text x="552" y="196" text-anchor="middle" class="lbl b">Router + Query, client-first</text>
+          <text x="552" y="215" text-anchor="middle" class="lbl s">typed routes · loaders · cache</text>
+          <text x="552" y="231" text-anchor="middle" class="lbl s">an SPA until a route needs more</text>
+        </g>
+        <g data-in="4">
+          <rect x="710" y="0" width="290" height="44" rx="9" fill="#121C30" stroke="#A78BFA"/>
+          <text x="855" y="20" text-anchor="middle" class="lbl b">Next.js</text>
+          <text x="855" y="36" text-anchor="middle" class="lbl s">App Router</text>
+          <rect x="710" y="56" width="290" height="80" rx="10" fill="rgba(167,139,250,.12)" stroke="#A78BFA"/>
+          <text x="855" y="88" text-anchor="middle" class="lbl b">Server Components by default</text>
+          <text x="855" y="107" text-anchor="middle" class="lbl s">server functions · route handlers</text>
+          <text x="855" y="123" text-anchor="middle" class="lbl s">caching opt-in since Next 16</text>
+          <rect x="710" y="164" width="290" height="80" rx="10" fill="none" stroke="#A78BFA"/>
+          <text x="855" y="196" text-anchor="middle" class="lbl b">'use client' components</text>
+          <text x="855" y="215" text-anchor="middle" class="lbl s">hydrated where you mark them</text>
+          <text x="855" y="231" text-anchor="middle" class="lbl s">the interactive parts</text>
+        </g>
+        <g data-in="5">
+          <path d="M104,272 L994,272" stroke="#64748B" fill="none"/>
+          <text x="104" y="294" class="lbl s">you assemble more</text>
+          <text x="1000" y="294" text-anchor="end" class="lbl s">more is decided for you, and more runs on a server you patch</text>
+        </g>
+      </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>Two places your code can run: a server you operate, or the visitor's browser.</i><i>Vite SPA: everything renders in the browser. The server only hands out files.</i><i>TanStack: Router and Query run client-first. Start adds SSR and server functions.</i><i>Next.js: server first. Components render there unless marked 'use client'.</i><i>Left to right, more is decided for you, and more runs on a server you patch.</i></span>
+    </div>
+    </div>
+    <div class="key">Same React in all three. What differs is where it runs, and who assembles the rest.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>3</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Benefits and drawbacks</div>
+    <h2>What each one buys, and what it costs</h2>
+    <div class="demo bare" id="demo-cost">
+    <table class="grid" id="fx-cost">
+      <tr><th></th><th style="color:#22D3EE">Vite SPA</th><th style="color:#34D399">TanStack</th><th style="color:#A78BFA">Next.js</th></tr>
+      <tr data-c="seo"><td><button type="button" class="dbtn" data-c="seo">First paint &amp; SEO</button></td><td data-m="r">Empty shell until JS runs</td><td data-m="w">SSR with Start</td><td data-m="g">HTML first, metadata built in</td></tr>
+      <tr data-c="data"><td><button type="button" class="dbtn" data-c="data">Data &amp; waterfalls</button></td><td data-m="w">Only if you add loaders</td><td data-m="g">Loaders + Query, in parallel</td><td data-m="g">Server fetch, streamed</td></tr>
+      <tr data-c="types"><td><button type="button" class="dbtn" data-c="types">Typed routes &amp; URL</button></td><td data-m="w">Whatever your router gives</td><td data-m="g">Inferred, search validated</td><td data-m="w">typedRoutes: opt-in, narrower</td></tr>
+      <tr data-c="magic"><td><button type="button" class="dbtn" data-c="magic">Framework magic</button></td><td data-m="g">None: you wrote it all</td><td data-m="g">Explicit loaders, server fns</td><td data-m="w">Power with a learning cost</td></tr>
+      <tr data-c="host"><td><button type="button" class="dbtn" data-c="host">Hosting &amp; coupling</button></td><td data-m="g">Any static host</td><td data-m="w">Most hosts; verify caching</td><td data-m="w">Smoothest on Vercel</td></tr>
+      <tr data-c="sec"><td><button type="button" class="dbtn" data-c="sec">Security surface</button></td><td data-m="g">No server of yours</td><td data-m="w">Grows once you add Start</td><td data-m="r">51 advisories in 2026</td></tr>
+      <tr data-c="mature"><td><button type="button" class="dbtn" data-c="mature">Maturity &amp; hiring</button></td><td data-m="g">Plain React, widely known</td><td data-m="r">Start 1.0 since Oct 2026</td><td data-m="g">Biggest ecosystem and pool</td></tr>
+      <tr data-c="churn"><td><button type="button" class="dbtn" data-c="churn">Upgrade churn</button></td><td data-m="g">One library at a time</td><td data-m="w">New APIs, older tutorials</td><td data-m="r">Breaking 16, new default in 17</td></tr>
+    </table>
+    <div class="row"><span class="demo-hint" data-k="why">Green buys, ochre depends, red costs. Click a row for the reason.</span></div>
+    </div>
+    <div class="key">No column is free: the SPA pays at first paint, Next.js in server surface and churn, TanStack in youth.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>4</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Where the field is going</div>
+    <h2>Most used isn't most liked</h2>
+    <div class="three">
+      <div class="card a">
+        <h3 class="cy">Vite</h3>
+        <div class="num cy">98%</div>
+        <div class="numlbl">satisfied, with 84% usage<br>State of JS 2025</div>
+        <div class="when">Feb 2025 · Create React App deprecated<br>Mar 2026 · Vite 8, on Rolldown</div>
+      </div>
+      <div class="card g">
+        <h3 class="g">TanStack Start</h3>
+        <div class="num g">3→15%</div>
+        <div class="numlbl">usage in a year, 93% satisfied<br>State of React 2025</div>
+        <div class="when">13 Oct 2026 · Start 1.0 stable<br>Server Components: experimental</div>
+      </div>
+      <div class="card p">
+        <h3 class="p">Next.js</h3>
+        <div class="num p">76→55%</div>
+        <div class="numlbl">satisfied, 2023 → 2025; usage 59%<br>State of JS 2025</div>
+        <div class="when">Oct 2025 · Next 16: caching opt-in<br>Next 17: Cache Components by default</div>
+      </div>
+    </div>
+    <div class="npm">
+      <span class="numlbl">npm, one week of Nov 2026<br>compare pairs, not totals</span>
+      <span class="chip">vite &gt; react<small>285M vs 273M</small></span>
+      <span class="chip">TanStack Query ≈ next<small>91M vs 95M</small></span>
+      <span class="chip">next ≈ 6.4 × Start<small>95M vs 15M</small></span>
+    </div>
+    <div class="key">Where it's going: React Compiler 1.0 memoizes for you in all three, Next.js caching is explicit, and a client-first framework is stable.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>5</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Choosing per product</div>
+    <h2>Pick per product, not per résumé</h2>
+    <div class="fig" id="fx-stack" style="max-width:1000px">
+      <svg viewBox="0 0 1000 250" role="img" aria-label="Decision flow: must a stranger find it by search or a shared link, or does it need a server you own; if either, the team and the host choose between Next.js and TanStack Start; otherwise a Vite SPA with Router and Query">
+        <g data-n="q1">
+          <rect x="0" y="0" width="230" height="84" rx="10" fill="#121C30" stroke="#243349"/>
+          <text x="115" y="30" text-anchor="middle" class="lbl b">Must a stranger find it by</text>
+          <text x="115" y="49" text-anchor="middle" class="lbl b">search or a shared link?</text>
+          <text x="115" y="70" text-anchor="middle" class="lbl s">behind a login? then no</text>
+        </g>
+        <g data-n="q2">
+          <rect x="290" y="0" width="230" height="84" rx="10" fill="#121C30" stroke="#243349"/>
+          <text x="405" y="30" text-anchor="middle" class="lbl b">Does it need a server</text>
+          <text x="405" y="49" text-anchor="middle" class="lbl b">you own and run?</text>
+          <text x="405" y="70" text-anchor="middle" class="lbl s">no API yet? then yes</text>
+        </g>
+        <g data-n="q3">
+          <rect x="290" y="150" width="230" height="84" rx="10" fill="#121C30" stroke="#243349"/>
+          <text x="405" y="180" text-anchor="middle" class="lbl b">What does the team know,</text>
+          <text x="405" y="199" text-anchor="middle" class="lbl b">and where must it run?</text>
+          <text x="405" y="220" text-anchor="middle" class="lbl s">only now: which framework</text>
+        </g>
+        <g data-n="spa">
+          <rect x="740" y="10" width="260" height="64" rx="10" fill="#121C30" stroke="#22D3EE"/>
+          <text x="870" y="37" text-anchor="middle" class="lbl b">Vite SPA + Router + Query</text>
+          <text x="870" y="56" text-anchor="middle" class="lbl s">static files, no server to run</text>
+        </g>
+        <g data-n="next">
+          <rect x="740" y="118" width="260" height="56" rx="10" fill="#121C30" stroke="#A78BFA"/>
+          <text x="870" y="141" text-anchor="middle" class="lbl b">Next.js</text>
+          <text x="870" y="159" text-anchor="middle" class="lbl s">server-first</text>
+        </g>
+        <g data-n="start">
+          <rect x="740" y="190" width="260" height="56" rx="10" fill="#121C30" stroke="#34D399"/>
+          <text x="870" y="213" text-anchor="middle" class="lbl b">TanStack Start</text>
+          <text x="870" y="231" text-anchor="middle" class="lbl s">client-first, SSR per route</text>
+        </g>
+
+        <g data-n="q1-no">
+          <path class="draw" pathLength="1" d="M230,42 L285,42" stroke="#64748B" fill="none"/>
+          <text x="258" y="34" text-anchor="middle" class="lbl s">no</text>
+        </g>
+        <g data-n="q2-no">
+          <path class="draw" pathLength="1" d="M520,42 L735,42" stroke="#64748B" fill="none"/>
+          <text x="628" y="34" text-anchor="middle" class="lbl s">no</text>
+        </g>
+        <g data-n="q1-yes">
+          <path class="draw" pathLength="1" d="M115,84 L115,192 L285,192" stroke="#FBBF24" fill="none"/>
+          <text x="125" y="140" class="lbl s" style="fill:#FBBF24">yes</text>
+        </g>
+        <g data-n="q2-yes">
+          <path class="draw" pathLength="1" d="M405,84 L405,145" stroke="#FBBF24" fill="none"/>
+          <text x="415" y="120" class="lbl s" style="fill:#FBBF24">yes</text>
+        </g>
+        <g data-n="q3-next">
+          <path class="draw" pathLength="1" d="M520,180 L735,148" stroke="#A78BFA" fill="none"/>
+          <text x="628" y="152" text-anchor="middle" class="lbl s">RSC · built-ins · Vercel</text>
+        </g>
+        <g data-n="q3-start">
+          <path class="draw" pathLength="1" d="M520,204 L735,218" stroke="#34D399" fill="none"/>
+          <text x="628" y="230" text-anchor="middle" class="lbl s">typed URL · any host</text>
+        </g>
+      </svg>
+    </div>
+    <div class="demo bare" id="demo-stack">
+      <div class="row">
+        <span class="demo-tag">Pick it</span>
+        <button type="button" class="dbtn" data-p="news">News site</button>
+        <button type="button" class="dbtn" data-p="travel">Travel search</button>
+        <button type="button" class="dbtn" data-p="bank">Bank dashboard</button>
+        <button type="button" class="dbtn" data-p="widget">Embeddable widget</button>
+        <button type="button" class="dbtn" data-p="mvp">SaaS MVP, no API yet</button>
+      </div>
+      <div class="row"><span class="demo-hint" data-k="why"></span></div>
+    </div>
+    <div class="key">Mid-level answer: “Next.js, everyone uses it.” Senior answer: walk these questions for the product in front of you — and name what the other choice would cost.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>6</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Rasmi, part by part</div>
+    <h2>One job board, a different answer per part</h2>
+    <div class="anim" id="fx-rasmi" data-at="200,1100,1900,2700,3500,4500,5300">
+    <div class="fig" style="max-width:1000px">
+      <svg viewBox="0 0 1000 318" role="img" aria-label="Rasmi part by part: public job listings and the marketing page are server-rendered with Next.js; the applicant dashboard and the internal admin tool are client-rendered; module 6 builds everything client-first on TanStack Router and Query, and module 7 moves the routes that earn a server to Next.js">
+        <g data-in="1">
+          <text x="0" y="12" class="lbl s" style="letter-spacing:1.4px">PART OF RASMI</text>
+          <text x="330" y="12" class="lbl s" style="letter-spacing:1.4px">WHAT IT NEEDS</text>
+          <text x="680" y="12" class="lbl s" style="letter-spacing:1.4px">THE FLOW PICKS</text>
+          <rect x="0" y="24" width="300" height="46" rx="9" fill="#121C30" stroke="#243349"/>
+          <text x="16" y="44" class="lbl b">Public job listings</text>
+          <text x="16" y="60" class="lbl s">/jobs · /jobs/:id · company pages</text>
+          <text x="330" y="44" class="lbl">Found by search and link previews</text>
+          <text x="330" y="60" class="lbl s">filters in the URL, data that changes often</text>
+          <rect x="0" y="80" width="300" height="46" rx="9" fill="#121C30" stroke="#243349"/>
+          <text x="16" y="100" class="lbl b">Marketing page</text>
+          <text x="16" y="116" class="lbl s">landing · pricing · blog</text>
+          <text x="330" y="100" class="lbl">Content and a fast first paint</text>
+          <text x="330" y="116" class="lbl s">little interactivity</text>
+          <rect x="0" y="136" width="300" height="46" rx="9" fill="#121C30" stroke="#243349"/>
+          <text x="16" y="156" class="lbl b">Applicant dashboard</text>
+          <text x="16" y="172" class="lbl s">applications · saved jobs · profile</text>
+          <text x="330" y="156" class="lbl">Behind a login, no SEO</text>
+          <text x="330" y="172" class="lbl s">mutations, optimistic UI</text>
+          <rect x="0" y="192" width="300" height="46" rx="9" fill="#121C30" stroke="#243349"/>
+          <text x="16" y="212" class="lbl b">Internal admin tool</text>
+          <text x="16" y="228" class="lbl s">moderation · companies</text>
+          <text x="330" y="212" class="lbl">Behind SSO, tables and forms</text>
+          <text x="330" y="228" class="lbl s">the API already exists</text>
+        </g>
+        <g data-in="2">
+          <path d="M622,47 L672,47" stroke="#64748B" fill="none"/>
+          <rect x="680" y="24" width="320" height="46" rx="9" fill="rgba(167,139,250,.10)" stroke="#A78BFA"/>
+          <text x="696" y="44" class="lbl b">Server-rendered: Next.js</text>
+          <text x="696" y="60" class="lbl s">TanStack Start fits too</text>
+        </g>
+        <g data-in="3">
+          <path d="M622,103 L672,103" stroke="#64748B" fill="none"/>
+          <rect x="680" y="80" width="320" height="46" rx="9" fill="rgba(167,139,250,.10)" stroke="#A78BFA"/>
+          <text x="696" y="100" class="lbl b">Next.js, pre-rendered</text>
+          <text x="696" y="116" class="lbl s">or Astro, if it's only ever content</text>
+        </g>
+        <g data-in="4">
+          <path d="M622,159 L672,159" stroke="#64748B" fill="none"/>
+          <rect x="680" y="136" width="320" height="46" rx="9" fill="rgba(34,211,238,.10)" stroke="#22D3EE"/>
+          <text x="696" y="156" class="lbl b">Client routes</text>
+          <text x="696" y="172" class="lbl s">a Vite SPA, or client-only routes in one app</text>
+        </g>
+        <g data-in="5">
+          <path d="M622,215 L672,215" stroke="#64748B" fill="none"/>
+          <rect x="680" y="192" width="320" height="46" rx="9" fill="rgba(34,211,238,.10)" stroke="#22D3EE"/>
+          <text x="696" y="212" class="lbl b">Vite SPA + Router + Query</text>
+          <text x="696" y="228" class="lbl s">static files, released on its own</text>
+        </g>
+        <g data-in="6">
+          <text x="0" y="262" class="lbl s" style="letter-spacing:1.4px">HOW THE PROGRAM FOLLOWS IT</text>
+          <rect x="0" y="272" width="460" height="46" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="16" y="292" class="lbl b">Module 6 · client-first</text>
+          <text x="16" y="308" class="lbl s">TanStack Router + Query: all of Rasmi as an SPA</text>
+        </g>
+        <g data-in="7">
+          <path d="M462,295 L532,295" stroke="#64748B" fill="none"/>
+          <rect x="540" y="272" width="460" height="46" rx="9" fill="#121C30" stroke="#A78BFA"/>
+          <text x="556" y="292" class="lbl b">Module 7 · Next.js</text>
+          <text x="556" y="308" class="lbl s">the routes that earn a server: listings, job pages</text>
+        </g>
+      </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>Four parts of one product. Run the flow on each.</i><i>Listings: strangers arrive from search and shared links. Server-rendered.</i><i>Marketing: content first, little interactivity. Pre-rendered pages.</i><i>Dashboard: behind a login, and the API exists. Client routes are enough.</i><i>Admin: behind SSO, released on its own. A static SPA.</i><i>The program follows the split: module 6 builds all of Rasmi client-first…</i><i>…then module 7 moves the routes that earn a server to Next.js.</i></span>
+    </div>
+    </div>
+    <div class="key">One app means one deploy and shared auth; one app per audience means the simplest tool for each. Both are defensible. Hype isn't.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>7</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 1 · Read next</div>
+    <h2>Let each stack make its own case</h2>
+    <div class="two">
+      <div class="card a">
+        <h3 class="cy">References</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://react.dev/learn/creating-a-react-app" target="_blank" rel="noopener">Creating a React App — react.dev</a><small>why the React team starts you on a framework</small></li>
+          <li><a href="https://react.dev/learn/build-a-react-app-from-scratch" target="_blank" rel="noopener">Build a React app from scratch — react.dev</a><small>the Vite route, and everything you assemble yourself</small></li>
+          <li><a href="https://tanstack.com/start/latest/docs/framework/react/start-vs-nextjs" target="_blank" rel="noopener">TanStack Start vs Next.js — tanstack.com</a><small>one side's comparison that still lists where the other wins</small></li>
+          <li><a href="https://nextjs.org/blog/next-16" target="_blank" rel="noopener">Next.js 16 — nextjs.org</a><small>opt-in caching, proxy.ts, and what broke</small></li>
+        </ul>
+      </div>
+      <div class="card b">
+        <h3 class="b">Resources</h3>
+        <ul class="plist refs" style="margin-top:4px">
+          <li><a href="https://vite.dev/guide/" target="_blank" rel="noopener">Getting started — vite.dev</a><small>plain React, the way this module builds Rasmi</small></li>
+          <li><a href="https://tanstack.com/router/latest/docs/framework/react/overview" target="_blank" rel="noopener">TanStack Router overview</a><small>typed routes, loaders and search params</small></li>
+          <li><a href="https://tanstack.com/start/latest/docs/framework/react/overview" target="_blank" rel="noopener">TanStack Start overview</a><small>SSR and server functions on top of the router</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/06-data-state-routing" target="_blank" rel="noopener">Module 6 slides</a><small>the deck this video walks through</small></li>
+        </ul>
+      </div>
+    </div>
+</section>
+
+  <section class="slide" data-chip="MODULE 06 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 2</div><div class="cx-page"><b>8</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Same data, three stacks</div>
+    <h2>Every stack leaves a copy in the browser</h2>
+    <div class="anim" id="fx-copy" data-at="200,1000,1900,2800,3800">
+    <div class="fig" style="max-width:1000px">
+      <svg viewBox="0 0 1000 290" role="img" aria-label="Rasmi's job listings in each stack from Lesson 1: a Vite SPA fetches them from the browser into TanStack Query's cache, keyed by query key; TanStack Router's loader fetches them on navigation into the same cache; Next.js fetches them in a Server Component on every request, cached only with use cache. In all three the browser ends up holding a copy that can go stale.">
+        <g data-in="1">
+          <text x="0" y="20" class="lbl b">Job listings</text>
+          <text x="0" y="36" class="lbl s">one piece of state</text>
+          <text x="0" y="92" class="lbl b">Server</text>
+          <text x="0" y="110" class="lbl s">the original</text>
+          <line x1="104" y1="150" x2="1000" y2="150" stroke="#243349" stroke-dasharray="4 6"/>
+          <text x="0" y="154" class="lbl s">network</text>
+          <text x="0" y="200" class="lbl b">Browser</text>
+          <text x="0" y="218" class="lbl s">what it holds</text>
+        </g>
+        <g data-in="2">
+          <rect x="104" y="0" width="290" height="44" rx="9" fill="#121C30" stroke="#22D3EE"/>
+          <text x="249" y="20" text-anchor="middle" class="lbl b">Vite SPA</text>
+          <text x="249" y="36" text-anchor="middle" class="lbl s">+ TanStack Query</text>
+          <rect x="104" y="56" width="290" height="80" rx="10" fill="none" stroke="#64748B" stroke-dasharray="5 5"/>
+          <text x="249" y="88" text-anchor="middle" class="lbl b">Rasmi's API</text>
+          <text x="249" y="107" text-anchor="middle" class="lbl s">answers GET /jobs</text>
+          <text x="249" y="123" text-anchor="middle" class="lbl s">from the database it owns</text>
+          <path d="M249,136 L249,160" stroke="#22D3EE" fill="none"/>
+          <rect x="104" y="164" width="290" height="80" rx="10" fill="rgba(34,211,238,.10)" stroke="#22D3EE"/>
+          <text x="249" y="196" text-anchor="middle" class="lbl b">Query cache</text>
+          <text x="249" y="215" text-anchor="middle" class="lbl s">keyed by ['jobs', filters]</text>
+          <text x="249" y="231" text-anchor="middle" class="lbl s">fetched when the list mounts</text>
+        </g>
+        <g data-in="3">
+          <rect x="407" y="0" width="290" height="44" rx="9" fill="#121C30" stroke="#34D399"/>
+          <text x="552" y="20" text-anchor="middle" class="lbl b">TanStack Router</text>
+          <text x="552" y="36" text-anchor="middle" class="lbl s">+ Query, client-first</text>
+          <rect x="407" y="56" width="290" height="80" rx="10" fill="none" stroke="#34D399" stroke-dasharray="5 5"/>
+          <text x="552" y="88" text-anchor="middle" class="lbl b">Rasmi's API</text>
+          <text x="552" y="107" text-anchor="middle" class="lbl s">the same original</text>
+          <text x="552" y="123" text-anchor="middle" class="lbl s">asked by the route, not the list</text>
+          <path d="M552,136 L552,160" stroke="#34D399" fill="none"/>
+          <rect x="407" y="164" width="290" height="80" rx="10" fill="rgba(52,211,153,.10)" stroke="#34D399"/>
+          <text x="552" y="196" text-anchor="middle" class="lbl b">Query cache, filled by the loader</text>
+          <text x="552" y="215" text-anchor="middle" class="lbl s">fetched on navigation, before render</text>
+          <text x="552" y="231" text-anchor="middle" class="lbl s">the same keys, the same entries</text>
+        </g>
+        <g data-in="4">
+          <rect x="710" y="0" width="290" height="44" rx="9" fill="#121C30" stroke="#A78BFA"/>
+          <text x="855" y="20" text-anchor="middle" class="lbl b">Next.js</text>
+          <text x="855" y="36" text-anchor="middle" class="lbl s">Server Components</text>
+          <rect x="710" y="56" width="290" height="80" rx="10" fill="rgba(167,139,250,.12)" stroke="#A78BFA"/>
+          <text x="855" y="88" text-anchor="middle" class="lbl b">await getJobs() on the server</text>
+          <text x="855" y="107" text-anchor="middle" class="lbl s">on every request, by default</text>
+          <text x="855" y="123" text-anchor="middle" class="lbl s">cached only with 'use cache'</text>
+          <path d="M855,136 L855,160" stroke="#A78BFA" fill="none"/>
+          <rect x="710" y="164" width="290" height="80" rx="10" fill="none" stroke="#A78BFA"/>
+          <text x="855" y="196" text-anchor="middle" class="lbl b">The page that request rendered</text>
+          <text x="855" y="215" text-anchor="middle" class="lbl s">HTML and RSC payload</text>
+          <text x="855" y="231" text-anchor="middle" class="lbl s">it doesn't refetch on its own</text>
+        </g>
+        <g data-in="5">
+          <rect x="300" y="154" width="84" height="20" rx="10" fill="#0E1525" stroke="#FBBF24"/>
+          <text x="342" y="168" text-anchor="middle" class="lbl s" style="fill:#FBBF24">a copy</text>
+          <rect x="603" y="154" width="84" height="20" rx="10" fill="#0E1525" stroke="#FBBF24"/>
+          <text x="645" y="168" text-anchor="middle" class="lbl s" style="fill:#FBBF24">a copy</text>
+          <rect x="906" y="154" width="84" height="20" rx="10" fill="#0E1525" stroke="#FBBF24"/>
+          <text x="948" y="168" text-anchor="middle" class="lbl s" style="fill:#FBBF24">a copy</text>
+          <text x="104" y="280" class="lbl" style="fill:#FBBF24">A recruiter closes job 42. The database changes, and none of these copies knows until it is fetched again.</text>
+        </g>
+      </svg>
+    </div>
+    <div class="anim-bar">
+      <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
+      <button type="button" class="anim-replay">replay</button>
+      <button type="button" class="anim-step" data-d="1" aria-label="Next step">→</button>
+      <span class="anim-say"><i>One piece of server state: Rasmi's job listings. The original lives in a database.</i><i>Vite SPA + Query: the list mounts, the browser fetches, the answer is cached by key.</i><i>TanStack Router + Query: the loader fetches on navigation, before render, into the same cache.</i><i>Next.js: a Server Component fetches per request. Caching is opt-in with 'use cache'.</i><i>Whichever stack, the browser holds a copy, and a copy can go stale.</i></span>
+    </div>
+    </div>
+    <div class="key">The stack decides where the fetch runs, not who owns the jobs: whatever the browser holds is a copy, and copies go stale.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 06 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 2</div><div class="cx-page"><b>9</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Two kinds of state</div>
     <h2>Server state is a copy you don't own</h2>
     <table class="grid">
       <tr><th></th><th>Client state</th><th>Server state</th></tr>
       <tr><td><b>Source of truth</b></td><td>This browser tab</td><td>A database on the other side of the network</td></tr>
       <tr><td><b>Who can change it</b></td><td>Only your code</td><td>Other users, other tabs, a cron job — without telling you</td></tr>
       <tr><td><b>Can it go stale?</b></td><td class="g">Never — it <i>is</i> the truth</td><td class="r">The moment it arrives</td></tr>
-      <tr><td><b>Reading it</b></td><td>Synchronous</td><td>Async: loading, error, retry, refetch</td></tr>
+      <tr><td><b>Reading it</b></td><td>Synchronous</td><td>Async: pending, error, retry, refetch</td></tr>
       <tr><td><b>In Rasmi</b></td><td>Filters drawer open, apply-form draft</td><td>Listings, saved jobs, application statuses</td></tr>
     </table>
     <div class="key">If someone else can change it without telling you, it's server state — and what your app holds is a <b>cache</b> of it. Caches need expiry, refetching and invalidation. <code>useState</code> has none of those.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>03</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 1 · Sorting Rasmi's state</div>
+  <section class="slide" data-chip="MODULE 06 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 2</div><div class="cx-page"><b>10</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Sorting Rasmi's state</div>
     <h2>Every piece of state gets exactly one home</h2>
     <div class="anim" id="fx-homes" data-at="300,1300,2400,3400,4300,5400">
     <div class="fig" style="max-width:1000px">
@@ -511,8 +961,8 @@
     <div class="key w">The trap is <b>Saved jobs</b>. The user decides it, so it feels like client state — but the server keeps it. The click isn't the state; it's a <i>request</i> to change the server's state.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>04</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 1 · The interview question</div>
+  <section class="slide" data-chip="MODULE 06 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 2</div><div class="cx-page"><b>11</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · The interview question</div>
     <h2>Three questions decide where state lives</h2>
     <div class="fig" id="fx-home" style="max-width:1000px">
       <svg viewBox="0 0 1000 206" role="img" aria-label="Decision flow: does the server own it, then the query cache; should a reload restore it, then the URL; do distant parts need it, then a small store; otherwise useState">
@@ -595,30 +1045,30 @@
     <div class="key">Mid-level answer: “I'd put it in Redux.” Senior answer: ask these three questions out loud for each piece — and say what breaks if it lived anywhere else.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 1</div><div class="cx-page"><b>05</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 1 · Read next</div>
+  <section class="slide" data-chip="MODULE 06 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 2</div><div class="cx-page"><b>12</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 2 · Read next</div>
     <h2>Read where the line is drawn</h2>
     <div class="two">
       <div class="card a">
         <h3 class="cy">References</h3>
         <ul class="plist refs" style="margin-top:4px">
-          <li><a href="https://tanstack.com/query/latest/docs/framework/react/guides/does-this-replace-client-state" target="_blank" rel="noopener">Does TanStack Query replace client state?</a><small>the server-state / client-state split, from the library&#x27;s authors</small></li>
+          <li><a href="https://tanstack.com/query/latest/docs/framework/react/guides/does-this-replace-client-state" target="_blank" rel="noopener">Does TanStack Query replace global state managers? — tanstack.com</a><small>the server-state / client-state split, from the library&#x27;s authors</small></li>
           <li><a href="https://react.dev/learn/choosing-the-state-structure" target="_blank" rel="noopener">Choosing the state structure — react.dev</a><small>avoid redundant and duplicated state</small></li>
-          <li><a href="https://kentcdodds.com/blog/application-state-management-with-react" target="_blank" rel="noopener">Application state management with React</a><small>Kent C. Dodds on keeping state close to where it&#x27;s used</small></li>
+          <li><a href="https://react.dev/learn/sharing-state-between-components" target="_blank" rel="noopener">Sharing state between components — react.dev</a><small>lift it to the closest common parent, before any store</small></li>
         </ul>
       </div>
       <div class="card b">
         <h3 class="b">Resources</h3>
         <ul class="plist refs" style="margin-top:4px">
-          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener">Rasmi — the job board repo</a><small>sort its state into server, URL and client before Lesson 2</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener">Rasmi — the job board repo</a><small>sort its state into server, URL and client before Lesson 3</small></li>
           <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/06-data-state-routing" target="_blank" rel="noopener">Module 6 slides</a><small>the deck this video walks through</small></li>
         </ul>
       </div>
     </div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 2</div><div class="cx-page"><b>06</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 2 · The cache</div>
+  <section class="slide" data-chip="MODULE 06 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 3</div><div class="cx-page"><b>13</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · The cache</div>
     <h2>One key, one entry, one lifecycle</h2>
     <div class="fig" id="fx-life" style="max-width:1000px">
       <svg viewBox="0 0 1000 90" role="img" aria-label="Query entry lifecycle: fetching, fresh, stale, inactive, deleted">
@@ -678,8 +1128,43 @@
     <div class="key"><code>staleTime</code> decides when data is <b>refetched</b>; <code>gcTime</code> decides when it is <b>deleted</b>.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 2</div><div class="cx-page"><b>07</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 2 · What invalidation really means</div>
+  <section class="slide" data-chip="MODULE 06 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 3</div><div class="cx-page"><b>14</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · The key</div>
+    <h2>The key is the entry's address</h2>
+    <div class="fig" id="fx-keys" style="max-width:1000px">
+      <table class="grid">
+        <thead><tr><th>Query key</th><th>Read by</th><th>State</th></tr></thead>
+        <tbody data-k="rows"></tbody>
+      </table>
+    </div>
+    <div class="demo bare" id="demo-keys">
+      <div class="row">
+        <span class="demo-tag">Read</span>
+        <button type="button" class="dbtn" data-r="list">JobList · react</button>
+        <button type="button" class="dbtn" data-r="twin">2nd JobList · same filters</button>
+        <button type="button" class="dbtn" data-r="order">same filters · keys reordered</button>
+        <button type="button" class="dbtn" data-r="page">next page</button>
+        <button type="button" class="dbtn" data-r="detail">open job 42</button>
+      </div>
+      <div class="row">
+        <span class="demo-tag">Invalidate</span>
+        <button type="button" class="dbtn" data-i="jobs">['jobs']</button>
+        <button type="button" class="dbtn" data-i="list">['jobs','list']</button>
+        <button type="button" class="dbtn" data-i="detail">['jobs','detail','42']</button>
+        <span class="meter">requests<b data-k="req">0</b></span>
+      </div>
+      <div class="row"><span class="demo-hint" data-k="say"></span></div>
+    </div>
+    <pre><code><span class="kw">export const</span> jobKeys = {
+  all:    [<span class="st">'jobs'</span>] <span class="kw">as const</span>,
+  list:   (filters: <span class="ty">JobFilters</span>) =&gt; [...jobKeys.all, <span class="st">'list'</span>, filters] <span class="kw">as const</span>,
+  detail: (id: <span class="ty">string</span>) =&gt; [...jobKeys.all, <span class="st">'detail'</span>, id] <span class="kw">as const</span>,
+};</code></pre>
+    <div class="key">Same key, same entry: every screen that asks for it shares one request and one answer.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 06 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 3</div><div class="cx-page"><b>15</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · What invalidation really means</div>
     <h2>Invalidate means “mark stale”, not “delete”</h2>
     <div class="two tight">
       <div class="card g">
@@ -703,7 +1188,7 @@
           <tr><th>Call</th><th>What happens</th></tr>
           <tr><td><code>invalidateQueries</code></td><td>Marks matches stale. Active ones refetch now, the rest on next use. Old data stays on screen.</td></tr>
           <tr><td><code>setQueryData</code></td><td>You write the entry. No request.</td></tr>
-          <tr><td><code>removeQueries</code></td><td>Deletes it. The next reader starts from loading.</td></tr>
+          <tr><td><code>removeQueries</code></td><td>Deletes it. The next reader starts from pending.</td></tr>
           <tr><td><code>refetchQueries</code></td><td>Fetches now, stale or not.</td></tr>
         </table>
       </div>
@@ -711,8 +1196,8 @@
     <div class="key">Keys match by prefix: <code>['jobs']</code> hits every list and every detail. Shape your keys the way your data changes.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 2</div><div class="cx-page"><b>08</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 2 · Optimistic updates</div>
+  <section class="slide" data-chip="MODULE 06 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 3</div><div class="cx-page"><b>16</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Optimistic updates</div>
     <h2>Save the job now — and keep a way back</h2>
     <pre><code><span class="kw">const</span> save = <span class="fn">useMutation</span>({
   mutationFn: (jobId: <span class="ty">string</span>) =&gt; api.<span class="fn">saveJob</span>(jobId),
@@ -746,8 +1231,8 @@
     <div class="key r">Skip <code>cancelQueries</code> or the <code>onError</code> restore, and the star lies.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 2</div><div class="cx-page"><b>09</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 2 · The race it fixes</div>
+  <section class="slide" data-chip="MODULE 06 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 3</div><div class="cx-page"><b>17</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · The race it fixes</div>
     <h2>A late answer lands in its own key — not on screen</h2>
     <div class="anim" id="fx-race" data-at="300,1200,2100,3100,4000">
     <div class="fig" style="max-width:1000px">
@@ -799,14 +1284,15 @@
     <div class="key g">In a bare <code>useEffect</code> the slow <code>re</code> answer overwrites <code>react</code>. Here the screen reads by <b>key</b>, not arrival order — the race is designed out.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 2</div><div class="cx-page"><b>10</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 2 · Read next</div>
+  <section class="slide" data-chip="MODULE 06 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 3</div><div class="cx-page"><b>18</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 3 · Read next</div>
     <h2>The cache, from the people who built it</h2>
     <div class="two">
       <div class="card a">
         <h3 class="cy">References</h3>
         <ul class="plist refs" style="margin-top:4px">
           <li><a href="https://tanstack.com/query/latest/docs/framework/react/guides/important-defaults" target="_blank" rel="noopener">Important defaults — TanStack Query</a><small>why a tab switch refetches: staleTime 0, gcTime 5 min</small></li>
+          <li><a href="https://tanstack.com/query/latest/docs/framework/react/guides/query-keys" target="_blank" rel="noopener">Query keys</a><small>hashed deterministically; every variable goes in the key</small></li>
           <li><a href="https://tanstack.com/query/latest/docs/framework/react/guides/query-invalidation" target="_blank" rel="noopener">Query invalidation</a><small>mark stale, refetch the active ones, match by prefix</small></li>
           <li><a href="https://tanstack.com/query/latest/docs/framework/react/guides/optimistic-updates" target="_blank" rel="noopener">Optimistic updates</a><small>cancel, snapshot, write, roll back</small></li>
           <li><a href="https://react.dev/reference/react/useEffect#fetching-data-with-effects" target="_blank" rel="noopener">Fetching data with effects — react.dev</a><small>the ignore flag that closes the race without a library</small></li>
@@ -815,15 +1301,16 @@
       <div class="card b">
         <h3 class="b">Resources</h3>
         <ul class="plist refs" style="margin-top:4px">
-          <li><a href="https://tkdodo.eu/blog/practical-react-query" target="_blank" rel="noopener">Practical React Query — TkDodo</a><small>the maintainer&#x27;s series on keys, defaults and custom hooks</small></li>
           <li><a href="https://tanstack.com/query/latest/docs/framework/react/devtools" target="_blank" rel="noopener">TanStack Query Devtools</a><small>watch entries go fresh, stale and inactive</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener">Rasmi — the job board repo</a><small>write down every query key it needs before Lesson 4</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/06-data-state-routing" target="_blank" rel="noopener">Module 6 slides</a><small>the deck this video walks through</small></li>
         </ul>
       </div>
     </div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 3</div><div class="cx-page"><b>11</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Search params as state</div>
+  <section class="slide" data-chip="MODULE 06 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 4</div><div class="cx-page"><b>19</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Search params as state</div>
     <h2>If it lives in useState, nobody can share it</h2>
     <div class="anim" id="fx-url" data-at="200,650,1100,1550">
     <div class="fig" style="max-width:1000px">
@@ -883,20 +1370,50 @@
     <div class="key">Filters in the URL survive a refresh, travel in a link, and undo with Back.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 3</div><div class="cx-page"><b>12</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Type-safe routes and loaders</div>
+<section class="slide" data-chip="MODULE 06 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 4</div><div class="cx-page"><b>20</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Writing search params</div>
+    <h2>Back should undo a decision, not a keystroke</h2>
+    <div class="demo" id="demo-hist">
+      <div class="row">
+        <span class="demo-tag">Write with</span>
+        <button type="button" class="dbtn" data-mode="naive">search: { q }</button>
+        <button type="button" class="dbtn" data-mode="right">search: (prev) =&gt; …</button>
+        <span class="meter">history entries<b data-k="n">1</b></span>
+      </div>
+      <div class="row">
+        <input class="dinput" data-k="q" placeholder="search jobs" size="12" spellcheck="false" aria-label="Search text">
+        <button type="button" class="dbtn" data-act="remote" data-k="remote">Remote only</button>
+        <button type="button" class="dbtn" data-act="page">Page <span data-k="page">1</span> →</button>
+        <button type="button" class="dbtn" data-act="back">← Back</button>
+      </div>
+      <div class="row"><span class="demo-tag">History</span><div class="hist" data-k="hist"></div></div>
+      <div class="row"><span class="demo-hint" data-k="say"></span></div>
+    </div>
+    <pre><code><span class="kw">const</span> search = Route.<span class="fn">useSearch</span>();
+<span class="kw">const</span> navigate = <span class="fn">useNavigate</span>({ from: Route.fullPath });
+
+<span class="cmt">// a filter: keep the others, back to page 1</span>
+<span class="fn">navigate</span>({ search: (prev) =&gt; ({ ...prev, remote: !prev.remote, page: <span class="st">1</span> }) });
+
+<span class="cmt">// the search box, after its debounce: a search in progress rewrites its own entry</span>
+<span class="fn">navigate</span>({ search: (prev) =&gt; ({ ...prev, q, page: <span class="st">1</span> }), replace: search.q !== <span class="st">''</span> });</code></pre>
+    <div class="key">Update from <code>prev</code>, go back to page 1 when a filter changes, and let a search rewrite its own entry.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 06 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 4</div><div class="cx-page"><b>21</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Type-safe routes and loaders</div>
     <h2>Validate the URL once, at the route</h2>
     <pre><code><span class="kw">const</span> jobSearch = z.<span class="fn">object</span>({
-  q: z.<span class="fn">string</span>().<span class="fn">catch</span>(<span class="st">''</span>),
-  remote: z.<span class="fn">boolean</span>().<span class="fn">catch</span>(<span class="kw">false</span>),
-  page: z.<span class="fn">number</span>().<span class="fn">int</span>().<span class="fn">min</span>(<span class="st">1</span>).<span class="fn">catch</span>(<span class="st">1</span>),
+  q: z.<span class="fn">string</span>().<span class="fn">catch</span>(<span class="st">''</span>).<span class="fn">default</span>(<span class="st">''</span>),
+  remote: z.<span class="fn">boolean</span>().<span class="fn">catch</span>(<span class="kw">false</span>).<span class="fn">default</span>(<span class="kw">false</span>),
+  page: z.<span class="fn">number</span>().<span class="fn">int</span>().<span class="fn">min</span>(<span class="st">1</span>).<span class="fn">catch</span>(<span class="st">1</span>).<span class="fn">default</span>(<span class="st">1</span>),
 });
 
 <span class="kw">export const</span> Route = <span class="fn">createFileRoute</span>(<span class="st">'/jobs'</span>)({
   validateSearch: jobSearch,                                               <span class="cmt">// ?page=abc becomes page 1, never a crash</span>
   loaderDeps: ({ search: { q, remote, page } }) =&gt; ({ q, remote, page }),
   loader: ({ context: { queryClient }, deps }) =&gt;
-    queryClient.<span class="fn">ensureQueryData</span>(<span class="fn">jobsQuery</span>(deps)),                          <span class="cmt">// the fetch starts before render</span>
+    queryClient.<span class="fn">query</span>({ ...<span class="fn">jobsQuery</span>(deps), staleTime: <span class="st">'static'</span> }),     <span class="cmt">// cached data, or the fetch, before render</span>
   component: JobsPage,
 });</code></pre>
     <div class="demo bare" id="demo-parse">
@@ -905,11 +1422,11 @@
         <span class="meter">→</span><span class="parsed" data-k="out"></span>
       </div>
     </div>
-    <div class="key"><code>.catch()</code> turns a bad URL into a default, not a crash.</div>
+    <div class="key"><code>.catch()</code> turns a bad value into a default, <code>.default()</code> fills a missing one: never a crash.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 3</div><div class="cx-page"><b>13</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Loaders and typed links</div>
+  <section class="slide" data-chip="MODULE 06 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 4</div><div class="cx-page"><b>22</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Loaders and typed links</div>
     <h2>Fetch on navigation, not on render</h2>
     <div class="anim" id="fx-fall" data-at="200,700,1150,1700,2150,2550,3550,4000">
     <div class="fig" style="max-width:1000px">
@@ -959,30 +1476,33 @@
 &lt;<span class="ty">Link</span> to=<span class="st">"/job/$jobId"</span> params={{ jobId: job.id }} /&gt;     <span class="no">// ✗ type error: no such route</span></code></pre>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 3</div><div class="cx-page"><b>14</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 3 · Read next</div>
+  <section class="slide" data-chip="MODULE 06 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 4</div><div class="cx-page"><b>23</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Read next</div>
     <h2>The URL, typed end to end</h2>
     <div class="two">
       <div class="card a">
         <h3 class="cy">References</h3>
         <ul class="plist refs" style="margin-top:4px">
-          <li><a href="https://tanstack.com/router/latest/docs/framework/react/guide/search-params" target="_blank" rel="noopener">Search params — TanStack Router</a><small>validateSearch, defaults and typed links</small></li>
-          <li><a href="https://tanstack.com/router/latest/docs/framework/react/guide/data-loading" target="_blank" rel="noopener">Data loading — TanStack Router</a><small>loaders that run on navigation, not on render</small></li>
-          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams" target="_blank" rel="noopener">URLSearchParams — MDN</a><small>what the browser gives you underneath</small></li>
+          <li><a href="https://tanstack.com/router/latest/docs/guide/search-params" target="_blank" rel="noopener">Search params — TanStack Router</a><small>validateSearch, .catch() and defaults, Zod 4</small></li>
+          <li><a href="https://tanstack.com/router/latest/docs/how-to/navigate-with-search-params" target="_blank" rel="noopener">Navigate with search params — TanStack Router</a><small>update from prev and keep the other filters</small></li>
+          <li><a href="https://tanstack.com/router/latest/docs/guide/data-loading" target="_blank" rel="noopener">Data loading — TanStack Router</a><small>loaderDeps, and loaders that run on navigation</small></li>
+          <li><a href="https://tanstack.com/router/latest/docs/guide/external-data-loading" target="_blank" rel="noopener">External data loading — TanStack Router</a><small>the Query loader: queryClient.query</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/History/replaceState" target="_blank" rel="noopener">History: replaceState() — MDN</a><small>push or replace: what Back can undo</small></li>
         </ul>
       </div>
       <div class="card b">
         <h3 class="b">Resources</h3>
         <ul class="plist refs" style="margin-top:4px">
           <li><a href="https://zod.dev" target="_blank" rel="noopener">Zod</a><small>the schema behind validateSearch — the module 4 boundary habit</small></li>
+          <li><a href="https://github.com/Catalystsw/frontend-mastery-jobboard" target="_blank" rel="noopener">Rasmi — the job board repo</a><small>list every filter that belongs in its URL before Lesson 6</small></li>
           <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/06-data-state-routing" target="_blank" rel="noopener">Module 6 slides</a><small>the deck this video walks through</small></li>
         </ul>
       </div>
     </div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 4</div><div class="cx-page"><b>15</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Normalization</div>
+  <section class="slide" data-chip="MODULE 06 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 5</div><div class="cx-page"><b>24</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Normalization</div>
     <h2>One job, three copies, two of them wrong</h2>
     <div class="anim" id="fx-norm" data-at="200,800,1300,2000,2600,3100">
     <div class="fig" style="max-width:1000px">
@@ -1017,11 +1537,11 @@
   initialState: jobsAdapter.<span class="fn">getInitialState</span>(),
   reducers: { jobsReceived: jobsAdapter.upsertMany },  <span class="cmt">// one record per id, however many lists show it</span>
 });</code></pre>
-    <div class="key">With a server cache you rarely normalize — you <b>invalidate</b> the keys and refetch. Normalize when the <i>client</i> edits one record from many screens: offline drafts, editors, collaborative boards.</div>
+    <div class="key">Normalize when the <i>client</i> edits one record from many screens; with a server cache, <b>invalidate</b> instead.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 4</div><div class="cx-page"><b>16</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Zustand and Redux Toolkit</div>
+  <section class="slide" data-chip="MODULE 06 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 5</div><div class="cx-page"><b>25</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Zustand and Redux Toolkit</div>
     <h2>One tray, two stores</h2>
     <div class="two tight">
       <div class="card p">
@@ -1062,8 +1582,36 @@
     <div class="key">Neither should ever hold a job listing. Stores are for state the server has never heard of.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 4</div><div class="cx-page"><b>17</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Choosing, and refusing</div>
+  <section class="slide" data-chip="MODULE 06 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 5</div><div class="cx-page"><b>26</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Who re-renders</div>
+    <h2>A selector re-renders only what changed</h2>
+    <div class="demo" id="demo-rr">
+      <div class="row">
+        <span class="demo-tag">Share the tray with</span>
+        <button type="button" class="dbtn" data-mode="ctx">Context</button>
+        <button type="button" class="dbtn" data-mode="sel">Zustand selector</button>
+        <span class="meter">re-rendered<b data-k="n">0</b></span>
+        <span class="meter">output changed<b data-k="c">0</b></span>
+      </div>
+      <div class="row">
+        <button type="button" class="dbtn" data-act="42">Compare job 42</button>
+        <button type="button" class="dbtn" data-act="17">Compare job 17</button>
+        <button type="button" class="dbtn" data-act="clear">Clear tray</button>
+      </div>
+      <div class="row"><span class="demo-tag">Components</span><div class="comps" data-k="comps"></div></div>
+      <div class="row"><span class="demo-hint" data-k="say"></span></div>
+    </div>
+    <pre><code><span class="cmt">// Context: every component that reads it re-renders when the value changes</span>
+<span class="kw">const</span> { ids, toggle } = <span class="fn">useContext</span>(CompareContext);
+
+<span class="cmt">// Zustand: a component re-renders only when its selector's answer changes</span>
+<span class="kw">const</span> inTray = <span class="fn">useCompare</span>((s) =&gt; s.ids.<span class="fn">includes</span>(job.id));
+<span class="kw">const</span> toggle = <span class="fn">useCompare</span>((s) =&gt; s.toggle);        <span class="cmt">// the same function every time</span></code></pre>
+    <div class="key">Context suits values that rarely change; a selector re-renders only the components whose answer changed.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 06 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 5</div><div class="cx-page"><b>27</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Choosing, and refusing</div>
     <h2>Every tool here is the wrong choice somewhere</h2>
     <table class="grid">
       <tr><th>Tool</th><th>Right for</th><th>Wrong when</th></tr>
@@ -1074,35 +1622,36 @@
       <tr><td><b>TanStack Query</b></td><td>Anything the server owns</td><td>Purely local UI state — it's a cache, not a store</td></tr>
       <tr><td><b>URL search params</b></td><td>Filters, sort, page, the open job's id</td><td>Secrets, large blobs, every keystroke</td></tr>
     </table>
-    <div class="key r">Server data copied into Zustand or Redux is the classic red flag: loading flags, staleness and refetching, rebuilt by hand — and worse.</div>
+    <div class="key r">Server data copied into Zustand or Redux is the classic red flag: loading, staleness and refetching, rebuilt by hand.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 4</div><div class="cx-page"><b>18</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 4 · Read next</div>
+  <section class="slide" data-chip="MODULE 06 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 5</div><div class="cx-page"><b>28</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 5 · Read next</div>
     <h2>Before you add a store, read these</h2>
     <div class="two">
       <div class="card a">
         <h3 class="cy">References</h3>
         <ul class="plist refs" style="margin-top:4px">
           <li><a href="https://redux.js.org/usage/structuring-reducers/normalizing-state-shape" target="_blank" rel="noopener">Normalizing state shape — Redux</a><small>ids and lookup tables instead of nested copies</small></li>
-          <li><a href="https://redux-toolkit.js.org/api/createEntityAdapter" target="_blank" rel="noopener">createEntityAdapter — Redux Toolkit</a><small>normalization without the boilerplate</small></li>
+          <li><a href="https://redux.js.org/toolkit/api/createEntityAdapter" target="_blank" rel="noopener">createEntityAdapter — Redux Toolkit</a><small>normalization without the boilerplate</small></li>
+          <li><a href="https://react.dev/reference/react/useContext" target="_blank" rel="noopener">useContext — react.dev</a><small>every reader re-renders when the value changes</small></li>
           <li><a href="https://react.dev/learn/scaling-up-with-reducer-and-context" target="_blank" rel="noopener">Scaling up with reducer and context — react.dev</a><small>what React alone already gives you</small></li>
         </ul>
       </div>
       <div class="card b">
         <h3 class="b">Resources</h3>
         <ul class="plist refs" style="margin-top:4px">
-          <li><a href="https://zustand.docs.pmnd.rs/" target="_blank" rel="noopener">Zustand docs</a><small>a store in one hook — read it before deciding you need one</small></li>
+          <li><a href="https://zustand.docs.pmnd.rs/" target="_blank" rel="noopener">Zustand docs</a><small>a store in one hook: read it before deciding you need one</small></li>
           <li><a href="https://github.com/Catalystsw/frontend-mastery-program/tree/main/modules/06-data-state-routing" target="_blank" rel="noopener">Module 6 slides</a><small>the deck this video walks through</small></li>
         </ul>
       </div>
     </div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 5</div><div class="cx-page"><b>19</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Build</div>
+  <section class="slide" data-chip="MODULE 06 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 6</div><div class="cx-page"><b>29</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · Build</div>
     <h2>Rebuild Rasmi's data layer on Query and Router</h2>
-    <p class="say">Same screens, new plumbing: every piece of state moves to the home Lesson 1 gave it.</p>
+    <p class="say">Same screens, new plumbing: every piece of state moves to the home Lesson 2 gave it.</p>
     <div class="anim" id="fx-arch" data-at="200,700,1200,1700,2400,3100,3800">
     <div class="fig" style="max-width:1000px">
       <svg viewBox="0 0 1000 214" role="img" aria-label="Target architecture: URL to route to QueryClient cache to components; polling and mutations write into the cache; Zustand holds only the compare tray">
@@ -1139,35 +1688,66 @@
       <span class="anim-say"><i>The URL holds the filters.</i><i>The route validates them and starts the fetch.</i><i>Every read lands in one place: the Query cache.</i><i>Components only read from the cache.</i><i>A 30-second poll keeps application statuses fresh.</i><i>Saves and applications write back into the same cache.</i><i>Zustand keeps one job: the compare tray.</i></span>
     </div>
     </div>
-    <div class="key">Stage <code>module-6/data-layer</code> in the job board repo. One rule for the whole build: no component calls <code>fetch</code> — every read is a query, every write is a mutation.</div>
+    <div class="key">In <code>module-6/data-layer</code>, no component calls <code>fetch</code>: every read is a query, every write a mutation.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 5</div><div class="cx-page"><b>20</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Definition of done</div>
+  <section class="slide" data-chip="MODULE 06 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 6</div><div class="cx-page"><b>30</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · Polling</div>
+    <h2>Poll while someone is looking</h2>
+    <div class="demo" id="demo-poll">
+      <div class="row">
+        <span class="demo-tag">Server</span>
+        <button type="button" class="dbtn" data-act="move">Employer moves it on</button>
+        <span class="dom">status: <b data-k="server">submitted</b></span>
+        <span class="meter">requests<b data-k="n">1</b></span>
+      </div>
+      <div class="row">
+        <span class="demo-tag">App tab</span>
+        <button type="button" class="dbtn" data-act="tab">Hide tab</button>
+        <button type="button" class="dbtn" data-act="bg">refetchIntervalInBackground</button>
+        <span class="dom">badge: <b data-k="badge">submitted</b></span>
+        <span class="demo-hint" data-k="clock"></span>
+      </div>
+      <div class="row"><span class="demo-tag">Requests</span><div class="hist" data-k="log"></div></div>
+      <div class="row"><span class="demo-hint" data-k="say"></span></div>
+    </div>
+    <pre><code><span class="kw">export const</span> <span class="fn">applicationsQuery</span> = () =&gt;
+  <span class="fn">queryOptions</span>({
+    queryKey: [<span class="st">'applications'</span>],
+    queryFn: ({ signal }) =&gt; api.<span class="fn">applications</span>({ signal }),
+    refetchInterval: <span class="st">30_000</span>,               <span class="cmt">// every 30 s, while the tab is visible</span>
+    <span class="cmt">// refetchIntervalInBackground: true,  // a hidden tab polls too: rarely worth it</span>
+  });</code></pre>
+    <div class="key"><code>refetchInterval</code> polls while the tab is visible; coming back to the tab refetches at once.</div>
+</section>
+
+  <section class="slide" data-chip="MODULE 06 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 6</div><div class="cx-page"><b>31</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · Definition of done</div>
     <h2>Seven checks before you call it done</h2>
-    <table class="grid">
+    <table class="grid dod">
       <tr><th>Check</th><th>Prove it</th></tr>
       <tr><td><b>1 · No fetching in effects</b></td><td>Every read is a <code>useQuery</code>, <code>useSuspenseQuery</code> or a route loader</td></tr>
-      <tr><td><b>2 · Filters live in the URL</b></td><td>Reload, or paste the link in a private window: same results. <code>?page=abc</code> lands on page 1</td></tr>
+      <tr><td><b>2 · Filters live in the URL</b></td><td>Paste the link in a private window: same results. <code>?page=abc</code> lands on page 1. Back undoes a filter, not a keystroke</td></tr>
       <tr><td><b>3 · No stale search results</b></td><td>Throttle the network and type fast: the list always matches the box</td></tr>
       <tr><td><b>4 · Save is optimistic, with rollback</b></td><td>Make the save endpoint fail: the star flips, then flips back with an error</td></tr>
       <tr><td><b>5 · Apply refreshes its dependants</b></td><td>“My applications” and the job's Applied badge update with no reload</td></tr>
-      <tr><td><b>6 · Statuses stay fresh</b></td><td><code>refetchInterval</code> on applications: change a status on the server, the badge updates within 30 s — no click</td></tr>
+      <tr><td><b>6 · Statuses stay fresh</b></td><td>With the app in view, change a status on the server: the badge updates within 30 s, no click, no tab switch</td></tr>
       <tr><td><b>7 · The store holds no server data</b></td><td>Zustand contains the compare tray's ids — nothing else</td></tr>
     </table>
     <div class="key g">In the PR description, name the home of every piece of state with one sentence on why. That paragraph is your interview answer.</div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 5</div><div class="cx-page"><b>21</b> / 22</div><!--/catalyst-brand:chrome-->
-    <div class="kicker">Lesson 5 · Read next</div>
+  <section class="slide" data-chip="MODULE 06 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 6</div><div class="cx-page"><b>32</b> / 33</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · Read next</div>
     <h2>Everything the build leans on</h2>
     <div class="two">
       <div class="card a">
         <h3 class="cy">References</h3>
         <ul class="plist refs" style="margin-top:4px">
-          <li><a href="https://tanstack.com/router/latest/docs/framework/react/guide/external-data-loading" target="_blank" rel="noopener">External data loading — TanStack Router</a><small>the router warms the Query cache; it owns no data</small></li>
-          <li><a href="https://tanstack.com/query/latest/docs/framework/react/guides/prefetching" target="_blank" rel="noopener">Prefetching — TanStack Query</a><small>ensureQueryData in loaders, prefetch on hover</small></li>
-          <li><a href="https://tanstack.com/query/latest/docs/framework/react/reference/useQuery" target="_blank" rel="noopener">useQuery reference</a><small>refetchInterval, placeholderData and the rest of the options</small></li>
+          <li><a href="https://tanstack.com/router/latest/docs/guide/external-data-loading" target="_blank" rel="noopener">External data loading — TanStack Router</a><small>the router warms the Query cache; it owns no data</small></li>
+          <li><a href="https://tanstack.com/query/latest/docs/framework/react/guides/prefetching" target="_blank" rel="noopener">Prefetching — TanStack Query</a><small>queryClient.query in loaders, prefetch on hover</small></li>
+          <li><a href="https://tanstack.com/query/latest/docs/framework/react/guides/polling" target="_blank" rel="noopener">Polling — TanStack Query</a><small>refetchInterval, and why a hidden tab stops polling</small></li>
+          <li><a href="https://tanstack.com/query/latest/docs/framework/react/reference/functions/useQuery" target="_blank" rel="noopener">useQuery reference — TanStack Query</a><small>every option, from staleTime to refetchIntervalInBackground</small></li>
         </ul>
       </div>
       <div class="card b">
@@ -1180,13 +1760,14 @@
     </div>
 </section>
 
-  <section class="slide" data-chip="MODULE 06 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 5</div><div class="cx-page"><b>22</b> / 22</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 06 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 06 · VIDEO 6</div><div class="cx-page"><b>33</b> / 33</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 06 · done</div>
     <h2>Every piece of state has an owner and a home</h2>
     <div class="two">
       <div class="card a">
         <h3 class="cy">What you can now do</h3>
         <ul class="plist" style="margin-top:4px">
+          <li>Pick the stack per product<small>Vite SPA, TanStack or Next.js — and name what it costs</small></li>
           <li>Tell server state from client state<small>the server owns it; what you hold is a cache</small></li>
           <li>Run a cache instead of fetching in effects<small>keys, staleTime vs gcTime, invalidation, optimistic updates that roll back</small></li>
           <li>Close race conditions for good<small>cleanup flags, AbortController, or keys that decide</small></li>
@@ -1945,8 +2526,74 @@ export const useCompare = create<CompareState>()((set) => ({
   function k(root, name){ return root.querySelector('[data-k="' + name + '"]'); }
   window.cxDemo = { watch:watch, again:again, esc:esc, k:k };
 
+  /* L1b · one row of the cost grid at a time, with its reason */
+  (function(){
+    var root = document.getElementById('demo-cost'), grid = document.getElementById('fx-cost');
+    if (!root || !grid) return;
+    var WHY = {
+      seo:    'An SPA’s first HTML is an empty shell. Google renders JavaScript later, through a queue, and not every bot or link preview runs it. Next.js adds image, font and metadata built-ins; Start has no equivalents.',
+      data:   'react.dev: fetching in components makes network waterfalls, so load in router loaders or on the server. Start and Next.js build that in; an SPA gets it once you add a router with loaders.',
+      types:  'TanStack Router infers every route, param and validated search param, so a broken link is a compile error. Next.js has opt-in typedRoutes, narrower in scope.',
+      magic:  'Next.js decides what runs where from directives and module boundaries: real power, and a learning cost. Explicit loaders and server functions are more code, and easier to trace.',
+      host:   'An SPA is files on any CDN. Start deploys through Nitro, and its docs say to verify caching per host. Next.js runs anywhere on next start, but several instances need a shared cache.',
+      sec:    'A server is a surface you patch. December 2025’s CVSS 10 remote-code flaw hit every React Server Components implementation; Next.js now ships monthly fixes: 51 advisories in 2026.',
+      mature: 'Next.js has the largest ecosystem and hiring pool, and the most complete Server Components, per react.dev. Start went 1.0 on 13 Oct 2026: fewer case studies and hires, and its RSC is experimental.',
+      churn:  'Next 16 made params async and renamed middleware to proxy; Next 17 makes Cache Components the default. Start’s APIs are new, and many tutorials predate 1.0.'
+    };
+    var why = k(root,'why'), HINT = why.textContent;
+    function clear(){
+      grid.classList.remove('walk');
+      grid.querySelectorAll('.lit').forEach(function(r){ r.classList.remove('lit'); });
+      root.querySelectorAll('button[data-c]').forEach(function(b){ b.classList.remove('on'); });
+      why.textContent = HINT; why.classList.remove('said');
+    }
+    function pick(c){
+      clear();
+      grid.classList.add('walk');
+      grid.querySelector('tr[data-c="' + c + '"]').classList.add('lit');
+      root.querySelector('button[data-c="' + c + '"]').classList.add('on');
+      why.textContent = WHY[c]; why.classList.add('said');
+    }
+    root.addEventListener('click', function(e){ var b = e.target.closest('button[data-c]'); if (b) pick(b.dataset.c); });
+    watch(root, clear, clear);
+  })();
 
-  /* L1c · walk the three questions for one piece of state */
+  /* L1d · run one product through the stack questions */
+  (function(){
+    var root = document.getElementById('demo-stack'), fig = document.getElementById('fx-stack');
+    if (!root || !fig) return;
+    // path: the parts of the flow the product passes, in order. The MVP lands on both frameworks.
+    var PRODUCTS = {
+      news:   { path:['q1','q1-yes','q3','q3-next','next'], why:'News site → Next.js. Strangers arrive from search and shared links, and it is mostly content: server HTML with image, font and metadata built in.' },
+      travel: { path:['q1','q1-yes','q3','q3-start','start'], why:'Travel search → TanStack Start. Results must be crawlable and shareable, and the filters live in the URL: SSR plus typed, validated search params.' },
+      bank:   { path:['q1','q1-no','q2','q2-no','spa'], why:'Bank dashboard → Vite SPA. Behind a login, and the bank’s API already owns the data: nothing to rank, no server of yours to patch.' },
+      widget: { path:['q1','q1-no','q2','q2-no','spa'], why:'Embeddable widget → Vite SPA. It lives inside other people’s pages and ships from a CDN, with no server process.' },
+      mvp:    { path:['q1','q1-no','q2','q2-yes','q3','q3-next','next','q3-start','start'], why:'SaaS MVP → a full-stack framework: with no API yet, its server is the backend. Next.js if the team knows it, Start if they want client-first.' }
+    };
+    var timers = [];
+    function clear(){
+      timers.forEach(clearTimeout); timers = [];
+      fig.classList.remove('walk');
+      fig.querySelectorAll('.lit').forEach(function(e){ e.classList.remove('lit'); });
+      root.querySelectorAll('[data-p]').forEach(function(b){ b.classList.remove('on'); });
+      k(root,'why').textContent = '';
+    }
+    function walk(id){
+      clear();
+      var p = PRODUCTS[id];
+      fig.classList.add('walk');
+      root.querySelector('[data-p="' + id + '"]').classList.add('on');
+      p.path.forEach(function(n, j){
+        timers.push(setTimeout(function(){ fig.querySelector('[data-n="' + n + '"]').classList.add('lit'); }, j * 380));
+      });
+      timers.push(setTimeout(function(){ k(root,'why').textContent = p.why; }, p.path.length * 380));
+    }
+    root.addEventListener('click', function(e){ var b = e.target.closest('[data-p]'); if (b) walk(b.dataset.p); });
+    watch(root, clear, clear);
+  })();
+
+
+  /* L2c · walk the three questions for one piece of state */
   (function(){
     var root = document.getElementById('demo-home'), fig = document.getElementById('fx-home');
     if (!root || !fig) return;
@@ -1987,7 +2634,7 @@ export const useCompare = create<CompareState>()((set) => ({
     watch(root, clear, clear);
   })();
 
-  /* L2a · one cache entry on a clock: staleTime 3 s and gcTime 5 s, scaled down from the code */
+  /* L3a · one cache entry on a clock: staleTime 3 s and gcTime 5 s, scaled down from the code */
   (function(){
     var root = document.getElementById('demo-life'), fig = document.getElementById('fx-life');
     if (!root || !fig) return;
@@ -2063,7 +2710,123 @@ export const useCompare = create<CompareState>()((set) => ({
     }, function(){ timers.forEach(clearTimeout); timers = []; clearInterval(tick); });
   })();
 
-  /* L2c · optimistic save: switch off cancelQueries or the rollback and watch the star */
+  /* L3b · the key is the entry's address: one entry per key, shared by its readers, invalidated by prefix */
+  (function(){
+    var root = document.getElementById('demo-keys'), fig = document.getElementById('fx-keys');
+    if (!root || !fig) return;
+    var FETCH = 800;
+    var KEYS = {
+      saved: { path:['saved'],               text:"['saved']" },
+      p1:    { path:['jobs','list','p1'],    text:"['jobs','list',{ q:'react', page:1 }]" },
+      p2:    { path:['jobs','list','p2'],    text:"['jobs','list',{ q:'react', page:2 }]" },
+      d42:   { path:['jobs','detail','42'],  text:"['jobs','detail','42']" }
+    };
+    var PREFIX = { jobs:['jobs'], list:['jobs','list'], detail:['jobs','detail','42'] };
+    var HINT = 'One entry so far: the saved-jobs bar. Read some jobs, then invalidate by prefix. staleTime is 30 s, so data stays fresh until invalidated.';
+    var SAY = {
+      'new':  'New key, new entry: one request.',
+      joined: 'Same key, and its request is already in flight: it joins it. Still one request.',
+      stale:  'Stale, so the cached data shows at once and refetches once behind it.',
+      fresh:  'Same key, same entry, still fresh: shown at once, no request.'
+    };
+    var rows = k(fig,'rows'), say = k(root,'say'), req = k(root,'req'), pageBtn = root.querySelector('[data-r="page"]');
+    var E, order, list, twin, detailOn, n, timers = [];
+    function later(ms, f){ timers.push(setTimeout(f, ms)); }
+    function row(id){ return rows.querySelector('tr[data-e="' + id + '"]'); }
+    function blink(id, cls){ row(id).querySelectorAll('td').forEach(function(td){ again(td, cls); }); }
+    function entry(id){
+      if (!E[id]){
+        E[id] = { readers:[], data:false, st:'', busy:false }; order.push(id);
+        var tr = document.createElement('tr'); tr.dataset.e = id;
+        tr.innerHTML = '<td><code>' + esc(KEYS[id].text) + '</code></td><td data-c="by"></td><td><span class="pill" data-c="st"></span></td>';
+        rows.appendChild(tr);
+      }
+      return E[id];
+    }
+    function paint(){
+      order.forEach(function(id){
+        var e = E[id], tr = row(id), on = e.readers.length > 0, st;
+        if (e.busy) st = e.data ? 'refetching' : 'fetching';
+        else if (!on) st = e.st === 'stale' ? 'inactive · stale' : 'inactive';
+        else st = e.st;
+        tr.querySelector('[data-c="by"]').textContent = on ? e.readers.slice().sort().join(', ') : '—';
+        var p = tr.querySelector('[data-c="st"]');
+        p.textContent = st; p.className = 'pill ' + (e.busy ? 'fetching' : !on ? 'inactive' : e.st);
+      });
+      req.textContent = n;
+      root.querySelector('[data-r="list"]').classList.toggle('on', !!list);
+      root.querySelector('[data-r="twin"]').classList.toggle('on', !!twin);
+      root.querySelector('[data-r="detail"]').classList.toggle('on', detailOn);
+      pageBtn.textContent = list === 'p2' ? 'back to page 1' : 'next page';
+    }
+    function fetch(id){
+      var e = E[id];
+      if (e.busy) return;
+      e.busy = true; n++; again(req, 'bump');
+      later(FETCH, function(){ e.busy = false; e.data = true; e.st = 'fresh'; blink(id, 'flash-g'); paint(); });
+    }
+    function read(id, who){
+      var e = entry(id); e.readers.push(who);
+      if (e.busy) return 'joined';
+      if (!e.data){ fetch(id); return 'new'; }
+      if (e.st === 'stale'){ fetch(id); return 'stale'; }
+      return 'fresh';
+    }
+    function drop(id, who){ E[id].readers = E[id].readers.filter(function(r){ return r !== who; }); }
+    function reset(){
+      timers.forEach(clearTimeout); timers = [];
+      E = {}; order = []; list = null; twin = null; detailOn = false; n = 0; rows.innerHTML = '';
+      var s = entry('saved'); s.readers = ['SavedBar']; s.data = true; s.st = 'fresh';
+      say.textContent = HINT; paint();
+    }
+    root.addEventListener('click', function(ev){
+      var b = ev.target.closest('[data-r],[data-i]'); if (!b) return;
+      var r = b.dataset.r, msg;
+      if (r === 'list'){
+        if (list) msg = 'JobList is already on screen.';
+        else { list = 'p1'; msg = SAY[read('p1', 'JobList')]; }
+      } else if (r === 'twin'){
+        if (!list) msg = 'Mount JobList first: the second one asks for the same filters.';
+        else if (twin) msg = 'The second JobList is already on screen.';
+        else { twin = list; msg = SAY[read(list, 'JobList 2')]; }
+      } else if (r === 'order'){
+        if (!list) msg = 'Mount JobList first.';
+        else {
+          blink(list, 'flash');
+          msg = "{ page:" + (list === 'p1' ? 1 : 2) + ", q:'react' } hashes to the same key, because object order doesn't matter. ['list','jobs'] would be a new entry: array order does.";
+        }
+      } else if (r === 'page'){
+        if (!list) msg = 'Mount JobList first.';
+        else {
+          var to = list === 'p1' ? 'p2' : 'p1', how;
+          drop(list, 'JobList'); list = to; how = read(to, 'JobList');
+          msg = to === 'p2' ? 'New filters, new key, new entry. Page 1 stays cached for gcTime.'
+              : how === 'fresh' ? 'Back to page 1: still cached and fresh, so it shows at once with no request.' : SAY[how];
+        }
+      } else if (r === 'detail'){
+        if (detailOn) msg = 'Job 42 is already open.';
+        else { detailOn = true; msg = SAY[read('d42', 'JobDetail')]; }
+      } else {
+        var pre = PREFIX[b.dataset.i], now = 0, wait = 0;
+        var hit = order.filter(function(id){ var p = KEYS[id].path; return pre.every(function(x, j){ return p[j] === x; }) && E[id].data; });
+        if (!hit.length) msg = 'No cached entry starts with that key yet, so nothing is marked.';
+        else {
+          hit.forEach(function(id){
+            var e = E[id]; e.st = 'stale'; blink(id, 'flash');
+            if (e.readers.length){ now++; fetch(id); } else wait++;
+          });
+          msg = ('Marked ' + hit.length + (hit.length === 1 ? ' entry' : ' entries') + ' stale. ' +
+                (now ? now + ' on screen ' + (now === 1 ? 'refetches' : 'refetch') + ' now, with the old data still showing. ' : '') +
+                (wait ? wait + ' inactive ' + (wait === 1 ? 'waits' : 'wait') + ' for the next reader. ' : '') +
+                (b.dataset.i === 'jobs' ? "['saved'] doesn't start with 'jobs', so it stays fresh." : '')).trim();
+        }
+      }
+      say.textContent = msg; paint();
+    });
+    watch(root, reset, function(){ timers.forEach(clearTimeout); timers = []; });
+  })();
+
+  /* L3c · optimistic save: switch off cancelQueries or the rollback and watch the star */
   (function(){
     var root = document.getElementById('demo-opt'); if (!root) return;
     var slide = root.closest('.slide');
@@ -2126,7 +2889,7 @@ export const useCompare = create<CompareState>()((set) => ({
     }, function(){ timers.forEach(clearTimeout); timers = []; });
   })();
 
-  /* L2d · the same race, with a query key or a bare effect */
+  /* L3d · the same race, with a query key or a bare effect */
   (function(){
     var root = document.getElementById('demo-race'), fig = document.getElementById('fx-race');
     if (!root || !fig) return;
@@ -2142,7 +2905,7 @@ export const useCompare = create<CompareState>()((set) => ({
     watch(root, function(){ mode('key'); });
   })();
 
-  /* L3a · the same filters in useState, or in the URL */
+  /* L4a · the same filters in useState, or in the URL */
   (function(){
     var root = document.getElementById('demo-url'); if (!root) return;
     var input = k(root,'q'), mode, f, hist, timer;
@@ -2206,7 +2969,7 @@ export const useCompare = create<CompareState>()((set) => ({
     watch(root, function(){ reset('state'); }, function(){ clearTimeout(timer); });
   })();
 
-  /* L3b · what validateSearch makes of a hand-edited URL */
+  /* L4b · what validateSearch makes of a hand-edited URL */
   (function(){
     var root = document.getElementById('demo-parse'); if (!root) return;
     var input = k(root,'in'), out = k(root,'out');
@@ -2234,6 +2997,230 @@ export const useCompare = create<CompareState>()((set) => ({
     }
     input.addEventListener('input', run);
     watch(root, function(){ input.value = '?q=react&remote=yes&page=abc'; run(); });
+  })();
+
+  /* L4c · writing search params: what Back undoes */
+  (function(){
+    var root = document.getElementById('demo-hist'); if (!root) return;
+    var input = k(root,'q'), box = k(root,'hist'), mode, hist, at, timer, lost = '';
+    function fresh(){ return { q:'', remote:false, page:1 }; }
+    function url(x){
+      var p = [];
+      if (x.q) p.push('q=' + encodeURIComponent(x.q));
+      if (x.remote) p.push('remote=true');
+      if (x.page > 1) p.push('page=' + x.page);
+      return p.length ? '?' + p.join('&') : '/jobs';
+    }
+    function cur(){ return hist[at]; }
+    function say(t){ k(root,'say').textContent = t; }
+    function push(x){ hist = hist.slice(0, at + 1); hist.push(x); at = hist.length - 1; }
+    function paint(syncInput){
+      var f = cur();
+      if (syncInput) input.value = f.q;
+      k(root,'remote').classList.toggle('on', f.remote);
+      k(root,'page').textContent = f.page;
+      k(root,'n').textContent = hist.length;
+      root.querySelectorAll('[data-mode]').forEach(function(b){ b.classList.toggle('on', b.dataset.mode === mode); });
+      box.innerHTML = '<span class="more" hidden></span>' + hist.map(function(x, i){
+        return '<span class="hent' + (i === at ? ' cur' : i > at ? ' fwd' : '') + '">' + esc(url(x)) + '</span>';
+      }).join('');
+      // keep the current entry in view: fold the oldest ones into "+N earlier"
+      var chips = box.querySelectorAll('.hent'), more = box.querySelector('.more'), n = 0;
+      while (box.scrollWidth > box.clientWidth + 1 && n < at){
+        chips[n++].style.display = 'none'; more.hidden = false; more.textContent = '+' + n + ' earlier';
+      }
+    }
+    function lit(){ var c = box.querySelector('.hent.cur'); if (c) again(c, 'flash'); }
+    function settle(){            // the debounced search box, in the (prev) => … version
+      clearTimeout(timer); timer = null;
+      var f = cur(), q = input.value;
+      if (q === f.q) return;
+      var x = { q:q, remote:f.remote, page:1 };
+      if (f.q !== ''){ hist[at] = x; say('Still the same search: its entry is rewritten, not added.'); }
+      else { push(x); say('The search settled: one new entry, back to page 1.'); }
+      paint(false); lit();
+    }
+    function undid(a, b){
+      var q = a.q !== b.q, r = a.remote !== b.remote, p = a.page !== b.page;
+      if (q && !r && !p) return Math.abs(a.q.length - b.q.length) === 1 && (a.q.indexOf(b.q) === 0 || b.q.indexOf(a.q) === 0)
+        ? 'Back undid one keystroke.' : 'Back undid the whole search.';
+      if (r && !q && p) return 'Back undid the filter, and page ' + b.page + ' is back.';
+      if (r && !q) return 'Back undid the filter.';
+      if (p && !q && !r) return 'Back went to page ' + b.page + '.';
+      return 'Back undid one entry.';
+    }
+    function reset(m){
+      clearTimeout(timer); timer = null; lost = '';
+      mode = m; hist = [fresh()]; at = 0; paint(true);
+      say(m === 'naive' ? 'Page forward twice, turn on Remote only, type a search, then press Back.'
+                        : 'Same steps: page forward twice, Remote only, a search, then Back.');
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-act],[data-mode]'); if (!b) return;
+      if (b.dataset.mode) return reset(b.dataset.mode);
+      if (timer) settle();
+      lost = '';
+      var a = b.dataset.act, f = cur();
+      if (a === 'remote'){
+        if (mode === 'naive'){
+          push({ q:f.q, remote:!f.remote, page:f.page });
+          say(f.page > 1 ? 'A filter changed and the page did not: page ' + f.page + ' of a shorter list, often an empty one.' : 'A filter changed: a new entry.');
+        } else {
+          push({ q:f.q, remote:!f.remote, page:1 });
+          say(f.page > 1 ? 'A filter changed: a new entry, back to page 1.' : 'A filter changed: a new entry.');
+        }
+        paint(false); lit();
+      }
+      if (a === 'page'){ push({ q:f.q, remote:f.remote, page:f.page + 1 }); paint(false); lit(); say('Page ' + (f.page + 1) + ': a new entry.'); }
+      if (a === 'back'){
+        if (at === 0) return say('Back leaves the page: this is the first entry.');
+        at--; paint(true); lit(); say(undid(f, cur()));
+      }
+    });
+    input.addEventListener('input', function(){
+      if (mode === 'naive'){
+        var f = cur(), gone = [];               // what this search dropped stays in the hint while typing goes on
+        if (f.remote) gone.push('Remote only'); if (f.page > 1) gone.push('the page');
+        if (gone.length) lost = gone.join(' and ');
+        push({ q:input.value, remote:false, page:1 }); paint(false); lit();
+        say('A new entry for every keystroke' + (lost ? ', and search: { q } dropped ' + lost : '') + '.');
+      } else { clearTimeout(timer); timer = setTimeout(settle, 450); }
+    });
+    watch(root, function(){ reset('naive'); }, function(){ clearTimeout(timer); timer = null; });
+  })();
+
+  /* L5b · who re-renders: Context re-renders every reader; a selector only the components whose answer changed */
+  (function(){
+    var root = document.getElementById('demo-rr'); if (!root) return;
+    var JOBS = ['42', '17', '8', '23'], box = k(root,'comps'), mode, ids, renders;
+    var COMPS = [{ c:'header', name:'Header' }]
+      .concat(JOBS.map(function(j){ return { c:'j' + j, name:'JobCard ' + j, job:j }; }))
+      .concat([{ c:'tray', name:'CompareTray' }]);
+    function out(c, list){            // what the component shows
+      if (c.c === 'header') return 'Compare (' + list.length + ')';
+      if (c.c === 'tray') return list.length ? list.join(', ') : 'empty';
+      return list.indexOf(c.job) >= 0 ? '★' : '☆';
+    }
+    function pick(c, list){           // what its selector returns; Object.is on this decides a re-render
+      if (c.c === 'header') return list.length;
+      if (c.c === 'tray') return list;
+      return list.indexOf(c.job) >= 0;
+    }
+    function say(t){ k(root,'say').textContent = t; }
+    function paint(){
+      root.querySelectorAll('[data-mode]').forEach(function(b){ b.classList.toggle('on', b.dataset.mode === mode); });
+      ['42', '17'].forEach(function(j){ root.querySelector('[data-act="' + j + '"]').classList.toggle('on', ids.indexOf(j) >= 0); });
+      box.innerHTML = COMPS.map(function(c){
+        return '<span class="rr" data-c="' + c.c + '">' + c.name + '<b>' + esc(out(c, ids)) + '</b><small>' + renders[c.c] + '×</small></span>';
+      }).join('');
+    }
+    function reset(m){
+      mode = m; ids = []; renders = {};
+      COMPS.forEach(function(c){ renders[c.c] = 1; });
+      var n = k(root,'n'); n.textContent = '0'; n.className = ''; k(root,'c').textContent = '0';
+      paint();
+      say(m === 'ctx' ? 'The tray is one context value, and all six components read it. Press Compare job 42.'
+                      : 'Each component selects its own answer from the store. Press Compare job 42.');
+    }
+    function change(next, what){
+      var hit = COMPS.filter(function(c){ return mode === 'ctx' || pick(c, ids) !== pick(c, next); });
+      var same = hit.filter(function(c){ return out(c, ids) === out(c, next); });
+      var before = ids;
+      hit.forEach(function(c){ renders[c.c]++; });
+      ids = next; paint();
+      hit.forEach(function(c){
+        again(box.querySelector('[data-c="' + c.c + '"]'), out(c, before) === out(c, next) ? 'flash-r' : 'flash-g');
+      });
+      var n = k(root,'n'); n.textContent = hit.length; n.className = same.length ? 'bad' : 'good';
+      k(root,'c').textContent = hit.length - same.length;
+      say(mode === 'ctx'
+        ? what + ': the context value changed, so all ' + hit.length + ' readers re-rendered, and ' + same.length + ' of them painted the same thing again.'
+        : what + ': ' + hit.length + ' re-rendered, the ones whose answer changed. The other selectors returned the same answer, so React skipped them.');
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-act],[data-mode]'); if (!b) return;
+      if (b.dataset.mode) return reset(b.dataset.mode);
+      var a = b.dataset.act;
+      if (a === 'clear'){
+        if (!ids.length) return say('The tray is already empty: nothing to clear.');
+        return change([], 'Tray cleared');
+      }
+      var has = ids.indexOf(a) >= 0;
+      change(has ? ids.filter(function(x){ return x !== a; }) : ids.concat([a]), 'Job ' + a + (has ? ' removed' : ' added'));
+    });
+    watch(root, function(){ reset('ctx'); });
+  })();
+
+  /* L6a · polling: refetchInterval every 3 s here (30 s in the code). A hidden tab skips each tick; showing it refetches at once. */
+  (function(){
+    var root = document.getElementById('demo-poll'); if (!root) return;
+    var EVERY = 3000, FETCH = 700, STAT = ['submitted', 'in-review', 'offer'];
+    var log = k(root,'log'), s, tick, clock;
+    function now(){ return performance.now(); }
+    function say(t){ k(root,'say').textContent = t; }
+    function chip(text, cls){
+      var el = document.createElement('span'); el.className = 'hent' + (cls ? ' ' + cls : ''); el.textContent = text;
+      log.appendChild(el);
+      while (log.scrollWidth > log.clientWidth + 1 && log.children.length > 1) log.removeChild(log.firstChild);
+    }
+    function restart(){ clearTimeout(tick); s.next = now() + EVERY; tick = setTimeout(onTick, EVERY); }
+    function onTick(){                 // the interval keeps running; a hidden tab only skips the fetch
+      if (s.visible || s.bg) fetch('poll');
+      else { chip('skipped: hidden', 'skip'); restart(); }
+    }
+    function fetch(kind){
+      if (s.fetching) return;
+      s.fetching = true; s.n++; clearTimeout(tick); paint();
+      var answer = s.server;
+      s.timer = setTimeout(function(){
+        s.fetching = false;
+        var changed = s.badge !== answer;
+        s.badge = answer;
+        chip((kind === 'focus' ? 'focus refetch' : 'poll') + (changed ? ' → ' + STAT[answer] : ''), changed ? 'chg' : kind === 'focus' ? 'cur' : '');
+        if (changed){ again(k(root,'badge'), 'flash-g'); if (kind === 'poll' && !s.visible) say('Polled while hidden: refetchIntervalInBackground kept the badge current.'); }
+        restart(); paint();
+      }, FETCH);
+    }
+    function paint(){
+      k(root,'server').textContent = STAT[s.server];
+      k(root,'badge').textContent = STAT[s.badge];
+      k(root,'n').textContent = s.n;
+      var tab = root.querySelector('[data-act="tab"]');
+      tab.textContent = s.visible ? 'Hide tab' : 'Show tab'; tab.classList.toggle('on', !s.visible);
+      root.querySelector('[data-act="bg"]').classList.toggle('on', s.bg);
+      var left = (Math.max(0, s.next - now()) / 1000).toFixed(1) + ' s';
+      k(root,'clock').textContent = s.fetching ? 'fetching…'
+        : (!s.visible && !s.bg) ? 'tab hidden · next tick in ' + left + ', skipped'
+        : 'next poll in ' + left + ' · 30 s, scaled to 3 s';
+    }
+    root.addEventListener('click', function(e){
+      var b = e.target.closest('[data-act]'); if (!b) return;
+      var a = b.dataset.act;
+      if (a === 'move'){
+        s.server = (s.server + 1) % STAT.length; again(k(root,'server'), 'flash');
+        say(s.visible || s.bg ? 'The server changed and nothing tells the browser: the badge catches up at the next poll.'
+                              : 'The server changed while the tab is hidden: every tick is skipped, so the badge stays behind.');
+      }
+      if (a === 'tab'){
+        s.visible = !s.visible;
+        if (s.visible){ say('Back on the tab: the data is stale, so it refetches at once.'); fetch('focus'); }
+        else say(s.bg ? 'Hidden, but refetchIntervalInBackground is on: the poll keeps fetching.'
+                      : 'Hidden: the timer keeps ticking, and each tick skips the fetch.');
+      }
+      if (a === 'bg'){
+        s.bg = !s.bg;
+        say(s.bg ? 'refetchIntervalInBackground: true. A hidden tab polls too.'
+                 : 'refetchIntervalInBackground: false, the default. A hidden tab skips its polls.');
+      }
+      paint();
+    });
+    function stop(){ clearTimeout(tick); if (s) clearTimeout(s.timer); clearInterval(clock); }
+    watch(root, function(){
+      stop(); log.innerHTML = '';
+      s = { server:0, badge:0, visible:true, bg:false, fetching:false, n:1, next:0, timer:0 };
+      chip('first load'); restart(); clock = setInterval(paint, 100); paint();
+      say('It polls every 3 s here, 30 s in the code. Move the status on, then hide the tab and move it on again.');
+    }, stop);
   })();
 })();
 </script>

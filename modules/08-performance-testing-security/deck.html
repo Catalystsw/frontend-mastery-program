@@ -197,6 +197,14 @@
   .demo{background:var(--panel); border:1px solid var(--line2); border-radius:12px; padding:11px 14px; margin-top:14px;
     width:100%; max-width:1060px; font:min(1.45vw,15.5px)/1.4 var(--sans); color:var(--ink2)}
   .demo.bare{background:none; border:0; padding:0; border-radius:0}
+  /* L4c: one chip per test layer; green goes red on the bug, red misses it, grey stays green as it should. */
+  #demo-layer .lay.hit{border:1px solid var(--good); color:#fff; background:rgba(52,211,153,.12)}
+  #demo-layer .lay.miss{border:1px solid var(--bad)}
+  #demo-layer .lay.best{box-shadow:0 0 0 2px var(--good)}
+  /* L6b: lhci assert's output; it changes text, so it isn't a <pre> with a copy button. */
+  #demo-lhci .term{margin-top:8px; background:var(--code); border:1px solid var(--line2); border-radius:10px; padding:10px 14px;
+    font:12px/1.3 var(--mono); color:var(--ink2); white-space:pre-wrap; min-height:13em}
+  #demo-lhci .term .e{color:var(--bad)} #demo-lhci .term .g{color:var(--good)}
   .demo .row{display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px}
   .demo .row + .row{margin-top:9px}
   .demo-tag{font:700 10.5px/1 var(--mono); letter-spacing:1.6px; text-transform:uppercase; color:var(--cy)}
@@ -382,7 +390,7 @@
 
 <div id="bar"></div>
 <div id="stage">
-  <section class="slide" style="justify-content:center" data-chip="MODULE 08 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 1</div><div class="cx-page"><b>01</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" style="justify-content:center" data-chip="MODULE 08 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 1</div><div class="cx-page"><b>01</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 08 · Performance, Testing &amp; Security</div>
     <h1>A Number Before,<br>a Number After</h1>
     <div class="sub">Measure what users feel, fix it, prove it — then let tests and CI keep it fixed.</div>
@@ -417,7 +425,7 @@
 </section>
 
   <!-- L1a · CORE WEB VITALS -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 1</div><div class="cx-page"><b>02</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 1</div><div class="cx-page"><b>02</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Core Web Vitals</div>
     <h2>Three numbers for what users feel</h2>
     <div class="anim" id="fx-cwv" data-at="200,1100,2000">
@@ -482,11 +490,11 @@
         <span class="demo-hint" data-k="say"></span>
       </div>
     </div>
-    <div class="key">Each one is scored at the <b>75th percentile</b> of real visits, phones and desktops separately. Pass all three at p75 and the page passes — which still allows one visit in four to be slower than that.</div>
+    <div class="key">Each is judged at the <b>75th percentile</b> of real visits, phones and desktops apart: one visit in four can still be slower.</div>
 </section>
 
   <!-- L1b · LAB VS FIELD -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 1</div><div class="cx-page"><b>03</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 1</div><div class="cx-page"><b>03</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Lab vs field</div>
     <h2>The lab says why. The field says whether.</h2>
     <table class="grid">
@@ -495,11 +503,15 @@
       <tr><td><b>CrUX</b>, via PageSpeed Insights</td><td><b style="color:var(--good)">Field.</b> Real Chrome users, a rolling 28 days, p75.</td><td>Do our users pass? The verdict that counts.</td><td>Why, or what changed this week. Low-traffic pages get no data.</td></tr>
       <tr><td><b>RUM</b>, <code>web-vitals</code> in Rasmi</td><td><b style="color:var(--good)">Field.</b> Every visit you choose to send.</td><td>Which page, device, element and release.</td><td>Nothing for free. You build the pipeline and the sampling.</td></tr>
     </table>
+    <pre><code><span class="kw">import</span> { onLCP, onINP, onCLS } <span class="kw">from</span> <span class="st">'web-vitals/attribution'</span>;
+<span class="kw">const</span> send = (m) =&gt; navigator.<span class="fn">sendBeacon</span>(<span class="st">'/rum'</span>,
+  JSON.<span class="fn">stringify</span>({ name: m.name, value: m.value, rating: m.rating, page: location.pathname }));
+<span class="fn">onLCP</span>(send); <span class="fn">onINP</span>(send); <span class="fn">onCLS</span>(send);</code></pre>
     <div class="key w">A Lighthouse 98 on your laptop next to a failing CrUX p75 is not a contradiction. Use the lab to diagnose and the field to judge.</div>
 </section>
 
   <!-- L1 · READ NEXT -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 1</div><div class="cx-page"><b>04</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 1"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 1</div><div class="cx-page"><b>04</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 1 · Read next</div>
     <h2>Go deeper: Core Web Vitals</h2>
     <div class="two">
@@ -514,7 +526,8 @@
       <div class="card g">
         <h3 class="g">Resources</h3>
         <ul class="plist" style="margin-top:4px">
-          <li><a href="https://github.com/GoogleChrome/web-vitals" target="_blank" rel="noopener" onclick="event.stopPropagation()">web-vitals ↗</a><small>the library behind the snippet above, with its attribution build</small></li>
+          <li><a href="https://github.com/GoogleChrome/web-vitals" target="_blank" rel="noopener" onclick="event.stopPropagation()">web-vitals ↗</a><small>the library behind the RUM snippet, with its attribution build</small></li>
+          <li><a href="https://developer.chrome.com/docs/web-platform/soft-navigations" target="_blank" rel="noopener" onclick="event.stopPropagation()">Measuring soft navigations ↗</a><small>vitals per route in a single-page app</small></li>
           <li><a href="https://pagespeed.web.dev/" target="_blank" rel="noopener" onclick="event.stopPropagation()">PageSpeed Insights ↗</a><small>CrUX field data and a Lighthouse run for any public URL</small></li>
         </ul>
       </div>
@@ -522,7 +535,7 @@
 </section>
 
   <!-- L2a · READING THE BUNDLE -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>05</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>05</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Reading the bundle</div>
     <h2>Find the import that cost 300 KB</h2>
     <div class="fig" id="fx-bundle" style="max-width:1000px">
@@ -551,7 +564,7 @@
     </div>
     <div class="two tight">
       <pre><code>$ vite build --sourcemap
-$ npx source-map-explorer <span class="st">'dist/assets/*.js'</span></code></pre>
+$ npx source-map-explorer <span class="st">'dist/assets/*.js'</span> --no-border-checks</code></pre>
       <pre><code><span class="cmt">// src/app/routes.tsx</span>
 <span class="kw">import</span> { PostJobPage } <span class="kw">from</span> <span class="st">'@/features/post-job'</span>;
 <span class="no">// static import → in main.js, for every visitor</span></code></pre>
@@ -560,7 +573,7 @@ $ npx source-map-explorer <span class="st">'dist/assets/*.js'</span></code></pre
 </section>
 
   <!-- L3a · IMAGES -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>06</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>06</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Images</div>
     <h2>Reserve the box, rush the hero</h2>
     <div class="two tight" style="max-width:1240px">
@@ -589,7 +602,7 @@ $ npx source-map-explorer <span class="st">'dist/assets/*.js'</span></code></pre
 </section>
 
   <!-- L3b · FONTS AND THE CLS SCORE -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>07</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>07</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Fonts and the CLS score</div>
     <h2>A late font moves text that already painted</h2>
     <div class="two tight" style="max-width:1240px">
@@ -636,9 +649,10 @@ $ npx source-map-explorer <span class="st">'dist/assets/*.js'</span></code></pre
 <span class="kw">@font-face</span> {                 <span class="cmt">/* Arial, cut to Inter's size */</span>
   font-family: <span class="st">'Inter Fallback'</span>;
   src: <span class="fn">local</span>(<span class="st">'Arial'</span>);
-  size-adjust: <span class="st">107.4%</span>;
-  ascent-override: <span class="st">90.2%</span>;
-  descent-override: <span class="st">22.5%</span>;
+  size-adjust: <span class="st">107.12%</span>;
+  ascent-override: <span class="st">90.44%</span>;
+  descent-override: <span class="st">22.52%</span>;
+  line-gap-override: <span class="st">0%</span>;
 }
 <span class="ty">body</span> {
   font-family: <span class="st">'Inter'</span>, <span class="st">'Inter Fallback'</span>, sans-serif;
@@ -648,7 +662,7 @@ $ npx source-map-explorer <span class="st">'dist/assets/*.js'</span></code></pre
 </section>
 
   <!-- L2 · READ NEXT -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>08</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 2"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 2</div><div class="cx-page"><b>08</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 2 · Read next</div>
     <h2>Go deeper: bundles, images and fonts</h2>
     <div class="two">
@@ -671,7 +685,7 @@ $ npx source-map-explorer <span class="st">'dist/assets/*.js'</span></code></pre
 </section>
 
   <!-- L4a · MEMO THAT HELPS -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 3</div><div class="cx-page"><b>09</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 3</div><div class="cx-page"><b>09</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Memoization that helps</div>
     <h2>memo only skips when every prop is the same</h2>
     <div class="two tight" style="max-width:1240px">
@@ -690,7 +704,7 @@ $ npx source-map-explorer <span class="st">'dist/assets/*.js'</span></code></pre
       </div>
       <div class="card g">
         <h3 class="g">Same props, render skipped</h3>
-        <pre><code><span class="kw">const</span> now = <span class="fn">useMemo</span>(() =&gt; Date.<span class="fn">now</span>(), []);
+        <pre><code><span class="kw">const</span> [now] = <span class="fn">useState</span>(() =&gt; Date.<span class="fn">now</span>());
 
 &lt;<span class="ty">JobCard</span>
   job={job}
@@ -700,11 +714,11 @@ $ npx source-map-explorer <span class="st">'dist/assets/*.js'</span></code></pre
 /&gt;</code></pre>
       </div>
     </div>
-    <div class="key"><code>memo</code> compares each prop with <code>Object.is</code>. If one prop is new on every render, you pay for the comparison <i>and</i> the render. Selecting a job in Rasmi re-rendered all 120 cards before this change and 2 after it: the one that lost the highlight and the one that gained it.</div>
+    <div class="key"><code>memo</code> compares every prop with <code>Object.is</code>: one new prop per render, and you pay for the comparison <i>and</i> the render.</div>
 </section>
 
   <!-- L4b · THE PROFILER -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 3</div><div class="cx-page"><b>10</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 3</div><div class="cx-page"><b>10</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · The profiler proves it</div>
     <h2>Record one click, read the commit</h2>
     <div class="anim" id="fx-prof" data-at="200,1000,1900,2700,3500">
@@ -762,6 +776,10 @@ $ npx source-map-explorer <span class="st">'dist/assets/*.js'</span></code></pre
         <span class="meter">rendered<b data-k="n">–</b></span>
         <span class="meter">commit<b data-k="ms">–</b></span>
       </div>
+      <div class="row">
+        <button type="button" class="dbtn" data-act="compiler">React Compiler: off</button>
+        <span class="demo-hint" data-k="say"></span>
+      </div>
     </div>
     <div class="two tight">
       <pre><code>&lt;<span class="ty">Profiler</span> id=<span class="st">"JobList"</span>
@@ -774,7 +792,7 @@ $ npx source-map-explorer <span class="st">'dist/assets/*.js'</span></code></pre
 </section>
 
   <!-- L3 · READ NEXT -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 3</div><div class="cx-page"><b>11</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 3"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 3</div><div class="cx-page"><b>11</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 3 · Read next</div>
     <h2>Go deeper: memo and the profiler</h2>
     <div class="two">
@@ -791,13 +809,14 @@ $ npx source-map-explorer <span class="st">'dist/assets/*.js'</span></code></pre
         <ul class="plist" style="margin-top:4px">
           <li><a href="https://react.dev/learn/react-developer-tools" target="_blank" rel="noopener" onclick="event.stopPropagation()">React Developer Tools ↗</a><small>the Profiler tab used in the video</small></li>
           <li><a href="https://react.dev/reference/react/useDeferredValue" target="_blank" rel="noopener" onclick="event.stopPropagation()">useDeferredValue — React reference ↗</a><small>the fix for typing that feels sticky</small></li>
+          <li><a href="https://react.dev/learn/react-compiler" target="_blank" rel="noopener" onclick="event.stopPropagation()">React Compiler ↗</a><small>the memo you no longer write, and where it stops</small></li>
         </ul>
       </div>
     </div>
 </section>
 
   <!-- L5b · BEHAVIOUR, NOT IMPLEMENTATION -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 4</div><div class="cx-page"><b>12</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 4</div><div class="cx-page"><b>12</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · Behaviour, not implementation</div>
     <h2>Test what the user sees, not how you built it</h2>
     <div class="two tight" style="max-width:1240px">
@@ -830,7 +849,7 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
 </section>
 
   <!-- L6a · MSW -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 4</div><div class="cx-page"><b>13</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 4</div><div class="cx-page"><b>13</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · MSW</div>
     <h2>Mock the network, not your fetch function</h2>
     <div class="two tight" style="max-width:1240px">
@@ -846,7 +865,7 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
 
 <span class="cmt">// src/test/setup.ts · setupServer from 'msw/node'</span>
 <span class="kw">export const</span> server = <span class="fn">setupServer</span>(...handlers);
-<span class="fn">beforeAll</span>(() =&gt; server.<span class="fn">listen</span>({ onUnhandledRequest: <span class="st">'error'</span> }));
+<span class="fn">beforeAll</span>(() =&gt; server.<span class="fn">listen</span>({ onUnhandledFrame: <span class="st">'error'</span> }));
 <span class="fn">afterEach</span>(() =&gt; server.<span class="fn">resetHandlers</span>());
 <span class="fn">afterAll</span>(() =&gt; server.<span class="fn">close</span>());</code></pre>
       <pre><code><span class="fn">it</span>(<span class="st">'shows a retry when the API fails'</span>, <span class="kw">async</span> () =&gt; {
@@ -865,7 +884,7 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
 </section>
 
   <!-- L6b · PLAYWRIGHT -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 4</div><div class="cx-page"><b>14</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 4</div><div class="cx-page"><b>14</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · Playwright</div>
     <h2>One real browser, one journey that matters</h2>
     <div class="two tight" style="max-width:1240px">
@@ -897,8 +916,37 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
     <div class="key">No sleeps. Every action waits until the element is visible, enabled and not covered, and <code>expect</code> retries for up to 5 s. When CI fails, the trace shows the DOM, network and console at every step.</div>
 </section>
 
+  <section class="slide" data-chip="MODULE 08 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 4</div><div class="cx-page"><b>15</b> / 25</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 4 · Pick the layer</div>
+    <h2>The cheapest test that would fail</h2>
+    <div class="demo" id="demo-layer">
+      <div class="row">
+        <span class="demo-tag">The change</span>
+        <button type="button" class="dbtn" data-b="salary">a salary rounds wrong</button>
+        <button type="button" class="dbtn" data-b="api">a 500 leaves the list blank</button>
+        <button type="button" class="dbtn" data-b="chunk">a lazy chunk 404s after deploy</button>
+        <button type="button" class="dbtn" data-b="banner">a banner covers Apply now</button>
+        <button type="button" class="dbtn" data-b="rename">a refactor renames every class</button>
+      </div>
+      <div class="row">
+        <span class="demo-tag">Goes red</span>
+        <span class="dom lay" data-k="unit">unit · Vitest</span>
+        <span class="dom lay" data-k="int">integration · RTL + MSW</span>
+        <span class="dom lay" data-k="e2e">E2E · Playwright</span>
+      </div>
+      <div class="row"><span class="demo-hint" data-k="say"></span></div>
+    </div>
+    <table class="grid">
+      <tr><th>Layer</th><th>Runs in</th><th>Fakes</th><th>Catches</th></tr>
+      <tr><td><b>Unit</b></td><td>Node, no DOM</td><td>Everything around the function</td><td>Logic: formatting, sorting, a reducer</td></tr>
+      <tr><td><b>Integration</b></td><td>jsdom</td><td>The server, through MSW</td><td>Every state of a screen, and its wiring</td></tr>
+      <tr><td><b>E2E</b></td><td>A real browser, on the production build</td><td>Nothing</td><td>Loading, layout, the journey itself</td></tr>
+    </table>
+    <div class="key">Write the cheapest test that would go red if this broke, and let a refactor stay green.</div>
+</section>
+
   <!-- L4 · READ NEXT -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 4</div><div class="cx-page"><b>15</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 4"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 4</div><div class="cx-page"><b>16</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 4 · Read next</div>
     <h2>Go deeper: testing</h2>
     <div class="two">
@@ -906,7 +954,7 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
         <h3 class="cy">References</h3>
         <ul class="plist" style="margin-top:4px">
           <li><a href="https://testing-library.com/docs/queries/about/" target="_blank" rel="noopener" onclick="event.stopPropagation()">About queries — Testing Library ↗</a><small>the query priority, roles first</small></li>
-          <li><a href="https://mswjs.io/docs/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Mock Service Worker docs ↗</a><small>handlers, server.use and MSW 2's http API</small></li>
+          <li><a href="https://mswjs.io/docs/" target="_blank" rel="noopener" onclick="event.stopPropagation()">Mock Service Worker docs ↗</a><small>handlers, server.use, and MSW 3's onUnhandledFrame</small></li>
           <li><a href="https://playwright.dev/docs/best-practices" target="_blank" rel="noopener" onclick="event.stopPropagation()">Best practices — Playwright ↗</a><small>what to test end to end, and how</small></li>
         </ul>
       </div>
@@ -921,7 +969,7 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
 </section>
 
   <!-- L7a · XSS -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 5</div><div class="cx-page"><b>16</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 5</div><div class="cx-page"><b>17</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · XSS</div>
     <h2>React escapes text. Your HTML is on you.</h2>
     <div class="two tight" style="max-width:1240px">
@@ -952,11 +1000,11 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
       </div>
       <div class="row"><span class="demo-hint" data-k="out"></span></div>
     </div>
-    <div class="key w">Other sinks to grep for: <code>innerHTML</code>, <code>eval</code>, <code>new Function</code>, and <code>href={job.applyUrl}</code>, where you allow only <code>https:</code> and <code>mailto:</code>. <code>{job.title}</code> is safe. Anything that bypasses JSX text is not.</div>
+    <div class="key w"><code>{job.title}</code> is safe; grep for what bypasses JSX text: <code>innerHTML</code>, <code>eval</code>, <code>new Function</code>, and URLs from users.</div>
 </section>
 
   <!-- L7b · WHERE TO PUT A TOKEN -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 5</div><div class="cx-page"><b>17</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 5</div><div class="cx-page"><b>18</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · Where to put a token</div>
     <h2>If JavaScript can read it, XSS can steal it</h2>
     <table class="grid" id="tbl-store">
@@ -979,7 +1027,7 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
 </section>
 
   <!-- L7c · CONTENT SECURITY POLICY -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 5</div><div class="cx-page"><b>18</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 5</div><div class="cx-page"><b>19</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · Content Security Policy</div>
     <h2>CSP: the seatbelt for the XSS you missed</h2>
     <div class="two tight" style="max-width:1240px">
@@ -1015,7 +1063,7 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
 </section>
 
   <!-- L5 · READ NEXT -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 5</div><div class="cx-page"><b>19</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 5"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 5</div><div class="cx-page"><b>20</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 5 · Read next</div>
     <h2>Go deeper: XSS, CSRF and CSP</h2>
     <div class="two">
@@ -1032,13 +1080,14 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
         <ul class="plist" style="margin-top:4px">
           <li><a href="https://github.com/cure53/DOMPurify" target="_blank" rel="noopener" onclick="event.stopPropagation()">DOMPurify ↗</a><small>the sanitiser used in the video</small></li>
           <li><a href="https://csp-evaluator.withgoogle.com/" target="_blank" rel="noopener" onclick="event.stopPropagation()">CSP Evaluator ↗</a><small>paste a policy, see its holes</small></li>
+          <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Trusted_Types_API" target="_blank" rel="noopener" onclick="event.stopPropagation()">Trusted Types API ↗</a><small>MDN: locking the innerHTML sinks, Baseline 2026</small></li>
         </ul>
       </div>
     </div>
 </section>
 
   <!-- L8a · BASELINE → BUDGET → FIX -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 6</div><div class="cx-page"><b>20</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 6</div><div class="cx-page"><b>21</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 6 · Baseline → budget → fix</div>
     <h2>Write the number down before you touch anything</h2>
     <div class="anim" id="fx-budget" data-at="200,1000,1800,2600,3400">
@@ -1078,12 +1127,12 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
       </svg>
     </div>
     <table class="grid">
-      <tr><th>Rasmi job page</th><th data-hl="1" class="hl-r">Baseline</th><th data-hl="2" class="hl-w">Budget</th><th data-hl="4" class="hl-g">After</th><th data-hl="3">Fixed by</th></tr>
-      <tr><td><b>LCP</b> · lab, mobile</td><td data-hl="1" class="hl-r"><b style="color:var(--bad)">4.1 s</b></td><td data-hl="2" class="hl-w">≤ 2.5 s</td><td data-hl="4" class="hl-g"><b style="color:var(--good)">2.2 s</b></td><td data-hl="3">Lazy editor (L2), hero image (L3)</td></tr>
-      <tr><td><b>TBT</b> · lab stand-in for INP</td><td data-hl="1" class="hl-r"><b style="color:var(--bad)">610 ms</b></td><td data-hl="2" class="hl-w">≤ 200 ms</td><td data-hl="4" class="hl-g"><b style="color:var(--good)">140 ms</b></td><td data-hl="3">Lazy editor (L2), stable props (L4)</td></tr>
-      <tr><td><b>CLS</b> · lab</td><td data-hl="1" class="hl-r"><b style="color:var(--bad)">0.21</b></td><td data-hl="2" class="hl-w">≤ 0.1</td><td data-hl="4" class="hl-g"><b style="color:var(--good)">0.02</b></td><td data-hl="3">Image dimensions, font fallback (L3)</td></tr>
+      <tr><th>Rasmi job page <span style="text-transform:none; letter-spacing:0; font-weight:500">· illustrative numbers</span></th><th data-hl="1" class="hl-r">Baseline</th><th data-hl="2" class="hl-w">Budget</th><th data-hl="4" class="hl-g">After</th><th data-hl="3">Fixed by</th></tr>
+      <tr><td><b>LCP</b> · lab, mobile</td><td data-hl="1" class="hl-r"><b style="color:var(--bad)">4.1 s</b></td><td data-hl="2" class="hl-w">≤ 2.5 s</td><td data-hl="4" class="hl-g"><b style="color:var(--good)">2.2 s</b></td><td data-hl="3">Lazy editor (L2), hero image (L2)</td></tr>
+      <tr><td><b>TBT</b> · lab stand-in for INP</td><td data-hl="1" class="hl-r"><b style="color:var(--bad)">610 ms</b></td><td data-hl="2" class="hl-w">≤ 200 ms</td><td data-hl="4" class="hl-g"><b style="color:var(--good)">140 ms</b></td><td data-hl="3">Lazy editor (L2), stable props (L3)</td></tr>
+      <tr><td><b>CLS</b> · lab</td><td data-hl="1" class="hl-r"><b style="color:var(--bad)">0.21</b></td><td data-hl="2" class="hl-w">≤ 0.1</td><td data-hl="4" class="hl-g"><b style="color:var(--good)">0.02</b></td><td data-hl="3">Image dimensions, font fallback (L2)</td></tr>
       <tr><td><b>Initial JS</b> · gzip</td><td data-hl="1" class="hl-r"><b style="color:var(--bad)">214 KB</b></td><td data-hl="2" class="hl-w">≤ 120 KB</td><td data-hl="4" class="hl-g"><b style="color:var(--good)">102 KB</b></td><td data-hl="3">Lazy editor, two locales (L2)</td></tr>
-      <tr><td><b>INP</b> · field p75</td><td data-hl="1" class="hl-r"><b style="color:var(--bad)">320 ms</b></td><td data-hl="2" class="hl-w">≤ 200 ms</td><td data-hl="4" class="hl-g"><b style="color:var(--good)">170 ms</b></td><td data-hl="3">Stable props, deferred query (L4)</td></tr>
+      <tr><td><b>INP</b> · field p75</td><td data-hl="1" class="hl-r"><b style="color:var(--bad)">320 ms</b></td><td data-hl="2" class="hl-w">≤ 200 ms</td><td data-hl="4" class="hl-g"><b style="color:var(--good)">170 ms</b></td><td data-hl="3">Stable props, deferred query (L3)</td></tr>
     </table>
     <div class="anim-bar">
       <button type="button" class="anim-step" data-d="-1" aria-label="Previous step">←</button>
@@ -1094,8 +1143,36 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
     </div>
 </section>
 
+  <section class="slide" data-chip="MODULE 08 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 6</div><div class="cx-page"><b>22</b> / 25</div><!--/catalyst-brand:chrome-->
+    <div class="kicker">Lesson 6 · The guard</div>
+    <h2>The budget is a file CI reads</h2>
+    <pre style="font-size:11.5px; line-height:1.45; padding:9px 16px"><code>{
+  <span class="st">"ci"</span>: {
+    <span class="st">"collect"</span>: { <span class="st">"staticDistDir"</span>: <span class="st">"dist"</span>, <span class="st">"numberOfRuns"</span>: 3 },
+    <span class="st">"assert"</span>: {
+      <span class="st">"assertions"</span>: {
+        <span class="st">"largest-contentful-paint"</span>: [<span class="st">"error"</span>, { <span class="st">"maxNumericValue"</span>: 2500, <span class="st">"aggregationMethod"</span>: <span class="st">"median-run"</span> }],
+        <span class="st">"total-blocking-time"</span>: [<span class="st">"error"</span>, { <span class="st">"maxNumericValue"</span>: 200, <span class="st">"aggregationMethod"</span>: <span class="st">"median-run"</span> }],
+        <span class="st">"cumulative-layout-shift"</span>: [<span class="st">"error"</span>, { <span class="st">"maxNumericValue"</span>: 0.1, <span class="st">"aggregationMethod"</span>: <span class="st">"median-run"</span> }],
+        <span class="st">"resource-summary:script:size"</span>: [<span class="st">"error"</span>, { <span class="st">"maxNumericValue"</span>: 122880, <span class="st">"aggregationMethod"</span>: <span class="st">"median-run"</span> }]
+      }
+    }
+  }
+}</code></pre>
+    <div class="demo" id="demo-lhci">
+      <div class="row">
+        <span class="demo-tag"><code>lhci assert</code> on</span>
+        <button type="button" class="dbtn" data-v="base">the baseline</button>
+        <button type="button" class="dbtn" data-v="after">after the three fixes</button>
+        <span class="demo-hint">illustrative numbers · output trimmed</span>
+      </div>
+      <div class="term" data-k="out"></div>
+    </div>
+    <div class="key">Commit the budget first, and let CI fail the build.</div>
+</section>
+
   <!-- L8c · BUILD -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 6</div><div class="cx-page"><b>21</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 6</div><div class="cx-page"><b>23</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 6 · Build</div>
     <h2>Rasmi on a budget, with the receipts</h2>
     <div class="two">
@@ -1117,7 +1194,7 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
 </section>
 
   <!-- L6 · READ NEXT -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 6</div><div class="cx-page"><b>22</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 6</div><div class="cx-page"><b>24</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Lesson 6 · Read next</div>
     <h2>Go deeper: performance budgets</h2>
     <div class="two">
@@ -1126,7 +1203,7 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
         <ul class="plist" style="margin-top:4px">
           <li><a href="https://web.dev/articles/performance-budgets-101" target="_blank" rel="noopener" onclick="event.stopPropagation()">Performance budgets 101 ↗</a><small>choosing and enforcing a budget</small></li>
           <li><a href="https://github.com/GoogleChrome/lighthouse-ci" target="_blank" rel="noopener" onclick="event.stopPropagation()">Lighthouse CI ↗</a><small>running Lighthouse on every push</small></li>
-          <li><a href="https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md" target="_blank" rel="noopener" onclick="event.stopPropagation()">Lighthouse CI configuration ↗</a><small>every assertion option in lighthouserc.json</small></li>
+          <li><a href="https://github.com/GoogleChrome/lighthouse-ci/blob/main/docs/configuration.md" target="_blank" rel="noopener" onclick="event.stopPropagation()">Lighthouse CI configuration ↗</a><small>assertions, script-size budgets and aggregationMethod</small></li>
         </ul>
       </div>
       <div class="card g">
@@ -1139,7 +1216,7 @@ fireEvent.<span class="fn">click</span>(cards[<span class="st">2</span>]);
 </section>
 
   <!-- CLOSING -->
-  <section class="slide" data-chip="MODULE 08 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 6</div><div class="cx-page"><b>23</b> / 23</div><!--/catalyst-brand:chrome-->
+  <section class="slide" data-chip="MODULE 08 · VIDEO 6"><!--catalyst-brand:chrome--><i class="cx-logo" role="img" aria-label="Catalyst"></i><div class="cx-chip">MODULE 08 · VIDEO 6</div><div class="cx-page"><b>25</b> / 25</div><!--/catalyst-brand:chrome-->
     <div class="kicker">Module 08 · done</div>
     <h2>Fast, tested and safe, with the proof</h2>
     <div class="two">
@@ -2041,7 +2118,7 @@ export async function run(): Promise<Result[]> {
   (function(){
     var root = document.getElementById('demo-memo'), fig = document.getElementById('fx-prof');
     if (!root || !fig) return;
-    var N = 120, prev = [], selected = 0, mode = 'arrow';
+    var N = 120, prev = [], selected = 0, mode = 'arrow', compiler = false;
     function setSelectedId(id){ selected = id; }      // a state setter: the same function every render
     function spin(ms){ var end = performance.now() + ms; while (performance.now() < end) {} }
     function same(a, b){ return Object.keys(a).every(function(key){ return Object.is(a[key], b[key]); }); }
@@ -2064,10 +2141,17 @@ export async function run(): Promise<Result[]> {
       k(root,'n').textContent = '–'; k(root,'n').className = '';
       k(root,'ms').textContent = '–'; k(root,'ms').className = '';
       fig.classList.remove('see-before', 'see-after');
+      k(root,'say').textContent = '';
     }
     root.addEventListener('click', function(e){
       var b = e.target.closest('[data-p]');
       if (b) return pick(b.dataset.p);
+      if (e.target.closest('[data-act="compiler"]')){
+        compiler = !compiler;
+        var cb = root.querySelector('[data-act="compiler"]');
+        cb.textContent = 'React Compiler: ' + (compiler ? 'on' : 'off'); cb.classList.toggle('on', compiler);
+        return pick(mode);
+      }
       if (!e.target.closest('[data-act="click"]')) return;
       selected = (selected + 1) % N;
       var r = commit(), all = r.n === N;
@@ -2075,8 +2159,65 @@ export async function run(): Promise<Result[]> {
       k(root,'ms').textContent = r.ms.toFixed(1) + ' ms'; k(root,'ms').className = all ? 'bad' : 'good';
       again(k(root,'ms'), 'bump');
       fig.classList.toggle('see-before', all); fig.classList.toggle('see-after', !all);
+      // what the real React Compiler 1.0 does with this list (measured): the same counts, compiled or not
+      k(root,'say').textContent = mode === 'arrow'
+        ? (compiler ? 'Compiled, and still 120: the compiler memoizes JobList, but the arrow is made inside a .map that reruns when selectedId changes.'
+                    : 'A new arrow for every card on every commit: memo compares, then renders all 120.')
+        : (compiler ? 'The setter is the same function every render, so 2 render, the same as without the compiler.'
+                    : 'The setter never changes: only the 2 cards whose isSelected changed render.');
     });
-    watch(root, function(){ selected = 0; pick('arrow'); });
+    watch(root, function(){
+      selected = 0; compiler = false;
+      var cb = root.querySelector('[data-act="compiler"]'); cb.textContent = 'React Compiler: off'; cb.classList.remove('on');
+      pick('arrow');
+    });
+  })();
+
+  /* L4c · which test layer goes red for which change */
+  (function(){
+    var root = document.getElementById('demo-layer'); if (!root) return;
+    var NAME = { unit:'unit · Vitest', int:'integration · RTL + MSW', e2e:'E2E · Playwright' };
+    var B = {
+      salary: { unit:'hit', int:'hit', e2e:'miss', best:'unit', say:'formatSalary(12500) is a pure function: a unit test catches it in milliseconds. A screen test that reads the card would too; the search-and-apply journey never reads a salary.' },
+      api:    { unit:'miss', int:'hit', e2e:'miss', best:'int', say:'Only the integration test can make the API fail on cue: server.use returns a 500 for this one test. A unit test has no network, and the real API won’t fail when an E2E run asks it to.' },
+      chunk:  { unit:'miss', int:'miss', e2e:'hit', best:'e2e', say:'Vitest imports the source, never the built chunks. Only the E2E run, against the production build, loads the chunk and sees the 404.' },
+      banner: { unit:'miss', int:'miss', e2e:'hit', best:'e2e', say:'jsdom does no layout, so the click lands even under a banner. Playwright waits for Apply now to be able to receive the click, and times out when something covers it.' },
+      rename: { unit:'calm', int:'calm', e2e:'calm', best:null, say:'Not a bug, and nothing should go red, and nothing does. Only the class-based test from the first slide would: a false alarm.' }
+    };
+    var SUFFIX = { hit:' · goes red', miss:' · misses it', calm:' · stays green' };
+    function set(b){
+      root.querySelectorAll('[data-b]').forEach(function(x){ x.classList.toggle('on', x.dataset.b === b); });
+      ['unit', 'int', 'e2e'].forEach(function(l){
+        var el = k(root, l), v = b ? B[b][l] : null;
+        el.className = 'dom lay' + (v === 'hit' ? ' hit' : v === 'miss' ? ' miss' : '') + (b && B[b].best === l ? ' best' : '');
+        el.textContent = NAME[l] + (v ? SUFFIX[v] : '') + (b && B[b].best === l ? ' · cheapest' : '');
+      });
+      k(root,'say').textContent = b ? B[b].say : 'Pick a change. Which layer goes red first?';
+    }
+    root.addEventListener('click', function(e){ var x = e.target.closest('[data-b]'); if (x) set(x.dataset.b); });
+    watch(root, function(){ set(null); });
+  })();
+
+  /* L6b · lhci assert against the budget: Rasmi's baseline and after the fixes (illustrative numbers, real output format) */
+  (function(){
+    var root = document.getElementById('demo-lhci'); if (!root) return;
+    var HEAD = 'Checking assertions against 1 URL(s), 3 total run(s)\n';
+    var V = {
+      base: HEAD + [
+          ['largest-contentful-paint', '4100'], ['total-blocking-time', '610'],
+          ['cumulative-layout-shift', '0.21'], ['resource-summary.script.size', '219136']
+        ].map(function(r){ return '  ✘  ' + r[0] + ' failure for maxNumericValue assertion\n           found: ' + r[1]; }).join('\n') +
+        '\nAssertion failed. Exiting with status code 1.',
+      after: HEAD + 'All results processed!'
+    };
+    function paint(v){
+      root.querySelectorAll('[data-v]').forEach(function(b){ b.classList.toggle('on', b.dataset.v === v); });
+      k(root,'out').innerHTML = esc(V[v])
+        .replace(/^(  ✘ .*|Assertion failed\..*)$/gm, '<span class="e">$1</span>')
+        .replace(/^(All results processed!)$/m, '<span class="g">$1</span>');
+    }
+    root.addEventListener('click', function(e){ var b = e.target.closest('[data-v]'); if (b) paint(b.dataset.v); });
+    watch(root, function(){ paint('base'); });
   })();
 
   /* L5a · the same employer HTML, three ways into a page */
